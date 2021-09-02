@@ -10,11 +10,12 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
+import org.apache.hadoop.mapreduce.Partitioner;	//	add
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.GenericOptionsParser;
 
-public class Wordcount {
+public class Wordcountsort {
 	/* 
 	Object, Text : input key-value pair type (always same (to get a line of input file))
 	Text, IntWritable : output key-value pair type
@@ -45,6 +46,8 @@ public class Wordcount {
 	Text, IntWritable : input key type and the value type of input value list
 	Text, IntWritable : output key-value pair type
 	*/
+	
+	
 	public static class IntSumReducer
 			extends Reducer<Text,IntWritable,Text,IntWritable> {
 
@@ -64,18 +67,28 @@ public class Wordcount {
 			context.write(key,result);
 		}
 	}
-
+	
+	
+	public static class MyPartitioner extends Partitioner<Text, IntWritable> {
+		@Override
+		public int getPartition(Text key, IntWritable value, int numPartitions){
+			if(key.toString().charAt(0) < 'a') 
+				return 0;
+			else
+				return 1;
+		}
+	}
 
 	/* Main function */
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
 		String[] otherArgs = new GenericOptionsParser(conf,args).getRemainingArgs();
 		if ( otherArgs.length != 2 ) {
-			System.err.println("Usage: wordcount <in> <out>");
+			System.err.println("Usage: <in> <out>");
 			System.exit(2);
 		}
 		Job job = new Job(conf,"word count");
-		job.setJarByClass(Wordcount.class);
+		job.setJarByClass(Wordcountsort.class);
 
 		// let hadoop know my map and reduce classes
 		job.setMapperClass(TokenizerMapper.class);
@@ -83,7 +96,7 @@ public class Wordcount {
 
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(IntWritable.class);
-
+		job.setPartitionerClass(MyPartitioner.class);
 		// set number of reduces
 		job.setNumReduceTasks(2);
 
