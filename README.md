@@ -27,8 +27,8 @@ Wordcount.java를 수정하여 각 단어의 첫 글자(알파멧)만을 카운�
 ## 실행결과
 
 <p align="center">
-    <img src="C:\Users\multicampus\Desktop\발표\p1.PNG" alt="p1" style="zoom:60%;" />
-    <img src="C:\Users\multicampus\Desktop\발표\p1-2.PNG" alt="p1-2" style="zoom:60%;" />
+    ![p1-1](https://user-images.githubusercontent.com/77487962/131943355-563e79cf-b61c-4a8a-a5ec-a94ec1be9d30.PNG)
+    ![p1-2](https://user-images.githubusercontent.com/77487962/131943394-11cc1e10-11b4-42aa-a62e-9841bf654007.PNG)
 </p>
 
 
@@ -72,9 +72,10 @@ Wordcount.java를 수정하여 각 단어의 첫 글자(알파멧)만을 카운�
 
 ## 실행결과
 
-![image-20210903105048812](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210903105048812.png)
-
-![image-20210903105234529](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210903105234529.png)
+<p align="center">
+    ![p2-1](https://user-images.githubusercontent.com/77487962/131943451-d28bf280-f8e2-4f81-8dae-51fd60d48c17.PNG)
+    ![p2-2](https://user-images.githubusercontent.com/77487962/131943479-3af985f2-4af2-4b05-b362-1fc50ec8ac7a.PNG)
+</p>
 
 # PJT # 3
 
@@ -110,9 +111,10 @@ Wordcount.java를 수정하여 각 단어의 첫 글자(알파멧)만을 카운�
 
 ## 실행 결과
 
-![Untitled](C:\Users\multicampus\Documents\카카오톡 받은 파일\pjt#3\PJT # 3 b20ded1153794961b66822609389de56\Untitled.png)
-
-![Untitled 1](C:\Users\multicampus\Documents\카카오톡 받은 파일\pjt#3\PJT # 3 b20ded1153794961b66822609389de56\Untitled 1.png)
+<p align="center">
+    ![p3-1](https://user-images.githubusercontent.com/77487962/131943519-795fa304-f605-4f6b-86fe-fb0560ebdb4d.PNG)
+    ![p3-2](https://user-images.githubusercontent.com/77487962/131943546-8da5a656-c6b4-4146-997a-91a290c28a38.PNG)
+</p>
 
 # PJT#4
 
@@ -165,7 +167,8 @@ B   1   1   -7
 
 ## 실행 결과
 
-![p4-1](C:\Users\multicampus\Desktop\발표\p4-1.PNG)
-
-![p4-2](C:\Users\multicampus\Desktop\발표\p4-2.PNG)
+<p align="center">
+    ![p4-1](https://user-images.githubusercontent.com/77487962/131943558-1bac117a-c612-4e93-980f-eb5200932bf9.PNG)
+    ![p4-2](https://user-images.githubusercontent.com/77487962/131943576-dfa69256-b18d-4d2f-949f-dc862ca25327.PNG)
+</p>
 
