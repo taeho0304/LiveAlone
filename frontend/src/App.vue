@@ -1,3 +1,4 @@
+
 <template>  
   <v-app>
       <router-view/>
@@ -8,7 +9,6 @@
 
 export default {
   name: 'App',
-
   data: () => ({
     //
   }),
