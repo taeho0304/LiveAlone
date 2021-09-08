@@ -1,18 +1,16 @@
 <template >
-    <div id="background"> 
-        <StartPage />
-    </div>
+  <div id="background">
+    <StartPage />
+  </div>
 </template>
 
 <style>
-
 html {
-    background-color: #D9E1E8;
+  background-color: #d9e1e8;
 }
 
 .v-application--wrap {
-
-    background-color: #D9E1E8;
+  background-color: #d9e1e8;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -25,11 +23,11 @@ html {
 
 
 <script>
-import StartPage from '../components/StartPage.vue'
+import StartPage from "../components/StartPage.vue";
 
 export default {
-    components:{
-        StartPage
-    }
-}
+  components: {
+    StartPage,
+  },
+};
 </script>
