@@ -4,7 +4,7 @@
 
     <v-card
         class="mx-auto"
-        max-width="504"
+        max-width="500"
         >
         <v-card-text>
         <div>혼족, 일코노미, 나홀로족..</div>
@@ -19,7 +19,7 @@
     </v-card>
     
     <div class="button" align="center">
-        <v-btn id="button1" class="button hover1" rounded x-large color="primary">검색하기</v-btn>
+        <router-link to="/search"><v-btn id="button1" class="button hover1" rounded x-large color="primary">검색하기</v-btn></router-link>
         <v-btn id="button2" class="button hover2" rounded x-large color="error">추천받기</v-btn>
     </div>
 
