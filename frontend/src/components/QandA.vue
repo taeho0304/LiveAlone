@@ -1,41 +1,57 @@
 <template>
-  <v-stepper v-model="e1">
+  <v-stepper v-model="e1" class="rounded-xl">
     <v-stepper-header>
       <template v-for="n in QnA">
         <v-stepper-step
+          class="mx-0 rounded-xl"
           :key="`${n.index}-step`"
           :complete="e1 > n.index"
           :step="n.index"
           editable
         >
-          Step {{ n.index }}
+          Question {{ n.index }}
         </v-stepper-step>
-
         <v-divider v-if="n.index !== QnA" :key="n.index"></v-divider>
       </template>
     </v-stepper-header>
 
-    <v-stepper-items>
+    <v-stepper-items class="QnA">
       <v-stepper-content
         v-for="n in QnA"
         :key="`${n.index}-content`"
         :step="n.index"
       >
-        {{ n.Q }}
+        <div class="col-12 click ml-auto my-10">
+          <p class="text-h5">
+            <strong> {{ n.Q }} </strong>
+          </p>
+        </div>
 
-        <v-btn
-          v-for="a in n.ans"
-          :key="`${a.index}`"
-          color="primary"
-          @click="nextStep(n.index)"
-        >
-          {{ a.A }}
-        </v-btn>
+        <div class="col-12 click ml-auto pa-1">
+          <v-btn
+            rounded
+            class="col-6 click ml-auto mx-1 my-5 black--text"
+            x-large
+            color="secondary"
+            v-for="a in n.ans"
+            :key="`${a.index}`"
+            @click="nextStep(n.index)"
+          >
+            <span class="text-h6"
+              ><strong>{{ a.A }}</strong></span
+            >
+          </v-btn>
+        </div>
       </v-stepper-content>
     </v-stepper-items>
   </v-stepper>
 </template>
 
+<style >
+.QnA {
+  background-color: #9baec8;
+}
+</style>
 
 <script>
 export default {
@@ -105,6 +121,10 @@ export default {
         this.e1 = 1;
       } else {
         this.e1 = n + 1;
+      }
+
+      if (n == 5) {
+        console.log(":done");
       }
     },
   },

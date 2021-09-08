@@ -1,21 +1,14 @@
-<template>
+
+<template>  
   <v-app>
-    <v-main>
-      <HelloWorld />
-    </v-main>
+      <router-view/>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from "@/views/QandA.vue";
 
 export default {
-  name: "App",
-
-  components: {
-    HelloWorld,
-  },
-
+  name: 'App',
   data: () => ({
     //
   }),
