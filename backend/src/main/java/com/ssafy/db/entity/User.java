@@ -16,12 +16,11 @@ import javax.persistence.*;
 @Setter
 public class User extends BaseEntity{
     String userId;
-    String userPass;
     String userName;
     String userEmail;
     String userPhone;
 
     @JsonIgnore
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    String password;
+    String userPass;
 }
