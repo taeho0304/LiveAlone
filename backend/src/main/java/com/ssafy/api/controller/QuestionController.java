@@ -1,0 +1,101 @@
+package com.ssafy.api.controller;
+
+import com.ssafy.api.request.QuestionPatcherPostReq;
+import com.ssafy.api.request.UserRegisterPostReq;
+import com.ssafy.api.response.QuestionRes;
+import com.ssafy.api.response.UserLoginPostRes;
+import com.ssafy.api.response.UserRes;
+import com.ssafy.api.service.QuestionOptionService;
+import com.ssafy.api.service.QuestionService;
+import com.ssafy.api.service.UserService;
+import com.ssafy.common.auth.SsafyUserDetails;
+import com.ssafy.common.model.response.BaseResponseBody;
+import com.ssafy.db.entity.Question;
+import com.ssafy.db.entity.User;
+import io.swagger.annotations.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+
+/**
+ * 질문 관련 API 요청 처리를 위한 컨트롤러 정의.
+ */
+@Api(value = "질문 API", tags = {"Question"})
+@RestController
+@RequestMapping("/api/v1")
+public class QuestionController {
+
+    @Autowired
+    QuestionService questionService;
+
+    @Autowired
+    QuestionOptionService questionOptionService;
+
+    @PostMapping("/questions")
+    @ApiOperation(value = "질문 생성", notes = "사용자에게 제공할 질문을 생성 한다.")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "성공"),
+            @ApiResponse(code = 500, message = "실패")
+    })
+    public ResponseEntity<? extends BaseResponseBody> createQuestion(
+            @RequestBody @ApiParam(value = "질문 내용", required = true) String questionContent) {
+        try {
+            questionService.createQuestion(questionContent);
+            return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Success"));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(500).body(BaseResponseBody.of(500, "fail"));
+        }
+    }
+
+    @GetMapping("/questions")
+    @ApiOperation(value = "질문 목록 조회", notes = "사용자에게 제공할 질문 목록을 생성 한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<QuestionRes> getQuestions(@ApiIgnore Authentication authentication) {
+        try {
+            List<Question> questions = questionService.getQuestion();
+            return ResponseEntity.status(201).body(QuestionRes.of(questions));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(500).body(QuestionRes.of(500, "fail"));
+        }
+    }
+
+    @PatchMapping("questions")
+    @ApiOperation(value = "질문 목록 수정", notes = "회원 본인의 정보를 수정한다.")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "성공"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> patchQuestion(
+            @RequestBody @ApiParam(value = "질문 목록 수정", required = true) QuestionPatcherPostReq questionInfo) {
+        try {
+            questionService.patchQuestion(questionInfo);
+            return ResponseEntity.status(201).body(UserLoginPostRes.of(201, "Success"));
+        }catch (Exception e){
+            return ResponseEntity.status(500).body(UserLoginPostRes.of(500, "fail"));
+        }
+    }
+
+    @DeleteMapping("questions")
+    @ApiOperation(value = "질문 삭제", notes = "질문을 삭제한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "삭제 성공"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<BaseResponseBody> deleteQuestion(
+            @RequestBody @ApiParam(value = "삭제 질문 리스트", required = true) List<Long> questionId) {
+        try {
+            questionService.deleteQuestion(questionId);
+            return ResponseEntity.status(200).body(UserLoginPostRes.of(201, "Success"));
+        }catch (Exception e){
+            return ResponseEntity.status(500).body(UserLoginPostRes.of(500, "Fail"));
+        }
+    }
+}
