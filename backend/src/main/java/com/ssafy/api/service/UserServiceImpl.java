@@ -37,10 +37,10 @@ public class UserServiceImpl implements UserService {
 	public User createUser(UserRegisterPostReq userRegisterInfo) {
 		user.setUserId(userRegisterInfo.getId());
 		// 보안을 위해서 유저 패스워드 암호화 하여 디비에 저장.
-		user.setPassword(passwordEncoder.encode(userRegisterInfo.getPassword()));
-		user.setDepartment(userRegisterInfo.getDepartment());
-		user.setName(userRegisterInfo.getName());
-		user.setPosition(userRegisterInfo.getPosition());
+//		user.setPassword(passwordEncoder.encode(userRegisterInfo.getPassword()));
+//		user.setDepartment(userRegisterInfo.getDepartment());
+//		user.setName(userRegisterInfo.getName());
+//		user.setPosition(userRegisterInfo.getPosition());
 		//
 		return userRepository.save(user);
 	}
@@ -49,9 +49,9 @@ public class UserServiceImpl implements UserService {
 	public void patchUser(UserRegisterPostReq userRegisterInfo, String userId) {
 		try {
 			Optional<User> user = userRepository.findById(userRepositorySupport.findUserByUserId(userId).get().getId());
-			user.get().setDepartment(userRegisterInfo.getDepartment());
-			user.get().setName(userRegisterInfo.getName());
-			user.get().setPosition(userRegisterInfo.getPosition());
+//			user.get().setDepartment(userRegisterInfo.getDepartment());
+//			user.get().setName(userRegisterInfo.getName());
+//			user.get().setPosition(userRegisterInfo.getPosition());
 			userRepository.save(user.get());
 		}catch (NoSuchElementException e){
 
