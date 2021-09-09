@@ -16,5 +16,5 @@ public class QuestionOption extends BaseEntity{
     private Question question;
 
     String optionContent;
-    String optionContentIndex;
+    int optionContentIndex;
 }

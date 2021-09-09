@@ -1,7 +1,7 @@
 package com.ssafy.api.service;
 
-import com.ssafy.api.request.QuestionPatcherPostReq;
-import com.ssafy.api.request.UserRegisterPostReq;
+import com.ssafy.api.request.QuestionOptionPostReq;
+import com.ssafy.api.request.QuestionPatchReq;
 import com.ssafy.db.entity.Question;
 
 import java.util.List;
@@ -15,7 +15,9 @@ public interface QuestionService {
 
 	List<Question> getQuestion();
 
-	void patchQuestion(QuestionPatcherPostReq questionInfo);
+	void patchQuestion(QuestionPatchReq questionInfo);
 
 	void deleteQuestion(List<Long> questionId);
+
+
 }

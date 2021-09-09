@@ -1,7 +1,11 @@
 package com.ssafy.api.service;
 
-import com.ssafy.api.request.QuestionPatcherPostReq;
+import com.ssafy.api.request.QuestionOptionPostReq;
+import com.ssafy.api.request.QuestionPatchReq;
 import com.ssafy.db.entity.Question;
+import com.ssafy.db.entity.QuestionOption;
+import com.ssafy.db.repository.QuestionOptionRepository;
+import com.ssafy.db.repository.QuestionOptionRepositorySupport;
 import com.ssafy.db.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +24,9 @@ public class QuestionServiceImpl implements QuestionService {
 	@Autowired
 	QuestionService questionService;
 
+	@Autowired
+	QuestionOptionService questionOptionService;
+
 	@Override
 	public void createQuestion(String questionContent) {
 		Question question = new Question();
@@ -33,7 +40,7 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 
 	@Override
-	public void patchQuestion(QuestionPatcherPostReq questionInfo) {
+	public void patchQuestion(QuestionPatchReq questionInfo) {
 		Optional<Question> question = questionRepository.findById(questionInfo.getQuestionId());
 		question.get().setQuestionContent(questionInfo.getQuestionContent());
 		questionRepository.save(question.get());

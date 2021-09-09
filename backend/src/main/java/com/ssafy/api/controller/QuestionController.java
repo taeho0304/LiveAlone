@@ -1,17 +1,16 @@
 package com.ssafy.api.controller;
 
-import com.ssafy.api.request.QuestionPatcherPostReq;
-import com.ssafy.api.request.UserRegisterPostReq;
+import com.ssafy.api.Model.QnA;
+import com.ssafy.api.request.QuestionOptionPostReq;
+import com.ssafy.api.request.QuestionPatchReq;
+import com.ssafy.api.response.QuestionOptionRes;
 import com.ssafy.api.response.QuestionRes;
 import com.ssafy.api.response.UserLoginPostRes;
-import com.ssafy.api.response.UserRes;
 import com.ssafy.api.service.QuestionOptionService;
 import com.ssafy.api.service.QuestionService;
-import com.ssafy.api.service.UserService;
-import com.ssafy.common.auth.SsafyUserDetails;
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.Question;
-import com.ssafy.db.entity.User;
+import com.ssafy.db.entity.QuestionOption;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -44,6 +43,7 @@ public class QuestionController {
     })
     public ResponseEntity<? extends BaseResponseBody> createQuestion(
             @RequestBody @ApiParam(value = "질문 내용", required = true) String questionContent) {
+        System.out.println("121dsadasdsfdfsdfdsadasd");
         try {
             questionService.createQuestion(questionContent);
             return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Success"));
@@ -53,12 +53,12 @@ public class QuestionController {
     }
 
     @GetMapping("/questions")
-    @ApiOperation(value = "질문 목록 조회", notes = "사용자에게 제공할 질문 목록을 생성 한다.")
+    @ApiOperation(value = "질문 목록 조회", notes = "전체 질문 목록을 조회한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<QuestionRes> getQuestions(@ApiIgnore Authentication authentication) {
+    public ResponseEntity<QuestionRes> getQuestions() {
         try {
             List<Question> questions = questionService.getQuestion();
             return ResponseEntity.status(201).body(QuestionRes.of(questions));
@@ -74,7 +74,7 @@ public class QuestionController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> patchQuestion(
-            @RequestBody @ApiParam(value = "질문 목록 수정", required = true) QuestionPatcherPostReq questionInfo) {
+            @RequestBody @ApiParam(value = "질문 목록 수정", required = true) QuestionPatchReq questionInfo) {
         try {
             questionService.patchQuestion(questionInfo);
             return ResponseEntity.status(201).body(UserLoginPostRes.of(201, "Success"));
@@ -96,6 +96,37 @@ public class QuestionController {
             return ResponseEntity.status(200).body(UserLoginPostRes.of(201, "Success"));
         }catch (Exception e){
             return ResponseEntity.status(500).body(UserLoginPostRes.of(500, "Fail"));
+        }
+    }
+
+    @PostMapping("/questions/options")
+    @ApiOperation(value = "질문 옵션 생성", notes = "사용자에게 제공할 질문을 생성 한다.")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "성공"),
+            @ApiResponse(code = 500, message = "실패")
+    })
+    public ResponseEntity<? extends BaseResponseBody> createQuestionOption(
+            @RequestBody @ApiParam(value = "질문 옵션", required = true) QuestionOptionPostReq questionOptionInfo) {
+        try {
+            questionOptionService.createQuestionOption(questionOptionInfo);
+            return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Success"));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(500).body(BaseResponseBody.of(500, "fail"));
+        }
+    }
+
+    @GetMapping("/questions/options")
+    @ApiOperation(value = "질문 옵션 조회", notes = "사용자에게 제공할 질문을 조회 한다.")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "성공"),
+            @ApiResponse(code = 500, message = "실패")
+    })
+    public ResponseEntity<QuestionOptionRes> getQuestionOption() {
+        try {
+            List<QnA> questionOptions = questionOptionService.getQuestionOption();
+            return ResponseEntity.status(201).body(QuestionOptionRes.of(questionOptions));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(500).body(QuestionOptionRes.of(500, "fail"));
         }
     }
 }
