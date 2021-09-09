@@ -12,24 +12,25 @@
             <v-btn class="btn" depressed rounded color="blue lighten-4 black--text" @click="signUp = !signUp">회원가입</v-btn>
         </v-app-bar>
 
-         <div :model="search" style="margin-top:70px;">
+         <div v-if="search" style="margin-top:65px; background-color:white;">
                 <v-item-group multiple>
     
-                <v-item
-                v-for="n in 8"
-                :key="n"
-                v-slot="{ active, toggle }"
-                >
-                <v-chip
-                    active-class="purple--text"
-                    :input-value="active"
-                    @click="toggle"
-                >
-                    Tag {{ n }}
-                </v-chip>
-                </v-item>
-      </v-item-group>
-            </div>
+                    <v-item
+                    v-for="n in 8"
+                    :key="n"
+                    v-slot="{ active, toggle }"
+                    >
+                    <v-chip
+                        active-class="purple--text"
+                        :input-value="active"
+                        @click="toggle"
+                    >
+                        Tag {{ n }}
+                    </v-chip>
+                    </v-item>
+                </v-item-group>
+        </div>
+
         <v-row justify="center">
             <v-dialog v-model="signIn" persistent max-width="600px" >
                 <v-card style="border-radius: 30px; background: #D9E1E8;">
