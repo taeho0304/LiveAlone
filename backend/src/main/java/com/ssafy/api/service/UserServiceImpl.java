@@ -1,8 +1,6 @@
 package com.ssafy.api.service;
 
-import com.ssafy.api.response.UserLoginPostRes;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +9,6 @@ import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.UserRepository;
 import com.ssafy.db.repository.UserRepositorySupport;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 /**
@@ -35,39 +32,28 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User createUser(UserRegisterPostReq userRegisterInfo) {
-		user.setUserId(userRegisterInfo.getId());
-		// 보안을 위해서 유저 패스워드 암호화 하여 디비에 저장.
-		user.setPassword(passwordEncoder.encode(userRegisterInfo.getPassword()));
-		user.setDepartment(userRegisterInfo.getDepartment());
-		user.setName(userRegisterInfo.getName());
-		user.setPosition(userRegisterInfo.getPosition());
-		//
+		user.setUserId(userRegisterInfo.getUserId());
+		user.setUserPass(passwordEncoder.encode(userRegisterInfo.getUserPass()));
+		user.setUserEmail(userRegisterInfo.getUserEmail());
+		user.setUserPhone(userRegisterInfo.getUserPhone());
+		user.setUserName(userRegisterInfo.getUserName());
 		return userRepository.save(user);
 	}
-
 	@Override
 	public void patchUser(UserRegisterPostReq userRegisterInfo, String userId) {
-		try {
-			Optional<User> user = userRepository.findById(userRepositorySupport.findUserByUserId(userId).get().getId());
-			user.get().setDepartment(userRegisterInfo.getDepartment());
-			user.get().setName(userRegisterInfo.getName());
-			user.get().setPosition(userRegisterInfo.getPosition());
-			userRepository.save(user.get());
-		}catch (NoSuchElementException e){
-
-		}
+		Optional<User> user = userRepository.findById(userRepositorySupport.findUserByUserId(userId).get().getId());
+		user.get().setUserEmail(userRegisterInfo.getUserEmail());
+		user.get().setUserPass(passwordEncoder.encode(userRegisterInfo.getUserPass()));
+		user.get().setUserPhone(userRegisterInfo.getUserPhone());
+		user.get().setUserName(userRegisterInfo.getUserName());
+		userRepository.save(user.get());
 	}
-
 	@Override
 	public User getUserByUserId(String userId) {
-		// 디비에 유저 정보 조회 (userId 를 통한 조회).
-		User user = userRepositorySupport.findUserByUserId(userId).get();
-		return user;
+		return userRepositorySupport.findUserByUserId(userId).get();
 	}
 	@Override
 	public void deleteUserByUserId(String userId) {
-		// 디비에 유저 정보 조회 (userId 를 통한 삭제)
 		userRepository.deleteById(userRepositorySupport.findUserByUserId(userId).get().getId());
 	}
-
 }
