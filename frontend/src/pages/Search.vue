@@ -1,13 +1,27 @@
 <template>
   <div>
-    
+    <div id="map" style="width:500px;height:400px;"></div>
   </div>
 </template>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f52d6b75a8a65ca935ff31e1ba7eace5">
+</script>
 <script>
+		var container = document.getElementById('map');
+		var options = {
+			center: new kakao.maps.LatLng(33.450701, 126.570667),
+			level: 3
+		};
+
+		var map = new kakao.maps.Map(container, options);
+	</script>
+<script>
+
+
 export default {
   name: 'index',
   bodyClass: 'index-page',
   components: {
+    
   }
 };
 </script>
