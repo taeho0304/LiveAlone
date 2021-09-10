@@ -13,4 +13,8 @@ public interface QuestionOptionService {
     void createQuestionOption(QuestionOptionPostReq questionOptionInfo);
 
     List<QnA> getQuestionOption();
+
+    void deleteQuestionOption(List<Long> questionOptionId);
+
+    void deleteQuestionOptionByQuestionId(List<Long> questionId);
 }

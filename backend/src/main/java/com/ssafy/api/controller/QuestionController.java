@@ -86,7 +86,7 @@ public class QuestionController {
     @DeleteMapping("questions")
     @ApiOperation(value = "질문 삭제", notes = "질문을 삭제한다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "삭제 성공"),
+            @ApiResponse(code = 201, message = "삭제 성공"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<BaseResponseBody> deleteQuestion(
@@ -100,7 +100,7 @@ public class QuestionController {
     }
 
     @PostMapping("/questions/options")
-    @ApiOperation(value = "질문 옵션 생성", notes = "사용자에게 제공할 질문을 생성 한다.")
+    @ApiOperation(value = "질문 옵션 생성", notes = "사용자에게 제공할 질문을 생성한다.")
     @ApiResponses({
             @ApiResponse(code = 201, message = "성공"),
             @ApiResponse(code = 500, message = "실패")
@@ -116,9 +116,9 @@ public class QuestionController {
     }
 
     @GetMapping("/questions/options")
-    @ApiOperation(value = "질문 옵션 조회", notes = "사용자에게 제공할 질문을 조회 한다.")
+    @ApiOperation(value = "질문 옵션 조회", notes = "사용자에게 제공할 질문을 조회한다.")
     @ApiResponses({
-            @ApiResponse(code = 201, message = "성공"),
+            @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "실패")
     })
     public ResponseEntity<QuestionOptionRes> getQuestionOption() {
@@ -127,6 +127,22 @@ public class QuestionController {
             return ResponseEntity.status(201).body(QuestionOptionRes.of(questionOptions));
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(500).body(QuestionOptionRes.of(500, "fail"));
+        }
+    }
+
+    @DeleteMapping("/questions/options")
+    @ApiOperation(value = "질문 옵션 삭제", notes = "사용자에게 제공할 질문을 삭제한다.")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "성공"),
+            @ApiResponse(code = 500, message = "실패")
+    })
+    public ResponseEntity<? extends BaseResponseBody> deleteQuestionOption(
+            @RequestBody @ApiParam(value = "질문 옵션 리스트 삭제", required = true) List<Long> questionOptionId) {
+        try {
+            questionOptionService.deleteQuestionOption(questionOptionId);
+            return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Success"));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(500).body(BaseResponseBody.of(500, "fail"));
         }
     }
 }

@@ -48,7 +48,11 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Override
 	public void deleteQuestion(List<Long> questionId) {
-		for (Long qId:questionId)
-			questionRepository.deleteById(qId);
+		for (Long id:questionId){
+			System.out.println(1);
+			questionOptionService.deleteQuestionOptionByQuestionId(questionId);
+			System.out.println(2);
+			questionRepository.deleteById(id);
+		}
 	}
 }

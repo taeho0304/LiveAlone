@@ -24,6 +24,8 @@ public class QuestionOptionRes extends BaseResponseBody {
 	
 	public static QuestionOptionRes of(List<QnA> questionOptions) {
 		QuestionOptionRes res = new QuestionOptionRes();
+		res.setStatusCode(200);
+		res.setMessage("success");
 		res.setQna(questionOptions);
 		return res;
 	}

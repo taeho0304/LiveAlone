@@ -24,6 +24,8 @@ public class QuestionRes extends BaseResponseBody {
 	
 	public static QuestionRes of(List<Question> questions) {
 		QuestionRes res = new QuestionRes();
+		res.setStatusCode(200);
+		res.setMessage("success");
 		res.setQuestionList(questions);
 		return res;
 	}

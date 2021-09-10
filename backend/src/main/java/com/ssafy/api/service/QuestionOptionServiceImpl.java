@@ -62,4 +62,14 @@ public class QuestionOptionServiceImpl implements QuestionOptionService {
 		}
 		return qnAList;
 	}
+	@Override
+	public void deleteQuestionOption(List<Long> questionOptionId) {
+		for (Long id:questionOptionId)
+			questionOptionRepository.deleteById(id);
+	}
+
+	@Override
+	public void deleteQuestionOptionByQuestionId(List<Long> questionId) {
+		questionOptionRepositorySupport.deleteByQuestionId(questionId);
+	}
 }
