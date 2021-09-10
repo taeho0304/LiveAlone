@@ -30,6 +30,7 @@
 export default {
   name: 'start',
   bodyClass: 'start-page',
+ 
   components: {
     
   }
