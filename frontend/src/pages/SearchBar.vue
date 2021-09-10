@@ -9,31 +9,25 @@
   >
 
     <template slot="navbar-menu">
-      <li class="nav-item" @click="isSearch = !isSearch">
-        <a class="nav-link"><i class="now-ui-icons objects_globe"></i><p>상세검색</p></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link">
-          <router-link to="/login"> <i class="now-ui-icons objects_key-25"></i><p>로그인</p></router-link>
-        </a>
-      </li>
-      <drop-down
-              tag="li"
-              title="Examples"
-              icon="now-ui-icons design_image"
-              class="nav-item"
-      >
-        <nav-link to="/landing">
-          <i class="now-ui-icons education_paper"></i> Landing
-        </nav-link>
-        <nav-link to="/login">
-          <i class="now-ui-icons users_circle-08"></i> Login
-        </nav-link>
-        <nav-link to="/profile">
-          <i class="now-ui-icons users_single-02"></i> Profile
-        </nav-link>
-      </drop-down>
       
+      <drop-down
+        v-for="(item, index) in searchItems"
+        :key="index"
+        :title="item.title"
+        tag="div"
+      >
+        <div v-if="(item.index == 0)||(item.index == 1)">
+            <n-checkbox v-for="(items, index) in item.option" :key="index" class="dropdown-item">{{items.name}}</n-checkbox>
+        </div>
+        <div v-else >
+            <h6 class="dropdown-header">매매/전세가/보증금</h6>
+            <div class="dropdown-item">
+                <slider class="slider-info" v-model="rangeSlider" :connect="true" type="primary"></slider>
+            </div>
+            
+        </div>        
+        
+</drop-down>
     
     </template>
     
@@ -43,7 +37,8 @@
 </template>
 
 <script>
-import { Navbar, DropDown, NavLink} from '@/components';
+import { Navbar, DropDown, Checkbox, Button, FormGroupInput, Slider} from '@/components';
+
 import { Popover } from 'element-ui';
 export default {
   name: 'main-navbar',
@@ -55,14 +50,47 @@ export default {
     },
   },
   components: {
-    NavLink,
+    [Checkbox.name]: Checkbox,
+    [FormGroupInput.name]: FormGroupInput,
+    [Button.name]: Button,
     Navbar,
+    [Slider.name]: Slider,
     DropDown,
     [Popover.name]: Popover
   },
   data(){
     return{
       isSearch:false,
+      rangeSlider: [0, 50],
+      searchItems:[
+          {
+            title: "방 종류",
+            index: 0,
+            option:[
+                {name:"원룸, 투룸"},
+                {name:"오피스텔"},
+                {name:"아파트"},
+                {name:"빌라"},
+                {name:"주택"},
+            ]
+          },
+        {
+            title: "거래방식",
+            index: 1,
+            option:[
+                {name:"전체"},
+                {name:"매매"},
+                {name:"전세"},
+                {name:"월세"},
+            ]
+        },
+        {
+            title: "가격대",
+            index: 2,
+            },
+          {title: "관리비"},
+          {title: "방 크기"},
+      ]
     }
   }
 };
