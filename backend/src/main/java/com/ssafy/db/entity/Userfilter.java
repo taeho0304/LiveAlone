@@ -18,6 +18,8 @@ public class Userfilter extends BaseEntity implements Serializable {
     private CommercialCategory commercialCategory;
 
     @OneToOne( fetch = FetchType.LAZY)
-    @JoinColumn(unique = true)
-    private User user;
+
+//    @JoinColumn(unique = true)
+
+     private User user;
 }

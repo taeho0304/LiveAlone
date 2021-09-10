@@ -76,10 +76,10 @@ import { /*DropDown*/ Navbar, } from '@/components';
 import { Popover } from 'element-ui';
 import SearchBar from '../pages/SearchBar.vue';
 export default {
-  name: 'main-navbar',
+  name: "main-navbar",
   props: {
     transparent: Boolean,
-    colorOnScroll: Number
+    colorOnScroll: Number,
   },
   components: {
     SearchBar,
@@ -105,7 +105,7 @@ export default {
     background-color: #eb8816 !important;
 }
 .bg-default {
-    background-color: #ffffff !important;
+  background-color: #ffffff !important;
 }
 
 
