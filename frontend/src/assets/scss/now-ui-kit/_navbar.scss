@@ -1,7 +1,8 @@
 .navbar{
     padding-top: $navbar-padding-base;
     padding-bottom: $navbar-padding-base;
-    height: 47px;
+    min-height: 53px;
+    margin-bottom: 20px;
     box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.15);
 
     a{
@@ -27,7 +28,7 @@
             right: 0;
             margin: 0 auto;
             width: 49px;
-
+            top: -4px;
         }
 
         .nav-link.btn{
@@ -101,7 +102,8 @@
     .navbar-brand{
         text-transform: uppercase;
         font-size: $font-size-small;
-
+        padding-top: $padding-base-vertical;
+        padding-bottom: $padding-base-vertical;
         line-height: $line-height-nav-link;
     }
 
@@ -139,7 +141,7 @@
         background-color: $transparent-bg !important;
         box-shadow: none;
         color: $white-color;
-
+        padding-top: 20px !important;
     }
 
     &.bg-white:not(.navbar-transparent){

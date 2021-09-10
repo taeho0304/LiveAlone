@@ -1,21 +1,18 @@
 <template >
     <div>
         <MainNav/>
-
-        <Map />
+        <Search />
     </div>
 </template>
 
 <script>
 import MainNav from '../layout/MainNavbar.vue'
-// import SearchBar from '../pages/SearchBar.vue'
-import Map from '../pages/Map.vue'
+import Search from '../pages/Search.vue'
 
 export default {
     components:{
         MainNav,
-        
-        Map
+        Search
     }
 }
 </script>

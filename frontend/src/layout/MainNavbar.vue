@@ -1,12 +1,14 @@
 <template>
-  <div>
+
   <navbar
     position="fixed"
     type="info"
     menu-classes="ml-auto"
   >
     <template>
-      <router-link v-popover:popover1 class="navbar-brand" to="/">
+      <img v-lazy="'img/mainlogo.jpg'" alt="" style="width:40px;"/>
+            
+      <router-link v-popover:popover1 class="navbar-brand" to="/search">
         나 혼자 살거다
       </router-link>
       <el-popover
@@ -17,64 +19,100 @@
         trigger="hover"
       >
         <div class="popover-body">
-            전체가구 40%인<br>1인 가구를 위하여..
+          전체가구 40%인<br>
+          1인 가구를 위하여..
         </div>
       </el-popover>
     </template>
     <template slot="navbar-menu">
-      <li class="nav-item" @click="clickSearch()">
-        <a class="nav-link"><i class="now-ui-icons objects_globe"></i><p>상세검색</p></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link">
-          <router-link to="/login"> <i class="now-ui-icons objects_key-25"></i><p>로그인</p></router-link>
+      <!-- <li class="nav-item">
+        <a
+          class="nav-link"
+          href="https://www.creative-tim.com/product/vue-now-ui-kit"
+          target="_blank"
+        >
+          <i class="now-ui-icons arrows-1_cloud-download-93"></i>
+          <p>Download</p>
         </a>
+      </li> -->
+      <!-- <drop-down
+        tag="li"
+        title="Components"
+        icon="now-ui-icons design_app"
+        class="nav-item"
+      >
+        <nav-link to="/">
+          <i class="now-ui-icons business_chart-pie-36"></i> All components
+        </nav-link>
+        <a
+          href="https://demos.creative-tim.com/vue-now-ui-kit/documentation"
+          target="_blank"
+          class="dropdown-item"
+        >
+          <i class="now-ui-icons design_bullet-list-67"></i> Documentation
+        </a>
+      </drop-down> -->
+    
+      <li class="nav-item" @click="search = !search">
+        <a class="nav-link btn btn-neutral" style="width:110px;" target="_blank">
+        <p style="color:#000000;">상세검색 <i class="now-ui-icons ui-1_zoom-bold"></i></p></a>
+      </li>
+      <navbar v-show="search" type="default" position="fixed" menu-classes="ml-auto" style="margin-top:63px">
+        <template slot="navbar-menu">
+          <li class="nav-item">
+            <a class="nav-link btn btn-neutral" style="width:110px;" target="_blank">
+                <p style="color:#000000;">방 종류</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-neutral" style="width:110px;" target="_blank">
+              <p style="color:#000000;">거래방식</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-neutral" style="width:110px;" target="_blank">
+              <p style="color:#000000;">가격대</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-neutral" style="width:110px;" target="_blank">
+              <p style="color:#000000;">방 면적</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-neutral" style="width:110px;" target="_blank">
+              <p style="color:#000000;">관리비</p>
+            </a>
+          </li>
+          
+        </template>
+      </navbar>
+  
+      <li class="nav-item">
+        <router-link to="/login">
+          <a class="nav-link btn btn-neutral" style="width:100px;" target="_blank">
+            <p style="color:#000000;">로그인 <i class="now-ui-icons objects_key-25"></i></p></a>
+        </router-link>
       </li>
       <li class="nav-item">
         <a
-          class="nav-link"
+          class="nav-link btn btn-neutral"
+          style="width:100px; color:#000000;"
+          target="_blank"
         >
-          <i class="now-ui-icons arrows-1_cloud-download-93"></i>
           <p>회원가입</p>
         </a>
       </li>
-      <!-- <drop-down
-              tag="li"
-              title="Examples"
-              icon="now-ui-icons design_image"
-              class="nav-item"
-      >
-        <nav-link to="/landing">
-          <i class="now-ui-icons education_paper"></i> Landing
-        </nav-link>
-        <nav-link to="/login">
-          <i class="now-ui-icons users_circle-08"></i> Login
-        </nav-link>
-        <nav-link to="/profile">
-          <i class="now-ui-icons users_single-02"></i> Profile
-        </nav-link>
-      </drop-down> -->
-      <!-- <li class="nav-item">
-        <a
-          class="nav-link btn btn-neutral"
-          href="https://www.creative-tim.com/product/vue-now-ui-kit-pro"
-          target="_blank"
-        >
-          <i class="now-ui-icons arrows-1_share-66"></i>
-          <p>Upgrade to PRO</p>
-        </a>
-      </li> -->
+      
+
+      
     </template>
- 
   </navbar>
-  <SearchBar :visible="isSearch"/>
-  </div>
 </template>
 
 <script>
-import { /*DropDown*/ Navbar, } from '@/components';
+import {  Navbar } from '@/components';
 import { Popover } from 'element-ui';
-import SearchBar from '../pages/SearchBar.vue';
 export default {
   name: 'main-navbar',
   props: {
@@ -82,31 +120,24 @@ export default {
     colorOnScroll: Number
   },
   components: {
-    SearchBar,
+    
     Navbar,
+
     [Popover.name]: Popover
   },
   data(){
     return{
-      isSearch:false,
+      search:false,
     }
-  },
-  methods:{
-    clickSearch(){
-      this.isSearch = !this.isSearch;
-      console.log(this.isSearch);
-    }
-  },
+  }
 };
 </script>
 
 <style scoped>
 .bg-info {
-    background-color: #eb8816 !important;
+    background-color: #000000 !important;
 }
 .bg-default {
     background-color: #ffffff !important;
 }
-
-
 </style>

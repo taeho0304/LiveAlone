@@ -13,7 +13,7 @@
                 <div class="text-center">
                 <router-link to="/search"><a class="btn btn-primary btn-round btn-lg btn-block">검색하기</a></router-link>
                 <a
-                  class="btn btn-warning btn-round btn-lg btn-block"
+                  class="button"
                   >추천하기</a
                 >
                 
