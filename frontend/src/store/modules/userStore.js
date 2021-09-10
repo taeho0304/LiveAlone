@@ -23,14 +23,20 @@ export default {
     actions: {
         requestRegister(context, payload) {
             let body = payload
-            return http.post('/users', body)
+
+            http.post('/api/v1/users', body).then(() => {
+                router.push('/');
+            }).catch((err) => {
+                //alert(err.response.data.message);
+                console.log(err);
+            });
         },
         requestLogin({ commit }, user) {
             http
                 .post(`/api/v1/auth/login`, user)
                 .then(({ data }) => {
 
-                    commit("LOGIN",  data );
+                    commit("LOGIN", data);
                     console.log(data)
 
                     router.push('/');
