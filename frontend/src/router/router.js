@@ -9,6 +9,7 @@ import MainNavbar from '../layout/MainNavbar.vue';
 import MainFooter from '../layout/MainFooter.vue';
 import store from '../store/index';
 import SignupForm from '../pages/SignupForm.vue';
+import QnAPage from '../view/QnAPage.vue';
 
 Vue.use(Router);
 
@@ -63,7 +64,18 @@ export default new Router({
         header: { colorOnScroll: 400 },
         footer: { backgroundColor: 'black' }
       }
+    },
+
+    {
+      path: '/qna',
+      name: 'qna',
+      components: { default: QnAPage, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 400 },
+        footer: { backgroundColor: 'black' }
+      }
     }
+
   ],
   scrollBehavior: to => {
     if (to.hash) {
