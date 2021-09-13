@@ -120,15 +120,13 @@ public class RoomSearchController {
         }
     }
 
-    @GetMapping("/rooms")
-    @ApiOperation(value = "거래 타입 조회", notes = "거래 타입을 조회한다.")
+    @GetMapping("/residences")
+    @ApiOperation(value = "매물 조회", notes = "매물을 조회한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "실패")
     })
-    public ResponseEntity<ResidenceRes> getRooms(
-            @RequestBody @ApiParam(value = "매물 검색", required = false) ResidenceGetReq residenceGetReq
-            ) {
+    public ResponseEntity<ResidenceRes> getResidences( @ModelAttribute ResidenceGetReq residenceGetReq) {
         try {
             List<ResidenceInfo> rooms = roomSearchService.getResidenceInfos(residenceGetReq);
             return ResponseEntity.status(200).body(ResidenceRes.of(rooms));

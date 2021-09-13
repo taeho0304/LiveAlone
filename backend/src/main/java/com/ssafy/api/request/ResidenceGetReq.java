@@ -10,26 +10,26 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@ApiModel("ResidenceGetReq")
+//@ApiModel("ResidenceGetReq")
 public class ResidenceGetReq {
-	@ApiModelProperty(name="방 종ㄿ", example="원룸")
-	String roomType;
-	@ApiModelProperty(name="거래 타입", example="월세")
-	String bargainType;
-	@ApiModelProperty(name="최저 가격대(만원)", example="40")
+//	@ApiModelProperty(name="방 종류", example="원룸")
+	String residenceCategory;
+//	@ApiModelProperty(name="거래 타입", example="월세")
+	String residenceType;
+//	@ApiModelProperty(name="최저 가격대(만원)", example="40")
 	int startPrice;
-	@ApiModelProperty(name="최고 가격대(만원)", example="100")
+//	@ApiModelProperty(name="최고 가격대(만원)", example="100")
 	int endPrice;
-	@ApiModelProperty(name="관리비 최저 가격대(만원)", example="5")
+//	@ApiModelProperty(name="관리비 최저 가격대(만원)", example="5")
 	int startManagePrice;
-	@ApiModelProperty(name="관리비 최고 가격대(만원)", example="10")
+//	@ApiModelProperty(name="관리비 최고 가격대(만원)", example="10")
 	int endManagePrice;
-	@ApiModelProperty(name="최저 면적(평수)", example="8")
+//	@ApiModelProperty(name="최저 면적(평수)", example="8")
 	int startArea;
-	@ApiModelProperty(name="최고 면적(평수)", example="10")
+//	@ApiModelProperty(name="최고 면적(평수)", example="10")
 	int endArea;
-	@ApiModelProperty(name="정렬 기준", example="cost")
+//	@ApiModelProperty(name="정렬 기준", example="cost")
 	String sortType;
-	@ApiModelProperty(name="정렬 방식", example="asc")
+//	@ApiModelProperty(name="정렬 방식", example="asc")
 	String sortOrder;
 }
