@@ -5,26 +5,25 @@
         {{ label }}
       </slot>
     </span>
-    <div class="progress" :style="`height: ${height}px`">
+    <slot>
+      <span class="progress-value" v-if="showValue"> {{ value }}% </span>
+    </slot>
+    <div class="progress mr-2" :style="`height: ${height}px`">
       <div
-        class="progress-bar"
+        class="progress-bar ml-2"
         :class="computedClasses"
         role="progressbar"
         :aria-valuenow="value"
         aria-valuemin="0"
         aria-valuemax="100"
         :style="`width: ${value}%;`"
-      >
-        <slot>
-          <span class="progress-value" v-if="showValue"> {{ value }}% </span>
-        </slot>
-      </div>
+      ></div>
     </div>
   </div>
 </template>
 <script>
 export default {
-  name: 'n-progress',
+  name: "n-progress",
   props: {
     striped: Boolean,
     showValue: Boolean,
@@ -32,28 +31,28 @@ export default {
     label: String,
     height: {
       type: Number,
-      default: 1
+      default: 3,
     },
     type: {
       type: String,
-      default: 'default'
+      default: "default",
     },
     value: {
       type: Number,
       default: 0,
-      validator: value => {
+      validator: (value) => {
         return value >= 0 && value <= 100;
-      }
-    }
+      },
+    },
   },
   computed: {
     computedClasses() {
       return [
-        { 'progress-bar-striped': this.striped },
-        { 'progress-bar-animated': this.animated }
+        { "progress-bar-striped": this.striped },
+        { "progress-bar-animated": this.animated },
       ];
-    }
-  }
+    },
+  },
 };
 </script>
 <style></style>
