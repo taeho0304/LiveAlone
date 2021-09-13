@@ -1,13 +1,12 @@
 package com.ssafy.db.entity;
 
+import com.ssafy.db.idmodel.QuestionResultPK;
+import com.ssafy.db.idmodel.ResidenceInfoPK;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -17,6 +16,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @EqualsAndHashCode
+@IdClass(QuestionResultPK.class)
 public class QuestionResult extends BaseEntity implements Serializable {
     @Id
     @OneToOne(fetch = FetchType.LAZY)
