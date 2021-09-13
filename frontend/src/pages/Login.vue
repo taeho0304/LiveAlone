@@ -1,45 +1,49 @@
 <template>
-  <div class="page-header clear-filter" filter-color="orange">
+  <div class="page-header">
     <div class="content">
       <div class="container">
         <div class="col-md-5 ml-auto mr-auto">
-          <card type="login" plain>
+          <card type="login" plain style="margin-top:-20px;">
             <div slot="header" class="logo-container">
-              <img v-lazy="'img/login.png'" alt="" />
+              <img v-lazy="'img/login.png'" alt="" style="margin-top:-30px;"/>
             </div>
 
             <fg-input
               class="no-border input-lg"
               v-model="user.id"
+              type="text"
               addon-left-icon="now-ui-icons users_circle-08"
               placeholder="아이디"
             >
             </fg-input>
+            
 
             <fg-input
               class="no-border input-lg"
               addon-left-icon="now-ui-icons text_caps-small"
               v-model="user.password"
               placeholder="비밀번호"
+              type="password"
             >
             </fg-input>
+            
+            <card class="text-center" style="border-radius:10px;" >
+              <h6 class="card-text" v-if="!errors.requireId" style="color:red;">아이디를 입력해주세요.</h6>
+              <h6 class="card-text" v-if="!errors.requirePw" style="color:red;">비밀번호를 입력해주세요.(영문자/숫자/특수문자)</h6>
+            </card>
 
-            <template slot="raw-content">
-              <div class="card-footer text-center">
-                <a
-                  @click="clickLogin"
-                  class="btn btn-primary btn-round btn-lg btn-block"
-                  >Get Started</a
-                >
+            <template>
+              <div style="margin-top:-30px;" class="card-footer text-center">
+                <a @click="clickLogin" class="btn btn-primary btn-round btn-lg btn-block">로그인</a>
               </div>
               <div class="pull-left">
                 <h6>
-                  <a href="#pablo" class="link footer-link">Create Account</a>
+                  <router-link to="signup"><a class="link footer-link">아직 계정이 없으신가요?</a></router-link>
                 </h6>
               </div>
               <div class="pull-right">
                 <h6>
-                  <a href="#pablo" class="link footer-link">Need Help?</a>
+                  <a href="#pablo" class="link footer-link">도움말</a>
                 </h6>
               </div>
             </template>
@@ -47,12 +51,10 @@
         </div>
       </div>
     </div>
-    <main-footer></main-footer>
   </div>
 </template>
 <script>
 import { Card, Button, FormGroupInput } from "@/components";
-import MainFooter from "@/layout/MainFooter";
 import { mapActions } from "vuex";
 
 export default {
@@ -64,22 +66,42 @@ export default {
         id: "",
         password: "",
       },
+      errors:{
+        requireId:true,
+        requirePw:true,
+      },
     };
   },
   methods: {
     ...mapActions("user", ["requestLogin"]),
     clickLogin() {
-      console.log(this.user.id);
-      console.log(this.user.password);
-      this.requestLogin(this.user);
+      if(this.user.id==""){
+        this.errors.requireId=false;
+        return;
+      }else if(this.user.id!=""&&this.user.password==""){
+        this.errors.requireId=true;
+        this.errors.requirePw=false;
+        return;
+      }else{
+        this.errors.requireId=true;
+        this.errors.requirePw=true;
+        this.requestLogin(this.user);
+        return;
+      }
+      
     },
+
   },
   components: {
     Card,
-    MainFooter,
     [Button.name]: Button,
     [FormGroupInput.name]: FormGroupInput,
   },
 };
 </script>
-<style></style>
+<style>
+.input-group, .form-group {
+    margin-bottom: 0px;
+    position: relative;
+}
+</style>

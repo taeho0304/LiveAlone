@@ -8632,6 +8632,11 @@
   "resolved" "https://registry.npmjs.org/vary/-/vary-1.1.2.tgz"
   "version" "1.1.2"
 
+"vee-validate@^3.4.12":
+  "integrity" "sha512-mKYlbLmnKVj6zQ4pWBpOEQhc4rcee+wYy2IuMJEuH4Omx31g62YRVnjO3DMeWz7kAQN8z11UwHTY5s75gAGzRw=="
+  "resolved" "https://registry.npmjs.org/vee-validate/-/vee-validate-3.4.12.tgz"
+  "version" "3.4.12"
+
 "vendors@^1.0.0":
   "integrity" "sha512-w/hry/368nO21AN9QljsaIhb9ZiZtZARoVH5f3CsFbawdLdayCgKRPup7CggujvySMxx0I91NOyxdVENohprLQ=="
   "resolved" "https://registry.npmjs.org/vendors/-/vendors-1.0.2.tgz"
@@ -8725,7 +8730,7 @@
   "resolved" "https://registry.npmjs.org/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz"
   "version" "1.9.1"
 
-"vue@^2 || ^3.0.0-0", "vue@^2.0.0", "vue@^2.5.17", "vue@^2.6.11":
+"vue@^2 || ^3.0.0-0", "vue@^2.0.0", "vue@^2.5.17", "vue@^2.5.18", "vue@^2.6.11":
   "integrity" "sha512-x2284lgYvjOMj3Za7kqzRcUSxBboHqtgRE2zlos1qWaOye5yUmHn42LB1250NJBLRwEcdrB0JRwyPTEPhfQjiQ=="
   "resolved" "https://registry.npmjs.org/vue/-/vue-2.6.14.tgz"
   "version" "2.6.14"

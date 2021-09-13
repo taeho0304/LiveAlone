@@ -1,12 +1,7 @@
 <template>
   <div
     class="section section-signup"
-    style="
-      background-image: url('img/bg11.jpg');
-      background-size: cover;
-      background-position: top center;
-      min-height: 700px;
-    "
+    id="form"
   >
     <div class="container">
       <div class="row">
@@ -72,13 +67,10 @@
         </card>
       </div>
 
-      <div class="col text-center">
-        <router-link
-          to="/login"
-          class="btn btn-simple btn-round btn-white btn-lg"
-        >
-          View Login Page
-        </router-link>
+      <div class="col text-center" style="padding-top:15px;">
+        <h6>
+          <router-link to="signup"><a class="link footer-link">로그인하기</a></router-link>
+        </h6>
       </div>
     </div>
   </div>
@@ -113,4 +105,20 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+
+.card-signup .card-header {
+    margin:0 20px;
+    padding: 15px 0;
+}
+
+.card-signup .card-footer {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding: 20px 0;
+}
+.section-signup .col .btn {
+    margin: 15px;
+}
+
+</style>

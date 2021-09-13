@@ -23,19 +23,16 @@
     </template>
     <template slot="navbar-menu">
       <li class="nav-item" @click="clickSearch()">
-        <a class="nav-link"><i class="now-ui-icons objects_globe"></i><p>상세검색</p></a>
+        <a class="nav-link"><p>상세검색</p></a>
       </li>
       <li class="nav-item">
         <a class="nav-link">
-          <router-link to="/login"> <i class="now-ui-icons objects_key-25"></i><p>로그인</p></router-link>
+          <router-link to="/login"> <i class="now-ui-icons media-1_button-power"></i><p>로그인</p></router-link>
         </a>
       </li>
       <li class="nav-item">
-        <a
-          class="nav-link"
-        >
-          <i class="now-ui-icons arrows-1_cloud-download-93"></i>
-          <p>회원가입</p>
+         <a class="nav-link">
+          <router-link to="/signup"><p>회원가입</p></router-link>
         </a>
       </li>
       <!-- <drop-down
