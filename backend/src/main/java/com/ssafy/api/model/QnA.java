@@ -1,4 +1,4 @@
-package com.ssafy.api.Model;
+package com.ssafy.api.model;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

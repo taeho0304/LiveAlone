@@ -12,5 +12,5 @@ import javax.persistence.Entity;
 @Getter
 @Setter
 public class ResidenceType extends BaseEntity{
-    String type;
+    String type; // 매매, 전세
 }

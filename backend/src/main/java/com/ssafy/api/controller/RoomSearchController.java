@@ -1,16 +1,12 @@
 package com.ssafy.api.controller;
 
-import com.ssafy.api.Model.QnA;
-import com.ssafy.api.request.QuestionOptionPostReq;
-import com.ssafy.api.request.QuestionPatchReq;
+import com.ssafy.api.request.ResidenceGetReq;
 import com.ssafy.api.response.*;
-import com.ssafy.api.service.QuestionOptionService;
-import com.ssafy.api.service.QuestionService;
 import com.ssafy.api.service.RoomSearchService;
 import com.ssafy.common.model.response.BaseResponseBody;
-import com.ssafy.db.entity.BargainType;
-import com.ssafy.db.entity.Question;
-import com.ssafy.db.entity.RoomType;
+import com.ssafy.db.entity.ResidenceCategory;
+import com.ssafy.db.entity.ResidenceInfo;
+import com.ssafy.db.entity.ResidenceType;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +35,7 @@ public class RoomSearchController {
     public ResponseEntity<? extends BaseResponseBody> createRoomType(
             @RequestBody @ApiParam(value = "방 종류", required = true) String roomtype) {
         try {
-            roomSearchService.createRoomType(roomtype);
+            roomSearchService.createResidenceCategory(roomtype);
             return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Success"));
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(500).body(BaseResponseBody.of(500, "fail"));
@@ -52,12 +48,12 @@ public class RoomSearchController {
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<RoomTypeRes> getRoomType() {
+    public ResponseEntity<ResidenceCategoryRes> getRoomType() {
         try {
-            List<RoomType> roomTypes = roomSearchService.getRoomType();
-            return ResponseEntity.status(200).body(RoomTypeRes.of(roomTypes));
+            List<ResidenceCategory> ResidenceCategories = roomSearchService.getResidenceCategory();
+            return ResponseEntity.status(200).body(ResidenceCategoryRes.of(ResidenceCategories));
         } catch (NoSuchElementException e) {
-            return ResponseEntity.status(500).body(RoomTypeRes.of(500, "fail"));
+            return ResponseEntity.status(500).body(ResidenceCategoryRes.of(500, "fail"));
         }
     }
 
@@ -70,7 +66,7 @@ public class RoomSearchController {
     public ResponseEntity<BaseResponseBody> deleteRoomType(
             @RequestBody @ApiParam(value = "삭제 질문 리스트", required = true) List<Long> roomtype) {
         try {
-            roomSearchService.deleteRoomType(roomtype);
+            roomSearchService.deleteResidenceCategory(roomtype);
             return ResponseEntity.status(200).body(UserLoginPostRes.of(201, "Success"));
         }catch (Exception e){
             return ResponseEntity.status(500).body(UserLoginPostRes.of(500, "Fail"));
@@ -86,7 +82,7 @@ public class RoomSearchController {
     public ResponseEntity<? extends BaseResponseBody> createBargainType(
             @RequestBody @ApiParam(value = "거래 타입", required = true) String bargaintype) {
         try {
-            roomSearchService.createBargainType(bargaintype);
+            roomSearchService.createResidenceType(bargaintype);
             return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Success"));
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(500).body(BaseResponseBody.of(500, "fail"));
@@ -99,12 +95,12 @@ public class RoomSearchController {
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "실패")
     })
-    public ResponseEntity<BargainTypeRes> getBargainType() {
+    public ResponseEntity<ResidenceTypeRes> getBargainType() {
         try {
-            List<BargainType> bargainType = roomSearchService.getBargainType();
-            return ResponseEntity.status(200).body(BargainTypeRes.of(bargainType));
+            List<ResidenceType> residenceType = roomSearchService.getResidenceType();
+            return ResponseEntity.status(200).body(ResidenceTypeRes.of(residenceType));
         } catch (NoSuchElementException e) {
-            return ResponseEntity.status(500).body(BargainTypeRes.of(500, "fail"));
+            return ResponseEntity.status(500).body(ResidenceTypeRes.of(500, "fail"));
         }
     }
 
@@ -117,10 +113,27 @@ public class RoomSearchController {
     public ResponseEntity<? extends BaseResponseBody> deleteBargainType(
             @RequestBody @ApiParam(value = "질문 옵션 리스트 삭제", required = true)List<Long> bargainId) {
         try {
-            roomSearchService.deleteBargainType(bargainId);
+            roomSearchService.deleteResidenceType(bargainId);
             return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Success"));
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(500).body(BaseResponseBody.of(500, "fail"));
+        }
+    }
+
+    @GetMapping("/rooms")
+    @ApiOperation(value = "거래 타입 조회", notes = "거래 타입을 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "실패")
+    })
+    public ResponseEntity<ResidenceRes> getRooms(
+            @RequestBody @ApiParam(value = "매물 검색", required = false) ResidenceGetReq residenceGetReq
+            ) {
+        try {
+            List<ResidenceInfo> rooms = roomSearchService.getResidenceInfos(residenceGetReq);
+            return ResponseEntity.status(200).body(ResidenceRes.of(rooms));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(500).body(ResidenceRes.of(500, "fail"));
         }
     }
 }

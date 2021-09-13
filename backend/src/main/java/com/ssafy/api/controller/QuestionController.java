@@ -1,6 +1,6 @@
 package com.ssafy.api.controller;
 
-import com.ssafy.api.Model.QnA;
+import com.ssafy.api.model.QnA;
 import com.ssafy.api.request.QuestionOptionPostReq;
 import com.ssafy.api.request.QuestionPatchReq;
 import com.ssafy.api.response.QuestionOptionRes;
@@ -10,13 +10,10 @@ import com.ssafy.api.service.QuestionOptionService;
 import com.ssafy.api.service.QuestionService;
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.Question;
-import com.ssafy.db.entity.QuestionOption;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 import java.util.NoSuchElementException;

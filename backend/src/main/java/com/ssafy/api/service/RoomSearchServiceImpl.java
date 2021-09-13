@@ -1,10 +1,10 @@
 package com.ssafy.api.service;
 
-import com.ssafy.db.entity.BargainType;
-import com.ssafy.db.entity.RoomType;
-import com.ssafy.db.repository.BargainTypeRepository;
-import com.ssafy.db.repository.QuestionRepository;
-import com.ssafy.db.repository.RoomTypeRepository;
+import com.ssafy.api.request.ResidenceGetReq;
+import com.ssafy.db.entity.ResidenceCategory;
+import com.ssafy.db.entity.ResidenceInfo;
+import com.ssafy.db.entity.ResidenceType;
+import com.ssafy.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,45 +16,53 @@ import java.util.List;
 @Service("roomSearchService")
 public class RoomSearchServiceImpl implements RoomSearchService {
 	@Autowired
-	RoomTypeRepository roomTypeRepository;
+	ResidenceCategoryRepository residenceCategoryRepository;
 
 	@Autowired
-	BargainTypeRepository bargainTypeRepository;
+	ResidenceTypeRepository residenceTypeRepository;
 
 	@Autowired
 	RoomSearchService roomSearchService;
 
+	@Autowired
+	ResidenceInfoRepositorySupport residenceInfoRepositorySupport;
+
 	@Override
-	public void createRoomType(String type) {
-		RoomType roomType = new RoomType();
-		roomType.setType(type);
-		roomTypeRepository.save(roomType);
+	public void createResidenceCategory(String type) {
+		ResidenceCategory residenceCategory = new ResidenceCategory();
+		residenceCategory.setCategoryName(type);
+		residenceCategoryRepository.save(residenceCategory);
 	}
 
 	@Override
-	public List<RoomType> getRoomType() {
-		return roomTypeRepository.findAll();
+	public List<ResidenceCategory> getResidenceCategory() {
+		return residenceCategoryRepository.findAll();
 	}
 
 	@Override
-	public void deleteRoomType(List<Long> roomType) {
-		for (Long id:roomType) roomTypeRepository.deleteById(id);
+	public void deleteResidenceCategory(List<Long> residenceCategory) {
+		for (Long id:residenceCategory) residenceCategoryRepository.deleteById(id);
 	}
 
 	@Override
-	public void createBargainType(String type) {
-		BargainType bargainType = new BargainType();
-		bargainType.setType(type);
-		bargainTypeRepository.save(bargainType);
+	public void createResidenceType(String type) {
+		ResidenceType residenceType = new ResidenceType();
+		residenceType.setType(type);
+		residenceTypeRepository.save(residenceType);
 	}
 
 	@Override
-	public List<BargainType> getBargainType() {
-		return bargainTypeRepository.findAll();
+	public List<ResidenceType> getResidenceType() {
+		return residenceTypeRepository.findAll();
 	}
 
 	@Override
-	public void deleteBargainType(List<Long> bargainType) {
-		for (Long id:bargainType) bargainTypeRepository.deleteById(id);
+	public void deleteResidenceType(List<Long> residenceType) {
+		for (Long id:residenceType) residenceTypeRepository.deleteById(id);
+	}
+
+	@Override
+	public List<ResidenceInfo> getResidenceInfos(ResidenceGetReq residenceGetReq) {
+		return residenceInfoRepositorySupport.findRooms(residenceGetReq);
 	}
 }
