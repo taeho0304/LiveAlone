@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 질문 옵션 모델 관련 디비 쿼리 생성을 위한 구현 정의.
  */
-//@Transactional
+
 @Repository
 public class QuestionOptionRepositorySupport {
     @Autowired
@@ -24,10 +24,9 @@ public class QuestionOptionRepositorySupport {
         return Long.valueOf(count).intValue();
     }
 
+    @Transactional
     public void deleteByQuestionId(List<Long> questionId) {
-        for (Long id:questionId){
-            long execute = jpaQueryFactory.delete(qQuestionOption).where(qQuestionOption.question.id.eq(id)).execute();
-            System.out.println("execute : "+execute );
-        }
+        for (Long id:questionId)
+            jpaQueryFactory.delete(qQuestionOption).where(qQuestionOption.question.id.eq(id)).execute();
     }
 }

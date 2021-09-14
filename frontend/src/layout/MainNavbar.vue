@@ -35,7 +35,7 @@
         </div>
         
       </drop-down>
-      <template v-if="!isLogin">
+      <template v-if="isLogin">
         <li class="nav-item">
           <a class="nav-link">
             <router-link to="/login"> <i class="now-ui-icons media-1_button-power"></i><p>로그인</p></router-link>
@@ -47,7 +47,7 @@
           </a>
         </li>
       </template>
-      <template v-if="isLogin">
+      <template v-else>
         <li class="nav-item">
           <a class="nav-link">
             <span @click="clickLogout()"><p>로그아웃</p></span>

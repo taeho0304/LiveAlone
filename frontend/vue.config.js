@@ -1,4 +1,4 @@
-const URL = "localhost:8080";
+const URL = "3.38.97.229:8082";
 
 module.exports = {
   css: {
