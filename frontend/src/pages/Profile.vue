@@ -154,10 +154,10 @@ export default {
     ...mapGetters('user',['getUserInfo']),
     click(){
       this.isClick=!this.isClick;
-      console.log(this.isClick);
+      //console.log(this.isClick);
     },
     clickModify(){
-      console.log(this.isClick);
+     // console.log(this.isClick);
       this.click();
     }
   },
@@ -166,7 +166,7 @@ export default {
   },
   mounted(){
     this.requestUserInfo();
-    console.log(this.getUserInfo)
+    //console.log(this.getUserInfo)
   },
 };
 </script>
