@@ -29,7 +29,7 @@ public class QQuestionOption extends EntityPathBase<QuestionOption> {
 
     public final StringPath optionContent = createString("optionContent");
 
-    public final StringPath optionContentIndex = createString("optionContentIndex");
+    public final NumberPath<Integer> optionContentIndex = createNumber("optionContentIndex", Integer.class);
 
     public final QQuestion question;
 

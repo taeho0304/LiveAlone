@@ -1,7 +1,6 @@
 package com.ssafy.api.response;
 
 import com.ssafy.common.model.response.BaseResponseBody;
-import com.ssafy.db.entity.BargainType;
 import com.ssafy.db.entity.ResidenceType;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
