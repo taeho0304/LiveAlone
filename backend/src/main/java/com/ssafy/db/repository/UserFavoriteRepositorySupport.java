@@ -3,6 +3,7 @@ package com.ssafy.db.repository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.db.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -29,4 +30,9 @@ public class UserFavoriteRepositorySupport {
         jpaQueryFactory.delete(quserFavorite).where(quserFavorite.user.id.eq(userFavoriteId)).execute();
     }
 
+    public UserFavorite checkDuplicate(Long userId, Long residenceId) {
+        UserFavorite userFavorite = jpaQueryFactory.select(quserFavorite).from(quserFavorite)
+                .where(quserFavorite.user.id.eq(userId), quserFavorite.residenceInfo.id.eq(residenceId)).fetchOne();
+        return userFavorite;
+    }
 }
