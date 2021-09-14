@@ -1,36 +1,9 @@
 <template>
   <div>
-    <div class="page-header clear-filter" filter-color="orange">
-      <parallax
-        class="page-header-image"
-        style="background-image:url('img/bg5.jpg')"
-      >
-      </parallax>
-      <div class="container">
-        <div class="photo-container">
-          <img src="img/ryan.jpg" alt="" />
-        </div>
-        <h3 class="title">Ryan Scheinder</h3>
-        <p class="category">Photographer</p>
-        <div class="content">
-          <div class="social-description">
-            <h2>26</h2>
-            <p>Comments</p>
-          </div>
-          <div class="social-description">
-            <h2>26</h2>
-            <p>Comments</p>
-          </div>
-          <div class="social-description">
-            <h2>48</h2>
-            <p>Bookmarks</p>
-          </div>
-        </div>
-      </div>
-    </div>
+    
     <div class="section">
-      <div class="container">
-        <div class="button-container">
+      <div class="container" >
+        <!-- <div class="button-container">
           <a href="#button" class="btn btn-primary btn-round btn-lg">Follow</a>
           <a
             href="#button"
@@ -48,40 +21,76 @@
           >
             <i class="fab fa-instagram"></i>
           </a>
-        </div>
-        <h3 class="title">About me</h3>
-        <h5 class="description">
-          An artist of considerable range, Ryan — the name taken by
-          Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and
-          records all of his own music, giving it a warm, intimate feel with a
-          solid groove structure. An artist of considerable range.
-        </h5>
-        <div class="row">
-          <div class="col-md-6 ml-auto mr-auto">
-            <h4 class="title text-center">My Portfolio</h4>
-          </div>
-          <tabs
-            pills
-            class="nav-align-center"
-            tab-content-classes="gallery"
-            tab-nav-classes="nav-pills-just-icons"
-            type="primary"
-          >
-            <tab-pane title="Profile">
-              <i slot="label" class="now-ui-icons design_image"></i>
-
-              <div class="col-md-10 ml-auto mr-auto">
+        </div> -->
+        <h3 class="title" style="margin-top:1px;">My Page</h3>
+      
+        <div class="card row">
+          <tabs type="primary" tabContentClasses="tab-subcategories"
+        square centered class="nav-align-center">
+            <tab-pane>
+              <span slot="label">
+                <i class="now-ui-icons business_badge"></i> Profile
+              </span>
+              <div class="col-md-10 ml-auto mr-auto" style="margin-top:0px">
                 <div class="row collections">
-                  <div class="col-md-6">
-                    <img src="img/bg6.jpg" class="img-raised" />
-                    <img src="img/bg11.jpg" alt="" class="img-raised" />
+                  <div class="col-md-1">
                   </div>
-                  <div class="col-md-6">
-                    <img src="img/bg7.jpg" alt="" class="img-raised" />
-                    <img src="img/bg8.jpg" alt="" class="img-raised" />
+                  <div class="col-md-10">
+                    <fg-input
+                        class="no-border input-lg"
+                        v-bind:disabled="!isClick"
+                        type="text"
+                        addon-left-icon="now-ui-icons users_circle-08"
+                        placeholder="이름"
+                      >
+                    </fg-input>
+                    <fg-input
+                        class="no-border input-lg"
+                        v-bind:disabled="!isClick"
+                        type="text"
+                        addon-left-icon="now-ui-icons users_circle-08"
+                        placeholder="아이디"
+                      >
+                    </fg-input>
+                    <fg-input
+                        class="no-border input-lg"
+                        v-bind:disabled="!isClick"
+                        type="text"
+                        addon-left-icon="now-ui-icons users_circle-08"
+                        placeholder="이메일"
+                      >
+                    </fg-input>
+                    <fg-input
+                        class="no-border input-lg"
+                        v-bind:disabled="!isClick"
+                        type="text"
+                        addon-left-icon="now-ui-icons users_circle-08"
+                        placeholder="휴대폰 번호"
+                        :v-model="getUserInfo.userPhone"
+                      >
+                    </fg-input>
                   </div>
+                  <div class="col-md-1">
+                  </div>
+                  <div class="col-md-3">
+                  </div>
+                  <div class="col-md-3">
+                      <div style="margin-top:-30px;" class="card-footer text-center">
+                        <a v-if="!isClick" @click="click()" class="btn btn-primary btn-round btn-lg btn-block">수정</a>
+                        <a v-if="isClick" @click="clickModify()" class="btn btn-primary btn-round btn-lg btn-block">확인</a>
+                      </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div style="margin-top:-30px;" class="card-footer text-center">
+                        <a class="btn btn-primary btn-round btn-lg btn-block">탈퇴</a>
+                      </div>
+                  </div>
+                  <div class="col-md-3">
+                  </div>
+
                 </div>
               </div>
+              
             </tab-pane>
 
             <tab-pane title="Home">
@@ -118,21 +127,51 @@
               </div>
             </tab-pane>
           </tabs>
+
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { Tabs, TabPane } from '@/components';
-
+import { Tabs, TabPane, FormGroupInput } from '@/components';
+import {mapActions, mapState, mapGetters} from 'vuex';
 export default {
   name: 'profile',
   bodyClass: 'profile-page',
   components: {
     Tabs,
-    TabPane
-  }
+    TabPane,
+    [FormGroupInput.name]: FormGroupInput,
+  },
+  data:function(){
+    return{
+      isClick:false,
+    }
+  },
+  methods:{
+    ...mapActions('user',['requestUserInfo', 'requestDelete', 'requestModify']),
+    ...mapGetters('user',['getUserInfo']),
+    click(){
+      this.isClick=!this.isClick;
+      console.log(this.isClick);
+    },
+    clickModify(){
+      console.log(this.isClick);
+      this.click();
+    }
+  },
+  created(){
+    
+  },
+  mounted(){
+    this.requestUserInfo();
+    console.log(this.getUserInfo)
+  },
 };
 </script>
-<style></style>
+<style>
+.profile-page .gallery {
+    margin-top: 5px;
+}
+</style>

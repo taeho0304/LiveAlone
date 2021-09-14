@@ -6,7 +6,7 @@ import router from "@/router/router";
 export default {
     namespaced: true,
     state: {
-
+        userInfo: null,
         accessToken: "",
 
     },
@@ -16,16 +16,16 @@ export default {
             localStorage.setItem("accessToken", state.accessToken);
             console.log(payload.accessToken);
         },
-        LOGOUT(state) {
-            Object.assign(state, getDefaultState());
-        },
+        USERINFO(state, payload) {
+
+        }
     },
     actions: {
         requestRegister(context, payload) {
             let body = payload
 
             http.post('/api/v1/users', body).then(() => {
-                router.push('/');
+                router.push('/login');
             }).catch((err) => {
                 //alert(err.response.data.message);
                 console.log(err);
@@ -35,23 +35,27 @@ export default {
             http
                 .post(`/api/v1/auth/login`, user)
                 .then(({ data }) => {
-
                     commit("LOGIN", data);
-                    console.log(data)
-
-                    router.push('/');
-
+                    router.push('/search');
                     console.log(localStorage.getItem("accessToken"));
                 })
                 .catch((err) => {
-                    //alert(err.response.data.message);
                     console.log(err);
                 });
         },
-        // NOTE: 로그인 상태 설정
-
-        logout(context) {
-            context.commit('LOGOUT')
+        requestUserInfo({commit}){
+            const CSRF_TOKEN=localStorage.getItem("accessToken");
+            if (!CSRF_TOKEN) return;
+            http
+              .get(`/api/v1/users/me`,{headers: {"Authorization": 'Bearer '+ CSRF_TOKEN }
+            })
+            .then(({ data })=>{
+                commit("USERINFO", data);
+                console.log(data);
+            })
+            .catch(() => {
+                console.error();
+            });
         },
 
 
@@ -63,5 +67,8 @@ export default {
         getLoginStatus(state) {
             return state.loginStatus;
         },
+        getUserInfo(state) {
+            return state.userInfo;
+          },
     }
 }

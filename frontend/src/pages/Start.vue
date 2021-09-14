@@ -5,7 +5,7 @@
         <div class="col-md-6">
           <img class="pb-4" src="img/main.jpg" />
         </div>
-        <div class="col-md-6 mt-4">
+        <div class="col-md-6" style="margin-top:100px;">
           <h2 class="h2-seo" style="color: black">I will live alone</h2>
           <div style="color: black; text-size: 16px">
             혼족, 일코노미, 나홀로족...
