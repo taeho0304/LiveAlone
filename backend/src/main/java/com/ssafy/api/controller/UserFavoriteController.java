@@ -61,6 +61,23 @@ public class UserFavoriteController {
         }
     }
 
+    @GetMapping()
+    @ApiOperation(value = "찜한 관심 매물 조회", notes = "찜한 관심 매물을 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 409, message = "중복 있음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> checkDuplicated(
+            @ApiIgnore Authentication authentication, @RequestParam Long ResidenceId) {
+        try {
+            UserFavorite userFavorite = userFavoriteService.checkDuplicated(authentication, ResidenceId);
+            return ResponseEntity.status(409).body(BaseResponseBody.of(200, "중복 있음"));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "중복 없음"));
+        }
+    }
+
     @DeleteMapping()
     @ApiOperation(value = "관심 매물 찜 삭제", notes = "찜한 관심 매물을 삭제한다.")
     @ApiResponses({
