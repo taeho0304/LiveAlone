@@ -26,14 +26,22 @@
 </template>
 <script>
 
-
+import {mapActions} from 'vuex';
 export default {
   name: 'start',
   bodyClass: 'start-page',
  
   components: {
     
-  }
+  },
+  created(){
+    this.requestRoomType();
+    this.requestBargainType();
+
+  },
+  methods:{
+    ...mapActions('search', ['requestRoomType', 'requestBargainType']),
+  },
 };
 </script>
 <style>
