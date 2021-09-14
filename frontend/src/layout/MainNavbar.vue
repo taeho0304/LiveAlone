@@ -99,16 +99,16 @@ export default {
   methods:{
     clickSearch(index){
       if(index==0){
-        console.log("원룸");
+        //console.log("원룸");
         this.isOneRoom = true;
         this.isApart = false;
-        console.log(this.isOneRoom);
+        //console.log(this.isOneRoom);
         return;
       }else if(index== 1){
-        console.log("오피스텔");
+        //console.log("오피스텔");
         this.isOneRoom = false;
         this.isApart = true;
-        console.log(this.isOneRoom);
+        //console.log(this.isOneRoom);
         return;
       }
     },

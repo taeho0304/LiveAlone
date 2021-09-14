@@ -14,7 +14,7 @@ export default {
         LOGIN(state, payload) {
             state.accessToken = payload.accessToken;
             localStorage.setItem("accessToken", state.accessToken);
-            console.log(payload.accessToken);
+            //console.log(payload.accessToken);
         },
         USERINFO(state, payload) {
 
@@ -28,7 +28,7 @@ export default {
                 router.push('/login');
             }).catch((err) => {
                 //alert(err.response.data.message);
-                console.log(err);
+                //console.log(err);
             });
         },
         requestLogin({ commit }, user) {
@@ -37,10 +37,10 @@ export default {
                 .then(({ data }) => {
                     commit("LOGIN", data);
                     router.push('/search');
-                    console.log(localStorage.getItem("accessToken"));
+                   // console.log(localStorage.getItem("accessToken"));
                 })
                 .catch((err) => {
-                    console.log(err);
+                   // console.log(err);
                 });
         },
         requestUserInfo({commit}){
@@ -51,10 +51,10 @@ export default {
             })
             .then(({ data })=>{
                 commit("USERINFO", data);
-                console.log(data);
+                //console.log(data);
             })
             .catch(() => {
-                console.error();
+                //console.error();
             });
         },
 

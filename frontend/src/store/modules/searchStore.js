@@ -25,10 +25,10 @@ export default {
             .get(`/api/v1/search/roomtypes`)
             .then(({data})=> {
                 commit("ROOMTYPE", data);
-                console.log(data);
+               // console.log(data);
             })
             .catch((err)=>{
-                console.log(err);
+               // console.log(err);
             })
         },
         requestBargainType({commit}){
@@ -36,9 +36,9 @@ export default {
             .get(`/api/v1/search/bargaintypes`)
             .then(({data})=>{
                 commit("BARGAINTYPE", data);
-                console.log(data);
+               // console.log(data);
             }).catch((err)=>{
-                console.log(err);
+               // console.log(err);
             })
         }
 

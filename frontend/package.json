@@ -50,6 +50,9 @@
   "eslintConfig": {
     "globals": {
       "kakao": false
+    },
+    "rules": {
+      "no-console": "off"
     }
   }
 }
