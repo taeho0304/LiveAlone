@@ -1,7 +1,6 @@
 package com.ssafy.api.service;
 
-import com.ssafy.api.request.UserRegisterPostReq;
-import com.ssafy.db.entity.User;
+import com.ssafy.db.entity.ResidenceInfo;
 import com.ssafy.db.entity.UserFavorite;
 import org.springframework.security.core.Authentication;
 
@@ -17,4 +16,6 @@ public interface UserFavoriteService {
 	List<UserFavorite> getFavoriteResidence(Authentication authentication);
 
 	void deleteFavoriteResidence(List<Long> userFavoriteIds, Authentication authentication);
+
+	UserFavorite checkDuplicated(Authentication authentication, Long residenceId);
 }
