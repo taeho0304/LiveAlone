@@ -1,16 +1,18 @@
 package com.ssafy.api.controller;
 
-import com.ssafy.api.Model.QnA;
+import com.ssafy.api.model.QnA;
 import com.ssafy.api.request.QuestionOptionPostReq;
 import com.ssafy.api.request.QuestionPatchReq;
+import com.ssafy.api.request.QuestionResultPostReq;
 import com.ssafy.api.response.QuestionOptionRes;
 import com.ssafy.api.response.QuestionRes;
 import com.ssafy.api.response.UserLoginPostRes;
 import com.ssafy.api.service.QuestionOptionService;
+import com.ssafy.api.service.QuestionResultService;
 import com.ssafy.api.service.QuestionService;
+import com.ssafy.api.service.UserService;
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.Question;
-import com.ssafy.db.entity.QuestionOption;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +28,10 @@ import java.util.NoSuchElementException;
  */
 @Api(value = "질문 API", tags = {"Question"})
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/questions")
 public class QuestionController {
+    @Autowired
+    UserService userService;
 
     @Autowired
     QuestionService questionService;
@@ -35,7 +39,10 @@ public class QuestionController {
     @Autowired
     QuestionOptionService questionOptionService;
 
-    @PostMapping("/questions")
+    @Autowired
+    QuestionResultService questionResultService;
+
+    @PostMapping()
     @ApiOperation(value = "질문 생성", notes = "사용자에게 제공할 질문을 생성 한다.")
     @ApiResponses({
             @ApiResponse(code = 201, message = "성공"),
@@ -43,7 +50,6 @@ public class QuestionController {
     })
     public ResponseEntity<? extends BaseResponseBody> createQuestion(
             @RequestBody @ApiParam(value = "질문 내용", required = true) String questionContent) {
-        System.out.println("121dsadasdsfdfsdfdsadasd");
         try {
             questionService.createQuestion(questionContent);
             return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Success"));
@@ -52,7 +58,7 @@ public class QuestionController {
         }
     }
 
-    @GetMapping("/questions")
+    @GetMapping()
     @ApiOperation(value = "질문 목록 조회", notes = "전체 질문 목록을 조회한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -62,12 +68,12 @@ public class QuestionController {
         try {
             List<Question> questions = questionService.getQuestion();
             return ResponseEntity.status(201).body(QuestionRes.of(questions));
-        } catch (NoSuchElementException e) {
+        } catch (Exception e) {
             return ResponseEntity.status(500).body(QuestionRes.of(500, "fail"));
         }
     }
 
-    @PatchMapping("questions")
+    @PatchMapping()
     @ApiOperation(value = "질문 목록 수정", notes = "회원 본인의 정보를 수정한다.")
     @ApiResponses({
             @ApiResponse(code = 201, message = "성공"),
@@ -83,7 +89,7 @@ public class QuestionController {
         }
     }
 
-    @DeleteMapping("questions")
+    @DeleteMapping()
     @ApiOperation(value = "질문 삭제", notes = "질문을 삭제한다.")
     @ApiResponses({
             @ApiResponse(code = 201, message = "삭제 성공"),
@@ -99,7 +105,7 @@ public class QuestionController {
         }
     }
 
-    @PostMapping("/questions/options")
+    @PostMapping("/options")
     @ApiOperation(value = "질문 옵션 생성", notes = "사용자에게 제공할 질문을 생성한다.")
     @ApiResponses({
             @ApiResponse(code = 201, message = "성공"),
@@ -110,12 +116,12 @@ public class QuestionController {
         try {
             questionOptionService.createQuestionOption(questionOptionInfo);
             return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Success"));
-        } catch (NoSuchElementException e) {
+        } catch (Exception e) {
             return ResponseEntity.status(500).body(BaseResponseBody.of(500, "fail"));
         }
     }
 
-    @GetMapping("/questions/options")
+    @GetMapping("/options")
     @ApiOperation(value = "질문 옵션 조회", notes = "사용자에게 제공할 질문을 조회한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -130,7 +136,7 @@ public class QuestionController {
         }
     }
 
-    @DeleteMapping("/questions/options")
+    @DeleteMapping("/options")
     @ApiOperation(value = "질문 옵션 삭제", notes = "사용자에게 제공할 질문을 삭제한다.")
     @ApiResponses({
             @ApiResponse(code = 201, message = "성공"),
@@ -142,6 +148,22 @@ public class QuestionController {
             questionOptionService.deleteQuestionOption(questionOptionId);
             return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Success"));
         } catch (NoSuchElementException e) {
+            return ResponseEntity.status(500).body(BaseResponseBody.of(500, "fail"));
+        }
+    }
+
+    @PostMapping("/results")
+    @ApiOperation(value = "질문 답변 생성", notes = "사용자 답변을 추가한다..")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "성공"),
+            @ApiResponse(code = 500, message = "실패")
+    })
+    public ResponseEntity<? extends BaseResponseBody> addQuestionResult(
+            @ApiIgnore Authentication authentication, @RequestBody @ApiParam(value = "답변 저장", required = true) QuestionResultPostReq questionResultPostReq) {
+        try {
+            questionResultService.createQuestionResult(authentication, questionResultPostReq);
+            return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Success"));
+        } catch (Exception e) {
             return ResponseEntity.status(500).body(BaseResponseBody.of(500, "fail"));
         }
     }

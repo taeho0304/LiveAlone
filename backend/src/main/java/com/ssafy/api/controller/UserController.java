@@ -57,6 +57,21 @@ public class UserController {
         }
     }
 
+    @GetMapping("/{userId}")
+    @ApiOperation(value = "아이디 중복 조회", notes = "회원 가입시 아이디 중복 조회를 한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 409, message = "아이디 중복")
+    })
+    public ResponseEntity<BaseResponseBody> checkIdDuplicate(@PathVariable String userId){
+        try {
+            userService.getUserByUserId(userId);
+            return ResponseEntity.status(409).body(BaseResponseBody.of(409, "이미 존재하는 사용자 ID입니다."));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Success"));
+        }
+    }
+
     @GetMapping("/me")
     @ApiOperation(value = "회원 본인 정보 조회", notes = "로그인한 회원 본인의 정보를 응답한다.")
     @ApiResponses({
