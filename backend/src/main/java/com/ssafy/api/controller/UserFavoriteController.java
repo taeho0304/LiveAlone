@@ -46,7 +46,7 @@ public class UserFavoriteController {
         }
     }
 
-    @GetMapping()
+    @GetMapping("/checkDuplicate")
     @ApiOperation(value = "찜한 관심 매물 조회", notes = "찜한 관심 매물을 조회한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),

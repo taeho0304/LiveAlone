@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @EqualsAndHashCode
-@IdClass(UserFavoritePK.class)
+@IdClass(ResidenceInfoPK.class)
 public class ResidenceInfo extends BaseEntity implements Serializable {
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
