@@ -12,17 +12,9 @@ import javax.persistence.*;
 @Getter
 @Setter
 public class QuestionOption extends BaseEntity{
-<<<<<<< HEAD
-
-=======
->>>>>>> c0ebc8e9ae59c1b82f017c027fb2a51f5d38c7a3
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Question question;
 
     String optionContent;
     int optionContentIndex;
-<<<<<<< HEAD
-
-=======
->>>>>>> c0ebc8e9ae59c1b82f017c027fb2a51f5d38c7a3
 }
