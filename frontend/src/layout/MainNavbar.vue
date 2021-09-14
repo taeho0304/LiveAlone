@@ -1,5 +1,7 @@
 <template>
   <div>
+  <OneSearchBar :visible="isOneRoom"/>
+  <ApartSearchBar :visible="isApart"/>
   <navbar
     position="fixed"
     type="info"
@@ -21,10 +23,18 @@
         </div>
       </el-popover>
     </template>
+  
     <template slot="navbar-menu">
-      <li class="nav-item" @click="clickSearch()">
-        <a class="nav-link"><p>상세검색</p></a>
-      </li>
+      <drop-down
+              tag="li"
+              :title="residenceType"
+              class="nav-item select"
+      >
+        <div class="nav-link"  v-for="(items, index) in getRoomType.residenceCategoryList" :key="index" @click="changeItem(items.categoryName, index)"> 
+          <i class="now-ui-icons education_paper"></i> {{ items.categoryName }}
+        </div>
+        
+      </drop-down>
       <li class="nav-item">
         <a class="nav-link">
           <router-link to="/login"> <i class="now-ui-icons media-1_button-power"></i><p>로그인</p></router-link>
@@ -35,43 +45,20 @@
           <router-link to="/signup"><p>회원가입</p></router-link>
         </a>
       </li>
-      <!-- <drop-down
-              tag="li"
-              title="Examples"
-              icon="now-ui-icons design_image"
-              class="nav-item"
-      >
-        <nav-link to="/landing">
-          <i class="now-ui-icons education_paper"></i> Landing
-        </nav-link>
-        <nav-link to="/login">
-          <i class="now-ui-icons users_circle-08"></i> Login
-        </nav-link>
-        <nav-link to="/profile">
-          <i class="now-ui-icons users_single-02"></i> Profile
-        </nav-link>
-      </drop-down> -->
-      <!-- <li class="nav-item">
-        <a
-          class="nav-link btn btn-neutral"
-          href="https://www.creative-tim.com/product/vue-now-ui-kit-pro"
-          target="_blank"
-        >
-          <i class="now-ui-icons arrows-1_share-66"></i>
-          <p>Upgrade to PRO</p>
-        </a>
-      </li> -->
+
     </template>
  
   </navbar>
-  <SearchBar :visible="isSearch"/>
+
   </div>
 </template>
 
 <script>
-import { /*DropDown*/ Navbar, } from '@/components';
+import { DropDown, Navbar, } from '@/components';
 import { Popover } from 'element-ui';
-import SearchBar from '../pages/SearchBar.vue';
+import OneSearchBar from '../pages/SearchBar/OneSearchBar.vue';
+import ApartSearchBar from '../pages/SearchBar/ApartSearchBar.vue';
+import { mapGetters } from 'vuex';
 export default {
   name: "main-navbar",
   props: {
@@ -79,20 +66,47 @@ export default {
     colorOnScroll: Number,
   },
   components: {
-    SearchBar,
+
+    DropDown,
+    OneSearchBar,
+    ApartSearchBar,
     Navbar,
     [Popover.name]: Popover
   },
   data(){
     return{
-      isSearch:false,
+      isOneRoom:false,
+      isApart:false,
+      residenceType:"방 종류",
+      residenceIndex:0,
     }
   },
   methods:{
-    clickSearch(){
-      this.isSearch = !this.isSearch;
-      console.log(this.isSearch);
-    }
+    clickSearch(index){
+      if(index==0){
+        console.log("원룸");
+        this.isOneRoom = true;
+        this.isApart = false;
+        console.log(this.isOneRoom);
+        return;
+      }else if(index== 1){
+        console.log("오피스텔");
+        this.isOneRoom = false;
+        this.isApart = true;
+        console.log(this.isOneRoom);
+        return;
+      }
+    },
+    changeItem(a, index) {
+      this.residenceType = a;
+      this.residenceIndex = index;
+      this.clickSearch(this.residenceIndex);
+      return;
+    },
+
+  },
+  computed :{
+    ...mapGetters('search',['getRoomType',]),
   },
 };
 </script>

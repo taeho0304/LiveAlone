@@ -25,6 +25,7 @@
         @include opacity(1);
         visibility: visible;
         @include transform-translate-y-dropdown(0px);
+        width: 250px;
     }
 
     .dropdown-item,
