@@ -18,10 +18,10 @@ import java.util.NoSuchElementException;
 /**
  * 방 검색 API 요청 처리를 위한 컨트롤러 정의.
  */
-@Api(value = "방 검색 API", tags = {"search"})
+@Api(value = "방 검색 API", tags = {"Search"})
 @RestController
 @RequestMapping("/api/v1/search")
-public class RoomSearchController {
+public class ResidenceSearchController {
 
     @Autowired
     RoomSearchService roomSearchService;

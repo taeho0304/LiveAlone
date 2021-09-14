@@ -1,6 +1,7 @@
 package com.ssafy.db.entity;
 
 import com.ssafy.db.idmodel.ResidenceInfoPK;
+import com.ssafy.db.idmodel.UserFavoritePK;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +16,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @EqualsAndHashCode
-@IdClass(ResidenceInfoPK.class)
+@IdClass(UserFavoritePK.class)
 public class ResidenceInfo extends BaseEntity implements Serializable {
     @Id
     @ManyToOne(fetch = FetchType.LAZY)

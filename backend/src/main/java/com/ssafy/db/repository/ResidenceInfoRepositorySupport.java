@@ -49,4 +49,9 @@ public class ResidenceInfoRepositorySupport {
         return residences.fetch();
     }
 
+    public ResidenceInfo findById(Long residenceId) {
+        ResidenceInfo residenceInfo = jpaQueryFactory.select(qresidenceInfo).from(qresidenceInfo)
+                .where(qresidenceInfo.id.eq(residenceId)).fetchOne();
+        return residenceInfo;
+    }
 }
