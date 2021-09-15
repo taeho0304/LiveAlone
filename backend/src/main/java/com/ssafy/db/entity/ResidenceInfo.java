@@ -43,6 +43,8 @@ public class ResidenceInfo extends BaseEntity implements Serializable {
     String lat;
     String lon;
     int cost;
+    int wolseCost;
+    int jeonseCost;
     int manageCost;
     int area;
     String content;

@@ -24,10 +24,16 @@ public class ResidenceInfoRepositorySupport {
         JPAQuery<ResidenceInfo> residences = jpaQueryFactory.select(qresidenceInfo).from(qresidenceInfo);
 
         BooleanBuilder builder = new BooleanBuilder();
-        if (residenceGetReq.getResidenceType() != null) builder.and(qresidenceInfo.residenceType.type.eq(residenceGetReq.getResidenceType()));
-        if (residenceGetReq.getResidenceCategory() != null) builder.and(qresidenceInfo.residenceCategory.categoryName.eq(residenceGetReq.getResidenceCategory()));
+        for (int i=0; i<residenceGetReq.getResidenceType().size(); i++)
+            builder.and(qresidenceInfo.residenceType.type.eq(residenceGetReq.getResidenceType().get(i)));
+        for (int i=0; i<residenceGetReq.getResidenceCategory().size(); i++)
+            builder.and(qresidenceInfo.residenceCategory.categoryName.eq(residenceGetReq.getResidenceCategory().get(i)));
         if (residenceGetReq.getStartPrice() > 0) builder.and(qresidenceInfo.cost.goe(residenceGetReq.getStartPrice()));
         if (residenceGetReq.getEndPrice() > 0) builder.and(qresidenceInfo.cost.loe(residenceGetReq.getEndPrice()));
+        if (residenceGetReq.getStartJPrice() > 0) builder.and(qresidenceInfo.jeonseCost.goe(residenceGetReq.getStartPrice()));
+        if (residenceGetReq.getEndJPrice() > 0) builder.and(qresidenceInfo.jeonseCost.loe(residenceGetReq.getEndPrice()));
+        if (residenceGetReq.getStartWPrice() > 0) builder.and(qresidenceInfo.wolseCost.goe(residenceGetReq.getStartPrice()));
+        if (residenceGetReq.getEndWPrice() > 0) builder.and(qresidenceInfo.wolseCost.loe(residenceGetReq.getEndPrice()));
         if (residenceGetReq.getStartManagePrice() > 0) builder.and(qresidenceInfo.manageCost.goe(residenceGetReq.getStartManagePrice()));
         if (residenceGetReq.getEndManagePrice() > 0) builder.and(qresidenceInfo.manageCost.loe(residenceGetReq.getEndManagePrice()));
         if (residenceGetReq.getStartArea() > 0) builder.and(qresidenceInfo.area.goe(residenceGetReq.getStartArea()));
