@@ -17,20 +17,25 @@
 </template>
 <script>
 export default {
-  name: 'n-checkbox',
+  name: "n-checkbox",
   model: {
-    prop: 'checked'
+    prop: "checked",
   },
   props: {
+    value: String,
     checked: [Array, Boolean],
     disabled: Boolean,
     inline: Boolean,
-    hasError: Boolean
+    hasError: Boolean,
   },
   data() {
     return {
-      cbId: '',
-      touched: false
+      cbId: "",
+      touched: false,
+      data: {
+        num: "",
+        type: false,
+      },
     };
   },
   computed: {
@@ -42,8 +47,9 @@ export default {
         if (!this.touched) {
           this.touched = true;
         }
-        this.$emit('input', check);
-      }
+
+        this.$emit("input", check, this.value);
+      },
     },
     inlineClass() {
       if (this.inline) {
@@ -51,12 +57,10 @@ export default {
       }
 
       return ``;
-    }
+    },
   },
   created() {
-    this.cbId = Math.random()
-      .toString(16)
-      .slice(2);
-  }
+    this.cbId = Math.random().toString(16).slice(2);
+  },
 };
 </script>
