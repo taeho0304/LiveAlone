@@ -1,93 +1,88 @@
 <template>
   <div>
-    <div class="page-header clear-filter" filter-color="orange">
-      <parallax
-        class="page-header-image"
-        style="background-image:url('img/bg5.jpg')"
-      >
-      </parallax>
-      <div class="container">
-        <div class="photo-container">
-          <img src="img/ryan.jpg" alt="" />
-        </div>
-        <h3 class="title">Ryan Scheinder</h3>
-        <p class="category">Photographer</p>
-        <div class="content">
-          <div class="social-description">
-            <h2>26</h2>
-            <p>Comments</p>
-          </div>
-          <div class="social-description">
-            <h2>26</h2>
-            <p>Comments</p>
-          </div>
-          <div class="social-description">
-            <h2>48</h2>
-            <p>Bookmarks</p>
-          </div>
-        </div>
-      </div>
-    </div>
+    
     <div class="section">
-      <div class="container">
-        <div class="button-container">
-          <a href="#button" class="btn btn-primary btn-round btn-lg">Follow</a>
-          <a
-            href="#button"
-            class="btn btn-default btn-round btn-lg btn-icon"
-            rel="tooltip"
-            title="Follow me on Twitter"
-          >
-            <i class="fab fa-twitter"></i>
-          </a>
-          <a
-            href="#button"
-            class="btn btn-default btn-round btn-lg btn-icon"
-            rel="tooltip"
-            title="Follow me on Instagram"
-          >
-            <i class="fab fa-instagram"></i>
-          </a>
-        </div>
-        <h3 class="title">About me</h3>
-        <h5 class="description">
-          An artist of considerable range, Ryan — the name taken by
-          Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and
-          records all of his own music, giving it a warm, intimate feel with a
-          solid groove structure. An artist of considerable range.
-        </h5>
-        <div class="row">
-          <div class="col-md-6 ml-auto mr-auto">
-            <h4 class="title text-center">My Portfolio</h4>
-          </div>
-          <tabs
-            pills
-            class="nav-align-center"
-            tab-content-classes="gallery"
-            tab-nav-classes="nav-pills-just-icons"
-            type="primary"
-          >
-            <tab-pane title="Profile">
-              <i slot="label" class="now-ui-icons design_image"></i>
-
-              <div class="col-md-10 ml-auto mr-auto">
+      <div class="container" >
+        <h3 class="title" style="margin-top:1px; padding-top:0px;">My Page</h3>
+      
+        <div class="card row">
+          <tabs type="primary" tabContentClasses="tab-subcategories"
+        square centered class="nav-align-center">
+            <tab-pane>
+              <span slot="label">
+                <i class="now-ui-icons business_badge"></i> Profile
+              </span>
+              <div v-if="getUserInfo" class="col-md-10 ml-auto mr-auto" style="margin-top:0px">
                 <div class="row collections">
-                  <div class="col-md-6">
-                    <img src="img/bg6.jpg" class="img-raised" />
-                    <img src="img/bg11.jpg" alt="" class="img-raised" />
+                  <div class="col-md-1">
                   </div>
-                  <div class="col-md-6">
-                    <img src="img/bg7.jpg" alt="" class="img-raised" />
-                    <img src="img/bg8.jpg" alt="" class="img-raised" />
+                  <div class="col-md-10">
+                    <fg-input
+                        class="no-border input-lg"
+                        v-bind:disabled="!isClick"
+                        type="text"
+                        addon-left-icon="now-ui-icons users_circle-08"
+                        placeholder="이름"
+                        v-model="getUserInfo.user.userName" name="userName"
+                        
+                      >
+                    </fg-input>
+                    <fg-input
+                        class="no-border input-lg"
+                        v-bind:disabled="!isClick"
+                        type="text"
+                        addon-left-icon="now-ui-icons users_circle-08"
+                        placeholder="아이디"
+                        v-model="getUserInfo.user.userId" name="userId"
+                      >
+                    </fg-input>
+                    <fg-input
+                        class="no-border input-lg"
+                        v-bind:disabled="!isClick"
+                        type="text"
+                        addon-left-icon="now-ui-icons users_circle-08"
+                        placeholder="이메일"
+                        v-model="getUserInfo.user.userEmail" name="email"
+                      >
+                    </fg-input>
+                    <fg-input
+                        class="no-border input-lg"
+                        v-bind:disabled="!isClick"
+                        type="text"
+                        addon-left-icon="now-ui-icons users_circle-08"
+                        v-model="getUserInfo.user.userPhone" name="phone"
+                      >
+                    </fg-input>
                   </div>
+                  <div class="col-md-1">
+                  </div>
+                  <div class="col-md-3">
+                  </div>
+                  <div class="col-md-3">
+                      <div style="margin-top:-30px;" class="card-footer text-center">
+                        <a v-if="!isClick" @click="click()" class="btn btn-primary btn-round btn-lg btn-block">수정</a>
+                        <a v-if="isClick" @click="clickModify()" class="btn btn-primary btn-round btn-lg btn-block">확인</a>
+                      </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div style="margin-top:-30px;" class="card-footer text-center">
+                        <a class="btn btn-primary btn-round btn-lg btn-block">탈퇴</a>
+                      </div>
+                  </div>
+                  <div class="col-md-3">
+                  </div>
+
                 </div>
               </div>
+              
             </tab-pane>
 
-            <tab-pane title="Home">
-              <i slot="label" class="now-ui-icons location_world"></i>
+            <tab-pane>
+              <span slot="label">
+                <i class="now-ui-icons shopping_shop"></i> Room
+              </span>
 
-              <div class="col-md-10 ml-auto mr-auto">
+              <!-- <div class="col-md-10 ml-auto mr-auto">
                 <div class="row collections">
                   <div class="col-md-6">
                     <img src="img/bg1.jpg" alt="" class="img-raised" />
@@ -98,41 +93,277 @@
                     <img src="img/bg7.jpg" alt="" class="img-raised" />
                   </div>
                 </div>
-              </div>
+              </div> -->
+              <template>
+                <VueSlickCarousel v-bind="settings" style="padding: 20px 30px 20px 30px;">
+                  <div class="card" style="width: 20rem;">
+                    <img class="card-img-top" src="img/main.jpg" alt="Card image cap">
+                    <div class="card-body">
+                      <h4 class="card-title">Card title</h4>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                  </div>
+                  <div class="card" style="width: 20rem;">
+                    <img class="card-img-top" src="img/main.jpg" alt="Card image cap">
+                    <div class="card-body">
+                      <h4 class="card-title">Card title</h4>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                  </div>
+                  <div class="card" style="width: 20rem;">
+                    <img class="card-img-top" src="img/main.jpg" alt="Card image cap">
+                    <div class="card-body">
+                      <h4 class="card-title">Card title</h4>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                  </div>
+                  <div class="card" style="width: 20rem;">
+                    <img class="card-img-top" src="img/main.jpg" alt="Card image cap">
+                    <div class="card-body">
+                      <h4 class="card-title">Card title</h4>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                  </div>
+                  <div class="card" style="width: 20rem;">
+                    <img class="card-img-top" src="img/main.jpg" alt="Card image cap">
+                    <div class="card-body">
+                      <h4 class="card-title">Card title</h4>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                  </div>
+                  
+                  <div class="card" style="width: 20rem;">
+                    <img class="card-img-top" src="img/main.jpg" alt="Card image cap">
+                    <div class="card-body">
+                      <h4 class="card-title">Card title</h4>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                  </div>
+                  <div class="card" style="width: 20rem;">
+                    <img class="card-img-top" src="img/main.jpg" alt="Card image cap">
+                    <div class="card-body">
+                      <h4 class="card-title">Card title</h4>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                  </div>
+                  <div class="card" style="width: 20rem;">
+                    <img class="card-img-top" src="img/main.jpg" alt="Card image cap">
+                    <div class="card-body">
+                      <h4 class="card-title">Card title</h4>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                  </div>
+                  <div class="card" style="width: 20rem;">
+                    <img class="card-img-top" src="img/main.jpg" alt="Card image cap">
+                    <div class="card-body">
+                      <h4 class="card-title">Card title</h4>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                  </div>
+                  <div class="card" style="width: 20rem;">
+                    <img class="card-img-top" src="img/main.jpg" alt="Card image cap">
+                    <div class="card-body">
+                      <h4 class="card-title">Card title</h4>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                  </div><div class="card" style="width: 20rem;">
+                    <img class="card-img-top" src="img/main.jpg" alt="Card image cap">
+                    <div class="card-body">
+                      <h4 class="card-title">Card title</h4>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                  </div>
+                  <div class="card" style="width: 20rem;">
+                    <img class="card-img-top" src="img/main.jpg" alt="Card image cap">
+                    <div class="card-body">
+                      <h4 class="card-title">Card title</h4>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                  </div>
+                  <div class="card" style="width: 20rem;">
+                    <img class="card-img-top" src="img/main.jpg" alt="Card image cap">
+                    <div class="card-body">
+                      <h4 class="card-title">Card title</h4>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                  </div>
+                </VueSlickCarousel>
+              </template>
+              
             </tab-pane>
 
-            <tab-pane title="Messages">
-              <i slot="label" class="now-ui-icons sport_user-run"></i>
-
+            <tab-pane>
+              <span slot="label">
+                <i class="now-ui-icons design_bullet-list-67"></i> Filter
+              </span>
               <div class="col-md-10 ml-auto mr-auto">
                 <div class="row collections">
-                  <div class="col-md-6">
-                    <img src="img/bg3.jpg" alt="" class="img-raised" />
-                    <img src="img/bg8.jpg" alt="" class="img-raised" />
+                  <div class="col-md-2">
+                    <span class="badge badge-neutral">방 유형</span>
                   </div>
-                  <div class="col-md-6">
-                    <img src="img/bg7.jpg" alt="" class="img-raised" />
-                    <img src="img/bg6.jpg" class="img-raised" />
+                  <div class="col-md-2">
+                    <span class="badge badge-neutral">거래 유형</span>
+                  </div>
+                  <div class="col-md-3">
+                    <span class="badge badge-neutral">가격</span>
+                  </div>
+                  <div class="col-md-5">
+                    <span class="badge badge-neutral">추가필터</span>
                   </div>
                 </div>
               </div>
+
+              <div class="col-md-10 ml-auto mr-auto">
+                <div class="row collections">
+                  <div class="col-md-2">
+                    <span class="badge badge-primary">원룸</span>
+                    <span class="badge badge-info">투,쓰리룸</span>
+                  </div>
+                  <div class="col-md-2">
+                    <span class="badge badge-success">전세</span>
+                    <span class="badge badge-warning">매매</span>
+                  </div>
+                  <div class="col-md-3">
+                    <span class="badge badge-success"> 0~1억5000만원</span>
+                    <span class="badge badge-warning"> 1억~2억5000만원</span>
+                  </div>
+                  <div class="col-md-3">
+                    <span class="badge badge-default">없음</span>
+                  </div>
+                  <div class="col-md-2">
+                      <span @click="remove()" class="badge badge-danger"><i class="now-ui-icons ui-1_simple-remove"></i></span>
+                  </div>
+                </div>
+              </div>
+             
+             
+             
+            
+            
             </tab-pane>
           </tabs>
+
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { Tabs, TabPane } from '@/components';
+import { Tabs, TabPane, FormGroupInput } from '@/components';
+import {mapActions, mapState, mapGetters} from 'vuex';
+import VueSlickCarousel from 'vue-slick-carousel'
+import 'vue-slick-carousel/dist/vue-slick-carousel.css'
+// optional style for arrows & dots
+import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
 
 export default {
   name: 'profile',
   bodyClass: 'profile-page',
   components: {
     Tabs,
-    TabPane
-  }
+    TabPane,
+    [FormGroupInput.name]: FormGroupInput,
+    VueSlickCarousel,
+    
+  },
+  data:function(){
+    return{
+      items: ["id", "name", "LastName"],
+            total: 100,
+            columns: [""],
+            actions: [""],
+      settings:{
+        "dots": true,
+        "infinite": true,
+        "initialSlide": 2,
+        "speed": 500,
+        "slidesToShow": 4,
+        "slidesToScroll": 1,
+        "swipeToSlide": true
+      },
+      isClick:false,
+      user: {
+        userName: "",
+        userId: "",
+        userPass: "",
+        userPhone: "",
+        userEmail: "",
+      },
+      
+    }
+  },
+    computed :{
+    ...mapGetters('user',['getUserInfo']),
+  },
+  methods:{
+    ...mapActions('user',['requestUserInfo', 'requestDelete', 'requestModify']),
+    click(){
+      this.isClick=!this.isClick;
+      console.log(this.isClick);
+    },
+    clickModify(){
+      console.log(this.isClick);
+      let modifyed={
+        userName:this.getUserInfo.user.userName,
+        userId:this.getUserInfo.user.userId,
+        userPass:this.getUserInfo.user.userPass,
+        userEmail:this.getUserInfo.user.userEmail,
+        userPhone:this.getUserInfo.user.userPhone,
+      }
+      this.requestModify(modifyed);
+      this.click();
+    },
+    init(){
+      this.requestUserInfo();
+    },
+    remove(){
+      alert("삭제완료");
+    }
+  },
+  created(){
+    this.init();
+    console.log(this.getUserInfo.user);
+  },
+  mounted(){
+    this.init();
+  },
 };
 </script>
-<style></style>
+<style>
+.profile-page .gallery {
+    margin-top: 5px;
+}
+.slick-prev:before, .slick-next:before {
+    font-family: 'slick';
+    font-size: 20px;
+    line-height: 1;
+    opacity: 0.75;
+    color: coral;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.slick-dots {
+    position: absolute;
+    bottom: 0px;
+    display: block;
+    width: 100%;
+    padding: 0;
+    padding-right: 50px;
+    margin: 0;
+    list-style: none;
+    text-align: center;
+}
+</style>

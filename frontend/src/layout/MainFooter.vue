@@ -3,6 +3,7 @@
     class="footer"
     :class="{ [`footer-${type}`]: type }"
     :data-background-color="backgroundColor"
+    
   >
     <div class="container">
       <nav>
@@ -53,4 +54,9 @@ export default {
   }
 };
 </script>
-<style></style>
+<style>
+.footer {
+    padding: 7px 0;
+}
+
+</style>

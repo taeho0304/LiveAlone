@@ -4,7 +4,7 @@ import startPage from '../view/startPage.vue';
 import searchPage from '../view/searchPage.vue';
 import Landing from '../pages/Landing.vue';
 import Login from '../view/loginPage.vue';
-import Profile from '../pages/Profile.vue';
+import Profile from '../view/profilePage.vue';
 import MainNavbar from '../layout/MainNavbar.vue';
 import MainFooter from '../layout/MainFooter.vue';
 import store from '../store/index';
@@ -47,7 +47,7 @@ export default new Router({
     {
       path: '/profile',
       name: 'profile',
-      components: { default: Profile, header: MainNavbar, footer: MainFooter },
+      component: Profile,
       props: {
         header: { colorOnScroll: 400 },
         footer: { backgroundColor: 'black' }

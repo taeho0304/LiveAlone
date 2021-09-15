@@ -1,7 +1,8 @@
 <template>
   <div>
-  <OneSearchBar :visible="isOneRoom"/>
-  <ApartSearchBar :visible="isApart"/>
+    <OneSearchBar :visible="isOneRoom"/>
+    <ApartSearchBar :visible="isApart"/>
+
   <navbar
     position="fixed"
     type="info"
@@ -23,7 +24,6 @@
         </div>
       </el-popover>
     </template>
-  
     <template slot="navbar-menu">
       <drop-down
               tag="li"
@@ -35,19 +35,31 @@
         </div>
         
       </drop-down>
-      <li class="nav-item">
-        <a class="nav-link">
-          <router-link to="/login"> <i class="now-ui-icons media-1_button-power"></i><p>로그인</p></router-link>
-        </a>
-      </li>
-      <li class="nav-item">
-         <a class="nav-link">
-          <router-link to="/signup"><p>회원가입</p></router-link>
-        </a>
-      </li>
-
+      <template v-if="!isLogin">
+        <li class="nav-item">
+            <a class="nav-link">
+              <router-link to="/login"> <i class="now-ui-icons media-1_button-power"></i><p>로그인</p></router-link>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link">
+              <router-link to="/signup"><p>회원가입</p></router-link>
+            </a>
+          </li>
+      </template>
+      <template v-if="isLogin">
+        <li class="nav-item">
+          <a class="nav-link">
+            <span @click="clickLogout()"><p>로그아웃</p></span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link">
+            <router-link to="/profile"><i class="now-ui-icons users_circle-08"></i><p>마이페이지</p></router-link>
+          </a>
+        </li>
+      </template>
     </template>
- 
   </navbar>
 
   </div>
@@ -75,6 +87,7 @@ export default {
   },
   data(){
     return{
+      isLogin:false,
       isOneRoom:false,
       isApart:false,
       residenceType:"방 종류",
@@ -103,13 +116,33 @@ export default {
       this.clickSearch(this.residenceIndex);
       return;
     },
+    clickLogout() {
+      this.isLogin=false;
+      localStorage.clear();
+    },
 
+
+  },
+  mounted(){
+    if(localStorage.getItem("accessToken")!=null){
+      this.isLogin=true;
+    }else{
+      this.isLogin=false;
+    }
+  },
+  create(){
+    if(localStorage.getItem("accessToken")!=null){
+        this.isLogin=true;
+    }else{
+        this.isLogin=false;
+    }
   },
   computed :{
     ...mapGetters('search',['getRoomType',]),
   },
 };
 </script>
+
 
 <style scoped>
 .bg-info {
