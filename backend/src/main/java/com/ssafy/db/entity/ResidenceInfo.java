@@ -34,6 +34,7 @@ public class ResidenceInfo extends BaseEntity implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private ResidenceCategory residenceCategory;
 
+
     @Id
     @OneToOne
 //    @JoinColumn(name = "id", unique = true, nullable = false )
@@ -49,6 +50,4 @@ public class ResidenceInfo extends BaseEntity implements Serializable {
     int area;
     String content;
     String imgurl;
-    String dong;
-    String gu;
 }

@@ -43,4 +43,11 @@ public class ResidenceGetReq {
 	String sortType;
 //	@ApiModelProperty(name="정렬 방식", example="asc")
 	String sortOrder;
+//	@ApiModelProperty(name="정렬 방식", example="asc")
+	String si;
+//	@ApiModelProperty(name="정렬 방식", example="asc")
+	String dong;
+
+	//	@ApiModelProperty(name="정렬 방식", example="asc")
+	String gugun;
 }
