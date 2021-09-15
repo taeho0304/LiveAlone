@@ -1,7 +1,8 @@
 <template>
   <div>
-  <OneSearchBar :visible="isOneRoom"/>
-  <ApartSearchBar :visible="isApart"/>
+    <OneSearchBar :visible="isOneRoom"/>
+    <ApartSearchBar :visible="isApart"/>
+
   <navbar
     position="fixed"
     type="info"
@@ -23,7 +24,6 @@
         </div>
       </el-popover>
     </template>
-  
     <template slot="navbar-menu">
       <drop-down
               tag="li"
@@ -37,15 +37,15 @@
       </drop-down>
       <template v-if="!isLogin">
         <li class="nav-item">
-          <a class="nav-link">
-            <router-link to="/login"> <i class="now-ui-icons media-1_button-power"></i><p>로그인</p></router-link>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link">
-            <router-link to="/signup"><p>회원가입</p></router-link>
-          </a>
-        </li>
+            <a class="nav-link">
+              <router-link to="/login"> <i class="now-ui-icons media-1_button-power"></i><p>로그인</p></router-link>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link">
+              <router-link to="/signup"><p>회원가입</p></router-link>
+            </a>
+          </li>
       </template>
       <template v-if="isLogin">
         <li class="nav-item">
@@ -59,9 +59,7 @@
           </a>
         </li>
       </template>
-
     </template>
- 
   </navbar>
 
   </div>
@@ -123,10 +121,11 @@ export default {
       localStorage.clear();
     },
 
+
   },
   mounted(){
     if(localStorage.getItem("accessToken")!=null){
-        this.isLogin=true;
+      this.isLogin=true;
     }else{
       this.isLogin=false;
     }
@@ -135,7 +134,7 @@ export default {
     if(localStorage.getItem("accessToken")!=null){
         this.isLogin=true;
     }else{
-      this.isLogin=false;
+        this.isLogin=false;
     }
   },
   computed :{
@@ -143,6 +142,7 @@ export default {
   },
 };
 </script>
+
 
 <style scoped>
 .bg-info {
