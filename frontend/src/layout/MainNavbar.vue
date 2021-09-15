@@ -87,7 +87,7 @@
 
         <template v-if="!isLogin">
           <li class="nav-item">
-            <a class="nav-link">
+            <a class="nav-link mt-2">
               <router-link to="/login">
                 <i class="now-ui-icons media-1_button-power"></i>
                 <p>로그인</p></router-link
@@ -95,7 +95,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link">
+            <a class="nav-link mt-2">
               <router-link to="/signup"><p>회원가입</p></router-link>
             </a>
           </li>
@@ -103,12 +103,12 @@
 
         <template v-if="isLogin">
           <li class="nav-item">
-            <a class="nav-link">
+            <a class="nav-link mt-2">
               <span @click="clickLogout()"><p>로그아웃</p></span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link">
+            <a class="nav-link mt-2">
               <router-link to="/profile"
                 ><i class="now-ui-icons users_circle-08"></i>
                 <p>마이페이지</p></router-link
