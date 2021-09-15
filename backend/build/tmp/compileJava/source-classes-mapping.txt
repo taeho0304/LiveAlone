@@ -1,22 +1,13 @@
-<<<<<<< HEAD
-=======
 com/ssafy/api/controller/UserFavoriteController.java
  com.ssafy.api.controller.UserFavoriteController
 com/ssafy/db/repository/UserFavoriteRepositorySupport.java
  com.ssafy.db.repository.UserFavoriteRepositorySupport
 com/ssafy/db/repository/ResidenceCategoryRepository.java
  com.ssafy.db.repository.ResidenceCategoryRepository
->>>>>>> c0ebc8e9ae59c1b82f017c027fb2a51f5d38c7a3
 com/ssafy/api/service/QuestionServiceImpl.java
  com.ssafy.api.service.QuestionServiceImpl
 com/ssafy/db/entity/QuestionOption.java
  com.ssafy.db.entity.QuestionOption
-<<<<<<< HEAD
-com/ssafy/config/SecurityConfig.java
- com.ssafy.config.SecurityConfig
-com/ssafy/db/repository/QuestionOptionRepositorySupport.java
- com.ssafy.db.repository.QuestionOptionRepositorySupport
-=======
 com/ssafy/api/service/UserFavoriteServiceImpl.java
  com.ssafy.api.service.UserFavoriteServiceImpl
 com/ssafy/config/SecurityConfig.java
@@ -27,7 +18,6 @@ com/ssafy/db/repository/QuestionOptionRepositorySupport.java
  com.ssafy.db.repository.QuestionOptionRepositorySupport
 com/ssafy/common/auth/UserDetail.java
  com.ssafy.common.auth.UserDetail
->>>>>>> c0ebc8e9ae59c1b82f017c027fb2a51f5d38c7a3
 com/ssafy/api/controller/QuestionController.java
  com.ssafy.api.controller.QuestionController
 com/ssafy/api/request/QuestionPatchReq.java
@@ -50,10 +40,6 @@ com/ssafy/db/entity/QuestionResult.java
  com.ssafy.db.entity.QuestionResult
 com/ssafy/db/repository/QuestionOptionRepository.java
  com.ssafy.db.repository.QuestionOptionRepository
-<<<<<<< HEAD
-com/ssafy/db/entity/ResidenceWeight.java
- com.ssafy.db.entity.ResidenceWeight
-=======
 com/ssafy/common/auth/UserDetailService.java
  com.ssafy.common.auth.UserDetailService
 com/ssafy/api/controller/ResidenceSearchController.java
@@ -64,31 +50,20 @@ com/ssafy/api/request/ResidenceGetReq.java
  com.ssafy.api.request.ResidenceGetReq
 com/ssafy/api/service/QuestionResultServiceImpl.java
  com.ssafy.api.service.QuestionResultServiceImpl
->>>>>>> c0ebc8e9ae59c1b82f017c027fb2a51f5d38c7a3
 com/ssafy/db/entity/User.java
  com.ssafy.db.entity.User
 com/ssafy/api/response/QuestionRes.java
  com.ssafy.api.response.QuestionRes
-<<<<<<< HEAD
-=======
 com/ssafy/api/model/QnA.java
  com.ssafy.api.model.QnA
 com/ssafy/api/request/QuestionResultPostReq.java
  com.ssafy.api.request.QuestionResultPostReq
->>>>>>> c0ebc8e9ae59c1b82f017c027fb2a51f5d38c7a3
 com/ssafy/db/entity/ResidenceDetail.java
  com.ssafy.db.entity.ResidenceDetail
 com/ssafy/db/entity/Question.java
  com.ssafy.db.entity.Question
 com/ssafy/api/service/QuestionOptionService.java
  com.ssafy.api.service.QuestionOptionService
-<<<<<<< HEAD
-com/ssafy/common/auth/SsafyUserDetailService.java
- com.ssafy.common.auth.SsafyUserDetailService
-com/ssafy/common/exception/handler/NotFoundHandler.java
- com.ssafy.common.exception.handler.NotFoundHandler
-=======
->>>>>>> c0ebc8e9ae59c1b82f017c027fb2a51f5d38c7a3
 com/ssafy/api/response/QuestionOptionRes.java
  com.ssafy.api.response.QuestionOptionRes
 com/ssafy/common/util/JwtTokenUtil.java
@@ -101,31 +76,14 @@ com/ssafy/db/idmodel/ResidenceInfoPK.java
  com.ssafy.db.idmodel.ResidenceInfoPK
 com/ssafy/common/util/ResponseBodyWriteUtil.java
  com.ssafy.common.util.ResponseBodyWriteUtil
-<<<<<<< HEAD
-=======
 com/ssafy/db/repository/QuestionResultRepositorySupport.java
  com.ssafy.db.repository.QuestionResultRepositorySupport
->>>>>>> c0ebc8e9ae59c1b82f017c027fb2a51f5d38c7a3
 com/ssafy/db/repository/UserRepositorySupport.java
  com.ssafy.db.repository.UserRepositorySupport
 com/ssafy/config/JpaConfig.java
  com.ssafy.config.JpaConfig
 com/ssafy/db/entity/ResidenceInfo.java
  com.ssafy.db.entity.ResidenceInfo
-<<<<<<< HEAD
-com/ssafy/api/Model/QnA.java
- com.ssafy.api.Model.QnA
-com/ssafy/config/SwaggerConfig.java
- com.ssafy.config.SwaggerConfig
-com/ssafy/api/service/UserService.java
- com.ssafy.api.service.UserService
-com/ssafy/api/service/UserServiceImpl.java
- com.ssafy.api.service.UserServiceImpl
-com/ssafy/common/auth/SsafyUserDetails.java
- com.ssafy.common.auth.SsafyUserDetails
-com/ssafy/api/request/UserRegisterPostReq.java
- com.ssafy.api.request.UserRegisterPostReq
-=======
 com/ssafy/db/entity/BargainType.java
  com.ssafy.db.entity.BargainType
 com/ssafy/db/idmodel/QuestionResultPK.java
@@ -154,31 +112,22 @@ com/ssafy/api/response/ResidenceTypeRes.java
  com.ssafy.api.response.ResidenceTypeRes
 com/ssafy/api/service/UserFavoriteService.java
  com.ssafy.api.service.UserFavoriteService
->>>>>>> c0ebc8e9ae59c1b82f017c027fb2a51f5d38c7a3
 com/ssafy/db/repository/UserRepository.java
  com.ssafy.db.repository.UserRepository
 com/ssafy/db/entity/ResidenceCategory.java
  com.ssafy.db.entity.ResidenceCategory
-<<<<<<< HEAD
-=======
 com/ssafy/db/repository/QuestionResultRepository.java
  com.ssafy.db.repository.QuestionResultRepository
->>>>>>> c0ebc8e9ae59c1b82f017c027fb2a51f5d38c7a3
 com/ssafy/db/entity/Userfilter.java
  com.ssafy.db.entity.Userfilter
 com/ssafy/common/model/response/BaseResponseBody.java
  com.ssafy.common.model.response.BaseResponseBody
-<<<<<<< HEAD
-com/ssafy/db/entity/UserFavorite.java
- com.ssafy.db.entity.UserFavorite
-=======
 com/ssafy/api/service/RoomSearchServiceImpl.java
  com.ssafy.api.service.RoomSearchServiceImpl
 com/ssafy/db/entity/UserFavorite.java
  com.ssafy.db.entity.UserFavorite
 com/ssafy/api/response/ResidenceRes.java
  com.ssafy.api.response.ResidenceRes
->>>>>>> c0ebc8e9ae59c1b82f017c027fb2a51f5d38c7a3
 com/ssafy/api/request/QuestionOptionPostReq.java
  com.ssafy.api.request.QuestionOptionPostReq
 com/ssafy/common/auth/JwtAuthenticationFilter.java
@@ -191,11 +140,8 @@ com/ssafy/config/WebMvcConfig.java
  com.ssafy.config.WebMvcConfig
 com/ssafy/db/entity/ResidenceType.java
  com.ssafy.db.entity.ResidenceType
-<<<<<<< HEAD
-=======
 com/ssafy/db/entity/CommercialCategory.java
  com.ssafy.db.entity.CommercialCategory
->>>>>>> c0ebc8e9ae59c1b82f017c027fb2a51f5d38c7a3
 com/ssafy/api/service/QuestionOptionServiceImpl.java
  com.ssafy.api.service.QuestionOptionServiceImpl
 com/ssafy/api/controller/UserController.java
