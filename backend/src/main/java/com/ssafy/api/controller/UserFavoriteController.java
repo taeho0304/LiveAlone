@@ -1,13 +1,8 @@
 package com.ssafy.api.controller;
 
-import com.ssafy.api.request.ResidenceGetReq;
 import com.ssafy.api.response.*;
-import com.ssafy.api.service.RoomSearchService;
 import com.ssafy.api.service.UserFavoriteService;
 import com.ssafy.common.model.response.BaseResponseBody;
-import com.ssafy.db.entity.ResidenceCategory;
-import com.ssafy.db.entity.ResidenceInfo;
-import com.ssafy.db.entity.ResidenceType;
 import com.ssafy.db.entity.UserFavorite;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;

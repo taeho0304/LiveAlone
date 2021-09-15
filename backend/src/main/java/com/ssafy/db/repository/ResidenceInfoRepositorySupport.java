@@ -3,6 +3,7 @@ package com.ssafy.db.repository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.ssafy.api.request.ResidenceDetailGetReq;
 import com.ssafy.api.request.ResidenceGetReq;
 import com.ssafy.db.entity.QResidenceInfo;
 import com.ssafy.db.entity.ResidenceInfo;
@@ -20,35 +21,35 @@ public class ResidenceInfoRepositorySupport {
     private JPAQueryFactory jpaQueryFactory;
     QResidenceInfo qresidenceInfo = QResidenceInfo.residenceInfo;
 
-    public List<ResidenceInfo> findRooms(ResidenceGetReq residenceGetReq) {
-        JPAQuery<ResidenceInfo> residences = jpaQueryFactory.select(qresidenceInfo).from(qresidenceInfo);
+    public List<ResidenceInfo> findRooms(ResidenceDetailGetReq residenceDetailGetReq, ResidenceGetReq residenceGetReq) {
+        JPAQuery<ResidenceInfo> residences = findRoomsBySiGuDong(residenceGetReq);
 
         BooleanBuilder builder = new BooleanBuilder();
-        for (int i=0; i<residenceGetReq.getResidenceType().size(); i++)
-            builder.and(qresidenceInfo.residenceType.type.eq(residenceGetReq.getResidenceType().get(i)));
-        for (int i=0; i<residenceGetReq.getResidenceCategory().size(); i++)
-            builder.and(qresidenceInfo.residenceCategory.categoryName.eq(residenceGetReq.getResidenceCategory().get(i)));
-        if (residenceGetReq.getStartPrice() > 0) builder.and(qresidenceInfo.cost.goe(residenceGetReq.getStartPrice()));
-        if (residenceGetReq.getEndPrice() > 0) builder.and(qresidenceInfo.cost.loe(residenceGetReq.getEndPrice()));
-        if (residenceGetReq.getStartJPrice() > 0) builder.and(qresidenceInfo.jeonseCost.goe(residenceGetReq.getStartPrice()));
-        if (residenceGetReq.getEndJPrice() > 0) builder.and(qresidenceInfo.jeonseCost.loe(residenceGetReq.getEndPrice()));
-        if (residenceGetReq.getStartWPrice() > 0) builder.and(qresidenceInfo.wolseCost.goe(residenceGetReq.getStartPrice()));
-        if (residenceGetReq.getEndWPrice() > 0) builder.and(qresidenceInfo.wolseCost.loe(residenceGetReq.getEndPrice()));
-        if (residenceGetReq.getStartManagePrice() > 0) builder.and(qresidenceInfo.manageCost.goe(residenceGetReq.getStartManagePrice()));
-        if (residenceGetReq.getEndManagePrice() > 0) builder.and(qresidenceInfo.manageCost.loe(residenceGetReq.getEndManagePrice()));
-        if (residenceGetReq.getStartArea() > 0) builder.and(qresidenceInfo.area.goe(residenceGetReq.getStartArea()));
-        if (residenceGetReq.getEndArea() > 0) builder.and(qresidenceInfo.area.loe(residenceGetReq.getEndArea()));
+        for (int i = 0; i< residenceDetailGetReq.getResidenceType().size(); i++)
+            builder.and(qresidenceInfo.residenceType.type.eq(residenceDetailGetReq.getResidenceType().get(i)));
+        for (int i = 0; i< residenceDetailGetReq.getResidenceCategory().size(); i++)
+            builder.and(qresidenceInfo.residenceCategory.categoryName.eq(residenceDetailGetReq.getResidenceCategory().get(i)));
+        if (residenceDetailGetReq.getStartPrice() > 0) builder.and(qresidenceInfo.cost.goe(residenceDetailGetReq.getStartPrice()));
+        if (residenceDetailGetReq.getEndPrice() > 0) builder.and(qresidenceInfo.cost.loe(residenceDetailGetReq.getEndPrice()));
+        if (residenceDetailGetReq.getStartJPrice() > 0) builder.and(qresidenceInfo.jeonseCost.goe(residenceDetailGetReq.getStartPrice()));
+        if (residenceDetailGetReq.getEndJPrice() > 0) builder.and(qresidenceInfo.jeonseCost.loe(residenceDetailGetReq.getEndPrice()));
+        if (residenceDetailGetReq.getStartWPrice() > 0) builder.and(qresidenceInfo.wolseCost.goe(residenceDetailGetReq.getStartPrice()));
+        if (residenceDetailGetReq.getEndWPrice() > 0) builder.and(qresidenceInfo.wolseCost.loe(residenceDetailGetReq.getEndPrice()));
+        if (residenceDetailGetReq.getStartManagePrice() > 0) builder.and(qresidenceInfo.manageCost.goe(residenceDetailGetReq.getStartManagePrice()));
+        if (residenceDetailGetReq.getEndManagePrice() > 0) builder.and(qresidenceInfo.manageCost.loe(residenceDetailGetReq.getEndManagePrice()));
+        if (residenceDetailGetReq.getStartArea() > 0) builder.and(qresidenceInfo.area.goe(residenceDetailGetReq.getStartArea()));
+        if (residenceDetailGetReq.getEndArea() > 0) builder.and(qresidenceInfo.area.loe(residenceDetailGetReq.getEndArea()));
         residences.where(builder);
 
         // 정렬
-        if(residenceGetReq.getSortType()!=null){
-            if(residenceGetReq.getSortType().equals("cost")){
-                if(residenceGetReq.getSortOrder().equals("asc")) residences.orderBy(qresidenceInfo.cost.asc());
-                if(residenceGetReq.getSortOrder().equals("desc")) residences.orderBy(qresidenceInfo.cost.desc());
+        if(residenceDetailGetReq.getSortType()!=null){
+            if(residenceDetailGetReq.getSortType().equals("cost")){
+                if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(qresidenceInfo.cost.asc());
+                if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(qresidenceInfo.cost.desc());
             }
-            if(residenceGetReq.getSortType().equals("area")){
-                if(residenceGetReq.getSortOrder().equals("asc")) residences.orderBy(qresidenceInfo.area.asc());
-                if(residenceGetReq.getSortOrder().equals("desc")) residences.orderBy(qresidenceInfo.area.desc());
+            if(residenceDetailGetReq.getSortType().equals("area")){
+                if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(qresidenceInfo.area.asc());
+                if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(qresidenceInfo.area.desc());
             }
         }
 
@@ -59,5 +60,19 @@ public class ResidenceInfoRepositorySupport {
         ResidenceInfo residenceInfo = jpaQueryFactory.select(qresidenceInfo).from(qresidenceInfo)
                 .where(qresidenceInfo.id.eq(residenceId)).fetchOne();
         return residenceInfo;
+    }
+
+    public JPAQuery<ResidenceInfo> findRoomsBySiGuDong(ResidenceGetReq residenceGetReq) {
+        System.out.println("시 : "+residenceGetReq.getSi());
+        System.out.println("동 : "+residenceGetReq.getDong());
+        System.out.println("군 : "+residenceGetReq.getGugun());
+        JPAQuery<ResidenceInfo> residences = jpaQueryFactory.select(qresidenceInfo).from(qresidenceInfo);
+        BooleanBuilder builder = new BooleanBuilder();
+        if (residenceGetReq.getSi() != null) builder.and(qresidenceInfo.dong.Gugun.Si.siName.eq(residenceGetReq.getSi()));
+        if (residenceGetReq.getDong() != null) builder.and(qresidenceInfo.dong.dongName.eq(residenceGetReq.getDong()));
+        if (residenceGetReq.getGugun() != null) builder.and(qresidenceInfo.dong.Gugun.gugunName.eq(residenceGetReq.getGugun()));
+        residences.where(builder);
+
+        return residences;
     }
 }

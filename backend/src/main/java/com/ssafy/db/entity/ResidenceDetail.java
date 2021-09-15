@@ -14,4 +14,6 @@ import javax.persistence.Entity;
 public class ResidenceDetail extends BaseEntity {
     String building; // 건물명
     String unit; // 동
+    String floor; // 층
+    String structure; // 방 구조
 }

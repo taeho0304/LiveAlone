@@ -1,5 +1,6 @@
 package com.ssafy.api.service;
 
+import com.ssafy.api.request.ResidenceDetailGetReq;
 import com.ssafy.api.request.ResidenceGetReq;
 import com.ssafy.db.entity.ResidenceCategory;
 import com.ssafy.db.entity.ResidenceInfo;
@@ -62,7 +63,12 @@ public class RoomSearchServiceImpl implements RoomSearchService {
 	}
 
 	@Override
-	public List<ResidenceInfo> getResidenceInfos(ResidenceGetReq residenceGetReq) {
-		return residenceInfoRepositorySupport.findRooms(residenceGetReq);
+	public List<ResidenceInfo> getResidenceDetails(ResidenceDetailGetReq residenceDetailGetReq, ResidenceGetReq residenceGetReq) {
+		return residenceInfoRepositorySupport.findRooms(residenceDetailGetReq, residenceGetReq);
+	}
+
+	@Override
+	public List<ResidenceInfo> getResidencesBySiGuDong(ResidenceGetReq residenceGetReq) {
+		return residenceInfoRepositorySupport.findRoomsBySiGuDong(residenceGetReq).fetch();
 	}
 }

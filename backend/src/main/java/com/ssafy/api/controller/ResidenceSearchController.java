@@ -1,5 +1,6 @@
 package com.ssafy.api.controller;
 
+import com.ssafy.api.request.ResidenceDetailGetReq;
 import com.ssafy.api.request.ResidenceGetReq;
 import com.ssafy.api.response.*;
 import com.ssafy.api.service.RoomSearchService;
@@ -119,16 +120,31 @@ public class ResidenceSearchController {
             return ResponseEntity.status(500).body(BaseResponseBody.of(500, "fail"));
         }
     }
-
-    @GetMapping("/residences")
-    @ApiOperation(value = "매물 조회", notes = "매물을 조회한다.")
+    @GetMapping("/residences/")
+    @ApiOperation(value = "매물 상세 조회", notes = "매물을 상세 조회한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "실패")
     })
     public ResponseEntity<ResidenceRes> getResidences( @ModelAttribute ResidenceGetReq residenceGetReq) {
         try {
-            List<ResidenceInfo> rooms = roomSearchService.getResidenceInfos(residenceGetReq);
+            List<ResidenceInfo> rooms = roomSearchService.getResidencesBySiGuDong(residenceGetReq);
+            return ResponseEntity.status(200).body(ResidenceRes.of(rooms));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(500).body(ResidenceRes.of(500, "fail"));
+        }
+    }
+
+    @GetMapping("/residences/detail")
+    @ApiOperation(value = "매물 상세 조회", notes = "매물을 상세 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "실패")
+    })
+    public ResponseEntity<ResidenceRes> getResidencesDetail(
+            @ModelAttribute ResidenceDetailGetReq residenceDetailGetReq, @ModelAttribute ResidenceGetReq residenceGetReq) {
+        try {
+            List<ResidenceInfo> rooms = roomSearchService.getResidenceDetails(residenceDetailGetReq, residenceGetReq);
             return ResponseEntity.status(200).body(ResidenceRes.of(rooms));
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(500).body(ResidenceRes.of(500, "fail"));
