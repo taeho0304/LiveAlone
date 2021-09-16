@@ -1,13 +1,8 @@
 package com.ssafy.api.controller;
 
-import com.ssafy.api.request.ResidenceGetReq;
 import com.ssafy.api.response.*;
-import com.ssafy.api.service.RoomSearchService;
 import com.ssafy.api.service.UserFavoriteService;
 import com.ssafy.common.model.response.BaseResponseBody;
-import com.ssafy.db.entity.ResidenceCategory;
-import com.ssafy.db.entity.ResidenceInfo;
-import com.ssafy.db.entity.ResidenceType;
 import com.ssafy.db.entity.UserFavorite;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +66,7 @@ public class UserFavoriteController {
     public ResponseEntity<? extends BaseResponseBody> checkDuplicated(
             @ApiIgnore Authentication authentication, @RequestParam Long ResidenceId) {
         try {
-            UserFavorite userFavorite = userFavoriteService.checkDuplicated(authentication, ResidenceId);
+            userFavoriteService.checkDuplicated(authentication, ResidenceId);
             return ResponseEntity.status(409).body(BaseResponseBody.of(200, "중복 있음"));
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "중복 없음"));
