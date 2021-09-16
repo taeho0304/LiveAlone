@@ -34,6 +34,9 @@ public class ResidenceInfo extends BaseEntity implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private ResidenceCategory residenceCategory;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Dong dong;
+    
     @Id
     @OneToOne
 //    @JoinColumn(name = "id", unique = true, nullable = false )
@@ -43,10 +46,10 @@ public class ResidenceInfo extends BaseEntity implements Serializable {
     String lat;
     String lon;
     int cost;
+    int wolseCost;
+    int jeonseCost;
     int manageCost;
     int area;
     String content;
     String imgurl;
-    String dong;
-    String gu;
 }
