@@ -14,6 +14,7 @@ import QnAPage from '../view/QnAPage.vue';
 Vue.use(Router);
 
 export default new Router({
+  mode: 'history',
   linkExactActiveClass: 'active',
   routes: [
     {

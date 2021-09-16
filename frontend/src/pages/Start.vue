@@ -13,12 +13,14 @@
           <h5 class="h2-seo" style="color: black">이제는 1인 가구 시대!</h5>
           <div class="text-center">
             <router-link to="/search"
-              ><a class="btn btn-primary btn-round btn-lg btn-block"
+              ><a class="btn btn-primary btn-lg btn-block"
+              style="border-radius: 10px;"
                 >검색하기</a
               ></router-link
             >
             <router-link to="/qna"
-              ><a class="btn btn-warning btn-round btn-lg btn-block"
+              ><a class="btn btn-warning btn-lg btn-block"
+               style="border-radius: 10px;"
                 >추천하기</a
               ></router-link
             >
