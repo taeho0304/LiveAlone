@@ -17,7 +17,7 @@ export default {
             //console.log(payload.accessToken);
         },
         USERINFO(state, payload) {
-
+            state.userInfo = payload;
         }
     },
     actions: {
@@ -45,7 +45,7 @@ export default {
         },
         requestUserInfo({commit}){
             const CSRF_TOKEN=localStorage.getItem("accessToken");
-            if (!CSRF_TOKEN) return;
+            //if (CSRF_TOKEN==null) return;
             http
               .get(`/api/v1/users/me`,{headers: {"Authorization": 'Bearer '+ CSRF_TOKEN }
             })
@@ -57,6 +57,20 @@ export default {
                 //console.error();
             });
         },
+        requestModify({commit}, user){
+            console.log(user);
+            http
+              .patch(`/api/v1/users/`+user.userId,user)
+              .then(({ data })=>{
+                commit("USERINFO", data);
+                alert('회원정보가 수정 되었습니다.')
+                window.location.reload();
+                this.requestUserInfo();
+              })
+              .catch(() => {
+
+              });
+          },
 
 
     },

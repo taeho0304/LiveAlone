@@ -1,8 +1,9 @@
 //== Buttons
 //
 //## For each of Bootstrap's buttons, define text, background and border color.
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
 
-$sans-serif-family:          'Montserrat', 'Helvetica Neue',  Arial, sans-serif !default;
+$sans-serif-family:          'Noto Sans KR', 'Helvetica Neue',  Arial, sans-serif !default;
 
 $none:                       0   !default;
 $border-thin:                1px !default;
@@ -118,7 +119,7 @@ $padding-label-vertical:        2px !default;
 $padding-label-horizontal:     12px !default;
 
 $margin-large-vertical:        30px !default;
-$margin-base-vertical:         15px !default;
+$margin-base-vertical:         0px !default;
 
 $margin-base-horizontal:       15px !default;
 
