@@ -1,0 +1,208 @@
+2021-09-15 10:50:22.399  INFO 18812 --- [restartedMain] com.ssafy.ResidenceApplication           : Starting ResidenceApplication using Java 1.8.0_302 on DESKTOP-DVEGD0F with PID 18812 (C:\Users\PC\Documents\S05P21D106\backend\build\classes\java\main started by PC in C:\Users\PC\Documents\S05P21D106\backend)
+2021-09-15 10:50:22.408  INFO 18812 --- [restartedMain] com.ssafy.ResidenceApplication           : No active profile set, falling back to default profiles: default
+2021-09-15 10:50:22.466  INFO 18812 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2021-09-15 10:50:22.466  INFO 18812 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2021-09-15 10:50:23.876  INFO 18812 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-09-15 10:50:23.973  INFO 18812 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 88 ms. Found 8 JPA repository interfaces.
+2021-09-15 10:50:24.281  INFO 18812 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@8be11b9' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-09-15 10:50:24.284  INFO 18812 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-09-15 10:50:24.551  INFO 18812 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2021-09-15 10:50:24.561  INFO 18812 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-09-15 10:50:24.561  INFO 18812 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.45]
+2021-09-15 10:50:24.655  INFO 18812 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-09-15 10:50:24.656  INFO 18812 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2188 ms
+2021-09-15 10:50:24.800 DEBUG 18812 --- [restartedMain] o.s.web.filter.CharacterEncodingFilter   : Filter 'characterEncodingFilter' configured for use
+2021-09-15 10:50:24.800 DEBUG 18812 --- [restartedMain] o.s.w.f.CommonsRequestLoggingFilter      : Filter 'commonsRequestLoggingFilter' configured for use
+2021-09-15 10:50:25.063  INFO 18812 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-09-15 10:50:25.128  INFO 18812 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.30.Final
+2021-09-15 10:50:25.352  INFO 18812 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-09-15 10:50:25.455  INFO 18812 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2021-09-15 10:50:25.829  INFO 18812 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2021-09-15 10:50:25.842  INFO 18812 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL57Dialect
+2021-09-15 10:50:26.860  INFO 18812 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-09-15 10:50:26.872  INFO 18812 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-09-15 10:50:26.913  INFO 18812 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-09-15 10:50:27.304  WARN 18812 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-15 10:50:27.877 DEBUG 18812 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 32 mappings in 'requestMappingHandlerMapping'
+2021-09-15 10:50:27.982  INFO 18812 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2021-09-15 10:50:28.184  INFO 18812 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@17fe2071, org.springframework.security.web.context.SecurityContextPersistenceFilter@2b7b7116, org.springframework.security.web.header.HeaderWriterFilter@4e250b18, org.springframework.web.filter.CorsFilter@44664078, org.springframework.security.web.authentication.logout.LogoutFilter@7a820dad, com.ssafy.common.auth.JwtAuthenticationFilter@7618fd28, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@28b33648, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7c0d2ba3, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2f16c89b, org.springframework.security.web.session.SessionManagementFilter@1a5c70c9, org.springframework.security.web.access.ExceptionTranslationFilter@38065368, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@7d3e58cc]
+2021-09-15 10:50:28.251  INFO 18812 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-09-15 10:50:28.263 DEBUG 18812 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2021-09-15 10:50:28.300 DEBUG 18812 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/swagger-ui/] in 'viewControllerHandlerMapping'
+2021-09-15 10:50:28.322 DEBUG 18812 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/swagger-ui/**, /webjars/**, /**] in 'resourceHandlerMapping'
+2021-09-15 10:50:28.329 DEBUG 18812 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2021-09-15 10:50:28.541  INFO 18812 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2021-09-15 10:50:28.862  INFO 18812 --- [restartedMain] com.ssafy.ResidenceApplication           : Started ResidenceApplication in 7.033 seconds (JVM running for 8.744)
+2021-09-15 10:50:29.573  INFO 18812 --- [RMI TCP Connection(5)-222.108.206.153] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-09-15 10:50:29.573  INFO 18812 --- [RMI TCP Connection(5)-222.108.206.153] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-09-15 10:50:29.574 DEBUG 18812 --- [RMI TCP Connection(5)-222.108.206.153] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2021-09-15 10:50:29.574 DEBUG 18812 --- [RMI TCP Connection(5)-222.108.206.153] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2021-09-15 10:50:29.574 DEBUG 18812 --- [RMI TCP Connection(5)-222.108.206.153] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2021-09-15 10:50:29.576 DEBUG 18812 --- [RMI TCP Connection(5)-222.108.206.153] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@38b73333
+2021-09-15 10:50:29.578 DEBUG 18812 --- [RMI TCP Connection(5)-222.108.206.153] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@f0c4bf
+2021-09-15 10:50:29.578 DEBUG 18812 --- [RMI TCP Connection(5)-222.108.206.153] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2021-09-15 10:50:29.578  INFO 18812 --- [RMI TCP Connection(5)-222.108.206.153] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2021-09-15 10:50:42.797 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/swagger-ui", parameters={}
+2021-09-15 10:50:42.804 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-1] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler [Classpath [META-INF/resources/webjars/springfox-swagger-ui/]]
+2021-09-15 10:50:42.808 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-1] o.s.w.s.r.ResourceHttpRequestHandler     : Resource not found
+2021-09-15 10:50:42.809 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 404 NOT_FOUND
+2021-09-15 10:50:42.813 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-1] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for GET "/error", parameters={}
+2021-09-15 10:50:42.814 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#errorHtml(HttpServletRequest, HttpServletResponse)
+2021-09-15 10:50:42.842 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-1] o.s.w.s.v.ContentNegotiatingViewResolver : Selected 'text/html' given [text/html, text/html;q=0.8]
+2021-09-15 10:50:42.845 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 404
+2021-09-15 10:50:42.914 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/favicon.ico", parameters={}
+2021-09-15 10:50:42.915 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-2] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler [Classpath [META-INF/resources/], Classpath [resources/], Classpath [static/], Classpath [public/], ServletContext [/]]
+2021-09-15 10:50:42.917 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-2] o.s.w.s.r.ResourceHttpRequestHandler     : Resource not found
+2021-09-15 10:50:42.917 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 404 NOT_FOUND
+2021-09-15 10:50:42.917 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-2] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for GET "/error", parameters={}
+2021-09-15 10:50:42.918 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2021-09-15 10:50:42.926 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json;q=0.8', given [image/avif, image/webp, image/apng, image/svg+xml, image/*, */*;q=0.8] and supported [application/json, application/*+json, application/json, application/*+json]
+2021-09-15 10:50:42.927 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{timestamp=Wed Sep 15 10:50:42 KST 2021, status=404, error=Not Found, message=No message available,  (truncated)...]
+2021-09-15 10:50:42.949 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 404
+2021-09-15 10:50:52.369 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/swagger-ui/", parameters={}
+2021-09-15 10:50:52.371 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-3] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ParameterizableViewController [view="forward:/swagger-ui/index.html"]
+2021-09-15 10:50:52.374 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-3] o.s.w.s.v.ContentNegotiatingViewResolver : Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, application/signed-exchange;v=b3;q=0.9, */*;q=0.8]
+2021-09-15 10:50:52.374 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-3] o.s.w.servlet.view.InternalResourceView  : View name 'forward:', model {}
+2021-09-15 10:50:52.375 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-3] o.s.w.servlet.view.InternalResourceView  : Forwarding to [/swagger-ui/index.html]
+2021-09-15 10:50:52.376 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-3] o.s.web.servlet.DispatcherServlet        : "FORWARD" dispatch for GET "/swagger-ui/index.html", parameters={}
+2021-09-15 10:50:52.377 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-3] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler [Classpath [META-INF/resources/webjars/springfox-swagger-ui/]]
+2021-09-15 10:50:52.381 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Exiting from "FORWARD" dispatch, status 200
+2021-09-15 10:50:52.382 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2021-09-15 10:50:52.405 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/swagger-ui/swagger-ui.css?v=3.0.0", parameters={masked}
+2021-09-15 10:50:52.405 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/swagger-ui/swagger-ui-bundle.js?v=3.0.0", parameters={masked}
+2021-09-15 10:50:52.405 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-6] o.s.web.servlet.DispatcherServlet        : GET "/swagger-ui/springfox.css?v=3.0.0", parameters={masked}
+2021-09-15 10:50:52.406 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-5] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler [Classpath [META-INF/resources/webjars/springfox-swagger-ui/]]
+2021-09-15 10:50:52.406 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-4] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler [Classpath [META-INF/resources/webjars/springfox-swagger-ui/]]
+2021-09-15 10:50:52.406 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-6] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler [Classpath [META-INF/resources/webjars/springfox-swagger-ui/]]
+2021-09-15 10:50:52.411 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2021-09-15 10:50:52.415 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2021-09-15 10:50:52.419 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-7] o.s.web.servlet.DispatcherServlet        : GET "/swagger-ui/swagger-ui-standalone-preset.js?v=3.0.0", parameters={masked}
+2021-09-15 10:50:52.421 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-7] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler [Classpath [META-INF/resources/webjars/springfox-swagger-ui/]]
+2021-09-15 10:50:52.426 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-8] o.s.web.servlet.DispatcherServlet        : GET "/swagger-ui/springfox.js?v=3.0.0", parameters={masked}
+2021-09-15 10:50:52.427 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-8] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler [Classpath [META-INF/resources/webjars/springfox-swagger-ui/]]
+2021-09-15 10:50:52.435 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2021-09-15 10:50:52.445 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2021-09-15 10:50:52.462 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2021-09-15 10:50:52.599 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-9] o.s.web.servlet.DispatcherServlet        : GET "/swagger-ui/favicon-32x32.png?v=3.0.0", parameters={masked}
+2021-09-15 10:50:52.601 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-9] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler [Classpath [META-INF/resources/webjars/springfox-swagger-ui/]]
+2021-09-15 10:50:52.602 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-10] o.s.web.servlet.DispatcherServlet        : GET "/swagger-resources/configuration/ui", parameters={}
+2021-09-15 10:50:52.603 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-10] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to springfox.documentation.swagger.web.ApiResourceController#uiConfiguration()
+2021-09-15 10:50:52.605 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2021-09-15 10:50:52.606 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json] and supported [application/json]
+2021-09-15 10:50:52.616 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [springfox.documentation.swagger.web.UiConfiguration@6ef49b28]
+2021-09-15 10:50:52.618 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2021-09-15 10:50:52.628 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/swagger-resources/configuration/security", parameters={}
+2021-09-15 10:50:52.629 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to springfox.documentation.swagger.web.ApiResourceController#securityConfiguration()
+2021-09-15 10:50:52.629 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json] and supported [application/json]
+2021-09-15 10:50:52.631 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [springfox.documentation.swagger.web.SecurityConfiguration@52a5eb00]
+2021-09-15 10:50:52.632 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2021-09-15 10:50:52.640 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/swagger-resources", parameters={}
+2021-09-15 10:50:52.640 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to springfox.documentation.swagger.web.ApiResourceController#swaggerResources()
+2021-09-15 10:50:52.641 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json] and supported [application/json]
+2021-09-15 10:50:52.641 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [[springfox.documentation.swagger.web.SwaggerResource@a7274e0]]
+2021-09-15 10:50:52.643 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2021-09-15 10:50:52.681 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/v2/api-docs", parameters={}
+2021-09-15 10:50:52.681 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to springfox.documentation.swagger2.web.Swagger2ControllerWebMvc#getDocumentation(String, HttpServletRequest)
+2021-09-15 10:50:52.781 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, */*] and supported [application/json, application/hal+json]
+2021-09-15 10:50:52.783 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [springfox.documentation.spring.web.json.Json@3d084181]
+2021-09-15 10:50:52.785 DEBUG 18812 --- [http-nio-127.0.0.1-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2021-09-15 10:55:00.357  INFO 18812 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2021-09-15 10:55:00.366  INFO 18812 --- [SpringContextShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-09-15 10:55:00.371  INFO 18812 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2021-09-15 10:55:00.380  INFO 18812 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2021-09-15 10:55:03.522  INFO 2060 --- [restartedMain] com.ssafy.ResidenceApplication           : Starting ResidenceApplication using Java 1.8.0_302 on DESKTOP-DVEGD0F with PID 2060 (C:\Users\PC\Documents\S05P21D106\backend\build\classes\java\main started by PC in C:\Users\PC\Documents\S05P21D106\backend)
+2021-09-15 10:55:03.524  INFO 2060 --- [restartedMain] com.ssafy.ResidenceApplication           : No active profile set, falling back to default profiles: default
+2021-09-15 10:55:03.560  INFO 2060 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2021-09-15 10:55:03.561  INFO 2060 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2021-09-15 10:55:04.734  INFO 2060 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-09-15 10:55:04.826  INFO 2060 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 85 ms. Found 8 JPA repository interfaces.
+2021-09-15 10:55:05.111  INFO 2060 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@3aab2ba8' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-09-15 10:55:05.118  INFO 2060 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-09-15 10:55:05.401  INFO 2060 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2021-09-15 10:55:05.409  INFO 2060 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-09-15 10:55:05.409  INFO 2060 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.45]
+2021-09-15 10:55:05.503  INFO 2060 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-09-15 10:55:05.503  INFO 2060 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1941 ms
+2021-09-15 10:55:05.663 DEBUG 2060 --- [restartedMain] o.s.web.filter.CharacterEncodingFilter   : Filter 'characterEncodingFilter' configured for use
+2021-09-15 10:55:05.663 DEBUG 2060 --- [restartedMain] o.s.w.f.CommonsRequestLoggingFilter      : Filter 'commonsRequestLoggingFilter' configured for use
+2021-09-15 10:55:05.866  INFO 2060 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-09-15 10:55:05.910  INFO 2060 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.30.Final
+2021-09-15 10:55:06.022  INFO 2060 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-09-15 10:55:06.109  INFO 2060 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2021-09-15 10:55:06.381  INFO 2060 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2021-09-15 10:55:06.394  INFO 2060 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL57Dialect
+2021-09-15 10:55:07.313  INFO 2060 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-09-15 10:55:07.323  INFO 2060 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-09-15 10:55:07.359  INFO 2060 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2021-09-15 10:55:07.727  WARN 2060 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-15 10:55:08.332 DEBUG 2060 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 32 mappings in 'requestMappingHandlerMapping'
+2021-09-15 10:55:08.427  INFO 2060 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2021-09-15 10:55:08.613  INFO 2060 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@65fe8edd, org.springframework.security.web.context.SecurityContextPersistenceFilter@1e8ba7fd, org.springframework.security.web.header.HeaderWriterFilter@25265b76, org.springframework.web.filter.CorsFilter@5da509f0, org.springframework.security.web.authentication.logout.LogoutFilter@14672776, com.ssafy.common.auth.JwtAuthenticationFilter@60b516e, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3861e137, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2b7188bd, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5c74ca86, org.springframework.security.web.session.SessionManagementFilter@545f768, org.springframework.security.web.access.ExceptionTranslationFilter@2c28824f, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@68b195b5]
+2021-09-15 10:55:08.682  INFO 2060 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-09-15 10:55:08.693 DEBUG 2060 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2021-09-15 10:55:08.735 DEBUG 2060 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/swagger-ui/] in 'viewControllerHandlerMapping'
+2021-09-15 10:55:08.758 DEBUG 2060 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/swagger-ui/**, /webjars/**, /**] in 'resourceHandlerMapping'
+2021-09-15 10:55:08.764 DEBUG 2060 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2021-09-15 10:55:08.969  INFO 2060 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2021-09-15 10:55:09.294  INFO 2060 --- [restartedMain] com.ssafy.ResidenceApplication           : Started ResidenceApplication in 6.108 seconds (JVM running for 6.979)
+2021-09-15 10:55:09.915  INFO 2060 --- [RMI TCP Connection(3)-222.108.206.153] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-09-15 10:55:09.915  INFO 2060 --- [RMI TCP Connection(3)-222.108.206.153] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-09-15 10:55:09.915 DEBUG 2060 --- [RMI TCP Connection(3)-222.108.206.153] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2021-09-15 10:55:09.916 DEBUG 2060 --- [RMI TCP Connection(3)-222.108.206.153] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2021-09-15 10:55:09.916 DEBUG 2060 --- [RMI TCP Connection(3)-222.108.206.153] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2021-09-15 10:55:09.918 DEBUG 2060 --- [RMI TCP Connection(3)-222.108.206.153] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@4073e507
+2021-09-15 10:55:09.918 DEBUG 2060 --- [RMI TCP Connection(3)-222.108.206.153] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@18850e29
+2021-09-15 10:55:09.919 DEBUG 2060 --- [RMI TCP Connection(3)-222.108.206.153] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2021-09-15 10:55:09.919  INFO 2060 --- [RMI TCP Connection(3)-222.108.206.153] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2021-09-15 10:55:31.601 DEBUG 2060 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/swagger-ui/", parameters={}
+2021-09-15 10:55:31.608 DEBUG 2060 --- [http-nio-8080-exec-1] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ParameterizableViewController [view="forward:/swagger-ui/index.html"]
+2021-09-15 10:55:31.618 DEBUG 2060 --- [http-nio-8080-exec-1] o.s.w.s.v.ContentNegotiatingViewResolver : Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, application/signed-exchange;v=b3;q=0.9, */*;q=0.8]
+2021-09-15 10:55:31.618 DEBUG 2060 --- [http-nio-8080-exec-1] o.s.w.servlet.view.InternalResourceView  : View name 'forward:', model {}
+2021-09-15 10:55:31.619 DEBUG 2060 --- [http-nio-8080-exec-1] o.s.w.servlet.view.InternalResourceView  : Forwarding to [/swagger-ui/index.html]
+2021-09-15 10:55:31.621 DEBUG 2060 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : "FORWARD" dispatch for GET "/swagger-ui/index.html", parameters={}
+2021-09-15 10:55:31.623 DEBUG 2060 --- [http-nio-8080-exec-1] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler [Classpath [META-INF/resources/webjars/springfox-swagger-ui/]]
+2021-09-15 10:55:31.635 DEBUG 2060 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Exiting from "FORWARD" dispatch, status 200
+2021-09-15 10:55:31.637 DEBUG 2060 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2021-09-15 10:55:31.674 DEBUG 2060 --- [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/swagger-ui/swagger-ui.css?v=3.0.0", parameters={masked}
+2021-09-15 10:55:31.674 DEBUG 2060 --- [http-nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : GET "/swagger-ui/springfox.js?v=3.0.0", parameters={masked}
+2021-09-15 10:55:31.674 DEBUG 2060 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/swagger-ui/springfox.css?v=3.0.0", parameters={masked}
+2021-09-15 10:55:31.674 DEBUG 2060 --- [http-nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : GET "/swagger-ui/swagger-ui-standalone-preset.js?v=3.0.0", parameters={masked}
+2021-09-15 10:55:31.674 DEBUG 2060 --- [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/swagger-ui/swagger-ui-bundle.js?v=3.0.0", parameters={masked}
+2021-09-15 10:55:31.675 DEBUG 2060 --- [http-nio-8080-exec-3] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler [Classpath [META-INF/resources/webjars/springfox-swagger-ui/]]
+2021-09-15 10:55:31.675 DEBUG 2060 --- [http-nio-8080-exec-8] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler [Classpath [META-INF/resources/webjars/springfox-swagger-ui/]]
+2021-09-15 10:55:31.675 DEBUG 2060 --- [http-nio-8080-exec-9] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler [Classpath [META-INF/resources/webjars/springfox-swagger-ui/]]
+2021-09-15 10:55:31.675 DEBUG 2060 --- [http-nio-8080-exec-2] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler [Classpath [META-INF/resources/webjars/springfox-swagger-ui/]]
+2021-09-15 10:55:31.675 DEBUG 2060 --- [http-nio-8080-exec-4] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler [Classpath [META-INF/resources/webjars/springfox-swagger-ui/]]
+2021-09-15 10:55:31.679 DEBUG 2060 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2021-09-15 10:55:31.684 DEBUG 2060 --- [http-nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2021-09-15 10:55:31.684 DEBUG 2060 --- [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2021-09-15 10:55:31.697 DEBUG 2060 --- [http-nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2021-09-15 10:55:31.726 DEBUG 2060 --- [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2021-09-15 10:55:31.849 DEBUG 2060 --- [http-nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : GET "/swagger-resources/configuration/ui", parameters={}
+2021-09-15 10:55:31.852 DEBUG 2060 --- [http-nio-8080-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to springfox.documentation.swagger.web.ApiResourceController#uiConfiguration()
+2021-09-15 10:55:31.873 DEBUG 2060 --- [http-nio-8080-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json] and supported [application/json]
+2021-09-15 10:55:31.878 DEBUG 2060 --- [http-nio-8080-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [springfox.documentation.swagger.web.UiConfiguration@160bb41c]
+2021-09-15 10:55:31.888 DEBUG 2060 --- [http-nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2021-09-15 10:55:31.895 DEBUG 2060 --- [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/swagger-resources/configuration/security", parameters={}
+2021-09-15 10:55:31.897 DEBUG 2060 --- [http-nio-8080-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to springfox.documentation.swagger.web.ApiResourceController#securityConfiguration()
+2021-09-15 10:55:31.899 DEBUG 2060 --- [http-nio-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json] and supported [application/json]
+2021-09-15 10:55:31.902 DEBUG 2060 --- [http-nio-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [springfox.documentation.swagger.web.SecurityConfiguration@28a3c994]
+2021-09-15 10:55:31.903 DEBUG 2060 --- [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2021-09-15 10:55:31.911 DEBUG 2060 --- [http-nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : GET "/swagger-resources", parameters={}
+2021-09-15 10:55:31.913 DEBUG 2060 --- [http-nio-8080-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to springfox.documentation.swagger.web.ApiResourceController#swaggerResources()
+2021-09-15 10:55:31.914 DEBUG 2060 --- [http-nio-8080-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json] and supported [application/json]
+2021-09-15 10:55:31.914 DEBUG 2060 --- [http-nio-8080-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [[springfox.documentation.swagger.web.SwaggerResource@7adfd2b5]]
+2021-09-15 10:55:31.916 DEBUG 2060 --- [http-nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2021-09-15 10:55:31.946 DEBUG 2060 --- [http-nio-8080-exec-10] o.s.web.servlet.DispatcherServlet        : GET "/v2/api-docs", parameters={}
+2021-09-15 10:55:31.947 DEBUG 2060 --- [http-nio-8080-exec-10] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to springfox.documentation.swagger2.web.Swagger2ControllerWebMvc#getDocumentation(String, HttpServletRequest)
+2021-09-15 10:55:32.036 DEBUG 2060 --- [http-nio-8080-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, */*] and supported [application/json, application/hal+json]
+2021-09-15 10:55:32.037 DEBUG 2060 --- [http-nio-8080-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [springfox.documentation.spring.web.json.Json@287000a3]
+2021-09-15 10:55:32.039 DEBUG 2060 --- [http-nio-8080-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2021-09-15 10:55:36.954 DEBUG 2060 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/", parameters={}
+2021-09-15 10:55:36.956 DEBUG 2060 --- [http-nio-8080-exec-1] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler [Classpath [META-INF/resources/], Classpath [resources/], Classpath [static/], Classpath [public/], ServletContext [/]]
+2021-09-15 10:55:36.956 DEBUG 2060 --- [http-nio-8080-exec-1] o.s.w.s.r.ResourceHttpRequestHandler     : Resource not found
+2021-09-15 10:55:36.956 DEBUG 2060 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 404 NOT_FOUND
+2021-09-15 10:55:36.956 DEBUG 2060 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for GET "/error", parameters={}
+2021-09-15 10:55:36.958 DEBUG 2060 --- [http-nio-8080-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#errorHtml(HttpServletRequest, HttpServletResponse)
+2021-09-15 10:55:36.974 DEBUG 2060 --- [http-nio-8080-exec-1] o.s.w.s.v.ContentNegotiatingViewResolver : Selected 'text/html' given [text/html, text/html;q=0.8]
+2021-09-15 10:55:36.979 DEBUG 2060 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 404
