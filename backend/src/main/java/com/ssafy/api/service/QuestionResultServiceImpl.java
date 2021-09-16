@@ -34,14 +34,14 @@ public class QuestionResultServiceImpl implements QuestionResultService {
 
 		try{
 			QuestionResult questionResult = questionResultRepositorySupport.findQuestionResultByUesrIdAndResult(questionResultPostReq.getResultIndex(), user);
-			createResult(questionResult, questionResultPostReq, user);
+			saveResult(questionResult, questionResultPostReq, user);
 		}catch (Exception e) {
 			QuestionResult questionResult = new QuestionResult();
-			createResult(questionResult, questionResultPostReq, user);
+			saveResult(questionResult, questionResultPostReq, user);
 		}
 	}
 
-	private void createResult(QuestionResult questionResult, QuestionResultPostReq questionResultPostReq, User user) {
+	private void saveResult(QuestionResult questionResult, QuestionResultPostReq questionResultPostReq, User user) {
 		questionResult.setResult(questionResultPostReq.getResult());
 		questionResult.setResultIndex(questionResultPostReq.getResultIndex());
 		questionResult.setUser(user);

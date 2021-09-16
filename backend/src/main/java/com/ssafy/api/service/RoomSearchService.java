@@ -1,9 +1,11 @@
 package com.ssafy.api.service;
 
+import com.ssafy.api.request.ResidenceDetailGetReq;
 import com.ssafy.api.request.ResidenceGetReq;
 import com.ssafy.db.entity.ResidenceCategory;
 import com.ssafy.db.entity.ResidenceInfo;
 import com.ssafy.db.entity.ResidenceType;
+import org.springframework.security.core.Authentication;
 
 import java.util.List;
 
@@ -23,5 +25,9 @@ public interface RoomSearchService {
 
 	void deleteResidenceType(List<Long> residenceType);
 
-	List<ResidenceInfo> getResidenceInfos(ResidenceGetReq residenceGetReq);
+	List<ResidenceInfo> getResidenceDetails(ResidenceDetailGetReq residenceDetailGetReq, ResidenceGetReq residenceGetReq);
+
+	List<ResidenceInfo> getResidencesBySiGuDong(ResidenceGetReq residenceGetReq);
+
+	void createSearchResidenceFilter(ResidenceDetailGetReq residenceDetailGetReq, Authentication authentication, ResidenceGetReq residenceGetReq);
 }
