@@ -1,4 +1,4 @@
-const URL = "3.38.97.229:8082";
+const URL = "3.38.97.229";
 
 module.exports = {
   css: {
