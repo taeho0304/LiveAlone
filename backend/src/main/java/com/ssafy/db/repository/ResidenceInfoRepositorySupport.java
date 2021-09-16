@@ -42,16 +42,16 @@ public class ResidenceInfoRepositorySupport {
         residences.where(builder);
 
         // 정렬
-        if(residenceDetailGetReq.getSortType()!=null){
-            if(residenceDetailGetReq.getSortType().equals("cost")){
-                if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(qresidenceInfo.cost.asc());
-                if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(qresidenceInfo.cost.desc());
-            }
-            if(residenceDetailGetReq.getSortType().equals("area")){
-                if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(qresidenceInfo.area.asc());
-                if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(qresidenceInfo.area.desc());
-            }
-        }
+//        if(residenceDetailGetReq.getSortType()!=null){
+//            if(residenceDetailGetReq.getSortType().equals("cost")){
+//                if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(qresidenceInfo.cost.asc());
+//                if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(qresidenceInfo.cost.desc());
+//            }
+//            if(residenceDetailGetReq.getSortType().equals("area")){
+//                if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(qresidenceInfo.area.asc());
+//                if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(qresidenceInfo.area.desc());
+//            }
+//        }
 
         return residences.fetch();
     }
@@ -63,9 +63,6 @@ public class ResidenceInfoRepositorySupport {
     }
 
     public JPAQuery<ResidenceInfo> findRoomsBySiGuDong(ResidenceGetReq residenceGetReq) {
-        System.out.println("시 : "+residenceGetReq.getSi());
-        System.out.println("동 : "+residenceGetReq.getDong());
-        System.out.println("군 : "+residenceGetReq.getGugun());
         JPAQuery<ResidenceInfo> residences = jpaQueryFactory.select(qresidenceInfo).from(qresidenceInfo);
         BooleanBuilder builder = new BooleanBuilder();
         if (residenceGetReq.getSi() != null) builder.and(qresidenceInfo.dong.Gugun.Si.siName.eq(residenceGetReq.getSi()));

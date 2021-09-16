@@ -66,7 +66,7 @@ public class UserFavoriteController {
     public ResponseEntity<? extends BaseResponseBody> checkDuplicated(
             @ApiIgnore Authentication authentication, @RequestParam Long ResidenceId) {
         try {
-            UserFavorite userFavorite = userFavoriteService.checkDuplicated(authentication, ResidenceId);
+            userFavoriteService.checkDuplicated(authentication, ResidenceId);
             return ResponseEntity.status(409).body(BaseResponseBody.of(200, "중복 있음"));
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "중복 없음"));

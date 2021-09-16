@@ -11,7 +11,9 @@ import com.ssafy.db.entity.ResidenceType;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -121,7 +123,7 @@ public class ResidenceSearchController {
         }
     }
     @GetMapping("/residences/")
-    @ApiOperation(value = "매물 상세 조회", notes = "매물을 상세 조회한다.")
+    @ApiOperation(value = "매물 구/군/동으로 조회", notes = "매물을 상세 조회한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "실패")
@@ -136,7 +138,7 @@ public class ResidenceSearchController {
     }
 
     @GetMapping("/residences/detail")
-    @ApiOperation(value = "매물 상세 조회", notes = "매물을 상세 조회한다.")
+    @ApiOperation(value = "매물 상세필터로 조회", notes = "매물을 상세 조회한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "실패")
@@ -148,6 +150,23 @@ public class ResidenceSearchController {
             return ResponseEntity.status(200).body(ResidenceRes.of(rooms));
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(500).body(ResidenceRes.of(500, "fail"));
+        }
+    }
+
+    @PostMapping("/save")
+    @ApiOperation(value = "유저 검색 필터 저장", notes = "유저 검색 필터를 저장한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "실패")
+    })
+    public ResponseEntity<? extends BaseResponseBody> createUserResidenceSearchFilter(
+            @ModelAttribute ResidenceDetailGetReq residenceDetailGetReq, @ApiIgnore Authentication authentication,
+            @ModelAttribute ResidenceGetReq residenceGetReq) {
+        try {
+            roomSearchService.createSearchResidenceFilter(residenceDetailGetReq, authentication, residenceGetReq);
+            return ResponseEntity.status(200).body(BaseResponseBody.of(201, "success"));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(500).body(BaseResponseBody.of(500, "fail"));
         }
     }
 }

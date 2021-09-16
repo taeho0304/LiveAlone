@@ -5,6 +5,7 @@ import com.ssafy.api.request.ResidenceGetReq;
 import com.ssafy.db.entity.ResidenceCategory;
 import com.ssafy.db.entity.ResidenceInfo;
 import com.ssafy.db.entity.ResidenceType;
+import org.springframework.security.core.Authentication;
 
 import java.util.List;
 
@@ -27,4 +28,6 @@ public interface RoomSearchService {
 	List<ResidenceInfo> getResidenceDetails(ResidenceDetailGetReq residenceDetailGetReq, ResidenceGetReq residenceGetReq);
 
 	List<ResidenceInfo> getResidencesBySiGuDong(ResidenceGetReq residenceGetReq);
+
+	void createSearchResidenceFilter(ResidenceDetailGetReq residenceDetailGetReq, Authentication authentication, ResidenceGetReq residenceGetReq);
 }
