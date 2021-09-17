@@ -74,6 +74,9 @@ export default {
     this.requestRoomType();
     this.requestBargainType();
   },
+  methods: {
+    ...mapActions("search", ["requestRoomType", "requestBargainType"]),
+  },
 };
 </script>
 <style>
