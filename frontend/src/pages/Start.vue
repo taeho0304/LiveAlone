@@ -36,6 +36,7 @@
               ><a
                 class="btn btn-warning btn-lg btn-block"
                 style="border-radius: 10px"
+                @click="getQuestionList"
                 >추천하기</a
               ></router-link
             >
@@ -72,9 +73,6 @@ export default {
   created() {
     this.requestRoomType();
     this.requestBargainType();
-  },
-  methods: {
-    ...mapActions("search", ["requestRoomType", "requestBargainType"]),
   },
 };
 </script>
