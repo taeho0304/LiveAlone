@@ -1,5 +1,11 @@
 <template>
   <div>
+    <div
+      class="Resi col-md-3 mt-4"
+      style="max-width: 450px; position: relative"
+    >
+      <ResidenceList />
+    </div>
     <div id="map" style="width: 100%; height: 100%"></div>
     <ul id="category" v-show="isShow">
       <li id="BK9" data-order="0">
@@ -36,9 +42,12 @@
 
 <script>
 import { Button } from "@/components";
+import ResidenceList from "../pages/ResidenceList.vue";
+
 export default {
   components: {
     [Button.name]: Button,
+    ResidenceList,
   },
   name: "index",
   bodyClass: "index-page",
@@ -86,6 +95,11 @@ export default {
 };
 </script>
 <style>
+.Resi {
+  padding-left: 0;
+  float: left;
+  z-index: 6;
+}
 .temp {
   position: absolute;
   left: 50%;

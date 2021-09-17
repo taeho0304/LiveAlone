@@ -1,5 +1,5 @@
 <template >
-  <div>
+  <div >
     <MainNav @maker="getMarkerData" />
 
     <Map v-bind:marker="marker" />
@@ -8,7 +8,7 @@
 
 <script>
 import MainNav from "../layout/MainNavbar.vue";
-// import SearchBar from '../pages/SearchBar.vue'
+
 import Map from "../pages/Map.vue";
 
 export default {
@@ -30,3 +30,5 @@ export default {
   },
 };
 </script>
+<style scoped>
+</style>

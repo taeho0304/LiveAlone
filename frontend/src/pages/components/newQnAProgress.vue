@@ -104,11 +104,11 @@ export default {
     },
     next(a, ans) {
       this.QnARes.push(ans);
-      console.log(a);
-      console.log(ans);
+      //console.log(a);
+      //console.log(ans);
 
       if (this.index == 4) {
-        console.log(this.QnARes);
+       // console.log(this.QnARes);
         this.setRes(this.QnARes);
         return;
       }
