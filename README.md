@@ -122,7 +122,7 @@
 
 - Framework : Spring boot / Node.js / Docker 
 - Database : MySQL 
-- 담당자 : 배태호, 변준형, 배태호
+- 담당자 : 배태호, 변준형, 봉대현
 
 ### 🎨화면설계
 
