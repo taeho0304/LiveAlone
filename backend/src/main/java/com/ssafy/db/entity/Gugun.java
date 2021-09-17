@@ -8,11 +8,14 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
 /**
- * 매물 카테고리 모델 정의.
+ * 구, 군 모델 정의.
  */
 @Entity
 @Getter
 @Setter
-public class ResidenceCategory extends BaseEntity{
-    String categoryName; // 아파트, 원룸
+public class Gugun extends BaseEntity{
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Si Si;
+
+    String gugunName;
 }

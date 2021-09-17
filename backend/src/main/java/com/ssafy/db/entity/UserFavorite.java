@@ -2,13 +2,13 @@ package com.ssafy.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ssafy.db.idmodel.ResidenceInfoPK;
+import com.ssafy.db.idmodel.UserFavoritePK;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -17,6 +17,8 @@ import java.io.Serializable;
 @Entity
 @Getter
 @Setter
+@EqualsAndHashCode
+@IdClass(UserFavoritePK.class)
 public class UserFavorite extends BaseEntity implements Serializable {
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
