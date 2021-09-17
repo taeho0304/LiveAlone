@@ -2,7 +2,12 @@
   <div>
     <DetailSearch v-show="isdetail" />
 
-    <navbar position="fixed" type="info" menu-classes="ml-auto ">
+    <navbar
+      position="fixed"
+      type="info"
+      menu-classes="ml-auto"
+      style="height: 30px"
+    >
       <template>
         <router-link v-popover:popover1 class="navbar-brand" to="/">
           나 혼자 살거다
@@ -24,11 +29,11 @@
         <drop-down class="nav-item">
           <n-button
             slot="title"
-            type="primary"
-            class="dropdown-toggle"
+            class="dropdown-toggle btn-warning"
             data-toggle="dropdown"
             block
             round
+            style="color: #5e2c04"
           >
             {{ Si }}
           </n-button>
@@ -44,11 +49,12 @@
         <drop-down class="nav-item">
           <n-button
             slot="title"
-            type="primary"
+            type="warning"
             class="dropdown-toggle"
             data-toggle="dropdown"
             block
             round
+            style="color: #5e2c04"
           >
             {{ Gu }}
           </n-button>
@@ -63,11 +69,12 @@
         <drop-down class="nav-item" style="margin-right: 100px">
           <n-button
             slot="title"
-            type="primary"
+            type="warning"
             class="dropdown-toggle"
             data-toggle="dropdown"
             block
             round
+            style="color: #5e2c04"
           >
             {{ Dong }}
           </n-button>
@@ -236,7 +243,7 @@ export default {
 
 <style scoped>
 .bg-info {
-  background-color: #eb8816 !important;
+  background-color: #5e2c04 !important;
 }
 .bg-default {
   background-color: #ffffff !important;

@@ -100,7 +100,7 @@
             </div>
           </div>
           <div class="col-md-3 lineL" v-show="!checkedResiType[0].TradingJ">
-            선택후 설정 해라
+            전세 체크 후 이용해 주세요
           </div>
           <div class="col-md-3" v-show="checkedResiType[0].TradingW">
             <strong> 월세</strong>
@@ -126,7 +126,7 @@
             <!--<Slider /> -->
           </div>
           <div class="col-md-3" v-show="!checkedResiType[0].TradingW">
-            선택후 설정 해라
+            월세 체크 후 이용해 주세요
           </div>
 
           <div class="col-md-3" v-show="checkedResiType[0].TradingM">
@@ -152,7 +152,7 @@
             </div>
           </div>
           <div class="col-md-3" v-show="!checkedResiType[0].TradingM">
-            선택후 설정 해라
+            매매 체크 후 이용해 주세요
           </div>
         </div>
 
@@ -298,7 +298,7 @@
             <div class="col-md-11">
               <a
                 class="btn btn-warning btn-round btn-block"
-                style="margin-top: 90px"
+                style="margin-top: 90px; color: #5e2c04"
                 @click="setDetailSave"
                 >저장</a
               >

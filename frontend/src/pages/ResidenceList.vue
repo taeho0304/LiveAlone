@@ -2,19 +2,25 @@
   <div class="container">
     <div class="row col-md-12 resiwrap">
       <div class="col-md-4 ml-auto mr-auto">
-        <a class="btn btn-warning btn-round btn-block">가격</a>
+        <a class="btn btn-warning btn-round btn-block" style="color: #5e2c04"
+          >가격</a
+        >
       </div>
       <div class="col-md-4 ml-auto mr-auto">
-        <a class="btn btn-warning btn-round btn-block">면적</a>
+        <a class="btn btn-warning btn-round btn-block" style="color: #5e2c04"
+          >면적</a
+        >
       </div>
       <div class="col-md-4 ml-auto mr-auto">
-        <a class="btn btn-warning btn-round btn-block">선호</a>
+        <a class="btn btn-warning btn-round btn-block" style="color: #5e2c04"
+          >선호</a
+        >
       </div>
     </div>
     <template>
       <div
         class="row col-md-12 mr-0 mt-0"
-        style="overflow: auto; height: 800px"
+        style="overflow: auto; height: 780px"
       >
         <card
           class="card-nav-tabs text-center"

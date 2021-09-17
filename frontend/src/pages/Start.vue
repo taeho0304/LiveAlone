@@ -14,21 +14,28 @@
           <div class="text-center">
             <router-link to="/search"
               ><a
-                class="btn btn-round btn-lg btn-block"
-                style="background-color: #5e2c04"
+                class="btn btn-lg btn-block"
+                style="background-color: #5e2c04; border-radius: 10px"
                 >검색하기</a
               ></router-link
             >
-            <n-button type="primary" @click="modals.classic = true">
-              지도 보기
-            </n-button>
+
+            <a
+              class="btn btn-lg btn-block"
+              style="border-radius: 10px; background-color: #e97406"
+              @click="modals.classic = true"
+            >
+              지도 보기</a
+            >
             <modal :show.sync="modals.classic" modal-classes="modal-lg">
               <div style="display: flex">
                 <seoulMap />
               </div>
             </modal>
             <router-link to="/qna"
-              ><a class="btn btn-warning btn-round btn-lg btn-block"
+              ><a
+                class="btn btn-warning btn-lg btn-block"
+                style="border-radius: 10px"
                 >추천하기</a
               ></router-link
             >

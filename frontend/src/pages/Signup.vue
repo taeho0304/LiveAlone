@@ -94,7 +94,7 @@ export default {
   methods: {
     ...mapActions("user", ["requestRegister"]),
     clickRegister() {
-      console.log(this.user);
+      //console.log(this.user);
       this.requestRegister(this.user);
     },
   },
