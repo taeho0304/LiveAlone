@@ -1,6 +1,6 @@
 <template>
   <div class="contaioner">
-    <div class="col-md-12 wrap">
+    <div class="col-md-9 wrap" style="dispaly: flex; position: absolute">
       <div class="wraptemp">
         <div class="row">
           <div class="col-md-2">
@@ -100,7 +100,7 @@
             </div>
           </div>
           <div class="col-md-3 lineL" v-show="!checkedResiType[0].TradingJ">
-            선택후 설정 해라
+            전세 체크 후 이용해 주세요
           </div>
           <div class="col-md-3" v-show="checkedResiType[0].TradingW">
             <strong> 월세</strong>
@@ -126,7 +126,7 @@
             <!--<Slider /> -->
           </div>
           <div class="col-md-3" v-show="!checkedResiType[0].TradingW">
-            선택후 설정 해라
+            월세 체크 후 이용해 주세요
           </div>
 
           <div class="col-md-3" v-show="checkedResiType[0].TradingM">
@@ -152,7 +152,7 @@
             </div>
           </div>
           <div class="col-md-3" v-show="!checkedResiType[0].TradingM">
-            선택후 설정 해라
+            매매 체크 후 이용해 주세요
           </div>
         </div>
 
@@ -294,11 +294,11 @@
             아파트 설정 불가
           </div>
 
-          <div class="col-md-1">
+          <div class="col-md-1 pl-0 pr-0">
             <div class="col-md-11">
               <a
                 class="btn btn-warning btn-round btn-block"
-                style="margin-top: 90px"
+                style="margin-top: 90px; color: #5e2c04"
                 @click="setDetailSave"
                 >저장</a
               >
@@ -645,7 +645,7 @@ export default {
 
 <style scoped>
 .wraptemp {
-  z-index: 4;
+  z-index: 99;
 
   background-color: rgb(255, 255, 255);
   border-radius: 20px;
@@ -653,7 +653,8 @@ export default {
 }
 .wrap {
   padding-bottom: 25px;
-  z-index: 3;
+  margin-left: 400px;
+  z-index: 99;
   margin-top: 55px;
 }
 .category {

@@ -16,11 +16,11 @@ import lombok.Setter;
 @ApiModel("UserResponse")
 public class UserRes{
 	@ApiModelProperty(name="User ID")
-	User user;
+	String userId;
 	
 	public static UserRes of(User user) {
 		UserRes res = new UserRes();
-		res.setUser(user);
+		res.setUserId(user.getUserId());
 		return res;
 	}
 }

@@ -24,15 +24,11 @@ public class QResidenceInfo extends EntityPathBase<ResidenceInfo> {
 
     public final QBaseEntity _super = new QBaseEntity(this);
 
-    public final NumberPath<Integer> area = createNumber("area", Integer.class);
+    public final StringPath area = createString("area");
 
     public final StringPath content = createString("content");
 
-    public final NumberPath<Integer> cost = createNumber("cost", Integer.class);
-
-    public final StringPath dong = createString("dong");
-
-    public final StringPath gu = createString("gu");
+    public final StringPath cost = createString("cost");
 
     //inherited
     public final NumberPath<Long> id = _super.id;
@@ -42,8 +38,6 @@ public class QResidenceInfo extends EntityPathBase<ResidenceInfo> {
     public final StringPath lat = createString("lat");
 
     public final StringPath lon = createString("lon");
-
-    public final NumberPath<Integer> manageCost = createNumber("manageCost", Integer.class);
 
     public final StringPath name = createString("name");
 

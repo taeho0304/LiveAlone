@@ -14,5 +14,5 @@ import javax.persistence.ManyToOne;
 @Getter
 @Setter
 public class ResidenceCategory extends BaseEntity{
-    String categoryName; // 아파트, 원룸
+    String categoryName;
 }

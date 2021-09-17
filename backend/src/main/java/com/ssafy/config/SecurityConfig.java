@@ -2,7 +2,7 @@ package com.ssafy.config;
 
 import com.ssafy.api.service.UserService;
 import com.ssafy.common.auth.JwtAuthenticationFilter;
-import com.ssafy.common.auth.UserDetailService;
+import com.ssafy.common.auth.SsafyUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    private UserDetailService userDetailService;
+    private SsafyUserDetailService ssafyUserDetailService;
     
     @Autowired
     private UserService userService;
@@ -41,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-        daoAuthenticationProvider.setUserDetailsService(this.userDetailService);
+        daoAuthenticationProvider.setUserDetailsService(this.ssafyUserDetailService);
         return daoAuthenticationProvider;
     }
 

@@ -1,6 +1,6 @@
 package com.ssafy.api.service;
 
-import com.ssafy.api.model.QnA;
+import com.ssafy.api.Model.QnA;
 import com.ssafy.api.request.QuestionOptionPostReq;
 import com.ssafy.db.entity.Question;
 import com.ssafy.db.entity.QuestionOption;

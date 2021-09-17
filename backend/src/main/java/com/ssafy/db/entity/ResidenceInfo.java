@@ -1,8 +1,5 @@
 package com.ssafy.db.entity;
 
-import com.ssafy.db.idmodel.ResidenceInfoPK;
-import com.ssafy.db.idmodel.UserFavoritePK;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,8 +12,6 @@ import java.io.Serializable;
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode
-@IdClass(ResidenceInfoPK.class)
 public class ResidenceInfo extends BaseEntity implements Serializable {
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
@@ -34,9 +29,6 @@ public class ResidenceInfo extends BaseEntity implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private ResidenceCategory residenceCategory;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Dong dong;
-    
     @Id
     @OneToOne
 //    @JoinColumn(name = "id", unique = true, nullable = false )
@@ -45,11 +37,8 @@ public class ResidenceInfo extends BaseEntity implements Serializable {
     String name;
     String lat;
     String lon;
-    int cost;
-    int wolseCost;
-    int jeonseCost;
-    int manageCost;
-    int area;
+    String cost;
+    String area;
     String content;
     String imgurl;
 }
