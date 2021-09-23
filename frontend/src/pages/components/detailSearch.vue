@@ -257,7 +257,7 @@
                   value="1.5룸"
                   v-model="checkedRoomStruc[0].struct1"
                   @input="changeStruct"
-                  >주방 분리형(1.5 룸)</n-checkbox
+                  >주방 분리형&nbsp;&nbsp;&nbsp; (1.5 룸)</n-checkbox
                 >
               </div>
               <div class="col-md-3 floor">
@@ -648,14 +648,14 @@ export default {
   z-index: 99;
 
   background-color: rgb(255, 255, 255);
-  border-radius: 20px;
+  border-radius: 10px;
   box-shadow: 0 5px 18px -7px rgb(85, 83, 83);
 }
 .wrap {
   padding-bottom: 25px;
-  margin-left: 400px;
+  margin-left: 475px;
   z-index: 99;
-  margin-top: 55px;
+  margin-top: 60px;
 }
 .category {
   color: black;
