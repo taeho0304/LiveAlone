@@ -17,4 +17,6 @@ public class Dong extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     private Gugun Gugun;
     String dongName;
+    double lon;
+    double lat;
 }

@@ -1,5 +1,6 @@
 package com.ssafy.api.service;
 
+import com.ssafy.api.model.DongModel;
 import com.ssafy.api.request.ResidenceDetailGetReq;
 import com.ssafy.api.request.ResidenceGetReq;
 import com.ssafy.common.auth.UserDetail;
@@ -43,6 +44,15 @@ public class RoomSearchServiceImpl implements RoomSearchService {
 
 	@Autowired
 	ResidenceTypeRepositorySupport residenceTypeRepositorySupport;
+
+	@Autowired
+	SiRepository siRepository;
+
+	@Autowired
+	GuGunRepositorySupport guGunRepositorySupport;
+
+	@Autowired
+	DongRepositorySupport dongRepositorySupport;
 
 	@Override
 	public void createResidenceCategory(String type) {
@@ -100,6 +110,35 @@ public class RoomSearchServiceImpl implements RoomSearchService {
 			SearchResidenceFilter searchResidenceFilter = new SearchResidenceFilter();
 			saveFilter(searchResidenceFilter, residenceDetailGetReq, user, residenceGetReq);
 		}
+	}
+
+	@Override
+	public List<Si> getSi() {
+		return siRepository.findAll();
+	}
+
+	@Override
+	public List<String> getGuGun(String siName) {
+		List<Gugun> guGuns = guGunRepositorySupport.getGuGunBySiName(siName);
+		List<String> guGunList = new ArrayList<>();
+		for(int i=0; i<guGuns.size(); i++)
+			guGunList.add(guGuns.get(i).getGugunName());
+		return guGunList;
+	}
+
+	@Override
+	public List<DongModel> getDong(String guGunName) {
+		List<Dong> dongs = dongRepositorySupport.getDongByDongName(guGunName);
+		List<DongModel> dongModels = new ArrayList<>();
+		for(int i=0; i<dongs.size(); i++){
+			DongModel dongModel = new DongModel();
+			dongModel.setDongName(dongs.get(i).getDongName());
+			dongModel.setLat(dongs.get(i).getLat());
+			dongModel.setLon(dongs.get(i).getLon());
+			dongModels.add(dongModel);
+		}
+
+		return dongModels;
 	}
 
 	private void saveFilter(SearchResidenceFilter searchResidenceFilter, ResidenceDetailGetReq residenceDetailGetReq, User user, ResidenceGetReq residenceGetReq) {

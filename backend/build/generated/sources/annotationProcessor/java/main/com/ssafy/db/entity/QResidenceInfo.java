@@ -30,14 +30,14 @@ public class QResidenceInfo extends EntityPathBase<ResidenceInfo> {
 
     public final NumberPath<Integer> cost = createNumber("cost", Integer.class);
 
-    public final StringPath dong = createString("dong");
-
-    public final StringPath gu = createString("gu");
+    public final QDong dong;
 
     //inherited
     public final NumberPath<Long> id = _super.id;
 
     public final StringPath imgurl = createString("imgurl");
+
+    public final NumberPath<Integer> jeonseCost = createNumber("jeonseCost", Integer.class);
 
     public final StringPath lat = createString("lat");
 
@@ -57,6 +57,8 @@ public class QResidenceInfo extends EntityPathBase<ResidenceInfo> {
 
     public final QResidenceWeight residenceWeight;
 
+    public final NumberPath<Integer> wolseCost = createNumber("wolseCost", Integer.class);
+
     public QResidenceInfo(String variable) {
         this(ResidenceInfo.class, forVariable(variable), INITS);
     }
@@ -75,6 +77,7 @@ public class QResidenceInfo extends EntityPathBase<ResidenceInfo> {
 
     public QResidenceInfo(Class<? extends ResidenceInfo> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.dong = inits.isInitialized("dong") ? new QDong(forProperty("dong"), inits.get("dong")) : null;
         this.residenceCategory = inits.isInitialized("residenceCategory") ? new QResidenceCategory(forProperty("residenceCategory")) : null;
         this.residenceDetail = inits.isInitialized("residenceDetail") ? new QResidenceDetail(forProperty("residenceDetail")) : null;
         this.residenceEstate = inits.isInitialized("residenceEstate") ? new QResidenceEstate(forProperty("residenceEstate")) : null;
