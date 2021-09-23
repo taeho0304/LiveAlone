@@ -1,6 +1,9 @@
 <template>
-  <div class="container">
-    <div class="row col-md-12 resiwrap">
+  <div class="container" style="padding-right: 0">
+    <div
+      class="row col-md-12 resiwrap"
+      style="padding-bottom: 0; padding-top: 0"
+    >
       <div class="col-md-4 ml-auto mr-auto">
         <a class="btn btn-warning btn-round btn-block" style="color: #5e2c04"
           >가격</a
@@ -18,10 +21,7 @@
       </div>
     </div>
     <template>
-      <div
-        class="row col-md-12 mr-0 mt-0"
-        style="overflow: auto; height: 780px"
-      >
+      <div class="scroll row col-md-12 mr-0 mt-0">
         <card
           class="card-nav-tabs text-center"
           header-classes="card-header-warning"
@@ -56,7 +56,7 @@
               slot="footer"
               class="col-md-12 card-footer mt-0 text-muted mb-2"
             >
-              <p>1층,9평,관리비5만, *낙성대 초 역세권* 넓고 깨끗한 투룸</p>
+              <p>1층,9평,관리비5만, *낙성대 초 역세권* 넓고...</p>
             </div>
           </div>
         </card>
@@ -94,7 +94,7 @@
               slot="footer"
               class="col-md-12 card-footer mt-0 text-muted mb-2"
             >
-              <p>1층,9평,관리비5만, *낙성대 초 역세권* 넓고 깨끗한 투룸</p>
+              <p>1층,9평,관리비5만, *낙성대 초 역세권* 넓고...</p>
             </div>
           </div>
         </card>
@@ -132,7 +132,7 @@
               slot="footer"
               class="col-md-12 card-footer mt-0 text-muted mb-2"
             >
-              <p>1층,9평,관리비5만, *낙성대 초 역세권* 넓고 깨끗한 투룸</p>
+              <p>1층,9평,관리비5만, *낙성대 초 역세권* 넓고...</p>
             </div>
           </div>
         </card>
@@ -170,7 +170,7 @@
               slot="footer"
               class="col-md-12 card-footer mt-0 text-muted mb-2"
             >
-              <p>1층,9평,관리비5만, *낙성대 초 역세권* 넓고 깨끗한 투룸</p>
+              <p>1층,9평,관리비5만, *낙성대 초 역세권* 넓고...</p>
             </div>
           </div>
         </card>
@@ -208,7 +208,7 @@
               slot="footer"
               class="col-md-12 card-footer mt-0 text-muted mb-2"
             >
-              <p>1층,9평,관리비5만, *낙성대 초 역세권* 넓고 깨끗한 투룸</p>
+              <p>1층,9평,관리비5만, *낙성대 초 역세권* 넓고...</p>
             </div>
           </div>
         </card>
@@ -246,7 +246,7 @@
               slot="footer"
               class="col-md-12 card-footer mt-0 text-muted mb-2"
             >
-              <p>1층,9평,관리비5만, *낙성대 초 역세권* 넓고 깨끗한 투룸</p>
+              <p>1층,9평,관리비5만, *낙성대 초 역세권* 넓고...</p>
             </div>
           </div>
         </card>
@@ -284,7 +284,7 @@
               slot="footer"
               class="col-md-12 card-footer mt-0 text-muted mb-2"
             >
-              <p>1층,9평,관리비5만, *낙성대 초 역세권* 넓고 깨끗한 투룸</p>
+              <p>1층,9평,관리비5만, *낙성대 초 역세권* 넓고...</p>
             </div>
           </div>
         </card>
@@ -355,7 +355,22 @@ export default {
   text-align: left;
 }
 .resiwrap {
-  padding-left: 0;
   display: flex;
+}
+.scroll {
+  overflow: auto;
+  height: calc(100vh - 170px);
+}
+.scroll::-webkit-scrollbar {
+  width: 5px; /*스크롤바의 너비*/
+}
+.scroll::-webkit-scrollbar-thumb {
+  background-color: #2f3542;
+  border-radius: 10px;
+}
+.scroll::-webkit-scrollbar-track {
+  background-color: grey;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
 }
 </style>
