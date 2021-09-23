@@ -25,7 +25,7 @@
               style="border-radius: 10px; background-color: #e97406"
               @click="modals.classic = true"
             >
-              지도 보기</a
+              지도보기</a
             >
             <modal :show.sync="modals.classic" modal-classes="modal-lg">
               <div style="display: flex">
@@ -36,7 +36,7 @@
               ><a
                 class="btn btn-warning btn-lg btn-block"
                 style="border-radius: 10px"
-                >추천하기</a
+                >추천받기</a
               ></router-link
             >
           </div>
@@ -66,15 +66,12 @@ export default {
   methods: {
     ...mapActions("question", ["requestQuestion"]),
     getQuestionList() {
+      console.log("질문옵션");
       this.requestQuestion();
     },
   },
   created() {
-    this.requestRoomType();
-    this.requestBargainType();
-  },
-  methods: {
-    ...mapActions("search", ["requestRoomType", "requestBargainType"]),
+    this.getQuestionList();
   },
 };
 </script>
