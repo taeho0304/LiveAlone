@@ -1,13 +1,12 @@
 package com.ssafy.api.controller;
 
+import com.ssafy.api.model.DongModel;
 import com.ssafy.api.request.ResidenceDetailGetReq;
 import com.ssafy.api.request.ResidenceGetReq;
 import com.ssafy.api.response.*;
 import com.ssafy.api.service.RoomSearchService;
 import com.ssafy.common.model.response.BaseResponseBody;
-import com.ssafy.db.entity.ResidenceCategory;
-import com.ssafy.db.entity.ResidenceInfo;
-import com.ssafy.db.entity.ResidenceType;
+import com.ssafy.db.entity.*;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -122,7 +121,53 @@ public class ResidenceSearchController {
             return ResponseEntity.status(500).body(BaseResponseBody.of(500, "fail"));
         }
     }
-    @GetMapping("/residences/")
+
+    @GetMapping("/si")
+    @ApiOperation(value = "시 목록 조회", notes = "시 목록을 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "실패")
+    })
+    public ResponseEntity<SiRes> getSi() {
+        try {
+            List<Si> siList = roomSearchService.getSi();
+            return ResponseEntity.status(200).body(SiRes.of(siList));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(500).body(SiRes.of(500, "fail"));
+        }
+    }
+
+    @GetMapping("/gugun")
+    @ApiOperation(value = "구군 목록 조회", notes = "구군 목록을 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "실패")
+    })
+    public ResponseEntity<GuGunRes> getGuGun( @RequestParam String siName ) {
+        try {
+            List<String> guGunList = roomSearchService.getGuGun(siName);
+            return ResponseEntity.status(200).body(GuGunRes.of(guGunList));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(500).body(GuGunRes.of(500, "fail"));
+        }
+    }
+
+    @GetMapping("/dong")
+    @ApiOperation(value = "동 목록 조회", notes = "동 목록을 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "실패")
+    })
+    public ResponseEntity<DongRes> getDong( @RequestParam String dong ) {
+        try {
+            List<DongModel> dongModelList = roomSearchService.getDong(dong);
+            return ResponseEntity.status(200).body(DongRes.of(dongModelList));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(500).body(DongRes.of(500, "fail"));
+        }
+    }
+
+    @GetMapping("/residences")
     @ApiOperation(value = "매물 구/군/동으로 조회", notes = "매물을 상세 조회한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),

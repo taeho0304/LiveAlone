@@ -21,12 +21,12 @@ public class QResidenceDetail extends EntityPathBase<ResidenceDetail> {
 
     public final QBaseEntity _super = new QBaseEntity(this);
 
-    public final StringPath building = createString("building");
+    public final StringPath floor = createString("floor");
 
     //inherited
     public final NumberPath<Long> id = _super.id;
 
-    public final StringPath unit = createString("unit");
+    public final StringPath structure = createString("structure");
 
     public QResidenceDetail(String variable) {
         super(ResidenceDetail.class, forVariable(variable));
