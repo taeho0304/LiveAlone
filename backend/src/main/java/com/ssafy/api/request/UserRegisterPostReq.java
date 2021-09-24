@@ -22,5 +22,7 @@ public class UserRegisterPostReq {
 	String userEmail;
 	@ApiModelProperty(name="유저 Phone", example="010-1234-5678")
 	String userPhone;
+	@ApiModelProperty(name="부동산 id", example="1",required = false)
+	Long estateId;
 }
 

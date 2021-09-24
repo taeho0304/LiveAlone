@@ -8,15 +8,11 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
 /**
- * 동 모델 정의.
+ * 이미지 모델 정의.
  */
 @Entity
 @Getter
 @Setter
-public class Dong extends BaseEntity{
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Gugun Gugun;
-    String dongName;
-    double lon;
-    double lat;
+public class ImageUrl extends BaseEntity {
+    String url;
 }

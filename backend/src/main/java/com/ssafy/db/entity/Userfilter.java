@@ -15,13 +15,9 @@ import java.io.Serializable;
 @Setter
 @EqualsAndHashCode
 public class Userfilter extends BaseEntity implements Serializable {
-    @Id
     @ManyToOne
     private CommercialCategory commercialCategory;
 
     @OneToOne( fetch = FetchType.LAZY)
-
-//    @JoinColumn(unique = true)
-
-     private User user;
+    private User user;
 }

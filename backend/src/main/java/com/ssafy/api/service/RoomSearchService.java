@@ -1,10 +1,9 @@
 package com.ssafy.api.service;
 
+import com.ssafy.api.model.DongModel;
 import com.ssafy.api.request.ResidenceDetailGetReq;
 import com.ssafy.api.request.ResidenceGetReq;
-import com.ssafy.db.entity.ResidenceCategory;
-import com.ssafy.db.entity.ResidenceInfo;
-import com.ssafy.db.entity.ResidenceType;
+import com.ssafy.db.entity.*;
 import org.springframework.security.core.Authentication;
 
 import java.util.List;
@@ -30,4 +29,10 @@ public interface RoomSearchService {
 	List<ResidenceInfo> getResidencesBySiGuDong(ResidenceGetReq residenceGetReq);
 
 	void createSearchResidenceFilter(ResidenceDetailGetReq residenceDetailGetReq, Authentication authentication, ResidenceGetReq residenceGetReq);
+
+    List<Si> getSi();
+
+	List<String> getGuGun(String siName);
+
+	List<DongModel> getDong(String guGunName);
 }
