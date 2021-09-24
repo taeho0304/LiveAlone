@@ -18,7 +18,6 @@ import java.io.Serializable;
 @Setter
 @EqualsAndHashCode
 public class ResidenceWeight extends BaseEntity implements Serializable {
-    @Id
     @ManyToOne(fetch = FetchType.LAZY)
     private CommercialCategory commercialCategory;
 

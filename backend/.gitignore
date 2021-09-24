@@ -1,0 +1,8 @@
+# Gradle
+
+.idea
+.gradle
+/build/
+.gradletasknamecache
+
+build
