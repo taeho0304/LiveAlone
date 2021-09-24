@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  * 매물 부동산 모델 정의.
@@ -12,7 +15,9 @@ import javax.persistence.Entity;
 @Getter
 @Setter
 public class ResidenceEstate extends BaseEntity{
-    String name;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private EstateInfo estateInfo;
+
     String phone;
     String address;
     String tel;
