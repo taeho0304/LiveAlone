@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <VueSlickCarousel
+      v-bind="settings"
       class="ml-auto mr-auto mt-auto mb-auto"
       style="width: 500px; height: 245px"
     >
@@ -58,7 +59,22 @@
 <script>
 import Card from "../../components/Cards/Card.vue";
 import VueSlickCarousel from "vue-slick-carousel";
+import "vue-slick-carousel/dist/vue-slick-carousel.css";
+import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
 export default {
+  data() {
+    return {
+      settings: {
+        dots: true,
+        infinite: true,
+        initialSlide: 2,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        swipeToSlide: true,
+      },
+    };
+  },
   components: {
     Card,
     VueSlickCarousel,
@@ -70,5 +86,26 @@ export default {
   width: 495px;
   height: 245px;
   margin-top: 10px;
+}
+.slick-dots {
+  position: absolute;
+  bottom: 0px;
+  display: block;
+  width: 100%;
+  padding: 0;
+  padding-right: 50px;
+  margin: 0;
+  list-style: none;
+  text-align: center;
+}
+.slick-prev:before,
+.slick-next:before {
+  font-family: "slick";
+  font-size: 20px;
+  line-height: 1;
+  opacity: 0.75;
+  color: coral;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 </style>
