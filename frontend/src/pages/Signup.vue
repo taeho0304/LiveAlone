@@ -5,10 +5,10 @@
   >
     <div class="container">
       <div class="row">
-        <card class="card-signup" header-classes="text-center" color="orange">
-          <template slot="header">
-            <h3 class="card-title title-up">Sign Up</h3>
-          </template>
+
+   
+            <h3 class="center">Sign Up</h3>
+    
 
           <template>
             <fg-input
@@ -64,7 +64,7 @@
               >Get Started</n-button
             >
           </div>
-        </card>
+
       </div>
 
       <div class="col text-center" style="padding-top:15px;">
@@ -76,7 +76,7 @@
   </div>
 </template>
 <script>
-import { Card, FormGroupInput, Button } from "@/components";
+import { FormGroupInput, Button } from "@/components";
 import { mapActions } from "vuex";
 export default {
   data() {
@@ -99,7 +99,7 @@ export default {
     },
   },
   components: {
-    Card,
+
     [Button.name]: Button,
     [FormGroupInput.name]: FormGroupInput,
   },

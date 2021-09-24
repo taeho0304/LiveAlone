@@ -3,9 +3,9 @@
     
     <div class="section">
       <div class="container" >
-        <h3 class="title" style="margin-top:1px; padding-top:0px;">My Page</h3>
+
       
-        <div class="card row">
+        <div class="card row" style="margin-top:15px;">
           <tabs type="primary" tabContentClasses="tab-subcategories"
         square centered class="nav-align-center">
             <tab-pane>
