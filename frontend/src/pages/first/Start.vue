@@ -48,7 +48,7 @@
 <script>
 import { mapActions } from "vuex";
 import { Modal } from "@/components";
-import seoulMap from "./seoulMap.vue";
+import seoulMap from "../first/seoulMap.vue";
 export default {
   components: {
     Modal,

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import StartPage from '../pages/Start.vue'
+import StartPage from '../pages/first/Start.vue'
 
 export default {
     components:{

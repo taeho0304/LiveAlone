@@ -3,13 +3,14 @@
     class="footer"
     :class="{ [`footer-${type}`]: type }"
     :data-background-color="backgroundColor"
+    
   >
     <div class="container">
       <nav>
         <ul>
           <li>
             <a href="https://www.creative-tim.com">
-              Creative Tim
+              Creative 4남 1녀
             </a>
           </li>
           <li>
@@ -18,28 +19,23 @@
             </a>
           </li>
           <li>
-            <a href="https:///blog.creative-tim.com">
-              Blog
-            </a>
-          </li>
-          <li>
-            <a href="https://www.creative-tim.com/license">
-              License
+            <a href="https://humble-polonium-918.notion.site/7ed95eeaebdb49fd935c4a6f547294eb">
+              도움말
             </a>
           </li>
         </ul>
       </nav>
       <div class="copyright">
         &copy; {{ year }}, Designed by
-        <a href="https:///www.invisionapp.com" target="_blank" rel="noopener"
-          >Invision</a
-        >. Coded by
-        <a href="https://binarcode.com" target="_blank" rel="noopener"
-          >BinarCode</a
+        <a href="https://www.instagram.com/ujjgnim/" target="_blank" rel="noopener"
+          >MJ Kang</a
+        >,
+        <a href="https://www.instagram.com/y._.n_reo/" target="_blank" rel="noopener"
+          >KH Yoon</a
         >
         and
         <a href="https://www.creative-tim.com" target="_blank" rel="noopener"
-          >Creative Tim</a
+          >I will alone</a
         >.
       </div>
     </div>
@@ -58,4 +54,10 @@ export default {
   }
 };
 </script>
-<style></style>
+<style scope>
+.footer {
+    padding: 7px 0;
+
+}
+
+</style>

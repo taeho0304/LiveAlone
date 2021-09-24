@@ -1,34 +1,58 @@
 import jwt_decode from 'jwt-decode';
 import http from '@/util/http-common';
 import router from "@/router/router";
-
+import VueSimpleAlert from "vue-simple-alert";
 
 export default {
     namespaced: true,
     state: {
         userInfo: null,
         accessToken: "",
-
+        estateInfo: null,
+    },
+    getters: {
+      getAccessToken(state) {
+        return state.accessToken;
+        },
+        getLoginStatus(state) {
+            return state.loginStatus;
+        },
+        getUserInfo(state) {
+            return state.userInfo;
+          },
+        getEstateInfo(state){
+            return state.estateInfo;
+        },
     },
     mutations: {
         LOGIN(state, payload) {
             state.accessToken = payload.accessToken;
             localStorage.setItem("accessToken", state.accessToken);
-            //console.log(payload.accessToken);
         },
         USERINFO(state, payload) {
             state.userInfo = payload;
-        }
+        },
+        ESTATEINFO(state, payload){
+            console.log(payload);
+            state.estateInfo = payload;
+            console.log(state.estateInfo);
+        },
     },
     actions: {
         requestRegister(context, payload) {
             let body = payload
 
             http.post('/api/v1/users', body).then(() => {
+              VueSimpleAlert.fire({
+                title: "SUCCESS",
+                text: "회원가입이 완료 되었습니다.👋",
+                type: "success",
+              })
                 router.push('/login');
             }).catch((err) => {
-                //alert(err.response.data.message);
-                //console.log(err);
+              if(err.response.status==409){
+                VueSimpleAlert.alert("아이디를 다시 확인해주세요.😭");
+              }
             });
         },
         requestLogin({ commit }, user) {
@@ -36,25 +60,38 @@ export default {
                 .post(`/api/v1/auth/login`, user)
                 .then(({ data }) => {
                     commit("LOGIN", data);
+                    VueSimpleAlert.fire({
+                      title: "로그인 성공",
+                      text: "로그인이 완료 되었습니다.🙌",
+                      type: "success",
+                    })
                     router.push('/search');
-                   // console.log(localStorage.getItem("accessToken"));
                 })
                 .catch((err) => {
-                   // console.log(err);
+                  if(err.response.status==401){
+                    VueSimpleAlert.fire({
+                      title: "로그인 실패",
+                      text: "아이디와 패드워드를 다시 확인해주세요.😭",
+                      type: "error",
+                    })
+                  }else if(err.response.status==404){
+                    VueSimpleAlert.fire({
+                      title: "로그인 실패",
+                      text: "회원정보가 없습니다.😭",
+                      type: "error",
+                    })
+                  }
                 });
         },
         requestUserInfo({commit}){
             const CSRF_TOKEN=localStorage.getItem("accessToken");
-            //if (CSRF_TOKEN==null) return;
             http
               .get(`/api/v1/users/me`,{headers: {"Authorization": 'Bearer '+ CSRF_TOKEN }
             })
             .then(({ data })=>{
                 commit("USERINFO", data);
-                //console.log(data);
             })
             .catch(() => {
-                //console.error();
             });
         },
         requestModify({commit}, user){
@@ -63,26 +100,64 @@ export default {
               .patch(`/api/v1/users/`+user.userId,user)
               .then(({ data })=>{
                 commit("USERINFO", data);
-                alert('회원정보가 수정 되었습니다.')
+                VueSimpleAlert.fire({
+                  title: "수정 성공",
+                  text: "내용이 성공적으로 반영되었습니다.✍️",
+                  type: "success",
+                })
                 window.location.reload();
                 this.requestUserInfo();
               })
               .catch(() => {
 
               });
-          },
-
-
+        },
+        requestDuplicate({commit}, userId){
+            http
+              .get(`/api/v1/users/`+userId)
+              .then((res) => {
+                  VueSimpleAlert.fire({
+                    title: "SUCCESS",
+                    text: "사용가능한 아이디입니다.",
+                    type: "success",
+                  })
+                  commit('user/USERID', true, {root: true});
+                })
+              .catch((error) => {
+                if(error.response.data.statusCode==409){
+                  commit('user/USERID', false, {root: true});
+                  VueSimpleAlert.fire({
+                    title: "FAIL",
+                    text: "이미 존재하는 아이디입니다.",
+                    type: "error",
+                  })
+                }
+            });
+        },
+        requestEstate({commit}, estateNum){
+            console.log(estateNum);
+            http
+            .get(`/api/v1/users/estate`,{ params: { registrationNumber: estateNum }})
+              .then((res) => {
+                commit("user/ESTATEINFO", res.data.estateInfo, {root: true});
+                  VueSimpleAlert.fire({
+                    title: "SUCCESS",
+                    text: "사업자 번호가 확인되었습니다.",
+                    type: "success",
+                  })
+                
+                })
+              .catch((error) => {
+                if(error.response.data.statusCode==500){
+                  commit("ESTATENUMBER", false);
+                  VueSimpleAlert.fire({
+                    title: "FAIL",
+                    text: "사업자 번호가 존재하지 않습니다.",
+                    type: "error",
+                  })
+                }
+            });
+        },
     },
-    getters: {
-        getAccessToken(state) {
-            return state.accessToken;
-        },
-        getLoginStatus(state) {
-            return state.loginStatus;
-        },
-        getUserInfo(state) {
-            return state.userInfo;
-          },
-    }
+
 }

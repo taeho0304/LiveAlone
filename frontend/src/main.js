@@ -22,11 +22,12 @@ import NowUiKit from './plugins/now-ui-kit';
 import '@progress/kendo-theme-default/dist/all.css';
 import store from './store'
 import vuetify from './plugins/vuetify'
-
+import VueSimpleAlert from "vue-simple-alert";
 
 Vue.config.productionTip = false;
 
 Vue.use(NowUiKit);
+Vue.use(VueSimpleAlert, { reverseButtons: true });
 
 new Vue({
  router,

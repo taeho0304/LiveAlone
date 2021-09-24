@@ -24,6 +24,7 @@
               v-model="user.password"
               placeholder="비밀번호"
               type="password"
+              @keyup.enter="clickLogin"
             >
             </fg-input>
             
