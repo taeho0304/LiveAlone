@@ -7,10 +7,11 @@ gen
 build
 rebel.xml
 ssafy-web.log
+*.log
 
 # Gradle
 .gradle
 /build/
 .gradletasknamecache
-
+gradle
 
