@@ -1,8 +1,10 @@
 @include form-control-placeholder($default-color, .8);
 
 .form-control {
-    background-color: $transparent-bg;
-    border: 1px solid $light-gray;
+    // background-color: $transparent-bg;
+    background-color: #ffffff;
+    // border: 1px solid $light-gray;
+    border: 1px solid #ffffff;
     border-radius: $btn-round-radius;
     color: $black-color;
     line-height: normal;
