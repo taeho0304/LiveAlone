@@ -10,7 +10,7 @@
         <ul>
           <li>
             <a href="https://www.creative-tim.com">
-              Creative Tim
+              Creative 4남 1녀
             </a>
           </li>
           <li>
@@ -19,23 +19,23 @@
             </a>
           </li>
           <li>
-            <a href="https:///blog.creative-tim.com">
-              Blog
+            <a href="https://humble-polonium-918.notion.site/7ed95eeaebdb49fd935c4a6f547294eb">
+              Notion
             </a>
           </li>
         </ul>
       </nav>
       <div class="copyright">
         &copy; {{ year }}, Designed by
-        <a href="https:///www.invisionapp.com" target="_blank" rel="noopener"
-          >Invision</a
+        <a href="https://www.instagram.com/ujjgnim/" target="_blank" rel="noopener"
+          >MJ Kang</a
         >. Coded by
-        <a href="https://binarcode.com" target="_blank" rel="noopener"
-          >BinarCode</a
+        <a href="https://www.instagram.com/y._.n_reo/" target="_blank" rel="noopener"
+          >KH Yoon</a
         >
         and
         <a href="https://www.creative-tim.com" target="_blank" rel="noopener"
-          >Creative Tim</a
+          >I will alone.</a
         >.
       </div>
     </div>

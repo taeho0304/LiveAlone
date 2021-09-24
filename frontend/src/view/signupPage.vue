@@ -13,12 +13,12 @@
 <script>
 
 
-import Signup from '../pages/Signup copy.vue'
+import Signup from '../pages/user/Signup copy.vue'
 
 export default {
     data(){
         return {
-      color: "linear-gradient(0deg,#f6d365,#dfa579)",
+      color: "linear-gradient(0deg,#fdfbfb,#ebedee)",
     };
     },
     components:{

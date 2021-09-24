@@ -39,7 +39,7 @@
 
 <script>
 import { Button } from "@/components";
-import ResidenceList from "../pages/ResidenceList.vue";
+import ResidenceList from "./ResidenceList.vue";
 
 export default {
   components: {

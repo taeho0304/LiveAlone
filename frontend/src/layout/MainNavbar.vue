@@ -122,6 +122,13 @@
               >
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link mt-2">
+              <router-link to="/dashboard "
+                ><i class="now-ui-icons education_paper"></i>
+                <p>관리페이지</p></router-link>
+            </a>
+          </li>
         </template>
       </template>
     </navbar>
@@ -131,10 +138,7 @@
 <script>
 import { DropDown, Navbar, Button } from "@/components";
 import { Popover } from "element-ui";
-import OneSearchBar from "../pages/SearchBar/OneSearchBar.vue";
-import ApartSearchBar from "../pages/SearchBar/ApartSearchBar.vue";
-import { mapGetters } from "vuex";
-import DetailSearch from "../pages/components/detailSearch.vue";
+import DetailSearch from "../pages/map/detailSearch.vue";
 export default {
   name: "main-navbar",
   props: {
