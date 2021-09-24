@@ -48,235 +48,7 @@
                   <i class="now-ui-icons ui-2_favourite-28"></i>
                 </div>
                 <div class="col-md-6 pr-0">
-                  <i class="now-ui-icons ui-1_zoom-bold"></i>
-                </div>
-              </div>
-            </div>
-            <div
-              slot="footer"
-              class="col-md-12 card-footer mt-0 text-muted mb-2"
-            >
-              <p>1층,9평,관리비5만, *낙성대 초 역세권* 넓고...</p>
-            </div>
-          </div>
-        </card>
-        <card
-          class="card-nav-tabs text-center"
-          header-classes="card-header-warning"
-          style="max-width: 650px; max-height: 286px"
-        >
-          <div class="row" style="margin-rigth: 0">
-            <div class="col-md-8">
-              <img src="img/main.jpg" />
-            </div>
-            <div class="col-md-4 pr-0 pl-0">
-              <div class="col-md-12 pl-0 pb-0 title">
-                <strong><h5 class="mb-1">전세</h5></strong>
-              </div>
-              <div class="col-md-12 pt-1 pl-0 pr-0 title">
-                <strong><h5 class="mb-1">1억 6500</h5></strong>
-              </div>
-              <div class="col-md-12 pt-1 pl-0 pr-0 title">
-                <h6 class="mb-1">투룸</h6>
-              </div>
-              <div
-                class="row col-md-12 ml-auto mr-auto mt-1 pt-1 pl-0 pr-0 title"
-              >
-                <div class="col-md-6 pr-0">
-                  <i class="now-ui-icons ui-2_favourite-28"></i>
-                </div>
-                <div class="col-md-6 pr-0">
-                  <i class="now-ui-icons ui-1_zoom-bold"></i>
-                </div>
-              </div>
-            </div>
-            <div
-              slot="footer"
-              class="col-md-12 card-footer mt-0 text-muted mb-2"
-            >
-              <p>1층,9평,관리비5만, *낙성대 초 역세권* 넓고...</p>
-            </div>
-          </div>
-        </card>
-        <card
-          class="card-nav-tabs text-center"
-          header-classes="card-header-warning"
-          style="max-width: 650px; max-height: 286px"
-        >
-          <div class="row" style="margin-rigth: 0">
-            <div class="col-md-8">
-              <img src="img/main.jpg" />
-            </div>
-            <div class="col-md-4 pr-0 pl-0">
-              <div class="col-md-12 pl-0 pb-0 title">
-                <strong><h5 class="mb-1">전세</h5></strong>
-              </div>
-              <div class="col-md-12 pt-1 pl-0 pr-0 title">
-                <strong><h5 class="mb-1">1억 6500</h5></strong>
-              </div>
-              <div class="col-md-12 pt-1 pl-0 pr-0 title">
-                <h6 class="mb-1">투룸</h6>
-              </div>
-              <div
-                class="row col-md-12 ml-auto mr-auto mt-1 pt-1 pl-0 pr-0 title"
-              >
-                <div class="col-md-6 pr-0">
-                  <i class="now-ui-icons ui-2_favourite-28"></i>
-                </div>
-                <div class="col-md-6 pr-0">
-                  <i class="now-ui-icons ui-1_zoom-bold"></i>
-                </div>
-              </div>
-            </div>
-            <div
-              slot="footer"
-              class="col-md-12 card-footer mt-0 text-muted mb-2"
-            >
-              <p>1층,9평,관리비5만, *낙성대 초 역세권* 넓고...</p>
-            </div>
-          </div>
-        </card>
-        <card
-          class="card-nav-tabs text-center"
-          header-classes="card-header-warning"
-          style="max-width: 650px; max-height: 286px"
-        >
-          <div class="row" style="margin-rigth: 0">
-            <div class="col-md-8">
-              <img src="img/main.jpg" />
-            </div>
-            <div class="col-md-4 pr-0 pl-0">
-              <div class="col-md-12 pl-0 pb-0 title">
-                <strong><h5 class="mb-1">전세</h5></strong>
-              </div>
-              <div class="col-md-12 pt-1 pl-0 pr-0 title">
-                <strong><h5 class="mb-1">1억 6500</h5></strong>
-              </div>
-              <div class="col-md-12 pt-1 pl-0 pr-0 title">
-                <h6 class="mb-1">투룸</h6>
-              </div>
-              <div
-                class="row col-md-12 ml-auto mr-auto mt-1 pt-1 pl-0 pr-0 title"
-              >
-                <div class="col-md-6 pr-0">
-                  <i class="now-ui-icons ui-2_favourite-28"></i>
-                </div>
-                <div class="col-md-6 pr-0">
-                  <i class="now-ui-icons ui-1_zoom-bold"></i>
-                </div>
-              </div>
-            </div>
-            <div
-              slot="footer"
-              class="col-md-12 card-footer mt-0 text-muted mb-2"
-            >
-              <p>1층,9평,관리비5만, *낙성대 초 역세권* 넓고...</p>
-            </div>
-          </div>
-        </card>
-        <card
-          class="card-nav-tabs text-center"
-          header-classes="card-header-warning"
-          style="max-width: 650px; max-height: 286px"
-        >
-          <div class="row" style="margin-rigth: 0">
-            <div class="col-md-8">
-              <img src="img/main.jpg" />
-            </div>
-            <div class="col-md-4 pr-0 pl-0">
-              <div class="col-md-12 pl-0 pb-0 title">
-                <strong><h5 class="mb-1">전세</h5></strong>
-              </div>
-              <div class="col-md-12 pt-1 pl-0 pr-0 title">
-                <strong><h5 class="mb-1">1억 6500</h5></strong>
-              </div>
-              <div class="col-md-12 pt-1 pl-0 pr-0 title">
-                <h6 class="mb-1">투룸</h6>
-              </div>
-              <div
-                class="row col-md-12 ml-auto mr-auto mt-1 pt-1 pl-0 pr-0 title"
-              >
-                <div class="col-md-6 pr-0">
-                  <i class="now-ui-icons ui-2_favourite-28"></i>
-                </div>
-                <div class="col-md-6 pr-0">
-                  <i class="now-ui-icons ui-1_zoom-bold"></i>
-                </div>
-              </div>
-            </div>
-            <div
-              slot="footer"
-              class="col-md-12 card-footer mt-0 text-muted mb-2"
-            >
-              <p>1층,9평,관리비5만, *낙성대 초 역세권* 넓고...</p>
-            </div>
-          </div>
-        </card>
-        <card
-          class="card-nav-tabs text-center"
-          header-classes="card-header-warning"
-          style="max-width: 650px; max-height: 286px"
-        >
-          <div class="row" style="margin-rigth: 0">
-            <div class="col-md-8">
-              <img src="img/main.jpg" />
-            </div>
-            <div class="col-md-4 pr-0 pl-0">
-              <div class="col-md-12 pl-0 pb-0 title">
-                <strong><h5 class="mb-1">전세</h5></strong>
-              </div>
-              <div class="col-md-12 pt-1 pl-0 pr-0 title">
-                <strong><h5 class="mb-1">1억 6500</h5></strong>
-              </div>
-              <div class="col-md-12 pt-1 pl-0 pr-0 title">
-                <h6 class="mb-1">투룸</h6>
-              </div>
-              <div
-                class="row col-md-12 ml-auto mr-auto mt-1 pt-1 pl-0 pr-0 title"
-              >
-                <div class="col-md-6 pr-0">
-                  <i class="now-ui-icons ui-2_favourite-28"></i>
-                </div>
-                <div class="col-md-6 pr-0">
-                  <i class="now-ui-icons ui-1_zoom-bold"></i>
-                </div>
-              </div>
-            </div>
-            <div
-              slot="footer"
-              class="col-md-12 card-footer mt-0 text-muted mb-2"
-            >
-              <p>1층,9평,관리비5만, *낙성대 초 역세권* 넓고...</p>
-            </div>
-          </div>
-        </card>
-        <card
-          class="card-nav-tabs text-center"
-          header-classes="card-header-warning"
-          style="max-width: 650px; max-height: 286px"
-        >
-          <div class="row" style="margin-rigth: 0">
-            <div class="col-md-8">
-              <img src="img/main.jpg" />
-            </div>
-            <div class="col-md-4 pr-0 pl-0">
-              <div class="col-md-12 pl-0 pb-0 title">
-                <strong><h5 class="mb-1">전세</h5></strong>
-              </div>
-              <div class="col-md-12 pt-1 pl-0 pr-0 title">
-                <strong><h5 class="mb-1">1억 6500</h5></strong>
-              </div>
-              <div class="col-md-12 pt-1 pl-0 pr-0 title">
-                <h6 class="mb-1">투룸</h6>
-              </div>
-              <div
-                class="row col-md-12 ml-auto mr-auto mt-1 pt-1 pl-0 pr-0 title"
-              >
-                <div class="col-md-6 pr-0">
-                  <i class="now-ui-icons ui-2_favourite-28"></i>
-                </div>
-                <div class="col-md-6 pr-0">
-                  <i class="now-ui-icons ui-1_zoom-bold"></i>
+                  <i class="now-ui-icons ui-1_zoom-bold" @click="showModal"></i>
                 </div>
               </div>
             </div>
@@ -290,17 +62,32 @@
         </card>
       </div>
     </template>
+    <template>
+      <modal
+        class="resiDetailModal"
+        :show.sync="showResiDetail"
+        modal-classes="modal-lg"
+        header-classes="justify-content-center"
+      >
+        <ResiDetail />
+      </modal>
+    </template>
   </div>
 </template>
 <script>
 import { Card } from "@/components";
+import Modal from "../components/Modal.vue";
+import ResiDetail from "../pages/components/ResiDetail.vue";
 export default {
   components: {
     Card,
+    Modal,
+    ResiDetail,
   },
   setup() {},
   data() {
     return {
+      showResiDetail: false,
       residence: [
         {
           area: 0,
@@ -348,6 +135,12 @@ export default {
       ],
     };
   },
+  methods: {
+    showModal() {
+      console.log("dddd");
+      this.showResiDetail = !this.showResiDetail;
+    },
+  },
 };
 </script>
 <style scoped>
@@ -372,5 +165,10 @@ export default {
   background-color: grey;
   border-radius: 10px;
   box-shadow: inset 0px 0px 5px white;
+}
+.resiDetailModal {
+  display: flex;
+  
+ 
 }
 </style>
