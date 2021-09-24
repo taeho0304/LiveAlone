@@ -8,6 +8,8 @@ import com.ssafy.db.entity.ResidenceType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 /**
  * 방 거래 타입 관련 디비 쿼리 생성을 위한 구현 정의.
  */
@@ -17,9 +19,10 @@ public class EstateInfoRepositorySupport {
     private JPAQueryFactory jpaQueryFactory;
     QEstateInfo qEstateInfo = QEstateInfo.estateInfo;
 
-    public EstateInfo findEstateInfoByRegistrationNumber(String registrationNumber) {
+    public Optional<EstateInfo> findEstateInfoByRegistrationNumber(String registrationNumber) {
         EstateInfo estateInfo = jpaQueryFactory.select(qEstateInfo).from(qEstateInfo)
                 .where(qEstateInfo.registrationNumber.eq(registrationNumber)).fetchOne();
-        return estateInfo;
+        if(estateInfo == null) return Optional.empty();
+        return Optional.ofNullable(estateInfo);
     }
 }
