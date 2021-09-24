@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="Resi col-md-3">
+    <div class="Resi col-md-3" style="max-width: 430px">
       <ResidenceList />
     </div>
     <div id="map" style="width: 100%; height: 100%"></div>
@@ -98,8 +98,7 @@ export default {
   margin-top: 60px;
   z-index: 6;
   border-radius: 10px;
-  min-width: 450px;
-  max-width: 450px;
+
   background-color: #fafafa !important;
   padding-top: 0;
 }

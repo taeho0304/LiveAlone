@@ -2,8 +2,7 @@
   <div id="app">
     <VueSlickCarousel
       v-bind="settings"
-      class="ml-auto mr-auto mt-auto mb-auto"
-      style="width: 500px; height: 245px"
+      style="margin-left: 4%; width: 500px; height: 245px"
     >
       <img
         class="imgfile"
