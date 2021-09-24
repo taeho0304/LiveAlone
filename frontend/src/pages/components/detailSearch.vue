@@ -653,7 +653,7 @@ export default {
 }
 .wrap {
   padding-bottom: 25px;
-  margin-left: 475px;
+  margin-left: 25%;
   z-index: 99;
   margin-top: 60px;
 }

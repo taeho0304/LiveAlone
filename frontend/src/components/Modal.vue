@@ -20,8 +20,7 @@
           min-width: 600px;
           max-width: 600px;
           overflow: hidden;
-
-          margin-right: 800px;
+          margin-right: 44.8%;
           border-radius: 10px;
         "
       >
@@ -29,7 +28,7 @@
           class="modal-content"
           style="margin-top: 30px; border-radius: 10px"
         >
-          <div style="margin-right: 15px; margin-top: 15px">
+          <div style="margin-right: 15px; margin-top: 10px">
             <button
               style="justify-content: right"
               type="button"
@@ -106,5 +105,4 @@ export default {
 };
 </script>
 <style>
-
 </style>

@@ -9,7 +9,7 @@
 <script>
 import MainFooter from '../layout/MainFooter.vue'
 import MainNavbar from '../layout/MainNavbar.vue'
-import Profile from '../pages/Signup copy.vue'
+import Profile from '../pages/Profile.vue'
 
 export default {
     components:{

@@ -25,11 +25,14 @@
         <card
           class="card-nav-tabs text-center"
           header-classes="card-header-warning"
-          style="max-width: 650px; max-height: 286px"
+          style="min-width: 300px; max-height: 280px"
         >
           <div class="row" style="margin-rigth: 0">
             <div class="col-md-8">
-              <img src="img/main.jpg" />
+              <img
+                style="width: 100%; height: 95%"
+                src="https://d1774jszgerdmk.cloudfront.net/512/6a0ecfd6-d540-4349-bd11-ca9b66f8a5a0"
+              />
             </div>
             <div class="col-md-4 pr-0 pl-0">
               <div class="col-md-12 pl-0 pb-0 title">
@@ -52,10 +55,7 @@
                 </div>
               </div>
             </div>
-            <div
-              slot="footer"
-              class="col-md-12 card-footer mt-0 text-muted mb-2"
-            >
+            <div slot="footer" class="col-md-12 mt-0 text-muted mb-2">
               <p>1층,9평,관리비5만, *낙성대 초 역세권* 넓고...</p>
             </div>
           </div>
@@ -137,7 +137,6 @@ export default {
   },
   methods: {
     showModal() {
-      console.log("dddd");
       this.showResiDetail = !this.showResiDetail;
     },
   },
@@ -168,7 +167,5 @@ export default {
 }
 .resiDetailModal {
   display: flex;
-  
- 
 }
 </style>
