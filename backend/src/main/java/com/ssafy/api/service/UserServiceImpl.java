@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public EstateInfo getEstateInfoByResgistrationNumber(String registrationNumber) {
-		return estateInfoRepositorySupport.findEstateInfoByRegistrationNumber(registrationNumber);
+		return estateInfoRepositorySupport.findEstateInfoByRegistrationNumber(registrationNumber).get();
 	}
 
 	@Override
