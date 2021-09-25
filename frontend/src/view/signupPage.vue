@@ -13,7 +13,7 @@
 <script>
 
 
-import Signup from '../pages/user/Signup copy.vue'
+import Signup from '../pages/user/Signup.vue'
 
 export default {
     data(){

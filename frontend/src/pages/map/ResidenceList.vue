@@ -77,7 +77,7 @@
 <script>
 import { Card } from "@/components";
 import Modal from "@/components/Modal.vue";
-import ResiDetail from "@/pages/components/ResiDetail.vue";
+import ResiDetail from "@/pages/map/ResiDetail.vue";
 export default {
   components: {
     Card,
