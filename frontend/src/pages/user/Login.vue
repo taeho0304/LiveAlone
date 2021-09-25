@@ -30,7 +30,7 @@
                     </h6>
                 </div>
                 <div style="background:linear-gradient(60deg, #48c6ef, #6f86d6)" class="col-md-6">
-                  <h2 class="h2-seo mt-5" style="color: white;">Welcome to I will alive!</h2>
+                  <h2 class="h2-seo" style="color: white; margin-top:15%;">Find the property you want</h2>
                     <div style="color: black; text-size: 16px">
                       혼족, 일코노미, 나홀로족...
                     </div>
