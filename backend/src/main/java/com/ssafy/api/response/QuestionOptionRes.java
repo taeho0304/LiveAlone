@@ -1,9 +1,7 @@
 package com.ssafy.api.response;
 
-import com.ssafy.api.Model.QnA;
+import com.ssafy.api.model.QnA;
 import com.ssafy.common.model.response.BaseResponseBody;
-import com.ssafy.db.entity.Question;
-import com.ssafy.db.entity.QuestionOption;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;

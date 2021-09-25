@@ -1,5 +1,6 @@
 package com.ssafy.db.entity;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,7 @@ import java.io.Serializable;
 @Entity
 @Getter
 @Setter
+@EqualsAndHashCode
 public class Userfilter extends BaseEntity implements Serializable {
     @Id
     @ManyToOne

@@ -41,17 +41,15 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Override
 	public void patchQuestion(QuestionPatchReq questionInfo) {
-		Optional<Question> question = questionRepository.findById(questionInfo.getQuestionId());
-		question.get().setQuestionContent(questionInfo.getQuestionContent());
-		questionRepository.save(question.get());
+		Question question = questionRepository.findById(questionInfo.getQuestionId()).get();
+		question.setQuestionContent(questionInfo.getQuestionContent());
+		questionRepository.save(question);
 	}
 
 	@Override
 	public void deleteQuestion(List<Long> questionId) {
 		for (Long id:questionId){
-			System.out.println(1);
 			questionOptionService.deleteQuestionOptionByQuestionId(questionId);
-			System.out.println(2);
 			questionRepository.deleteById(id);
 		}
 	}
