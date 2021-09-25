@@ -201,6 +201,7 @@ export default {
     clickLogout() {
       this.isLogin = false;
       localStorage.clear();
+      this.$router.push("/");
     },
     clickDong(dongName, idx) {
       this.Dong = dongName;
