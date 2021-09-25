@@ -53,6 +53,7 @@ public class JwtTokenUtil {
     public static String getToken(User user) {
     		Date expires = JwtTokenUtil.getTokenExpiration(expirationTime);
              Map<String, String > token = new HashMap<String, String>();
+
              token.put("id",user.getUserId());
             token.put("name", user.getUserName());
             token.put("isManager",String.valueOf(user.getIsManger()));
