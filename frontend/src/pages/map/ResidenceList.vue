@@ -48,7 +48,10 @@
                 class="row col-md-12 ml-auto mr-auto mt-1 pt-1 pl-0 pr-0 title"
               >
                 <div class="col-md-6 pr-0">
-                  <i class="now-ui-icons ui-2_favourite-28"></i>
+                  <i
+                    class="now-ui-icons ui-2_favourite-28"
+                    @click="myFavorite"
+                  ></i>
                 </div>
                 <div class="col-md-6 pr-0">
                   <i class="now-ui-icons ui-1_zoom-bold" @click="showModal"></i>
@@ -78,6 +81,7 @@
 import { Card } from "@/components";
 import Modal from "@/components/Modal.vue";
 import ResiDetail from "@/pages/map/ResiDetail.vue";
+import VueSimpleAlert from "vue-simple-alert";
 export default {
   components: {
     Card,
@@ -88,56 +92,23 @@ export default {
   data() {
     return {
       showResiDetail: false,
-      residence: [
-        {
-          area: 0,
-          content: "string",
-          cost: 0,
-          dong: "string",
-          gu: "string",
-          id: 0,
-          imgurl: "residenceInfo",
-          jeonseCost: 0,
-          lat: "string",
-          lon: "string",
-          manageCost: 0,
-          name: "string",
-          residenceCategory: {
-            categoryName: "string",
-            id: 0,
-          },
-          residenceDetail: {
-            building: "string",
-            id: 0,
-            unit: "string",
-          },
-          residenceEstate: {
-            address: "string",
-            id: 0,
-            name: "string",
-            phone: "string",
-            tel: "string",
-          },
-          residenceType: {
-            id: 0,
-            type: "string",
-          },
-          residenceWeight: {
-            commercialCategory: {
-              categoryName: "string",
-              id: 0,
-            },
-            id: 0,
-            weight: "string",
-          },
-          wolseCost: 0,
-        },
-      ],
     };
   },
   methods: {
     showModal() {
       this.showResiDetail = !this.showResiDetail;
+    },
+    myFavorite() {
+      console.log("aaaaa");
+      if (localStorage.getItem("accessToken")) {
+        //NOTE: 로그인시 로직 구현 필요! 매물 데이터 필요!!
+      } else {
+        VueSimpleAlert.fire({
+          title: "서비스 권한 없음",
+          text: "찜하기 서비스는 회원 전용 서비스 입니다!",
+          type: "error",
+        });
+      }
     },
   },
 };
