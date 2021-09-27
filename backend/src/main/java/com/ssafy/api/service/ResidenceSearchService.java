@@ -11,7 +11,7 @@ import java.util.List;
 /**
  *	방 검색 관련 비즈니스 로직 처리를 위한 서비스 인터페이스 정의.
  */
-public interface RoomSearchService {
+public interface ResidenceSearchService {
 	void createResidenceCategory(String type);
 
 	List<ResidenceCategory> getResidenceCategory();

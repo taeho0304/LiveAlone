@@ -16,8 +16,8 @@ import java.util.List;
 /**
  *	방 검색 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
  */
-@Service("roomSearchService")
-public class RoomSearchServiceImpl implements RoomSearchService {
+@Service("residenceSearchService")
+public class ResidenceSearchServiceImpl implements ResidenceSearchService {
 	@Autowired
 	ResidenceCategoryRepository residenceCategoryRepository;
 
@@ -25,7 +25,7 @@ public class RoomSearchServiceImpl implements RoomSearchService {
 	ResidenceTypeRepository residenceTypeRepository;
 
 	@Autowired
-	RoomSearchService roomSearchService;
+	ResidenceSearchService residenceSearchService;
 
 	@Autowired
 	UserService userService;

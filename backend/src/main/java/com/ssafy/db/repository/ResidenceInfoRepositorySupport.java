@@ -6,6 +6,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.api.request.ResidenceDetailGetReq;
 import com.ssafy.api.request.ResidenceGetReq;
 import com.ssafy.db.entity.QResidenceInfo;
+import com.ssafy.db.entity.QUserFavorite;
 import com.ssafy.db.entity.ResidenceInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,6 +21,7 @@ public class ResidenceInfoRepositorySupport {
     @Autowired
     private JPAQueryFactory jpaQueryFactory;
     QResidenceInfo qresidenceInfo = QResidenceInfo.residenceInfo;
+    QUserFavorite quserFavorite = QUserFavorite.userFavorite;
 
     public List<ResidenceInfo> findRooms(ResidenceDetailGetReq residenceDetailGetReq, ResidenceGetReq residenceGetReq) {
         JPAQuery<ResidenceInfo> residences = findRoomsBySiGuDong(residenceGetReq);
@@ -42,17 +44,20 @@ public class ResidenceInfoRepositorySupport {
         residences.where(builder);
 
         // 정렬
-//        if(residenceDetailGetReq.getSortType()!=null){
-//            if(residenceDetailGetReq.getSortType().equals("cost")){
-//                if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(qresidenceInfo.cost.asc());
-//                if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(qresidenceInfo.cost.desc());
-//            }
-//            if(residenceDetailGetReq.getSortType().equals("area")){
-//                if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(qresidenceInfo.area.asc());
-//                if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(qresidenceInfo.area.desc());
-//            }
-//        }
-
+        if(residenceDetailGetReq.getSortType()!=null){
+            if(residenceDetailGetReq.getSortType().equals("cost")){
+                if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(qresidenceInfo.cost.asc());
+                if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(qresidenceInfo.cost.desc());
+            }
+            if(residenceDetailGetReq.getSortType().equals("area")){
+                if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(qresidenceInfo.area.asc());
+                if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(qresidenceInfo.area.desc());
+            }
+            if(residenceDetailGetReq.getSortType().equals("favorite")){
+                if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(quserFavorite.residenceInfo.id.count().asc());
+                if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(quserFavorite.residenceInfo.id.count().desc());
+            }
+        }
         return residences.fetch();
     }
 
