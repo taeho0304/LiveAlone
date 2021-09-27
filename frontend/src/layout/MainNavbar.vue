@@ -6,7 +6,7 @@
       position="fixed"
       type="info"
       menu-classes="ml-auto"
-      style="height: 30px"
+      style="height: 30px; background: linear-gradient(60deg, #4481eb, #04befe)"
     >
       <template>
         <router-link v-popover:popover1 class="navbar-brand" to="/">
@@ -29,11 +29,11 @@
         <drop-down class="nav-item">
           <n-button
             slot="title"
-            class="dropdown-toggle btn-warning"
+            class="dropdown-toggle btn-neutral"
             data-toggle="dropdown"
             block
             round
-            style="color: #5e2c04"
+            style="color: #000000"
           >
             {{ Si }}
           </n-button>
@@ -114,7 +114,7 @@
               <span @click="clickLogout()"><p>로그아웃</p></span>
             </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if="isUser" @click="getInfo()">
             <a class="nav-link mt-2">
               <router-link to="/profile"
                 ><i class="now-ui-icons users_circle-08"></i>
@@ -122,9 +122,9 @@
               >
             </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if="isEstate">
             <a class="nav-link mt-2">
-              <router-link to="/dashboard "
+              <router-link to="/manage"
                 ><i class="now-ui-icons education_paper"></i>
                 <p>관리페이지</p></router-link>
             </a>
@@ -138,6 +138,7 @@
 <script>
 import { DropDown, Navbar, Button } from "@/components";
 import { Popover } from "element-ui";
+import {mapGetters, mapActions} from 'vuex';
 import DetailSearch from "../pages/map/detailSearch.vue";
 export default {
   name: "main-navbar",
@@ -155,6 +156,8 @@ export default {
   data() {
     return {
       isLogin: false,
+      isEstate:false,
+      isUser:false,
       SiIdx: 0,
       GuIdx: 0,
       DongIdx: 0,
@@ -194,7 +197,12 @@ export default {
       emitData: null,
     };
   },
+  computed: {
+      ...mapGetters('user', ["getAccessInfo"]),
+
+    },
   methods: {
+    ...mapActions('user', ["requestUserInfo"]),
     changeItem() {
       this.isdetail = !this.isdetail;
     },
@@ -218,7 +226,10 @@ export default {
       console.log("emit : ", this.emitData);
       this.$emit("maker", this.emitData);
     },
-
+    getInfo(){
+      console.log("얼레");
+      this.requestUserInfo();
+    },
     clickGu(guName, idx) {
       this.Gu = guName;
       this.GuIdx = idx;
@@ -230,15 +241,33 @@ export default {
   },
   mounted() {
     if (localStorage.getItem("accessToken") != null) {
+      if(this.getAccessInfo != 'null'){
+        this.isEstate = true;
+        this.isUser = false;
+      }else{
+        this.isEstate = false;
+        this.isUser = true;
+      }
       this.isLogin = true;
     } else {
+      this.isUser = false;
+      this.isEstate = false;
       this.isLogin = false;
     }
   },
   create() {
     if (localStorage.getItem("accessToken") != null) {
+      if(this.getAccessInfo != 'null'){
+        this.isEstate = true;
+        this.isUser = false;
+      }else{
+        this.isEstate = false;
+        this.isUser = true;
+      }
       this.isLogin = true;
     } else {
+      this.isUser = false;
+      this.isEstate = false;
       this.isLogin = false;
     }
   },
@@ -248,7 +277,7 @@ export default {
 
 <style scoped>
 .bg-info {
-  background-color: #5e2c04 !important;
+  background-color: linear-gradient(60deg, #74ebd5, #9face6) !important;
 }
 .bg-default {
   background-color: #ffffff !important;

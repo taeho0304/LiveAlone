@@ -57,7 +57,6 @@ export default {
 <style scope>
 .footer {
     padding: 7px 0;
-
 }
 
 </style>

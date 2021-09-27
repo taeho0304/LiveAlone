@@ -59,13 +59,13 @@
                   <div class="col-md-3">
                   </div>
                   <div class="col-md-3">
-                      <div style="margin-top:-30px;" class="card-footer text-center">
+                      <div style="margin-top:-10px;" class="card-footer text-center">
                         <a v-if="!isClick" @click="click()" class="btn btn-primary btn-round btn-lg btn-block">수정</a>
                         <a v-if="isClick" @click="clickModify()" class="btn btn-primary btn-round btn-lg btn-block">확인</a>
                       </div>
                   </div>
                   <div class="col-md-3">
-                    <div style="margin-top:-30px;" class="card-footer text-center">
+                    <div style="margin-top:-10px;" class="card-footer text-center">
                         <a class="btn btn-primary btn-round btn-lg btn-block">탈퇴</a>
                       </div>
                   </div>
@@ -81,102 +81,10 @@
               <span slot="label">
                 <i class="now-ui-icons shopping_shop"></i> Room
               </span>
-
-              <!-- <div class="col-md-10 ml-auto mr-auto">
-                <div class="row collections">
-                  <div class="col-md-6">
-                    <img src="img/bg1.jpg" alt="" class="img-raised" />
-                    <img src="img/bg3.jpg" alt="" class="img-raised" />
-                  </div>
-                  <div class="col-md-6">
-                    <img src="img/bg8.jpg" alt="" class="img-raised" />
-                    <img src="img/bg7.jpg" alt="" class="img-raised" />
-                  </div>
-                </div>
-              </div> -->
               <template>
                 <VueSlickCarousel v-bind="settings" style="padding: 20px 30px 20px 30px;">
-                  <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="img/main.jpg" alt="Card image cap">
-                    <div class="card-body">
-                      <h4 class="card-title">Card title</h4>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                  </div>
-                  <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="img/main.jpg" alt="Card image cap">
-                    <div class="card-body">
-                      <h4 class="card-title">Card title</h4>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                  </div>
-                  <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="img/main.jpg" alt="Card image cap">
-                    <div class="card-body">
-                      <h4 class="card-title">Card title</h4>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                  </div>
-                  <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="img/main.jpg" alt="Card image cap">
-                    <div class="card-body">
-                      <h4 class="card-title">Card title</h4>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                  </div>
-                  <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="img/main.jpg" alt="Card image cap">
-                    <div class="card-body">
-                      <h4 class="card-title">Card title</h4>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                  </div>
                   
-                  <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="img/main.jpg" alt="Card image cap">
-                    <div class="card-body">
-                      <h4 class="card-title">Card title</h4>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                  </div>
-                  <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="img/main.jpg" alt="Card image cap">
-                    <div class="card-body">
-                      <h4 class="card-title">Card title</h4>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                  </div>
-                  <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="img/main.jpg" alt="Card image cap">
-                    <div class="card-body">
-                      <h4 class="card-title">Card title</h4>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                  </div>
-                  <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="img/main.jpg" alt="Card image cap">
-                    <div class="card-body">
-                      <h4 class="card-title">Card title</h4>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                  </div>
-                  <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="img/main.jpg" alt="Card image cap">
-                    <div class="card-body">
-                      <h4 class="card-title">Card title</h4>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                  </div><div class="card" style="width: 20rem;">
+                  <div class="card" style="width:20rem; border-radius: 0.2rem;">
                     <img class="card-img-top" src="img/main.jpg" alt="Card image cap">
                     <div class="card-body">
                       <h4 class="card-title">Card title</h4>
@@ -248,11 +156,6 @@
                   </div>
                 </div>
               </div>
-             
-             
-             
-            
-            
             </tab-pane>
           </tabs>
 
@@ -263,7 +166,7 @@
 </template>
 <script>
 import { Tabs, TabPane, FormGroupInput } from '@/components';
-import {mapActions, mapState, mapGetters} from 'vuex';
+import {mapActions, mapGetters} from 'vuex';
 import VueSlickCarousel from 'vue-slick-carousel'
 import 'vue-slick-carousel/dist/vue-slick-carousel.css'
 // optional style for arrows & dots
@@ -334,11 +237,11 @@ export default {
     }
   },
   created(){
-    this.init();
-    console.log(this.getUserInfo.user);
+  
+    console.log(this.getUserInfo);
   },
   mounted(){
-    this.init();
+
   },
 };
 </script>

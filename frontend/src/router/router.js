@@ -4,9 +4,8 @@ import startPage from '../view/startPage.vue';
 import searchPage from '../view/searchPage.vue';
 import Login from '../view/loginPage.vue';
 import Profile from '../view/profilePage.vue';
-import MainNavbar from '../layout/MainNavbar.vue';
+import Manage from '../view/managePage.vue';
 import MainFooter from '../layout/MainFooter.vue';
-import store from '../store/index';
 import signupPage from '../view/signupPage.vue';
 import QnAPage from '../view/QnAPage.vue';
 import Service from '../view/servicePage.vue';
@@ -56,10 +55,10 @@ export default new Router({
         footer: { backgroundColor: 'black' }
       }
     },
-     {
-      path: '/sevice',
-      name: 'sevice',
-      component: Service,
+    {
+      path: '/manage',
+      name: 'manage',
+      component: Manage,
       props: {
         header: { colorOnScroll: 400 },
         footer: { backgroundColor: 'black' }
