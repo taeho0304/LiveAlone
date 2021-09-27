@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User createUser(UserRegisterPostReq userRegisterInfo) {
 		user.setUserId(userRegisterInfo.getUserId());
-		user.setUserPass(passwordEncoder.encode(userRegisterInfo.getUserPass()));
+//		user.setUserPass(passwordEncoder.encode(userRegisterInfo.getUserPass()));
 		user.setUserEmail(userRegisterInfo.getUserEmail());
 		user.setUserPhone(userRegisterInfo.getUserPhone());
 		user.setUserName(userRegisterInfo.getUserName());
@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
 	public void patchUser(UserRegisterPostReq userRegisterInfo, String userId) {
 		Optional<User> user = userRepository.findById(userRepositorySupport.findUserByUserId(userId).get().getId());
 		user.get().setUserEmail(userRegisterInfo.getUserEmail());
-		user.get().setUserPass(passwordEncoder.encode(userRegisterInfo.getUserPass()));
+//		user.get().setUserPass(passwordEncoder.encode(userRegisterInfo.getUserPass()));
 		user.get().setUserPhone(userRegisterInfo.getUserPhone());
 		user.get().setUserName(userRegisterInfo.getUserName());
 		userRepository.save(user.get());
