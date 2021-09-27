@@ -11,6 +11,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -130,6 +132,7 @@ public class ResidenceSearchServiceImpl implements ResidenceSearchService {
 	public List<DongModel> getDong(String guGunName) {
 		List<Dong> dongs = dongRepositorySupport.getDongByDongName(guGunName);
 		List<DongModel> dongModels = new ArrayList<>();
+
 		for(int i=0; i<dongs.size(); i++){
 			DongModel dongModel = new DongModel();
 			dongModel.setDongName(dongs.get(i).getDongName());
