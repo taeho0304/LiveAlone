@@ -58,14 +58,17 @@
           >
             {{ Gu }}
           </n-button>
-          <a
-            v-for="(items, index) in GuList[SiIdx].gu"
-            :key="index"
-            class="dropdown-item"
-            @click="clickGu(items.name, index)"
-            >{{ items.name }}
-          </a>
+          <ul class="dropdown-scrollbar">
+            <a
+              v-for="(items, index) in GuList"
+              :key="index"
+              class="dropdown-item"
+              @click="clickGu(items, index)"
+              >{{ items }}
+            </a>
+          </ul>
         </drop-down>
+
         <drop-down class="nav-item" style="margin-right: 100px">
           <n-button
             slot="title"
@@ -78,13 +81,15 @@
           >
             {{ Dong }}
           </n-button>
-          <a
-            v-for="(items, index) in dongList[GuIdx].dong"
-            :key="index"
-            class="dropdown-item"
-            @click="clickDong(items.name, index)"
-            >{{ items.name }}
-          </a>
+          <ul class="dropdown-scrollbar">
+            <a
+              v-for="(items, index) in dongList"
+              :key="index"
+              class="dropdown-item"
+              @click="clickDong(items, index)"
+              >{{ items.dongName }}
+            </a>
+          </ul>
         </drop-down>
       </template>
       <template slot="navbar-menu">
@@ -126,7 +131,8 @@
             <a class="nav-link mt-2">
               <router-link to="/dashboard "
                 ><i class="now-ui-icons education_paper"></i>
-                <p>관리페이지</p></router-link>
+                <p>관리페이지</p></router-link
+              >
             </a>
           </li>
         </template>
@@ -139,6 +145,7 @@
 import { DropDown, Navbar, Button } from "@/components";
 import { Popover } from "element-ui";
 import DetailSearch from "../pages/map/detailSearch.vue";
+import http from "@/util/http-common";
 export default {
   name: "main-navbar",
   props: {
@@ -155,42 +162,16 @@ export default {
   data() {
     return {
       isLogin: false,
-      SiIdx: 0,
-      GuIdx: 0,
-      DongIdx: 0,
+
       Dong: "동 선택하세요",
       Si: "시 선택하세요",
       Gu: "구 선택하세요",
       isdetail: false,
       residenceType: "방 종류",
       residenceIndex: 0,
-      SiList: [{ name: "서울특별시" }, { name: "내가사는 천안시" }],
-      GuList: [
-        {
-          gu: [
-            { name: "용산구" },
-            { name: "강남구" },
-            { name: "강북구" },
-            { name: "서대문구" },
-          ],
-        },
-      ],
-      dongList: [
-        {
-          dong: [],
-        },
-        {
-          dong: [],
-        },
-        {
-          dong: [
-            { name: "삼양동" },
-            { name: "미아동" },
-            { name: "송천동" },
-            { name: "수유1동", lat: "37.5252081", long: "126.9300509" },
-          ],
-        },
-      ],
+      SiList: [{ name: "서울특별시" }],
+      GuList: [],
+      dongList: [],
       emitData: null,
     };
   },
@@ -203,29 +184,41 @@ export default {
       localStorage.clear();
       this.$router.push("/");
     },
-    clickDong(dongName, idx) {
-      this.Dong = dongName;
-      this.DongIdx = idx;
+    clickDong(dongItems, idx) {
+      this.Dong = dongItems.dongName;
 
       let temp = this.Si + " " + this.Gu + " " + this.Dong;
+      console.log(dongItems);
 
       const data = {
         juso: temp,
-        lat: this.dongList[this.GuIdx].dong[this.DongIdx].lat,
-        long: this.dongList[this.GuIdx].dong[this.DongIdx].long,
+        lat: dongItems.lat,
+        long: dongItems.lon,
       };
+
+      console.log(data);
+
       this.emitData = data;
+
       console.log("emit : ", this.emitData);
       this.$emit("maker", this.emitData);
     },
 
     clickGu(guName, idx) {
+      http.get("/api/v1/search/dong" + "?dong=" + guName).then((res) => {
+        console.log(res.data.dongModelList);
+        this.dongList = res.data.dongModelList;
+      });
       this.Gu = guName;
-      this.GuIdx = idx;
     },
     clickSi(siName, idx) {
+      http
+        .get("/api/v1/search/gugun" + "?siName=" + "서울특별시")
+        .then((res) => {
+          console.log(res.data.guGunListList);
+          this.GuList = res.data.guGunListList;
+        });
       this.Si = siName;
-      this.SiIdx = idx;
     },
   },
   mounted() {
@@ -252,5 +245,10 @@ export default {
 }
 .bg-default {
   background-color: #ffffff !important;
+}
+.dropdown-scrollbar {
+  height: 150px;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 </style>
