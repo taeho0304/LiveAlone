@@ -1,16 +1,18 @@
 <template>
-    <div class="card text-center" style="width:70%; border-radius:0rem;">
+    <div class="card text-center" style="width:60%; border-radius:0rem;">
         <div class="container">
             <div class="content row">
                 <div class="col-md-6" style="margin-top: 8%; margin-bottom: 5%;" >
                     <div class="row mt-5  ml-auto mr-auto">
-                        <fg-input class="input col-md-9 col-12" style="float: none;margin: 0px auto; padding-bottom: 10px;" v-model="user.id" type="text" addon-left-icon="now-ui-icons users_circle-08" autocomplete="off" placeholder="아이디"></fg-input>
-                        <fg-input class="input col-md-9 col-12" style="float: none;margin: 0px auto; padding-bottom: 0px;" addon-left-icon="now-ui-icons text_caps-small" v-model="user.password" placeholder="비밀번호" type="password" autocomplete="off" @keyup.enter="clickLogin"></fg-input>
+                        <fg-input class="col-md-9 col-12" style="border:0px; float: none;margin: 0px auto; padding-top:3px; padding-bottom: 0px;" v-model="user.id" type="text" autocomplete="off" placeholder="아이디"></fg-input>
+                        <fg-input class="col-md-9 col-12" style="border:0px; float: none;margin: 0px auto; padding-top:3px; padding-bottom: 0px;" v-model="user.password" placeholder="비밀번호" type="password" autocomplete="off" @keyup.enter="clickLogin"></fg-input>
                     </div>
                     <div class="row ml-auto mr-auto">
-                        <card class="col-md-6 col-6 text-center" style="border-radius:10px; float: none;margin: 0px auto;">
-                            <h6 class="card-text" v-if="!errors.requireId" style="color:red;">아이디를 입력해주세요.</h6>
-                            <h6 class="card-text" v-if="!errors.requirePw" style="color:red;">비밀번호를 입력해주세요.(영문자/숫자/특수문자)</h6>
+                        <card  v-if="!errors.requireId" class="col-md-6 col-6 text-center" style="border-radius:10px; float: none;margin: 0px auto;">
+                            <h6 class="card-text" style="color:red;">아이디를 입력해주세요.</h6>
+                        </card>
+                        <card v-if="!errors.requirePw" class="col-md-6 col-6 text-center" style="border-radius:10px; float: none;margin: 0px auto;">
+                            <h6 class="card-text" style="color:red;">비밀번호를 입력해주세요.(영문자/숫자/특수문자)</h6>
                         </card>
                     </div>
                     <div class="col-md-5 col-6" style="float: none; margin: 0px auto; padding-top:5%">
@@ -66,11 +68,11 @@
                     this.errors.requireId = false;
                     this.errors.requirePw = true;
                     return;
-                } else if (this.user.id != "" && this.user.password == "") {
+                } else if (this.user.id != "" && this.user.password =="") {
                     this.errors.requireId = true;
                     this.errors.requirePw = false;
                     return;
-                } else {
+                } else if(this.user.id !="" && this.user.password!="") {
                     this.errors.requireId = true;
                     this.errors.requirePw = true;
                     this.requestLogin(this.user);

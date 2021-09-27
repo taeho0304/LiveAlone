@@ -1,7 +1,7 @@
 <template >
     <div class="Site">
         <main-navbar/>
-        <Profile class="Site-content"/>
+        <Manage class="Site-content"/>
         <main-footer/>
     </div>
 </template>
@@ -9,11 +9,11 @@
 <script>
 import MainFooter from '../layout/Footer.vue'
 import MainNavbar from '../layout/MainNavbar.vue'
-import Profile from '../pages/user/Manage.vue'
+import Manage from '../pages/user/Manage.vue'
 
 export default {
     components:{
-        Profile,
+        Manage,
         MainNavbar,
         MainFooter,  
     }
@@ -28,5 +28,18 @@ export default {
 
 .Site-content {
   flex: 1;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+ 
+::-webkit-scrollbar-track {
+  background: #eeeeee;
+  border-radius: 5px;
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(#c2e59c, #64b3f4);
 }
 </style>

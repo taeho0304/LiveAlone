@@ -66,34 +66,33 @@ export default {
     },
     computed: {
         ...mapGetters('user', ["getEstateInfo"]),
-      
+
     },
     mounted(){
-      this.click();
+        this.click();
     },
     methods: {
         ...mapActions('user', ["requestRegister", "requestDuplicate", "requestEstate"]),
         clickRegisterMember() {
         for (var item in this.user) {
-          if(this.user[item]==""){
-            this.$alert("입력 정보를 다시 확인해주세요.");
-            return;
-          }
+            if(this.user[item]==""){
+                this.$alert("입력 정보를 다시 확인해주세요.");
+                return;
+            }
         }
         this.requestRegister(this.user);
         },
         clickRegisterEstate() {
-          if(this.getEstateInfo==null){
+        if(this.getEstateInfo==null){
             this.$alert("사업자 번호를 다시 확인해주세요.");
             return;
-          }
+        }
         this.estate.estateId=this.getEstateInfo.id;
-        console.log(this.estate.estateId);
         for (var item in this.estate) {
-          if(this.estate[item]==""){
-            this.$alert("입력 정보를 다시 확인해주세요.");
-            return;
-          }
+            if(this.estate[item]==""){
+                this.$alert("입력 정보를 다시 확인해주세요.");
+                return;
+            }
         }
         this.requestRegister(this.estate);
         },
