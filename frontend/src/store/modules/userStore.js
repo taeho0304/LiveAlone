@@ -8,11 +8,15 @@ export default {
     state: {
         userInfo: null,
         accessToken: "",
+        accessEstate:null,
         estateInfo: null,
     },
     getters: {
-      getAccessToken(state) {
-        return state.accessToken;
+        getAccessToken(state) {
+          return state.accessToken;
+        },
+        getAccessInfo(state){
+          return state.accessEstate;
         },
         getLoginStatus(state) {
             return state.loginStatus;
@@ -26,6 +30,9 @@ export default {
     },
     mutations: {
         LOGIN(state, payload) {
+            const decode = jwt_decode(payload.accessToken);
+            const info = decode.userInfo;
+            state.accessEstate = info.isEstate;
             state.accessToken = payload.accessToken;
             localStorage.setItem("accessToken", state.accessToken);
         },
@@ -33,9 +40,7 @@ export default {
             state.userInfo = payload;
         },
         ESTATEINFO(state, payload){
-            console.log(payload);
             state.estateInfo = payload;
-            console.log(state.estateInfo);
         },
     },
     actions: {
@@ -68,6 +73,7 @@ export default {
                     router.push('/search');
                 })
                 .catch((err) => {
+                  
                   if(err.response.status==401){
                     VueSimpleAlert.fire({
                       title: "로그인 실패",
@@ -80,6 +86,8 @@ export default {
                       text: "회원정보가 없습니다.😭",
                       type: "error",
                     })
+                  }else{
+                    console.log(err.response)
                   }
                 });
         },
@@ -90,8 +98,10 @@ export default {
             })
             .then(({ data })=>{
                 commit("USERINFO", data);
+                console.log(data);
             })
-            .catch(() => {
+            .catch((err) => {
+              console.log(err.response);
             });
         },
         requestModify({commit}, user){

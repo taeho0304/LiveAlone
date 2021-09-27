@@ -15,14 +15,14 @@
             <router-link to="/search"
               ><a
                 class="btn btn-lg btn-block"
-                style="background-color: #5e2c04; border-radius: 10px"
+                style="background:linear-gradient(60deg, #48c6ef, #00c6fb); border-radius: 10px"
                 >검색하기</a
               ></router-link
             >
 
             <a
               class="btn btn-lg btn-block"
-              style="border-radius: 10px; background-color: #e97406"
+              style="border-radius: 10px; background:linear-gradient(60deg, #48c6ef, #4481eb);"
               @click="modals.classic = true"
             >
               지도보기</a
@@ -34,8 +34,8 @@
             </modal>
             <router-link to="/qna"
               ><a
-                class="btn btn-warning btn-lg btn-block"
-                style="border-radius: 10px"
+                class="btn btn-lg btn-block"
+                style="border-radius: 10px;background:linear-gradient(60deg, #48c6ef, #495aff);"
                 >추천받기</a
               ></router-link
             >

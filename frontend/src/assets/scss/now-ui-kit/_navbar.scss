@@ -171,6 +171,10 @@
     }
 }
 
+.bg-blue{
+    background-color:  linear-gradient(60deg, #74ebd5, #9face6);
+}
+
 .bg-default{
     background-color: $default-color !important;
 }
