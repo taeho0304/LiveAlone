@@ -2,17 +2,27 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import startPage from '../view/startPage.vue';
 import searchPage from '../view/searchPage.vue';
-import Landing from '../pages/Landing.vue';
 import Login from '../view/loginPage.vue';
 import Profile from '../view/profilePage.vue';
-import MainNavbar from '../layout/MainNavbar.vue';
+import Manage from '../view/managePage.vue';
 import MainFooter from '../layout/MainFooter.vue';
-import store from '../store/index';
 import signupPage from '../view/signupPage.vue';
 import QnAPage from '../view/QnAPage.vue';
-
+import Service from '../view/servicePage.vue';
+import VueSimpleAlert from "vue-simple-alert";
 Vue.use(Router);
-
+const requireAuth = () => (to, from, next) => {
+  if (localStorage.getItem('accessToken')) {
+    return next();
+  }
+  VueSimpleAlert.fire({
+    title:"서비스 권한 없음",
+    text:"추천받기 서비스는 회원 전용 서비스 입니다!",
+    type:"error",
+}).then(() => {
+    next('/login');
+  }); 
+};
 export default new Router({
   mode: 'history',
   linkExactActiveClass: 'active',
@@ -26,15 +36,6 @@ export default new Router({
       path: '/search',
       name: 'search',
       component: searchPage,
-      props: {
-        header: { colorOnScroll: 400 },
-        footer: { backgroundColor: 'black' }
-      }
-    },
-    {
-      path: '/landing',
-      name: 'landing',
-      components: { default: Landing, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 400 },
         footer: { backgroundColor: 'black' }
@@ -55,6 +56,16 @@ export default new Router({
       }
     },
     {
+      path: '/manage',
+      name: 'manage',
+      component: Manage,
+      props: {
+        header: { colorOnScroll: 400 },
+        footer: { backgroundColor: 'black' }
+      }
+    },
+    
+    {
       path: '/signup',
       name: 'signup',
       component : signupPage,
@@ -68,6 +79,7 @@ export default new Router({
       path: '/qna',
       name: 'qna',
       components: { default: QnAPage, footer: MainFooter },
+      beforeEnter: requireAuth(),
       props: {
         header: { colorOnScroll: 400 },
         footer: { backgroundColor: 'black' }

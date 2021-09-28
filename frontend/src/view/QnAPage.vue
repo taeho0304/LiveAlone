@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import newQnAProgress from "../pages/components/newQnAProgress.vue";
+import newQnAProgress from "../pages/qna/newQnAProgress.vue";
 
 export default {
   data() {

@@ -9,7 +9,7 @@
 <script>
 import MainNav from "../layout/MainNavbar.vue";
 
-import Map from "../pages/Map.vue";
+import Map from "../pages/map/Map.vue";
 
 export default {
   components: {

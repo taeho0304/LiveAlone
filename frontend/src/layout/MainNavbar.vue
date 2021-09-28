@@ -6,7 +6,7 @@
       position="fixed"
       type="info"
       menu-classes="ml-auto"
-      style="height: 30px"
+      style="height: 30px; background: linear-gradient(60deg, #4481eb, #04befe)"
     >
       <template>
         <router-link v-popover:popover1 class="navbar-brand" to="/">
@@ -29,11 +29,11 @@
         <drop-down class="nav-item">
           <n-button
             slot="title"
-            class="dropdown-toggle btn-warning"
+            class="dropdown-toggle btn-neutral"
             data-toggle="dropdown"
             block
             round
-            style="color: #5e2c04"
+            style="color: #000000"
           >
             {{ Si }}
           </n-button>
@@ -49,42 +49,45 @@
         <drop-down class="nav-item">
           <n-button
             slot="title"
-            type="warning"
-            class="dropdown-toggle"
+            class="dropdown-toggle btn-neutral"
             data-toggle="dropdown"
             block
             round
-            style="color: #5e2c04"
+            style="color: #000000"
           >
             {{ Gu }}
           </n-button>
-          <a
-            v-for="(items, index) in GuList[SiIdx].gu"
-            :key="index"
-            class="dropdown-item"
-            @click="clickGu(items.name, index)"
-            >{{ items.name }}
-          </a>
+          <ul class="dropdown-scrollbar">
+            <a
+              v-for="(items, index) in GuList"
+              :key="index"
+              class="dropdown-item"
+              @click="clickGu(items, index)"
+              >{{ items }}
+            </a>
+          </ul>
         </drop-down>
+
         <drop-down class="nav-item" style="margin-right: 100px">
           <n-button
             slot="title"
-            type="warning"
-            class="dropdown-toggle"
+            class="dropdown-toggle btn-neutral"
             data-toggle="dropdown"
             block
             round
-            style="color: #5e2c04"
+            style="color: #000000"
           >
             {{ Dong }}
           </n-button>
-          <a
-            v-for="(items, index) in dongList[GuIdx].dong"
-            :key="index"
-            class="dropdown-item"
-            @click="clickDong(items.name, index)"
-            >{{ items.name }}
-          </a>
+          <ul class="dropdown-scrollbar">
+            <a
+              v-for="(items, index) in dongList"
+              :key="index"
+              class="dropdown-item"
+              @click="clickDong(items, index)"
+              >{{ items.dongName }}
+            </a>
+          </ul>
         </drop-down>
       </template>
       <template slot="navbar-menu">
@@ -114,11 +117,19 @@
               <span @click="clickLogout()"><p>로그아웃</p></span>
             </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if="isUser" @click="getInfo()">
             <a class="nav-link mt-2">
               <router-link to="/profile"
                 ><i class="now-ui-icons users_circle-08"></i>
                 <p>마이페이지</p></router-link
+              >
+            </a>
+          </li>
+          <li class="nav-item" v-if="isEstate">
+            <a class="nav-link mt-2">
+              <router-link to="/manage"
+                ><i class="now-ui-icons education_paper"></i>
+                <p>관리페이지</p></router-link
               >
             </a>
           </li>
@@ -131,10 +142,9 @@
 <script>
 import { DropDown, Navbar, Button } from "@/components";
 import { Popover } from "element-ui";
-import OneSearchBar from "../pages/SearchBar/OneSearchBar.vue";
-import ApartSearchBar from "../pages/SearchBar/ApartSearchBar.vue";
-import { mapGetters } from "vuex";
-import DetailSearch from "../pages/components/detailSearch.vue";
+import { mapGetters, mapActions } from "vuex";
+import DetailSearch from "../pages/map/detailSearch.vue";
+import http from "@/util/http-common";
 export default {
   name: "main-navbar",
   props: {
@@ -151,6 +161,9 @@ export default {
   data() {
     return {
       isLogin: false,
+
+      isEstate: false,
+      isUser: false,
       SiIdx: 0,
       GuIdx: 0,
       DongIdx: 0,
@@ -160,80 +173,96 @@ export default {
       isdetail: false,
       residenceType: "방 종류",
       residenceIndex: 0,
-      SiList: [{ name: "서울특별시" }, { name: "내가사는 천안시" }],
-      GuList: [
-        {
-          gu: [
-            { name: "용산구" },
-            { name: "강남구" },
-            { name: "강북구" },
-            { name: "서대문구" },
-          ],
-        },
-      ],
-      dongList: [
-        {
-          dong: [],
-        },
-        {
-          dong: [],
-        },
-        {
-          dong: [
-            { name: "삼양동" },
-            { name: "미아동" },
-            { name: "송천동" },
-            { name: "수유1동", lat: "37.5252081", long: "126.9300509" },
-          ],
-        },
-      ],
+      SiList: [{ name: "서울특별시" }],
+      GuList: [],
+      dongList: [],
       emitData: null,
     };
   },
+  computed: {
+    ...mapGetters("user", ["getAccessInfo"]),
+  },
   methods: {
+    ...mapActions("user", ["requestUserInfo"]),
     changeItem() {
       this.isdetail = !this.isdetail;
     },
     clickLogout() {
       this.isLogin = false;
       localStorage.clear();
+      this.$router.push("/");
     },
-    clickDong(dongName, idx) {
-      this.Dong = dongName;
-      this.DongIdx = idx;
+    clickDong(dongItems, idx) {
+      this.Dong = dongItems.dongName;
 
       let temp = this.Si + " " + this.Gu + " " + this.Dong;
+      console.log(dongItems);
 
       const data = {
-        juso: temp,
-        lat: this.dongList[this.GuIdx].dong[this.DongIdx].lat,
-        long: this.dongList[this.GuIdx].dong[this.DongIdx].long,
+        si: this.Si,
+        gugun: this.Gu,
+        dong: this.Dong,
+        lat: dongItems.lat,
+        long: dongItems.lon,
       };
+
+      console.log(data);
+
       this.emitData = data;
+
       console.log("emit : ", this.emitData);
       this.$emit("maker", this.emitData);
     },
-
+    getInfo() {
+      console.log("얼레");
+      this.requestUserInfo();
+    },
     clickGu(guName, idx) {
+      http.get("/api/v1/search/dong" + "?dong=" + guName).then((res) => {
+        console.log(res.data.dongModelList);
+        this.dongList = res.data.dongModelList;
+      });
       this.Gu = guName;
-      this.GuIdx = idx;
     },
     clickSi(siName, idx) {
+      http
+        .get("/api/v1/search/gugun" + "?siName=" + "서울특별시")
+        .then((res) => {
+          console.log(res.data.guGunListList);
+          this.GuList = res.data.guGunListList;
+        });
       this.Si = siName;
-      this.SiIdx = idx;
     },
   },
   mounted() {
     if (localStorage.getItem("accessToken") != null) {
+      if (this.getAccessInfo != "null") {
+        this.isEstate = true;
+        this.isUser = false;
+      } else {
+        this.isEstate = false;
+        this.isUser = true;
+      }
       this.isLogin = true;
     } else {
+      this.isUser = false;
+      this.isEstate = false;
       this.isLogin = false;
     }
   },
   create() {
     if (localStorage.getItem("accessToken") != null) {
+      if (this.getAccessInfo != "null") {
+        this.isEstate = true;
+        this.isUser = false;
+      } else {
+        this.isEstate = false;
+        this.isUser = true;
+      }
       this.isLogin = true;
     } else {
+      this.isUser = false;
+      this.isEstate = false;
       this.isLogin = false;
     }
   },
@@ -243,9 +272,14 @@ export default {
 
 <style scoped>
 .bg-info {
-  background-color: #5e2c04 !important;
+  background-color: linear-gradient(60deg, #74ebd5, #9face6) !important;
 }
 .bg-default {
   background-color: #ffffff !important;
+}
+.dropdown-scrollbar {
+  height: 150px;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 </style>
