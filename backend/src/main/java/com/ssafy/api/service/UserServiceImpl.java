@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User createUser(UserRegisterPostReq userRegisterInfo) {
 		user.setUserId(userRegisterInfo.getUserId());
-//		user.setUserPass(passwordEncoder.encode(userRegisterInfo.getUserPass()));
+		user.setUserPass(passwordEncoder.encode(userRegisterInfo.getUserPass()));
 		user.setUserEmail(userRegisterInfo.getUserEmail());
 		user.setUserPhone(userRegisterInfo.getUserPhone());
 		user.setUserName(userRegisterInfo.getUserName());
