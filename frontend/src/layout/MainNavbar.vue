@@ -49,12 +49,11 @@
         <drop-down class="nav-item">
           <n-button
             slot="title"
-            type="warning"
-            class="dropdown-toggle"
+            class="dropdown-toggle btn-neutral"
             data-toggle="dropdown"
             block
             round
-            style="color: #5e2c04"
+            style="color: #000000"
           >
             {{ Gu }}
           </n-button>
@@ -72,12 +71,11 @@
         <drop-down class="nav-item" style="margin-right: 100px">
           <n-button
             slot="title"
-            type="warning"
-            class="dropdown-toggle"
+            class="dropdown-toggle btn-neutral"
             data-toggle="dropdown"
             block
             round
-            style="color: #5e2c04"
+            style="color: #000000"
           >
             {{ Dong }}
           </n-button>
@@ -144,7 +142,7 @@
 <script>
 import { DropDown, Navbar, Button } from "@/components";
 import { Popover } from "element-ui";
-import {mapGetters, mapActions} from 'vuex';
+import { mapGetters, mapActions } from "vuex";
 import DetailSearch from "../pages/map/detailSearch.vue";
 import http from "@/util/http-common";
 export default {
@@ -164,8 +162,8 @@ export default {
     return {
       isLogin: false,
 
-      isEstate:false,
-      isUser:false,
+      isEstate: false,
+      isUser: false,
       SiIdx: 0,
       GuIdx: 0,
       DongIdx: 0,
@@ -182,11 +180,10 @@ export default {
     };
   },
   computed: {
-      ...mapGetters('user', ["getAccessInfo"]),
-
-    },
+    ...mapGetters("user", ["getAccessInfo"]),
+  },
   methods: {
-    ...mapActions('user', ["requestUserInfo"]),
+    ...mapActions("user", ["requestUserInfo"]),
     changeItem() {
       this.isdetail = !this.isdetail;
     },
@@ -202,7 +199,9 @@ export default {
       console.log(dongItems);
 
       const data = {
-        juso: temp,
+        si: this.Si,
+        gugun: this.Gu,
+        dong: this.Dong,
         lat: dongItems.lat,
         long: dongItems.lon,
       };
@@ -214,7 +213,7 @@ export default {
       console.log("emit : ", this.emitData);
       this.$emit("maker", this.emitData);
     },
-    getInfo(){
+    getInfo() {
       console.log("얼레");
       this.requestUserInfo();
     },
@@ -237,10 +236,10 @@ export default {
   },
   mounted() {
     if (localStorage.getItem("accessToken") != null) {
-      if(this.getAccessInfo != 'null'){
+      if (this.getAccessInfo != "null") {
         this.isEstate = true;
         this.isUser = false;
-      }else{
+      } else {
         this.isEstate = false;
         this.isUser = true;
       }
@@ -253,10 +252,10 @@ export default {
   },
   create() {
     if (localStorage.getItem("accessToken") != null) {
-      if(this.getAccessInfo != 'null'){
+      if (this.getAccessInfo != "null") {
         this.isEstate = true;
         this.isUser = false;
-      }else{
+      } else {
         this.isEstate = false;
         this.isUser = true;
       }

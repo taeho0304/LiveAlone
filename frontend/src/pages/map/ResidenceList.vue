@@ -2,20 +2,26 @@
   <div class="container" style="padding-right: 0">
     <div
       class="row col-md-12 resiwrap"
-      style="padding-bottom: 0; padding-top: 0"
+      style="padding-bottom: 0; padding-top: 0:"
     >
       <div class="col-md-4 ml-auto mr-auto">
-        <a class="btn btn-warning btn-round btn-block" style="color: #5e2c04"
+        <a
+          class="btn btn-neutral btn-round btn-block"
+          style="color: #000000"
           >가격</a
         >
       </div>
       <div class="col-md-4 ml-auto mr-auto">
-        <a class="btn btn-warning btn-round btn-block" style="color: #5e2c04"
+        <a
+          class="btn btn-neutral btn-round btn-block"
+          style="color: #000000"
           >면적</a
         >
       </div>
       <div class="col-md-4 ml-auto mr-auto">
-        <a class="btn btn-warning btn-round btn-block" style="color: #5e2c04"
+        <a
+          class="btn btn-neutral btn-round btn-block"
+          style="color: #000000"
           >선호</a
         >
       </div>
@@ -89,6 +95,7 @@ export default {
     ResiDetail,
   },
   setup() {},
+  props: {},
   data() {
     return {
       showResiDetail: false,
