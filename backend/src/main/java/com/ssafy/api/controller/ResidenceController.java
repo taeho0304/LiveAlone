@@ -1,5 +1,6 @@
 package com.ssafy.api.controller;
 
+import com.ssafy.api.model.CountModel;
 import com.ssafy.api.request.ResidenceDetailGetReq;
 import com.ssafy.api.request.ResidenceGetReq;
 import com.ssafy.api.request.ResidencePostReq;
@@ -54,6 +55,36 @@ public class ResidenceController {
             return ResponseEntity.status(200).body(ResidenceRes.of(rooms));
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(500).body(ResidenceRes.of(500, "fail"));
+        }
+    }
+
+    @GetMapping("/gucount")
+    @ApiOperation(value = "구 매물 개수 조회", notes = "구 매물 개수를 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "실패")
+    })
+    public ResponseEntity<CountRes> getGuCount() {
+        try {
+            List<CountModel> guCounts = residenceService.getGetGuCount();
+            return ResponseEntity.status(200).body(CountRes.of(guCounts));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(500).body(CountRes.of(500, "fail"));
+        }
+    }
+
+    @GetMapping("/dongcount")
+    @ApiOperation(value = "동 매물 개수 조회", notes = "구 매물 개수를 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "실패")
+    })
+    public ResponseEntity<CountRes> getDongCount() {
+        try {
+            List<CountModel> dongCounts = residenceService.getGetDongCount();
+            return ResponseEntity.status(200).body(CountRes.of(dongCounts));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(500).body(CountRes.of(500, "fail"));
         }
     }
 

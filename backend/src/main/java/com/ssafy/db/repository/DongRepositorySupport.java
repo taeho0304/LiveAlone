@@ -24,4 +24,10 @@ public class DongRepositorySupport {
                 .where(qDong.Gugun.gugunName.eq(guGunName)).orderBy(qDong.dongName.asc()).fetch();
         return dongs;
     }
+
+    public Dong getDongByDongName(String dongName) {
+        Dong dong = jpaQueryFactory.select(qDong).from(qDong)
+                .where(qDong.dongName.eq(dongName)).fetchOne();
+        return dong;
+    }
 }

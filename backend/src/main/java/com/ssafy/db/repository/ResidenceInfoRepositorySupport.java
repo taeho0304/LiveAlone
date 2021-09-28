@@ -76,4 +76,16 @@ public class ResidenceInfoRepositorySupport {
 
         return residences;
     }
+
+    public long findGuGunCount(Long id) {
+        long count = jpaQueryFactory.select(qresidenceInfo).from(qresidenceInfo)
+                .where(qresidenceInfo.dong.Gugun.id.eq(id)).fetchCount();
+        return count;
+    }
+
+    public long findDongCount(Long id) {
+        long count = jpaQueryFactory.select(qresidenceInfo).from(qresidenceInfo)
+                .where(qresidenceInfo.dong.id.eq(id)).fetchCount();
+        return count;
+    }
 }

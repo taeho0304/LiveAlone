@@ -1,17 +1,16 @@
 package com.ssafy.api.service;
 
+import com.ssafy.api.model.CountModel;
 import com.ssafy.api.request.ResidenceDetailGetReq;
 import com.ssafy.api.request.ResidenceGetReq;
 import com.ssafy.api.request.ResidencePostReq;
-import com.ssafy.api.request.UserRegisterPostReq;
 import com.ssafy.db.entity.*;
 import com.ssafy.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  *	매물 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
@@ -36,6 +35,15 @@ public class ResidenceServiceImpl implements ResidenceService {
 	@Autowired
 	DongRepositorySupport dongRepositorySupport;
 
+	@Autowired
+	DongRepository dongRepository;
+
+	@Autowired
+	GuGunRepository guGunRepository;
+
+//	@Autowired
+//	FeatureRepositorySupport featureRepositorySupport;
+
 	@Override
 	public List<ResidenceInfo> getResidenceDetails(ResidenceDetailGetReq residenceDetailGetReq, ResidenceGetReq residenceGetReq) {
 		return residenceInfoRepositorySupport.findRooms(residenceDetailGetReq, residenceGetReq);
@@ -54,9 +62,9 @@ public class ResidenceServiceImpl implements ResidenceService {
 	@Override
 	public void createResidence(ResidencePostReq residence) {
 		ResidenceInfo residenceInfo = new ResidenceInfo();
-//		residenceInfo.setDong(dongRepositorySupport.getDongByDongName(residence.getName()));
+		residenceInfo.setDong(dongRepositorySupport.getDongByDongName(residence.getName()));
 //		residenceInfo.setImageUrl();
-//		residenceInfo.setFeature(residence.getFeature());
+		residenceInfo.setFeature(setFeature(residence.getFeature()));
 		residenceInfo.setEstateInfo(estateInfoRepositorySupport.getEstateInfoByRegistrationNumber(residence.getEstateNumber()).get());
 		residenceInfo.setResidenceType(residenceTypeRepositorySupport.getResidenceTypeByTypeName(residence.getResidenceType()));
 		residenceInfo.setResidenceCategory(residenceCategoryRepositorySupport.getResidenceCategoryByCategory(residence.getResidenceCategory()));
@@ -74,5 +82,46 @@ public class ResidenceServiceImpl implements ResidenceService {
 		residenceInfo.setName(residence.getName());
 		residenceInfo.setStructure(residence.getStructure());
 		residenceInfoRepository.save(residenceInfo);
+	}
+
+	@Override
+	public List<CountModel> getGetGuCount() {
+		List<CountModel> countModelList = new ArrayList<>();
+		List<Gugun> gugunList = guGunRepository.findAll();
+
+		for (Gugun gugun : gugunList) {
+			CountModel countModel = new CountModel();
+			countModel.setLon(gugun.getLon());
+			countModel.setLat(gugun.getLat());
+			countModel.setName(gugun.getGugunName());
+			countModel.setCount(residenceInfoRepositorySupport.findGuGunCount(gugun.getId()));
+			countModelList.add(countModel);
+		}
+		return countModelList;
+	}
+
+	@Override
+	public List<CountModel> getGetDongCount() {
+		List<CountModel> countModelList = new ArrayList<>();
+		List<Dong> dongList = dongRepository.findAll();
+
+		for (Dong dong : dongList) {
+			CountModel countModel = new CountModel();
+			countModel.setLon(dong.getLon());
+			countModel.setLat(dong.getLat());
+			countModel.setName(dong.getDongName());
+			countModel.setCount(residenceInfoRepositorySupport.findDongCount(dong.getId()));
+			countModelList.add(countModel);
+		}
+		return countModelList;
+	}
+
+	private List<Feature> setFeature(List<String> featureList) {
+		List<Feature> features = new ArrayList<>();
+
+//		for(int i=0; i<featureList.size(); i++){
+//			features.get(i).getFeatureName()
+//		}
+		return features;
 	}
 }

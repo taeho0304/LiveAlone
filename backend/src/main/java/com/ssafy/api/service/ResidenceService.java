@@ -1,5 +1,6 @@
 package com.ssafy.api.service;
 
+import com.ssafy.api.model.CountModel;
 import com.ssafy.api.request.ResidenceDetailGetReq;
 import com.ssafy.api.request.ResidenceGetReq;
 import com.ssafy.api.request.ResidencePostReq;
@@ -21,4 +22,8 @@ public interface ResidenceService {
 	void deleteResidence(Long residenceId);
 
 	void createResidence(ResidencePostReq residence);
+
+    List<CountModel> getGetGuCount();
+
+    List<CountModel> getGetDongCount();
 }
