@@ -2,20 +2,20 @@
   <div class="container" style="padding-right: 0">
     <div
       class="row col-md-12 resiwrap"
-      style="padding-bottom: 0; padding-top: 0"
+      style="padding-bottom: 0; padding-top: 0:"
     >
       <div class="col-md-4 ml-auto mr-auto">
-        <a class="btn btn-warning btn-round btn-block" style="color: #5e2c04"
+        <a class="btn btn-neutral btn-round btn-block" style="color: #000000"
           >가격</a
         >
       </div>
       <div class="col-md-4 ml-auto mr-auto">
-        <a class="btn btn-warning btn-round btn-block" style="color: #5e2c04"
+        <a class="btn btn-neutral btn-round btn-block" style="color: #000000"
           >면적</a
         >
       </div>
       <div class="col-md-4 ml-auto mr-auto">
-        <a class="btn btn-warning btn-round btn-block" style="color: #5e2c04"
+        <a class="btn btn-neutral btn-round btn-block" style="color: #000000"
           >선호</a
         >
       </div>
@@ -23,32 +23,38 @@
     <template>
       <div class="scroll row col-md-12 mr-0 mt-0">
         <card
+          v-for="(a, idx) in resiList"
+          :key="idx"
           class="card-nav-tabs text-center"
           header-classes="card-header-warning"
           style="min-width: 300px; max-height: 280px"
         >
           <div class="row" style="margin-rigth: 0">
             <div class="col-md-8">
-              <img
-                style="width: 100%; height: 95%"
-                src="https://d1774jszgerdmk.cloudfront.net/512/6a0ecfd6-d540-4349-bd11-ca9b66f8a5a0"
-              />
+              <img style="width: 100%; height: 95%" :src="a.imageUrl[0].url" />
             </div>
             <div class="col-md-4 pr-0 pl-0">
               <div class="col-md-12 pl-0 pb-0 title">
-                <strong><h5 class="mb-1">전세</h5></strong>
+                <strong
+                  ><h5 class="mb-1">{{ a.residenceType.type }}</h5></strong
+                >
               </div>
               <div class="col-md-12 pt-1 pl-0 pr-0 title">
-                <strong><h5 class="mb-1">1억 6500</h5></strong>
+                <strong
+                  ><h5 class="mb-1">{{ a.jeonseCost }}</h5></strong
+                >
               </div>
               <div class="col-md-12 pt-1 pl-0 pr-0 title">
-                <h6 class="mb-1">투룸</h6>
+                <h6 class="mb-1">{{ a.residenceCategory.categoryName }}</h6>
               </div>
               <div
                 class="row col-md-12 ml-auto mr-auto mt-1 pt-1 pl-0 pr-0 title"
               >
                 <div class="col-md-6 pr-0">
-                  <i class="now-ui-icons ui-2_favourite-28"></i>
+                  <i
+                    class="now-ui-icons ui-2_favourite-28"
+                    @click="myFavorite"
+                  ></i>
                 </div>
                 <div class="col-md-6 pr-0">
                   <i class="now-ui-icons ui-1_zoom-bold" @click="showModal"></i>
@@ -56,7 +62,9 @@
               </div>
             </div>
             <div slot="footer" class="col-md-12 mt-0 text-muted mb-2">
-              <p>1층,9평,관리비5만, *낙성대 초 역세권* 넓고...</p>
+              <p>
+                {{ a.myFloor }},{{ a.area }}평, {{ a.feature[0].featureName }}
+              </p>
             </div>
           </div>
         </card>
@@ -78,6 +86,7 @@
 import { Card } from "@/components";
 import Modal from "@/components/Modal.vue";
 import ResiDetail from "@/pages/map/ResiDetail.vue";
+import VueSimpleAlert from "vue-simple-alert";
 export default {
   components: {
     Card,
@@ -85,59 +94,27 @@ export default {
     ResiDetail,
   },
   setup() {},
+  props: { resiList: Array },
   data() {
     return {
       showResiDetail: false,
-      residence: [
-        {
-          area: 0,
-          content: "string",
-          cost: 0,
-          dong: "string",
-          gu: "string",
-          id: 0,
-          imgurl: "residenceInfo",
-          jeonseCost: 0,
-          lat: "string",
-          lon: "string",
-          manageCost: 0,
-          name: "string",
-          residenceCategory: {
-            categoryName: "string",
-            id: 0,
-          },
-          residenceDetail: {
-            building: "string",
-            id: 0,
-            unit: "string",
-          },
-          residenceEstate: {
-            address: "string",
-            id: 0,
-            name: "string",
-            phone: "string",
-            tel: "string",
-          },
-          residenceType: {
-            id: 0,
-            type: "string",
-          },
-          residenceWeight: {
-            commercialCategory: {
-              categoryName: "string",
-              id: 0,
-            },
-            id: 0,
-            weight: "string",
-          },
-          wolseCost: 0,
-        },
-      ],
     };
   },
   methods: {
     showModal() {
       this.showResiDetail = !this.showResiDetail;
+    },
+    myFavorite() {
+      console.log("aaaaa");
+      if (localStorage.getItem("accessToken")) {
+        //NOTE: 로그인시 로직 구현 필요! 매물 데이터 필요!!
+      } else {
+        VueSimpleAlert.fire({
+          title: "서비스 권한 없음",
+          text: "찜하기 서비스는 회원 전용 서비스 입니다!",
+          type: "error",
+        });
+      }
     },
   },
 };

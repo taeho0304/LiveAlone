@@ -15,14 +15,20 @@
             <router-link to="/search"
               ><a
                 class="btn btn-lg btn-block"
-                style="background:linear-gradient(60deg, #48c6ef, #00c6fb); border-radius: 10px"
+                style="
+                  background: linear-gradient(60deg, #48c6ef, #00c6fb);
+                  border-radius: 10px;
+                "
                 >검색하기</a
               ></router-link
             >
 
             <a
               class="btn btn-lg btn-block"
-              style="border-radius: 10px; background:linear-gradient(60deg, #48c6ef, #4481eb);"
+              style="
+                border-radius: 10px;
+                background: linear-gradient(60deg, #48c6ef, #4481eb);
+              "
               @click="modals.classic = true"
             >
               지도보기</a
@@ -35,7 +41,10 @@
             <router-link to="/qna"
               ><a
                 class="btn btn-lg btn-block"
-                style="border-radius: 10px;background:linear-gradient(60deg, #48c6ef, #495aff);"
+                style="
+                  border-radius: 10px;
+                  background: linear-gradient(60deg, #48c6ef, #495aff);
+                "
                 >추천받기</a
               ></router-link
             >
@@ -69,9 +78,21 @@ export default {
       console.log("질문옵션");
       this.requestQuestion();
     },
+    ...mapActions("search", ["requestGugunCount"]),
+    getGugunCount() {
+      console.log("구군카운트");
+      this.requestGugunCount();
+    },
+    ...mapActions("search", ["requestDongCount"]),
+    getDongCount() {
+      console.log("동카운트");
+      this.requestDongCount();
+    },
   },
   created() {
     this.getQuestionList();
+    this.getGugunCount();
+    this.getDongCount();
   },
 };
 </script>
