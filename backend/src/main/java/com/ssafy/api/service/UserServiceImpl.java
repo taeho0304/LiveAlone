@@ -37,10 +37,9 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	EstateInfoRepositorySupport estateInfoRepositorySupport;
 
-	User user = new User();
-	
 	@Override
 	public User createUser(UserRegisterPostReq userRegisterInfo) {
+		User user = new User();
 		user.setUserId(userRegisterInfo.getUserId());
 		user.setUserPass(passwordEncoder.encode(userRegisterInfo.getUserPass()));
 		user.setUserEmail(userRegisterInfo.getUserEmail());
