@@ -19,7 +19,7 @@ public class EstateInfoRepositorySupport {
     private JPAQueryFactory jpaQueryFactory;
     QEstateInfo qEstateInfo = QEstateInfo.estateInfo;
 
-    public Optional<EstateInfo> findEstateInfoByRegistrationNumber(String registrationNumber) {
+    public Optional<EstateInfo> getEstateInfoByRegistrationNumber(String registrationNumber) {
         EstateInfo estateInfo = jpaQueryFactory.select(qEstateInfo).from(qEstateInfo)
                 .where(qEstateInfo.registrationNumber.eq(registrationNumber)).fetchOne();
         if(estateInfo == null) return Optional.empty();

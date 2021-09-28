@@ -11,7 +11,7 @@ import java.util.List;
 /**
  *	방 검색 관련 비즈니스 로직 처리를 위한 서비스 인터페이스 정의.
  */
-public interface RoomSearchService {
+public interface SearchService {
 	void createResidenceCategory(String type);
 
 	List<ResidenceCategory> getResidenceCategory();
@@ -23,10 +23,6 @@ public interface RoomSearchService {
 	List<ResidenceType> getResidenceType();
 
 	void deleteResidenceType(List<Long> residenceType);
-
-	List<ResidenceInfo> getResidenceDetails(ResidenceDetailGetReq residenceDetailGetReq, ResidenceGetReq residenceGetReq);
-
-	List<ResidenceInfo> getResidencesBySiGuDong(ResidenceGetReq residenceGetReq);
 
 	void createSearchResidenceFilter(ResidenceDetailGetReq residenceDetailGetReq, Authentication authentication, ResidenceGetReq residenceGetReq);
 

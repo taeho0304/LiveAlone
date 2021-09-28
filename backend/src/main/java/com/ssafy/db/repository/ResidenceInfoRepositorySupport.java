@@ -1,15 +1,19 @@
 package com.ssafy.db.repository;
 
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.ssafy.api.model.PositionModel;
 import com.ssafy.api.request.ResidenceDetailGetReq;
 import com.ssafy.api.request.ResidenceGetReq;
 import com.ssafy.db.entity.QResidenceInfo;
+import com.ssafy.db.entity.QUserFavorite;
 import com.ssafy.db.entity.ResidenceInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,6 +24,7 @@ public class ResidenceInfoRepositorySupport {
     @Autowired
     private JPAQueryFactory jpaQueryFactory;
     QResidenceInfo qresidenceInfo = QResidenceInfo.residenceInfo;
+    QUserFavorite quserFavorite = QUserFavorite.userFavorite;
 
     public List<ResidenceInfo> findRooms(ResidenceDetailGetReq residenceDetailGetReq, ResidenceGetReq residenceGetReq) {
         JPAQuery<ResidenceInfo> residences = findRoomsBySiGuDong(residenceGetReq);
@@ -42,17 +47,20 @@ public class ResidenceInfoRepositorySupport {
         residences.where(builder);
 
         // 정렬
-//        if(residenceDetailGetReq.getSortType()!=null){
-//            if(residenceDetailGetReq.getSortType().equals("cost")){
-//                if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(qresidenceInfo.cost.asc());
-//                if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(qresidenceInfo.cost.desc());
-//            }
-//            if(residenceDetailGetReq.getSortType().equals("area")){
-//                if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(qresidenceInfo.area.asc());
-//                if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(qresidenceInfo.area.desc());
-//            }
-//        }
-
+        if(residenceDetailGetReq.getSortType()!=null){
+            if(residenceDetailGetReq.getSortType().equals("cost")){
+                if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(qresidenceInfo.cost.asc());
+                if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(qresidenceInfo.cost.desc());
+            }
+            if(residenceDetailGetReq.getSortType().equals("area")){
+                if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(qresidenceInfo.area.asc());
+                if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(qresidenceInfo.area.desc());
+            }
+            if(residenceDetailGetReq.getSortType().equals("favorite")){
+                if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(quserFavorite.residenceInfo.id.count().asc());
+                if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(quserFavorite.residenceInfo.id.count().desc());
+            }
+        }
         return residences.fetch();
     }
 
@@ -65,11 +73,38 @@ public class ResidenceInfoRepositorySupport {
     public JPAQuery<ResidenceInfo> findRoomsBySiGuDong(ResidenceGetReq residenceGetReq) {
         JPAQuery<ResidenceInfo> residences = jpaQueryFactory.select(qresidenceInfo).from(qresidenceInfo);
         BooleanBuilder builder = new BooleanBuilder();
-        if (residenceGetReq.getSi() != null) builder.and(qresidenceInfo.dong.Gugun.Si.siName.eq(residenceGetReq.getSi()));
-        if (residenceGetReq.getDong() != null) builder.and(qresidenceInfo.dong.dongName.eq(residenceGetReq.getDong()));
         if (residenceGetReq.getGugun() != null) builder.and(qresidenceInfo.dong.Gugun.gugunName.eq(residenceGetReq.getGugun()));
+        if (residenceGetReq.getDong() != null) builder.and(qresidenceInfo.dong.dongName.eq(residenceGetReq.getDong()));
         residences.where(builder);
 
         return residences;
+    }
+
+    public long findGuGunCount(Long id) {
+        long count = jpaQueryFactory.select(qresidenceInfo).from(qresidenceInfo)
+                .where(qresidenceInfo.dong.Gugun.id.eq(id)).fetchCount();
+        return count;
+    }
+
+    public long findDongCount(Long id) {
+        long count = jpaQueryFactory.select(qresidenceInfo).from(qresidenceInfo)
+                .where(qresidenceInfo.dong.id.eq(id)).fetchCount();
+        return count;
+    }
+
+    public List<PositionModel> findPositionsByDongName(String dongName) {
+        List<PositionModel> positionModels = new ArrayList<>();
+        List<Tuple> list= jpaQueryFactory.select(qresidenceInfo.id, qresidenceInfo.lon, qresidenceInfo.lat).from(qresidenceInfo)
+                .where(qresidenceInfo.dong.dongName.eq(dongName)).fetch();
+
+        for(Tuple i: list){
+            PositionModel positionModel = new PositionModel();
+            positionModel.setId(i.get(qresidenceInfo.id));
+            positionModel.setLat(i.get(qresidenceInfo.lat));
+            positionModel.setLon(i.get(qresidenceInfo.lon));
+            positionModels.add(positionModel);
+        }
+
+        return positionModels;
     }
 }
