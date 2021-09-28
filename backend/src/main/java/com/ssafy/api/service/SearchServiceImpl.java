@@ -11,15 +11,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
  *	방 검색 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
  */
 @Service("residenceSearchService")
-public class ResidenceSearchServiceImpl implements ResidenceSearchService {
+public class SearchServiceImpl implements SearchService {
 	@Autowired
 	ResidenceCategoryRepository residenceCategoryRepository;
 
@@ -27,13 +25,10 @@ public class ResidenceSearchServiceImpl implements ResidenceSearchService {
 	ResidenceTypeRepository residenceTypeRepository;
 
 	@Autowired
-	ResidenceSearchService residenceSearchService;
+	SearchService searchService;
 
 	@Autowired
 	UserService userService;
-
-	@Autowired
-	ResidenceInfoRepositorySupport residenceInfoRepositorySupport;
 
 	@Autowired
 	SearchResidenceFilterRepository searchResidenceFilterRepository;
@@ -91,16 +86,6 @@ public class ResidenceSearchServiceImpl implements ResidenceSearchService {
 	}
 
 	@Override
-	public List<ResidenceInfo> getResidenceDetails(ResidenceDetailGetReq residenceDetailGetReq, ResidenceGetReq residenceGetReq) {
-		return residenceInfoRepositorySupport.findRooms(residenceDetailGetReq, residenceGetReq);
-	}
-
-	@Override
-	public List<ResidenceInfo> getResidencesBySiGuDong(ResidenceGetReq residenceGetReq) {
-		return residenceInfoRepositorySupport.findRoomsBySiGuDong(residenceGetReq).fetch();
-	}
-
-	@Override
 	public void createSearchResidenceFilter(ResidenceDetailGetReq residenceDetailGetReq, Authentication authentication, ResidenceGetReq residenceGetReq) {
 		UserDetail userDetail = (UserDetail) authentication.getDetails();
 		User user = userService.getUserByUserId(userDetail.getUsername());
@@ -130,7 +115,7 @@ public class ResidenceSearchServiceImpl implements ResidenceSearchService {
 
 	@Override
 	public List<DongModel> getDong(String guGunName) {
-		List<Dong> dongs = dongRepositorySupport.getDongByDongName(guGunName);
+		List<Dong> dongs = dongRepositorySupport.getDongByGuGunName(guGunName);
 		List<DongModel> dongModels = new ArrayList<>();
 
 		for(int i=0; i<dongs.size(); i++){

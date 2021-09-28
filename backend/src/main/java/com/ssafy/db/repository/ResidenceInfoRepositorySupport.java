@@ -70,9 +70,8 @@ public class ResidenceInfoRepositorySupport {
     public JPAQuery<ResidenceInfo> findRoomsBySiGuDong(ResidenceGetReq residenceGetReq) {
         JPAQuery<ResidenceInfo> residences = jpaQueryFactory.select(qresidenceInfo).from(qresidenceInfo);
         BooleanBuilder builder = new BooleanBuilder();
-        if (residenceGetReq.getSi() != null) builder.and(qresidenceInfo.dong.Gugun.Si.siName.eq(residenceGetReq.getSi()));
-        if (residenceGetReq.getDong() != null) builder.and(qresidenceInfo.dong.dongName.eq(residenceGetReq.getDong()));
         if (residenceGetReq.getGugun() != null) builder.and(qresidenceInfo.dong.Gugun.gugunName.eq(residenceGetReq.getGugun()));
+        if (residenceGetReq.getDong() != null) builder.and(qresidenceInfo.dong.dongName.eq(residenceGetReq.getDong()));
         residences.where(builder);
 
         return residences;

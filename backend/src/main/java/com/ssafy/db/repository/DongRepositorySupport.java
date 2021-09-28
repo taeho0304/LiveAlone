@@ -19,7 +19,7 @@ public class DongRepositorySupport {
     private JPAQueryFactory jpaQueryFactory;
     QDong qDong = QDong.dong;
 
-    public List<Dong> getDongByDongName(String guGunName) {
+    public List<Dong> getDongByGuGunName(String guGunName) {
         List<Dong> dongs = jpaQueryFactory.select(qDong).from(qDong)
                 .where(qDong.Gugun.gugunName.eq(guGunName)).orderBy(qDong.dongName.asc()).fetch();
         return dongs;
