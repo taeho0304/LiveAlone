@@ -21,7 +21,7 @@
                         <div class="check col-md-6 col-12" v-if="!errors.maxID">
                             최대 16자까지 입력 가능합니다.</div>
                         <label for="name" class="label col-md-7 col-12"><span>비밀번호</span></label>                            
-                        <fg-input class="col-md-7 col-12" style="float: none;margin: 0px auto; padding-bottom: 0px; padding-top:3px; " @blur="checkPass()" placeholder="alive123@" v-model="user.userPass"></fg-input>
+                        <fg-input type="password" class="col-md-7 col-12" style="float: none;margin: 0px auto; padding-bottom: 0px; padding-top:3px; " @blur="checkPass()" placeholder="alive123@" v-model="user.userPass"></fg-input>
                         <div class="check col-md-6 col-12" v-if="!errors.requirePass" style="color:red;">필수 정보입니다.</div>
                         <div class="check col-md-6 col-12" v-if="!errors.minPass" style="color:red;">
                             최소 9 글자까지 입력 해야 합니다.</div>
@@ -30,7 +30,7 @@
                         <div class="check col-md-6 col-12" v-if="!errors.matchPass" style="color:red;">
                             비밀번호는 영문, 숫자, 특수문자가 조합되어야합니다.</div>
                         <label for="name" class="label col-md-7 col-12"><span>비밀번호 확인</span></label>
-                        <fg-input class="col-md-7 col-12" style="float: none;margin: 0px auto; padding-bottom: 0px; padding-top:3px; " @blur="matchPass()" placeholder="alive123@" v-model="passwordcheck"></fg-input>
+                        <fg-input type="password" class="col-md-7 col-12" style="float: none;margin: 0px auto; padding-bottom: 0px; padding-top:3px; " @blur="matchPass()" placeholder="alive123@" v-model="passwordcheck"></fg-input>
                         <div class="check col-md-6 col-12" v-if="!errors.checkPass" style="">비밀번호가 일치하지 않습니다.</div>
                         <label for="name" class="label col-md-7 col-12"><span>이메일</span></label>
                         <fg-input class="col-md-7 col-12" style="float: none;margin: 0px auto; padding-bottom: 0px; padding-top:3px; " @blur="checkEmail()" placeholder="alive@alive.com" v-model="user.userEmail"></fg-input>
