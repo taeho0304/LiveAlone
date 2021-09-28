@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 public class PositionModel {
     long id;
-    double lat;
-    double lon;
+    String lat;
+    String lon;
 }

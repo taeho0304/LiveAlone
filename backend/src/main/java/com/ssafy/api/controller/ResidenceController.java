@@ -1,6 +1,7 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.model.CountModel;
+import com.ssafy.api.model.PositionModel;
 import com.ssafy.api.request.ResidenceDetailGetReq;
 import com.ssafy.api.request.ResidenceGetReq;
 import com.ssafy.api.request.ResidencePostReq;
@@ -12,7 +13,13 @@ import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.swing.text.Position;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -39,6 +46,24 @@ public class ResidenceController {
             return ResponseEntity.status(200).body(ResidenceRes.of(rooms));
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(500).body(ResidenceRes.of(500, "fail"));
+        }
+    }
+
+    @GetMapping("/positions")
+    @ApiOperation(value = "전체 동 좌표 조회", notes = "전체 동 좌표를 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "실패")
+    })
+    public ResponseEntity<PositionRes> getPositions(
+            @RequestParam(value = "동이름") String dongName
+    ) {
+        try {
+            System.out.println(dongName);
+            List<PositionModel> positionModels = residenceService.getPosition(dongName);
+            return ResponseEntity.status(200).body(PositionRes.of(positionModels));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(500).body(PositionRes.of(500, "fail"));
         }
     }
 
@@ -95,11 +120,11 @@ public class ResidenceController {
             @ApiResponse(code = 500, message = "실패")
     })
     public ResponseEntity<? extends BaseResponseBody> createResidenceType(
-            @RequestBody @ApiParam(value = "방 생성") ResidencePostReq residence) {
+            @RequestBody @ApiParam(value = "방 생성") ResidencePostReq residence, @RequestParam(value = "thumbnail", required = false) List<MultipartFile> thumbnails) {
         try {
-            residenceService.createResidence(residence);
+            residenceService.createResidence(residence, thumbnails);
             return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Success"));
-        } catch (NoSuchElementException e) {
+        } catch (NoSuchElementException | IOException e) {
             return ResponseEntity.status(500).body(BaseResponseBody.of(500, "fail"));
         }
     }
@@ -119,4 +144,6 @@ public class ResidenceController {
             return ResponseEntity.status(500).body(UserLoginPostRes.of(500, "fail"));
         }
     }
+
+
 }

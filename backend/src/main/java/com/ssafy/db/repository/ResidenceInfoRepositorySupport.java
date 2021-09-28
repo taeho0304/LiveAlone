@@ -1,8 +1,10 @@
 package com.ssafy.db.repository;
 
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.ssafy.api.model.PositionModel;
 import com.ssafy.api.request.ResidenceDetailGetReq;
 import com.ssafy.api.request.ResidenceGetReq;
 import com.ssafy.db.entity.QResidenceInfo;
@@ -11,6 +13,7 @@ import com.ssafy.db.entity.ResidenceInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -87,5 +90,23 @@ public class ResidenceInfoRepositorySupport {
         long count = jpaQueryFactory.select(qresidenceInfo).from(qresidenceInfo)
                 .where(qresidenceInfo.dong.id.eq(id)).fetchCount();
         return count;
+    }
+
+    public List<ResidenceInfo> findPositionsByDongName(String dongName) {
+        List<ResidenceInfo> positionModels = jpaQueryFactory.select(qresidenceInfo).from(qresidenceInfo)
+                .where(qresidenceInfo.dong.dongName.eq(dongName)).fetch();
+//        List<PositionModel> positionModels = new ArrayList<>();
+//        List<Tuple> list= jpaQueryFactory.select(qresidenceInfo.id, qresidenceInfo.lon, qresidenceInfo.lat).from(qresidenceInfo)
+//                .where(qresidenceInfo.dong.dongName.eq(dongName)).fetch();
+//
+//        for(Tuple i: list){
+//            PositionModel positionModel = new PositionModel();
+//            positionModel.setId(i.get(qresidenceInfo.id));
+//            positionModel.setLat(Double.parseDouble(i.get(qresidenceInfo.lat)));
+//            positionModel.setLon(Double.parseDouble(i.get(qresidenceInfo.lon)));
+//            positionModels.add(positionModel);
+//        }
+
+        return positionModels;
     }
 }

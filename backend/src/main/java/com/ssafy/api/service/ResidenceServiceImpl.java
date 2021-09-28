@@ -1,6 +1,8 @@
 package com.ssafy.api.service;
 
+import com.querydsl.core.Tuple;
 import com.ssafy.api.model.CountModel;
+import com.ssafy.api.model.PositionModel;
 import com.ssafy.api.request.ResidenceDetailGetReq;
 import com.ssafy.api.request.ResidenceGetReq;
 import com.ssafy.api.request.ResidencePostReq;
@@ -8,9 +10,15 @@ import com.ssafy.db.entity.*;
 import com.ssafy.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *	매물 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
@@ -41,8 +49,11 @@ public class ResidenceServiceImpl implements ResidenceService {
 	@Autowired
 	GuGunRepository guGunRepository;
 
-//	@Autowired
-//	FeatureRepositorySupport featureRepositorySupport;
+	@Autowired
+	FeatureRepositorySupport featureRepositorySupport;
+
+	@Autowired
+	FeatureRepository featureRepository;
 
 	@Override
 	public List<ResidenceInfo> getResidenceDetails(ResidenceDetailGetReq residenceDetailGetReq, ResidenceGetReq residenceGetReq) {
@@ -60,10 +71,16 @@ public class ResidenceServiceImpl implements ResidenceService {
 	}
 
 	@Override
-	public void createResidence(ResidencePostReq residence) {
+	public void createResidence(ResidencePostReq residence, List<MultipartFile> thumbnails) throws IOException {
+		List<ImageUrl> imageUrls = new ArrayList<>();
+		for (MultipartFile thumbnail:thumbnails) {
+			ImageUrl imageUrl = new ImageUrl();
+			imageUrl.setUrl(saveThumbnail(thumbnail));
+			imageUrls.add(imageUrl);
+		}
 		ResidenceInfo residenceInfo = new ResidenceInfo();
 		residenceInfo.setDong(dongRepositorySupport.getDongByDongName(residence.getName()));
-//		residenceInfo.setImageUrl();
+		residenceInfo.setImageUrl(imageUrls);
 		residenceInfo.setFeature(setFeature(residence.getFeature()));
 		residenceInfo.setEstateInfo(estateInfoRepositorySupport.getEstateInfoByRegistrationNumber(residence.getEstateNumber()).get());
 		residenceInfo.setResidenceType(residenceTypeRepositorySupport.getResidenceTypeByTypeName(residence.getResidenceType()));
@@ -116,12 +133,53 @@ public class ResidenceServiceImpl implements ResidenceService {
 		return countModelList;
 	}
 
+	@Override
+	public List<PositionModel> getPosition(String dongName) {
+		List<ResidenceInfo> residenceInfos = residenceInfoRepositorySupport.findPositionsByDongName(dongName);
+		List<PositionModel> positionModels = new ArrayList<>();
+		System.out.println("sdfsdfsd"+residenceInfos.size());
+		for (ResidenceInfo residenceInfo:residenceInfos) {
+			PositionModel positionModel = new PositionModel();
+			positionModel.setLon(residenceInfo.getLon());
+			positionModel.setLat(residenceInfo.getLat());
+			positionModel.setId(residenceInfo.getId());
+			positionModels.add(positionModel);
+		}
+		return positionModels;
+	}
+
 	private List<Feature> setFeature(List<String> featureList) {
 		List<Feature> features = new ArrayList<>();
 
-//		for(int i=0; i<featureList.size(); i++){
-//			features.get(i).getFeatureName()
-//		}
+		for(int i=0; i<featureList.size(); i++){
+			Optional<Feature> featureOptional = featureRepositorySupport.findFeatureByFeatureName(features.get(i).getFeatureName());
+			Feature feature = featureOptional.get();
+			if(!featureOptional.isPresent()){
+				feature.setFeatureName(features.get(i).getFeatureName());
+				featureRepository.save(feature);
+				feature = featureRepositorySupport.findFeatureByFeatureName(features.get(i).getFeatureName()).get();
+			}
+			features.add(feature);
+		}
 		return features;
 	}
+
+	private String saveThumbnail(MultipartFile thumbnail) throws IOException {
+		String path = "images/";
+		File file = new File(path);
+		if (!file.exists())
+			file.mkdirs();
+
+		String url = "";
+		if (thumbnail != null) {
+			String originalFileExtension = thumbnail.getOriginalFilename().substring(thumbnail.getOriginalFilename().lastIndexOf("."));
+			String new_file_name = Long.toString(System.nanoTime()) + originalFileExtension;
+
+			url = "images" + File.separator + new_file_name;
+			Path pathAbs = Paths.get(url).toAbsolutePath();
+			thumbnail.transferTo(pathAbs.toFile());
+		}
+		return url;
+	}
 }
+
