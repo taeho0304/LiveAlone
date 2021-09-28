@@ -49,13 +49,13 @@ public class ResidenceController {
         }
     }
 
-    @GetMapping("/ids")
+    @PostMapping("/ids")
     @ApiOperation(value = "매물 id로 조회", notes = "매물을 id로 조회한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "실패")
     })
-    public ResponseEntity<ResidenceRes> getResidences( @RequestParam List<Long> residenceIds) {
+    public ResponseEntity<ResidenceRes> getResidences( @RequestBody List<Long> residenceIds) {
         try {
             List<ResidenceInfo> rooms = residenceService.getResidencesById(residenceIds);
             return ResponseEntity.status(200).body(ResidenceRes.of(rooms));
