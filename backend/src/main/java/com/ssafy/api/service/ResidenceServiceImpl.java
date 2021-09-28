@@ -135,16 +135,7 @@ public class ResidenceServiceImpl implements ResidenceService {
 
 	@Override
 	public List<PositionModel> getPosition(String dongName) {
-		List<ResidenceInfo> residenceInfos = residenceInfoRepositorySupport.findPositionsByDongName(dongName);
-		List<PositionModel> positionModels = new ArrayList<>();
-		System.out.println("sdfsdfsd"+residenceInfos.size());
-		for (ResidenceInfo residenceInfo:residenceInfos) {
-			PositionModel positionModel = new PositionModel();
-			positionModel.setLon(residenceInfo.getLon());
-			positionModel.setLat(residenceInfo.getLat());
-			positionModel.setId(residenceInfo.getId());
-			positionModels.add(positionModel);
-		}
+		List<PositionModel> positionModels = residenceInfoRepositorySupport.findPositionsByDongName(dongName);
 		return positionModels;
 	}
 

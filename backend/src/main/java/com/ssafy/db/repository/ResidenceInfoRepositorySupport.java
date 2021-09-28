@@ -92,20 +92,18 @@ public class ResidenceInfoRepositorySupport {
         return count;
     }
 
-    public List<ResidenceInfo> findPositionsByDongName(String dongName) {
-        List<ResidenceInfo> positionModels = jpaQueryFactory.select(qresidenceInfo).from(qresidenceInfo)
+    public List<PositionModel> findPositionsByDongName(String dongName) {
+        List<PositionModel> positionModels = new ArrayList<>();
+        List<Tuple> list= jpaQueryFactory.select(qresidenceInfo.id, qresidenceInfo.lon, qresidenceInfo.lat).from(qresidenceInfo)
                 .where(qresidenceInfo.dong.dongName.eq(dongName)).fetch();
-//        List<PositionModel> positionModels = new ArrayList<>();
-//        List<Tuple> list= jpaQueryFactory.select(qresidenceInfo.id, qresidenceInfo.lon, qresidenceInfo.lat).from(qresidenceInfo)
-//                .where(qresidenceInfo.dong.dongName.eq(dongName)).fetch();
-//
-//        for(Tuple i: list){
-//            PositionModel positionModel = new PositionModel();
-//            positionModel.setId(i.get(qresidenceInfo.id));
-//            positionModel.setLat(Double.parseDouble(i.get(qresidenceInfo.lat)));
-//            positionModel.setLon(Double.parseDouble(i.get(qresidenceInfo.lon)));
-//            positionModels.add(positionModel);
-//        }
+
+        for(Tuple i: list){
+            PositionModel positionModel = new PositionModel();
+            positionModel.setId(i.get(qresidenceInfo.id));
+            positionModel.setLat(i.get(qresidenceInfo.lat));
+            positionModel.setLon(i.get(qresidenceInfo.lon));
+            positionModels.add(positionModel);
+        }
 
         return positionModels;
     }
