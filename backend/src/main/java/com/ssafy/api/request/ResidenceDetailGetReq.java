@@ -40,7 +40,7 @@ public class ResidenceDetailGetReq {
 //	@ApiModelProperty(name="최고 면적(평수)", example="10")
 	int endArea;
 //	@ApiModelProperty(name="정렬 기준", example="cost")
-//	String sortType;
+	String sortType;
 //	@ApiModelProperty(name="정렬 방식", example="asc")
-//	String sortOrder;
+	String sortOrder;
 }

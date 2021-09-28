@@ -22,7 +22,7 @@ public class GuGunRepositorySupport {
 
     public List<Gugun> getGuGunBySiName(String siName) {
         List<Gugun> guguns = jpaQueryFactory.select(qGugun).from(qGugun)
-                .where(qGugun.Si.siName.eq(siName)).fetch();
+                .where(qGugun.Si.siName.eq(siName)).orderBy(qGugun.gugunName.asc()).fetch();
         return  guguns;
     }
 }
