@@ -19,9 +19,6 @@ public class ResidenceInfo extends BaseEntity{
     private ResidenceType residenceType;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private ResidenceDetail residenceDetail;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     private EstateInfo estateInfo;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -48,4 +45,8 @@ public class ResidenceInfo extends BaseEntity{
     double manageCost;
     int area;
     String content;
+    String myFloor; // 층
+    String structure; // 방 구조
+    String buildingFloor; // 층
+    String direction;
 }
