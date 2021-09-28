@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-show="isResiShow" class="Resi col-md-3" style="max-width: 430px">
-      <ResidenceList />
+      <ResidenceList v-bind:resiList="resiList"/>
     </div>
     <div id="map" style="width: 100%; height: 100%"></div>
     <ul id="category" v-show="isShow">
@@ -75,9 +75,9 @@ export default {
   watch: {
     resiList: function (newVal) {
       console.log("new", newVal);
+      this.isResiShow = true;
     },
     markerList: function (newVal) {
-      
       console.log(newVal);
       var markers = newVal.positionModelList.map(function (position) {
         return new kakao.maps.Marker({
@@ -153,21 +153,18 @@ export default {
         console.log(message);
       });
 
-      kakao.maps.event.addListener(
-        clusterer,
-        "clusterclick",
-        function (cluster) {
-          var clickcluster = cluster.getMarkers().length;
-          var Item = [];
-          for (var i = 0; i < clickcluster; i++) {
-            Item.push(cluster.getMarkers()[i].Fb);
-          }
-          http.post("/api/v1/residences/ids", Item).then((res) => {
-            this.resiList = res.data.residenceInfo;
-            console.log(this.resiList);
-          });
-        }
-      );
+      kakao.maps.event.addListener(clusterer, "clusterclick", this.temp);
+    },
+    temp(cluster) {
+      var clickcluster = cluster.getMarkers().length;
+      var Item = [];
+      for (var i = 0; i < clickcluster; i++) {
+        Item.push(cluster.getMarkers()[i].Fb);
+      }
+      http.post("/api/v1/residences/ids", Item).then((res) => {
+        this.resiList = res.data.residenceInfo;
+        console.log(this.resiList);
+      });
     },
   },
 };
