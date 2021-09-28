@@ -49,6 +49,21 @@ public class ResidenceController {
         }
     }
 
+    @GetMapping("/ids")
+    @ApiOperation(value = "매물 id로 조회", notes = "매물을 id로 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "실패")
+    })
+    public ResponseEntity<ResidenceRes> getResidences( @RequestParam List<Long> residenceIds) {
+        try {
+            List<ResidenceInfo> rooms = residenceService.getResidencesById(residenceIds);
+            return ResponseEntity.status(200).body(ResidenceRes.of(rooms));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(500).body(ResidenceRes.of(500, "fail"));
+        }
+    }
+
     @GetMapping("/positions")
     @ApiOperation(value = "전체 동 좌표 조회", notes = "전체 동 좌표를 조회한다.")
     @ApiResponses({

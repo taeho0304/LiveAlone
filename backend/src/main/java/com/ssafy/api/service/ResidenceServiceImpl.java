@@ -139,6 +139,17 @@ public class ResidenceServiceImpl implements ResidenceService {
 		return positionModels;
 	}
 
+	@Override
+	public List<ResidenceInfo> getResidencesById(List<Long> residenceIds) {
+		List<ResidenceInfo> residenceInfos = new ArrayList<>();
+		for(Long id : residenceIds){
+			ResidenceInfo residenceInfo = residenceInfoRepository.findById(id).get();
+			residenceInfos.add(residenceInfo);
+		}
+
+		return residenceInfos;
+	}
+
 	private List<Feature> setFeature(List<String> featureList) {
 		List<Feature> features = new ArrayList<>();
 

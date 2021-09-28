@@ -28,4 +28,6 @@ public interface ResidenceService {
     List<CountModel> getGetDongCount();
 
 	List<PositionModel> getPosition(String dongName);
+
+    List<ResidenceInfo> getResidencesById(List<Long> residenceIds);
 }
