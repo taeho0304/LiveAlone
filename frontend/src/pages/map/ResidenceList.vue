@@ -31,7 +31,7 @@
         >
           <div class="row" style="margin-rigth: 0">
             <div class="col-md-8">
-              <img style="width: 100%; height: 95%" :src="a.imageUrl[0].url" />
+              <img style="max-width: 100%; height: auto;" :src="a.imageUrl[0].url" />
             </div>
             <div class="col-md-4 pr-0 pl-0">
               <div class="col-md-12 pl-0 pb-0 title">
@@ -77,7 +77,11 @@
             </div>
             <div slot="footer" class="col-md-12 mt-0 text-muted mb-2">
               <p>
-                {{ a.myFloor }},{{ a.area }}평, {{ a.feature[0].featureName }}
+                {{ a.myFloor }},{{ a.area }}평,
+                
+                <strong v-for="(name,idx) in a.feature" :key="idx"> 
+                  {{ name.featureName }}
+                  </strong>
               </p>
             </div>
           </div>
