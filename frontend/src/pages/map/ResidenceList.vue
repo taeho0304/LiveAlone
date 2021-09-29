@@ -40,8 +40,22 @@
                 >
               </div>
               <div class="col-md-12 pt-1 pl-0 pr-0 title">
-                <strong
-                  ><h5 class="mb-1">{{ a.jeonseCost }}</h5></strong
+                
+                <strong v-if="a.residenceType.type=='전세'"
+                   ><h5 class="mb-1">
+
+                    {{ showPrice(a.jeonseCost) }}
+                    </h5></strong
+                >
+                <strong v-else-if="a.residenceType.type=='매매'"
+                   ><h5 class="mb-1">
+                    {{ showPrice(a.cost) }}
+                    </h5></strong
+                >
+                <strong v-else-if="a.residenceType.type=='월세'"
+                   ><h5 class="mb-1">
+                    {{ showPrice(a.jeonseCost) }}/{{ a.wolseCost }}
+                    </h5></strong
                 >
               </div>
               <div class="col-md-12 pt-1 pl-0 pr-0 title">
@@ -101,6 +115,36 @@ export default {
     };
   },
   methods: {
+    showPrice(number){
+      console.log("실행")
+      var inputNumber  = number < 0 ? false : number;
+      var unitWords    = ['', '억', '조', '경'];
+      var splitUnit    = 10000;
+      var splitCount   = unitWords.length;
+      var resultArray  = [];
+      var resultString = '';
+
+      for (var i = 0; i < splitCount; i++){
+          var unitResult = (inputNumber % Math.pow(splitUnit, i + 1)) / Math.pow(splitUnit, i);
+          unitResult = Math.floor(unitResult);
+          if (unitResult > 0){
+              resultArray[i] = unitResult;
+          }
+      }
+
+      for (var i = 0; i < resultArray.length; i++){
+          if(!resultArray[i]) continue;
+          resultString = String(resultArray[i]) + unitWords[i] + resultString;
+      }
+      if(resultString[resultString.length-1]=="억")
+      {
+        
+        return resultString
+      }else{
+
+        return resultString
+      }
+    },
     showModal() {
       this.showResiDetail = !this.showResiDetail;
     },
