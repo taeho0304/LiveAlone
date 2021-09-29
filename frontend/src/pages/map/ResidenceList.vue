@@ -116,7 +116,7 @@ export default {
   },
   methods: {
     showPrice(number){
-      console.log("실행")
+      
       var inputNumber  = number < 0 ? false : number;
       var unitWords    = ['', '억', '조', '경'];
       var splitUnit    = 10000;
@@ -136,14 +136,9 @@ export default {
           if(!resultArray[i]) continue;
           resultString = String(resultArray[i]) + unitWords[i] + resultString;
       }
-      if(resultString[resultString.length-1]=="억")
-      {
-        
-        return resultString
-      }else{
-
-        return resultString
-      }
+     
+      return resultString
+      
     },
     showModal() {
       this.showResiDetail = !this.showResiDetail;
