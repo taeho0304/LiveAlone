@@ -1,6 +1,6 @@
 package com.ssafy.api.service;
 
-import com.ssafy.api.model.QnA;
+import com.ssafy.api.model.QnAModel;
 import com.ssafy.api.request.QuestionOptionPostReq;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 public interface QuestionOptionService {
     void createQuestionOption(QuestionOptionPostReq questionOptionInfo);
 
-    List<QnA> getQuestionOption();
+    List<QnAModel> getQuestionOption();
 
     void deleteQuestionOption(List<Long> questionOptionId);
 

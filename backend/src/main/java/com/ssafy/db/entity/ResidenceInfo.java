@@ -1,13 +1,11 @@
 package com.ssafy.db.entity;
 
-import com.ssafy.db.idmodel.ResidenceInfoPK;
-import com.ssafy.db.idmodel.UserFavoritePK;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.util.List;
 
 /**
  * 매물 모델 정의.
@@ -16,30 +14,26 @@ import java.io.Serializable;
 @Getter
 @Setter
 @EqualsAndHashCode
-@IdClass(ResidenceInfoPK.class)
-public class ResidenceInfo extends BaseEntity implements Serializable {
-    @Id
+public class ResidenceInfo extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     private ResidenceType residenceType;
 
-    @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    private ResidenceDetail residenceDetail;
+    private EstateInfo estateInfo;
 
-    @Id
-    @ManyToOne(fetch = FetchType.LAZY)
-    private ResidenceEstate residenceEstate;
-
-    @Id
     @ManyToOne(fetch = FetchType.LAZY)
     private ResidenceCategory residenceCategory;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Dong dong;
-    
-    @Id
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<ImageUrl> imageUrl;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Feature> feature;
+
     @OneToOne
-//    @JoinColumn(name = "id", unique = true, nullable = false )
     private ResidenceWeight residenceWeight;
 
     String name;
@@ -48,8 +42,11 @@ public class ResidenceInfo extends BaseEntity implements Serializable {
     int cost;
     int wolseCost;
     int jeonseCost;
-    int manageCost;
+    double manageCost;
     int area;
     String content;
-    String imgurl;
+    String myFloor; // 층
+    String structure; // 방 구조
+    String buildingFloor; // 층
+    String direction;
 }

@@ -2,6 +2,7 @@ package com.ssafy.api.service;
 
 import com.ssafy.api.request.UserRegisterPostReq;
 import com.ssafy.api.response.UserLoginPostRes;
+import com.ssafy.db.entity.EstateInfo;
 import com.ssafy.db.entity.User;
 import org.springframework.http.ResponseEntity;
 
@@ -13,4 +14,6 @@ public interface UserService {
 	User getUserByUserId(String userId);
 	void deleteUserByUserId(String userId);
 	void patchUser(UserRegisterPostReq registerInfo, String userId);
+
+    EstateInfo getEstateInfoByResgistrationNumber(String registrationNumber);
 }

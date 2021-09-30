@@ -1,6 +1,6 @@
 package com.ssafy.api.controller;
 
-import com.ssafy.api.model.QnA;
+import com.ssafy.api.model.QnAModel;
 import com.ssafy.api.request.QuestionOptionPostReq;
 import com.ssafy.api.request.QuestionPatchReq;
 import com.ssafy.api.request.QuestionResultPostReq;
@@ -129,7 +129,7 @@ public class QuestionController {
     })
     public ResponseEntity<QuestionOptionRes> getQuestionOption() {
         try {
-            List<QnA> questionOptions = questionOptionService.getQuestionOption();
+            List<QnAModel> questionOptions = questionOptionService.getQuestionOption();
             return ResponseEntity.status(201).body(QuestionOptionRes.of(questionOptions));
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(500).body(QuestionOptionRes.of(500, "fail"));

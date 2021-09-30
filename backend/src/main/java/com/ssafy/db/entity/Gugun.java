@@ -18,4 +18,6 @@ public class Gugun extends BaseEntity{
     private Si Si;
 
     String gugunName;
+    double lon;
+    double lat;
 }

@@ -51,16 +51,6 @@ export default {
                     // console.log(err);
                 })
         }
-        , requestGugunCount({ commit }) {
-            http.get("/api/v1/residences/gucount").then((res) => {
-                commit("GUGUNCOUNT", res.data);
-            });
-        },
-        requestDongCount({ commit }) {
-            http.get("/api/v1/residences/dongcount").then((res) => {
-                commit("DONGCOUNT", res.data);
-            });
-        },
     },
     getters: {
         getdongCount(state) {
