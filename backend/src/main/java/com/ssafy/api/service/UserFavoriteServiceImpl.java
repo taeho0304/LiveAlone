@@ -36,7 +36,7 @@ public class UserFavoriteServiceImpl implements UserFavoriteService {
 	public void createFavoriteResidence(Long residenceId, Authentication authentication) {
 		UserDetail userDetail = (UserDetail) authentication.getDetails();
 		UserFavorite userFavorite = new UserFavorite();
-		userFavorite.setResidenceInfo(residenceInfoRepositorySupport.findById(residenceId));
+		userFavorite.setResidenceInfo(residenceInfoRepository.findById(residenceId).get());
 		userFavorite.setUser(userService.getUserByUserId(userDetail.getUsername()));
 		userFavoriteRepository.save(userFavorite);
 	}

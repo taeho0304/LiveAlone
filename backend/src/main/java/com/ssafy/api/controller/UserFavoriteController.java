@@ -32,7 +32,7 @@ public class UserFavoriteController {
             @ApiResponse(code = 500, message = "실패")
     })
     public ResponseEntity<? extends BaseResponseBody> createFavoriteResidence(
-            @RequestBody @ApiParam(value = "방 종류", required = true) Long residenceId, @ApiIgnore Authentication authentication) {
+            @RequestParam @ApiParam(value = "방 종류", required = true) Long residenceId, @ApiIgnore Authentication authentication) {
         try {
             userFavoriteService.createFavoriteResidence(residenceId, authentication);
             return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Success"));
