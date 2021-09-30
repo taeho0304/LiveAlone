@@ -71,8 +71,14 @@ export default {
   },
   props: {
     marker: Object,
+    detailList: Array,
   },
   watch: {
+    detailList: function (newVal) {
+      console.log(newVal);
+      this.resiList = newVal;
+      this.isResiShow = true;
+    },
     resiList: function (newVal) {
       console.log("new", newVal);
       this.isResiShow = true;

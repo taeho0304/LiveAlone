@@ -312,7 +312,7 @@
 
 <script>
 import { Slider, Checkbox } from "@/components";
-
+import http from "@/util/http-common";
 export default {
   components: {
     Slider,
@@ -471,7 +471,7 @@ export default {
       if (this.dealMonthRange[0] == 0) {
         this.WrangeS = "0";
       }
-      this.setDetailSave();
+      this.requestDetailSave();
     },
     chaneJRange() {
       this.rangeSlider[0] = parseInt(this.rangeSlider[0]);
@@ -525,7 +525,8 @@ export default {
         this.checkedResiCategory[1].checkCategory.push("원룸");
       }
       if (this.checkedResiCategory[0].checkResi1) {
-        this.checkedResiCategory[1].checkCategory.push("투.쓰리룸");
+        this.checkedResiCategory[1].checkCategory.push("투룸");
+        this.checkedResiCategory[1].checkCategory.push("쓰리룸 이상");
       }
       if (this.checkedResiCategory[0].checkResi2) {
         this.checkedResiCategory[1].checkCategory.push("오피스텔");
@@ -591,6 +592,8 @@ export default {
     },
     requestDetailSave() {
       const mySave = {
+        gugun: this.juso.gugun,
+        dong: this.juso.dong,
         residenceCategory: this.checkedResiCategory[1].checkCategory,
         residenceType: this.checkedResiType[1].checkType,
         floorDetail: this.checkedFloorType[1].checkedFloor,
@@ -606,16 +609,24 @@ export default {
         startWPrice: this.dealMonthRange[0],
         endWPrice: this.dealMonthRange[1] == 350 ? 0 : this.dealMonthRange[1],
 
-        startManagePrice: this.CofMrange[0],
-        endManagePrice: this.CofMrange[1] == 50 ? 0 : this.CofMrange[1],
+        startManagePrice: this.costOfManage[0],
+        endManagePrice: this.costOfManage[1] == 50 ? 0 : this.costOfManage[1],
 
         startArea: this.roomSize[0],
         endArea: this.roomSize[0] == 50 ? 0 : this.roomSize[1],
       };
+      //NOTE : api 호출
       console.log(mySave);
+
+      http.post("/api/v1/residences/detail", mySave).then((res) => {
+        console.log("deatailRES", res.data.residenceInfo);
+        this.$emit("mydetailS", res.data.residenceInfo);
+      });
     },
     setDetailSave() {
       const mySave = {
+        gugun: this.juso.gugun,
+        dong: this.juso.dong,
         residenceCategory: this.checkedResiCategory[1].checkCategory,
         residenceType: this.checkedResiType[1].checkType,
         floorDetail: this.checkedFloorType[1].checkedFloor,
@@ -639,7 +650,7 @@ export default {
       };
     },
   },
-  props: {},
+  props: { juso: Object },
 };
 </script>
 

@@ -1,8 +1,8 @@
 <template >
-  <div >
-    <MainNav @maker="getMarkerData" />
+  <div>
+    <MainNav @maker="getMarkerData" @detailS="getDetailSearch" />
 
-    <Map v-bind:marker="marker" />
+    <Map v-bind:marker="marker" v-bind:detailList="detailList" />
   </div>
 </template>
 
@@ -20,12 +20,17 @@ export default {
   data() {
     return {
       marker: null,
+      detailList: [],
     };
   },
   methods: {
     getMarkerData(data) {
       this.marker = data;
       console.log(this.marker);
+    },
+    getDetailSearch(data) {
+      this.detailList = data;
+      console.log("디테일검색 결과", data);
     },
   },
 };
