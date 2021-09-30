@@ -32,13 +32,13 @@ public class ResidenceServiceImpl implements ResidenceService {
 	ResidenceInfoRepository residenceInfoRepository;
 
 	@Autowired
-	ResidenceTypeRepositorySupport residenceTypeRepositorySupport;
+	ResidenceTypeRepository residenceTypeRepository;
 
 	@Autowired
-	ResidenceCategoryRepositorySupport residenceCategoryRepositorySupport;
+	ResidenceCategoryRepository residenceCategoryRepository;
 
 	@Autowired
-	EstateInfoRepositorySupport estateInfoRepositorySupport;
+	EstateInfoRepository estateInfoRepository;
 
 	@Autowired
 	DongRepositorySupport dongRepositorySupport;
@@ -71,20 +71,22 @@ public class ResidenceServiceImpl implements ResidenceService {
 	}
 
 	@Override
-	public void createResidence(ResidencePostReq residence, List<MultipartFile> thumbnails) throws IOException {
+	public void createResidence(ResidencePostReq residence) throws IOException {
 		List<ImageUrl> imageUrls = new ArrayList<>();
-		for (MultipartFile thumbnail:thumbnails) {
+		for (MultipartFile thumbnail:residence.getThumbnails()) {
 			ImageUrl imageUrl = new ImageUrl();
 			imageUrl.setUrl(saveThumbnail(thumbnail));
 			imageUrls.add(imageUrl);
 		}
 		ResidenceInfo residenceInfo = new ResidenceInfo();
-		residenceInfo.setDong(dongRepositorySupport.getDongByDongName(residence.getName()));
+		residenceInfo.setDong(dongRepository.findById(residence.getDong()).get());
+		System.out.println(residenceInfo.getDong().getDongName());
+		System.out.println(residenceInfo.getDong().getId());
 		residenceInfo.setImageUrl(imageUrls);
 		residenceInfo.setFeature(setFeature(residence.getFeature()));
-		residenceInfo.setEstateInfo(estateInfoRepositorySupport.getEstateInfoByRegistrationNumber(residence.getEstateNumber()).get());
-		residenceInfo.setResidenceType(residenceTypeRepositorySupport.getResidenceTypeByTypeName(residence.getResidenceType()));
-		residenceInfo.setResidenceCategory(residenceCategoryRepositorySupport.getResidenceCategoryByCategory(residence.getResidenceCategory()));
+		residenceInfo.setEstateInfo(estateInfoRepository.findById(residence.getEstateId()).get());
+		residenceInfo.setResidenceType(residenceTypeRepository.findById(residence.getResidenceType()).get());
+		residenceInfo.setResidenceCategory(residenceCategoryRepository.findById(residence.getResidenceCategory()).get());
 		residenceInfo.setArea(residence.getArea());
 		residenceInfo.setBuildingFloor(residence.getBuildingFloor());
 		residenceInfo.setContent(residence.getContent());
@@ -152,15 +154,14 @@ public class ResidenceServiceImpl implements ResidenceService {
 
 	private List<Feature> setFeature(List<String> featureList) {
 		List<Feature> features = new ArrayList<>();
-
 		for(int i=0; i<featureList.size(); i++){
-			Optional<Feature> featureOptional = featureRepositorySupport.findFeatureByFeatureName(features.get(i).getFeatureName());
-			Feature feature = featureOptional.get();
+			Optional<Feature> featureOptional = featureRepositorySupport.findFeatureByFeatureName(featureList.get(i));
+			Feature feature = new Feature();
 			if(!featureOptional.isPresent()){
-				feature.setFeatureName(features.get(i).getFeatureName());
+				feature.setFeatureName(featureList.get(i));
 				featureRepository.save(feature);
-				feature = featureRepositorySupport.findFeatureByFeatureName(features.get(i).getFeatureName()).get();
-			}
+				feature = featureRepositorySupport.findFeatureByFeatureName(featureList.get(i)).get();
+			}else feature = featureOptional.get();
 			features.add(feature);
 		}
 		return features;
