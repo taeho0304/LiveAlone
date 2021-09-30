@@ -79,14 +79,14 @@ public class ResidenceController {
         }
     }
 
-    @GetMapping("/detail")
+    @PostMapping("/detail")
     @ApiOperation(value = "매물 상세필터로 조회", notes = "매물을 상세 조회한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "실패")
     })
     public ResponseEntity<ResidenceRes> getResidencesDetail(
-            @ModelAttribute ResidenceDetailGetReq residenceDetailGetReq, @ModelAttribute ResidenceGetReq residenceGetReq) {
+            @RequestBody ResidenceDetailGetReq residenceDetailGetReq, @RequestBody ResidenceGetReq residenceGetReq) {
         try {
             List<ResidenceInfo> rooms = residenceService.getResidenceDetails(residenceDetailGetReq, residenceGetReq);
             return ResponseEntity.status(200).body(ResidenceRes.of(rooms));

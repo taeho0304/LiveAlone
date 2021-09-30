@@ -46,8 +46,6 @@ public class ResidencePostReq {
 	double manageCost;
 //	@ApiModelProperty(name="질문 ID", example="1")
 	int area;
-//	@ApiModelProperty(name="매물 번호", example="614b0db1ff38d278c725b3f0")
-	String content;
 //	@ApiModelProperty(name="매물 층수", example="3")
 	String myFloor;
 //	@ApiModelProperty(name="구조", example="분리형")

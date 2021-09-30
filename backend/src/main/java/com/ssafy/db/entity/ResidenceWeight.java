@@ -21,5 +21,8 @@ public class ResidenceWeight extends BaseEntity implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private CommercialCategory commercialCategory;
 
+    @ManyToOne
+    private ResidenceInfo residenceInfo;
+
     String weight;
 }

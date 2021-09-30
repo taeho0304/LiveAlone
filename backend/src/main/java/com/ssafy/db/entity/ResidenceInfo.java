@@ -33,9 +33,6 @@ public class ResidenceInfo extends BaseEntity{
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Feature> feature;
 
-    @OneToOne
-    private ResidenceWeight residenceWeight;
-
     String name;
     String lat;
     String lon;
