@@ -15,7 +15,7 @@ import java.util.List;
  *	매물 관련 비즈니스 로직 처리를 위한 서비스 인터페이스 정의.
  */
 public interface ResidenceService {
-	List<ResidenceInfo> getResidenceDetails(ResidenceDetailGetReq residenceDetailGetReq, ResidenceGetReq residenceGetReq);
+	List<ResidenceInfo> getResidenceDetails(ResidenceDetailGetReq residenceDetailGetReq);
 
 	List<ResidenceInfo> getResidencesBySiGuDong(ResidenceGetReq residenceGetReq);
 

@@ -56,8 +56,8 @@ public class ResidenceServiceImpl implements ResidenceService {
 	FeatureRepository featureRepository;
 
 	@Override
-	public List<ResidenceInfo> getResidenceDetails(ResidenceDetailGetReq residenceDetailGetReq, ResidenceGetReq residenceGetReq) {
-		return residenceInfoRepositorySupport.findRooms(residenceDetailGetReq, residenceGetReq);
+	public List<ResidenceInfo> getResidenceDetails(ResidenceDetailGetReq residenceDetailGetReq) {
+		return residenceInfoRepositorySupport.findRooms(residenceDetailGetReq);
 	}
 
 	@Override
@@ -89,7 +89,6 @@ public class ResidenceServiceImpl implements ResidenceService {
 		residenceInfo.setResidenceCategory(residenceCategoryRepository.findById(residence.getResidenceCategory()).get());
 		residenceInfo.setArea(residence.getArea());
 		residenceInfo.setBuildingFloor(residence.getBuildingFloor());
-		residenceInfo.setContent(residence.getContent());
 		residenceInfo.setCost(residence.getCost());
 		residenceInfo.setJeonseCost(residence.getJeonseCost());
 		residenceInfo.setWolseCost(residence.getWolseCost());

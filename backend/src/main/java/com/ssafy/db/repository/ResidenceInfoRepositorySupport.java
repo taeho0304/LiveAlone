@@ -26,8 +26,8 @@ public class ResidenceInfoRepositorySupport {
     QResidenceInfo qresidenceInfo = QResidenceInfo.residenceInfo;
     QUserFavorite quserFavorite = QUserFavorite.userFavorite;
 
-    public List<ResidenceInfo> findRooms(ResidenceDetailGetReq residenceDetailGetReq, ResidenceGetReq residenceGetReq) {
-        JPAQuery<ResidenceInfo> residences = findRoomsBySiGuDong(residenceGetReq);
+    public List<ResidenceInfo> findRooms(ResidenceDetailGetReq residenceDetailGetReq) {
+        JPAQuery<ResidenceInfo> residences = jpaQueryFactory.select(qresidenceInfo).from(qresidenceInfo);
 
         BooleanBuilder builder = new BooleanBuilder();
         for (int i = 0; i< residenceDetailGetReq.getResidenceType().size(); i++)
@@ -44,6 +44,8 @@ public class ResidenceInfoRepositorySupport {
         if (residenceDetailGetReq.getEndManagePrice() > 0) builder.and(qresidenceInfo.manageCost.loe(residenceDetailGetReq.getEndManagePrice()));
         if (residenceDetailGetReq.getStartArea() > 0) builder.and(qresidenceInfo.area.goe(residenceDetailGetReq.getStartArea()));
         if (residenceDetailGetReq.getEndArea() > 0) builder.and(qresidenceInfo.area.loe(residenceDetailGetReq.getEndArea()));
+        if (residenceDetailGetReq.getGugun() != null) builder.and(qresidenceInfo.dong.Gugun.gugunName.eq(residenceDetailGetReq.getGugun()));
+        if (residenceDetailGetReq.getDong() != null) builder.and(qresidenceInfo.dong.dongName.eq(residenceDetailGetReq.getDong()));
         residences.where(builder);
 
         // 정렬
@@ -70,11 +72,11 @@ public class ResidenceInfoRepositorySupport {
         return residenceInfo;
     }
 
-    public JPAQuery<ResidenceInfo> findRoomsBySiGuDong(ResidenceGetReq residenceGetReq) {
+    public JPAQuery<ResidenceInfo> findRoomsBySiGuDong(ResidenceGetReq residenceDetailGetReq) {
         JPAQuery<ResidenceInfo> residences = jpaQueryFactory.select(qresidenceInfo).from(qresidenceInfo);
         BooleanBuilder builder = new BooleanBuilder();
-        if (residenceGetReq.getGugun() != null) builder.and(qresidenceInfo.dong.Gugun.gugunName.eq(residenceGetReq.getGugun()));
-        if (residenceGetReq.getDong() != null) builder.and(qresidenceInfo.dong.dongName.eq(residenceGetReq.getDong()));
+        if (residenceDetailGetReq.getGugun() != null) builder.and(qresidenceInfo.dong.Gugun.gugunName.eq(residenceDetailGetReq.getGugun()));
+        if (residenceDetailGetReq.getDong() != null) builder.and(qresidenceInfo.dong.dongName.eq(residenceDetailGetReq.getDong()));
         residences.where(builder);
 
         return residences;

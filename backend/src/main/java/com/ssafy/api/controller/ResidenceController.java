@@ -86,9 +86,9 @@ public class ResidenceController {
             @ApiResponse(code = 500, message = "실패")
     })
     public ResponseEntity<ResidenceRes> getResidencesDetail(
-            @RequestBody ResidenceDetailGetReq residenceDetailGetReq, @RequestBody ResidenceGetReq residenceGetReq) {
+            @RequestBody @ApiParam(value = "매물 상세", required = true) ResidenceDetailGetReq residenceDetailGetReq) {
         try {
-            List<ResidenceInfo> rooms = residenceService.getResidenceDetails(residenceDetailGetReq, residenceGetReq);
+            List<ResidenceInfo> rooms = residenceService.getResidenceDetails(residenceDetailGetReq);
             return ResponseEntity.status(200).body(ResidenceRes.of(rooms));
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(500).body(ResidenceRes.of(500, "fail"));
@@ -131,9 +131,7 @@ public class ResidenceController {
             @ApiResponse(code = 201, message = "성공"),
             @ApiResponse(code = 500, message = "실패")
     })
-    public ResponseEntity<? extends BaseResponseBody> createResidenceType(
-//            @RequestBody @ApiParam(value = "방 생성") ResidencePostReq residence, @RequestParam(value = "thumbnail", required = false) List<MultipartFile> thumbnails
-            ResidencePostReq residence) {
+    public ResponseEntity<? extends BaseResponseBody> createResidenceType( ResidencePostReq residence ) {
         try {
             residenceService.createResidence(residence);
             return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Success"));
