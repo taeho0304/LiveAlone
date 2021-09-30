@@ -35,6 +35,7 @@ export default {
             state.accessEstate = info.isEstate;
             state.accessToken = payload.accessToken;
             localStorage.setItem("accessToken", state.accessToken);
+            localStorage.setItem("accessEstate", state.accessEstate);
         },
         USERINFO(state, payload) {
             state.userInfo = payload;
@@ -56,7 +57,7 @@ export default {
                 router.push('/login');
             }).catch((err) => {
               if(err.response.status==409){
-                VueSimpleAlert.alert("아이디를 다시 확인해주세요.😭");
+                VueSimpleAlert.alert("중복된 아이디 입니다.😭");
               }
             });
         },
@@ -116,7 +117,6 @@ export default {
                   type: "success",
                 })
                 window.location.reload();
-                this.requestUserInfo();
               })
               .catch(() => {
 

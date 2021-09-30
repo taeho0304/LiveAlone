@@ -161,7 +161,6 @@ export default {
   data() {
     return {
       isLogin: false,
-
       isEstate: false,
       isUser: false,
       SiIdx: 0,
@@ -180,7 +179,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("user", ["getAccessInfo"]),
+    ...mapGetters("user", ["getUserInfo"]),
   },
   methods: {
     ...mapActions("user", ["requestUserInfo"]),
@@ -236,7 +235,7 @@ export default {
   },
   mounted() {
     if (localStorage.getItem("accessToken") != null) {
-      if (this.getAccessInfo != "null") {
+      if (localStorage.getItem("accessEstate") != null) {
         this.isEstate = true;
         this.isUser = false;
       } else {
@@ -252,7 +251,7 @@ export default {
   },
   create() {
     if (localStorage.getItem("accessToken") != null) {
-      if (this.getAccessInfo != "null") {
+      if (localStorage.getItem("accessEstate") != null) {
         this.isEstate = true;
         this.isUser = false;
       } else {
