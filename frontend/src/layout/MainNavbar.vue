@@ -235,7 +235,7 @@ export default {
   },
   mounted() {
     if (localStorage.getItem("accessToken") != null) {
-      if (localStorage.getItem("accessEstate") != null) {
+      if (localStorage.getItem("accessEstate") != "null") {
         this.isEstate = true;
         this.isUser = false;
       } else {
@@ -251,7 +251,7 @@ export default {
   },
   create() {
     if (localStorage.getItem("accessToken") != null) {
-      if (localStorage.getItem("accessEstate") != null) {
+      if (localStorage.getItem("accessEstate") != "null") {
         this.isEstate = true;
         this.isUser = false;
       } else {
