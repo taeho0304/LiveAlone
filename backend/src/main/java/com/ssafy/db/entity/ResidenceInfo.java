@@ -39,6 +39,7 @@ public class ResidenceInfo extends BaseEntity{
     int cost;
     int wolseCost;
     int jeonseCost;
+    int deposit;
     double manageCost;
     int area;
     String content;
