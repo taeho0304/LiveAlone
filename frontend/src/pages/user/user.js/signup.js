@@ -38,6 +38,7 @@ export default {
                 checkPass: true,
                 matchPass: true,
                 requireName: true,
+                checkName:true,
                 requirePhone: true,
                 matchPhone: true,
                 requireEmail: true,
@@ -54,6 +55,7 @@ export default {
                 checkPass: true,
                 matchPass: true,
                 requireName: true,
+                checkName:true,
                 requirePhone: true,
                 matchPhone: true,
                 requireEmail: true,
@@ -112,11 +114,18 @@ export default {
           this.requestEstate(number);
         },
         checkName(){
-          if(!this.user.userName){
+          if(this.user.userName==""){
             this.errors.requireName=false;
+            this.errors.checkName=true;
             return;
-          }else{
+          }else if (!/^[가-힣]{2,15}$/.test(this.user.userName)) {
             this.errors.requireName=true;
+            this.errors.checkName=false;
+            return;
+        }else{
+            this.errors.requireName=true;
+            this.errors.checkName=true;
+            return;
           }
         },
         checkID() {
@@ -210,12 +219,19 @@ export default {
             }
         },
         checkName2(){
-            if(!this.estate.userName){
-              this.errors2.requireName=false;
-              return;
+            if(this.estate.userName==""){
+                this.errors2.requireName=false;
+                this.errors2.checkName=true;
+                return;
+              }else if (!/^[가-힣]{2,15}$/.test(this.estate.userName)) {
+                this.errors2.requireName=true;
+                this.errors2.checkName=false;
+                return;
             }else{
-              this.errors2.requireName=true;
-            }
+                this.errors2.requireName=true;
+                this.errors2.checkName=true;
+                return;
+              }
           },
           checkID2() {
               if (!this.estate.userId) {
