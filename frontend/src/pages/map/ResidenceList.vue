@@ -52,7 +52,7 @@
                 >
                 <strong v-else-if="a.residenceType.type == '월세'"
                   ><h5 class="mb-1">
-                    {{ showPrice(a.jeonseCost) }}/{{ a.wolseCost }}
+                    {{ showPrice(a.deposite) }}/{{ showPrice(a.wolseCost) }}
                   </h5></strong
                 >
               </div>
@@ -65,7 +65,7 @@
                 <div class="col-md-6 pr-0">
                   <i
                     class="now-ui-icons ui-2_favourite-28"
-                    @click="myFavorite"
+                    @click="myFavorite(idx)"
                   ></i>
                 </div>
                 <div class="col-md-6 pr-0">
@@ -108,6 +108,7 @@ import Modal from "@/components/Modal.vue";
 import ResiDetail from "@/pages/map/ResiDetail.vue";
 import VueSimpleAlert from "vue-simple-alert";
 import VueStar from "vue-star";
+import http from "@/util/http-common";
 export default {
   components: {
     Card,
@@ -169,10 +170,28 @@ export default {
       this.resiDetail = this.resiList[res];
       console.log(this.resiDetail);
     },
-    myFavorite() {
+    myFavorite(idx) {
       console.log("aaaaa");
+      var postdata = this.resiList[idx].id;
+      const CSRF_TOKEN = localStorage.getItem("accessToken");
+
       if (localStorage.getItem("accessToken")) {
         //NOTE: 로그인시 로직 구현 필요! 매물 데이터 필요!!
+
+        http
+          .post("/api/v1/favorites", postdata, {
+            headers: { Authorization: "Bearer " + CSRF_TOKEN },
+          })
+          .then((res) => {
+            console.log(res);
+            if (res.status == 201) {
+              VueSimpleAlert.fire({
+                title: "찜하기 성공",
+                text: "찜하기 성공 ! 마이 페이지를 확인해주세요",
+                type: "success",
+              });
+            }
+          });
       } else {
         VueSimpleAlert.fire({
           title: "서비스 권한 없음",
