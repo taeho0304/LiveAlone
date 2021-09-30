@@ -184,7 +184,7 @@ export default {
                 this.errors.requireEmail = false;
                 this.errors.matchEmail = true;
                 return;
-            } else if (!/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/.test(this.user.userEmail)) {
+            } else if (!/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.user.userEmail)) {
                 this.errors.requireEmail = true;
                 this.errors.matchEmail = false;
                 return;
@@ -282,7 +282,7 @@ export default {
                   this.errors2.requireEmail = false;
                   this.errors2.matchEmail = true;
                   return;
-              } else if (!/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/.test(this.estate.userEmail)) {
+              } else if (!/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.estate.userEmail)) {
                   this.errors2.requireEmail = true;
                   this.errors2.matchEmail = false;
                   return;
