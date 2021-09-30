@@ -25,11 +25,6 @@ public class UserFavoriteRepositorySupport {
         return userFavorites;
     }
 
-    @Transactional
-    public void deleteByUserId(Long userFavoriteId) {
-        jpaQueryFactory.delete(quserFavorite).where(quserFavorite.user.id.eq(userFavoriteId)).execute();
-    }
-
     public UserFavorite checkDuplicate(Long userId, Long residenceId) {
         UserFavorite userFavorite = jpaQueryFactory.select(quserFavorite).from(quserFavorite)
                 .where(quserFavorite.user.id.eq(userId), quserFavorite.residenceInfo.id.eq(residenceId)).fetchOne();

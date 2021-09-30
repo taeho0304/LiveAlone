@@ -49,9 +49,10 @@ public class UserFavoriteServiceImpl implements UserFavoriteService {
 	}
 
 	@Override
-	public void deleteFavoriteResidence(List<Long> userFavoriteIds, Authentication authentication) {
-		for (Long userFavoriteId:userFavoriteIds)
-			userFavoriteRepositorySupport.deleteByUserId(userFavoriteId);
+	public void deleteFavoriteResidence(List<Long> userFavoriteIds) {
+		for (Long userFavoriteId:userFavoriteIds){
+			userFavoriteRepository.deleteById(userFavoriteId);
+		}
 	}
 
 	@Override
