@@ -132,11 +132,13 @@ public class ResidenceController {
             @ApiResponse(code = 500, message = "실패")
     })
     public ResponseEntity<? extends BaseResponseBody> createResidenceType(
-            @RequestBody @ApiParam(value = "방 생성") ResidencePostReq residence, @RequestParam(value = "thumbnail", required = false) List<MultipartFile> thumbnails) {
+//            @RequestBody @ApiParam(value = "방 생성") ResidencePostReq residence, @RequestParam(value = "thumbnail", required = false) List<MultipartFile> thumbnails
+            ResidencePostReq residence) {
         try {
-            residenceService.createResidence(residence, thumbnails);
+            residenceService.createResidence(residence);
             return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Success"));
         } catch (NoSuchElementException | IOException e) {
+            System.out.println(e);
             return ResponseEntity.status(500).body(BaseResponseBody.of(500, "fail"));
         }
     }

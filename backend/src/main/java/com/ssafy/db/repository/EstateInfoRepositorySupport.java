@@ -25,4 +25,11 @@ public class EstateInfoRepositorySupport {
         if(estateInfo == null) return Optional.empty();
         return Optional.ofNullable(estateInfo);
     }
+
+    public Optional<EstateInfo> getEstateInfoByRegistrationId(Long registrationId) {
+        EstateInfo estateInfo = jpaQueryFactory.select(qEstateInfo).from(qEstateInfo)
+                .where(qEstateInfo.id.eq(registrationId)).fetchOne();
+        if(estateInfo == null) return Optional.empty();
+        return Optional.ofNullable(estateInfo);
+    }
 }

@@ -21,7 +21,7 @@ public interface ResidenceService {
 
 	void deleteResidence(Long residenceId);
 
-	void createResidence(ResidencePostReq residence, List<MultipartFile> thumbnails) throws IOException;
+	void createResidence(ResidencePostReq residence) throws IOException;
 
     List<CountModel> getGetGuCount();
 
