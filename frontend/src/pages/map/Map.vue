@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-show="isResiShow" class="Resi col-md-3" style="max-width: 430px">
-      <ResidenceList v-bind:resiList="resiList"/>
+      <ResidenceList v-bind:resiList="resiList" />
     </div>
     <div id="map" style="width: 100%; height: 100%"></div>
     <ul id="category" v-show="isShow">
@@ -117,7 +117,7 @@ export default {
       /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
       script.src =
-        "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=f52d6b75a8a65ca935ff31e1ba7eace5&libraries=services,clusterer,drawing";
+        "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=f52d6b75a8a65ca935ff31e1ba7eace5&libraries=clusterer";
       document.head.appendChild(script);
     },
     initMap() {

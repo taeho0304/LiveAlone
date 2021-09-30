@@ -78,21 +78,9 @@ export default {
       console.log("질문옵션");
       this.requestQuestion();
     },
-    ...mapActions("search", ["requestGugunCount"]),
-    getGugunCount() {
-      console.log("구군카운트");
-      this.requestGugunCount();
-    },
-    ...mapActions("search", ["requestDongCount"]),
-    getDongCount() {
-      console.log("동카운트");
-      this.requestDongCount();
-    },
   },
   created() {
     this.getQuestionList();
-    this.getGugunCount();
-    this.getDongCount();
   },
 };
 </script>

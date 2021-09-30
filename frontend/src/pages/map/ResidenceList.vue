@@ -31,7 +31,7 @@
         >
           <div class="row" style="margin-rigth: 0">
             <div class="col-md-8">
-              <img style="max-width: 100%; height: auto;" :src="a.imageUrl[0].url" />
+              <img class="imgthum" :src="a.imageUrl[0].url" />
             </div>
             <div class="col-md-4 pr-0 pl-0">
               <div class="col-md-12 pl-0 pb-0 title">
@@ -40,22 +40,20 @@
                 >
               </div>
               <div class="col-md-12 pt-1 pl-0 pr-0 title">
-                
-                <strong v-if="a.residenceType.type=='전세'"
-                   ><h5 class="mb-1">
-
+                <strong v-if="a.residenceType.type == '전세'"
+                  ><h5 class="mb-1">
                     {{ showPrice(a.jeonseCost) }}
-                    </h5></strong
+                  </h5></strong
                 >
-                <strong v-else-if="a.residenceType.type=='매매'"
-                   ><h5 class="mb-1">
+                <strong v-else-if="a.residenceType.type == '매매'"
+                  ><h5 class="mb-1">
                     {{ showPrice(a.cost) }}
-                    </h5></strong
+                  </h5></strong
                 >
-                <strong v-else-if="a.residenceType.type=='월세'"
-                   ><h5 class="mb-1">
+                <strong v-else-if="a.residenceType.type == '월세'"
+                  ><h5 class="mb-1">
                     {{ showPrice(a.jeonseCost) }}/{{ a.wolseCost }}
-                    </h5></strong
+                  </h5></strong
                 >
               </div>
               <div class="col-md-12 pt-1 pl-0 pr-0 title">
@@ -71,17 +69,21 @@
                   ></i>
                 </div>
                 <div class="col-md-6 pr-0">
-                  <i class="now-ui-icons ui-1_zoom-bold" @click="showModal"></i>
+                  <i
+                    class="now-ui-icons ui-1_zoom-bold"
+                    @click="showModal(idx)"
+                  ></i>
                 </div>
               </div>
             </div>
             <div slot="footer" class="col-md-12 mt-0 text-muted mb-2">
               <p>
-                {{ a.myFloor }},{{ a.area }}평,
-                
-                <strong v-for="(name,idx) in a.feature" :key="idx"> 
-                  {{ name.featureName }}
-                  </strong>
+                {{ a.myFloor }}/{{ a.area }}평/
+
+                <strong>
+                  <!-- {{ name.featureName }} -->
+                  {{ showFeature(a.feature) }}
+                </strong>
               </p>
             </div>
           </div>
@@ -95,7 +97,7 @@
         modal-classes="modal-lg"
         header-classes="justify-content-center"
       >
-        <ResiDetail />
+        <ResiDetail v-if="resiDetail != null" v-bind:resiDetail="resiDetail" />
       </modal>
     </template>
   </div>
@@ -105,6 +107,7 @@ import { Card } from "@/components";
 import Modal from "@/components/Modal.vue";
 import ResiDetail from "@/pages/map/ResiDetail.vue";
 import VueSimpleAlert from "vue-simple-alert";
+import VueStar from "vue-star";
 export default {
   components: {
     Card,
@@ -116,36 +119,55 @@ export default {
   data() {
     return {
       showResiDetail: false,
+      resiDetail: null,
     };
   },
+  watch: {},
   methods: {
-    showPrice(number){
-      
-      var inputNumber  = number < 0 ? false : number;
-      var unitWords    = ['', '억', '조', '경'];
-      var splitUnit    = 10000;
-      var splitCount   = unitWords.length;
-      var resultArray  = [];
-      var resultString = '';
-
-      for (var i = 0; i < splitCount; i++){
-          var unitResult = (inputNumber % Math.pow(splitUnit, i + 1)) / Math.pow(splitUnit, i);
-          unitResult = Math.floor(unitResult);
-          if (unitResult > 0){
-              resultArray[i] = unitResult;
-          }
+    showFeature(feature) {
+      var resFeature = "";
+      for (var i = 0; i < feature.length; i++) {
+        if (i == feature.length - 1) {
+          resFeature += feature[i].featureName;
+        } else {
+          resFeature += feature[i].featureName + "/";
+        }
+        if (resFeature.length >= 10) {
+          resFeature += "...";
+          break;
+        }
       }
-
-      for (var i = 0; i < resultArray.length; i++){
-          if(!resultArray[i]) continue;
-          resultString = String(resultArray[i]) + unitWords[i] + resultString;
-      }
-     
-      return resultString
-      
+      return resFeature;
     },
-    showModal() {
+    showPrice(number) {
+      var inputNumber = number < 0 ? false : number;
+      var unitWords = ["", "억", "조", "경"];
+      var splitUnit = 10000;
+      var splitCount = unitWords.length;
+      var resultArray = [];
+      var resultString = "";
+
+      for (var i = 0; i < splitCount; i++) {
+        var unitResult =
+          (inputNumber % Math.pow(splitUnit, i + 1)) / Math.pow(splitUnit, i);
+        unitResult = Math.floor(unitResult);
+        if (unitResult > 0) {
+          resultArray[i] = unitResult;
+        }
+      }
+
+      for (var i = 0; i < resultArray.length; i++) {
+        if (!resultArray[i]) continue;
+        resultString = String(resultArray[i]) + unitWords[i] + resultString;
+      }
+
+      return resultString;
+    },
+
+    showModal(res) {
       this.showResiDetail = !this.showResiDetail;
+      this.resiDetail = this.resiList[res];
+      console.log(this.resiDetail);
     },
     myFavorite() {
       console.log("aaaaa");
@@ -163,6 +185,12 @@ export default {
 };
 </script>
 <style scoped>
+.imgthum {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  max-height: 180px;
+}
 .title {
   text-align: left;
 }
