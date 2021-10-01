@@ -10,6 +10,7 @@
   "dependencies": {
     "@progress/kendo-theme-default": "^4.41.1",
     "@progress/kendo-ui": "2021.2.616",
+    "@riophae/vue-treeselect": "^0.4.0",
     "axios": "^0.21.4",
     "axios-mock-adapter": "^1.20.0",
     "babel-eslint": "^10.1.0",
@@ -33,6 +34,7 @@
     "vue-slick-carousel": "^1.0.6",
     "vue-stepper": "^1.4.2",
     "vue-tables": "^1.6.44",
+    "vue-upload-multiple-image-korean": "^1.1.4",
     "vue2-transitions": "^0.3.0",
     "vuelidate": "^0.7.6",
     "vuetable-2": "^2.0.0-beta.4",

@@ -213,7 +213,6 @@ export default {
       this.$emit("maker", this.emitData);
     },
     getInfo() {
-      console.log("얼레");
       this.requestUserInfo();
     },
     clickGu(guName, idx) {
