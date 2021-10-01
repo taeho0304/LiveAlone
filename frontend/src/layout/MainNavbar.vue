@@ -1,6 +1,10 @@
 <template>
   <div>
-    <DetailSearch v-show="isdetail" />
+    <DetailSearch
+      v-show="isdetail"
+      v-bind:juso="emitData"
+      @mydetailS="requestDetailSearch"
+    />
 
     <navbar
       position="fixed"
@@ -185,6 +189,10 @@ export default {
     ...mapActions("user", ["requestUserInfo"]),
     changeItem() {
       this.isdetail = !this.isdetail;
+    },
+    requestDetailSearch(data) {
+      console.log("mainnav", data);
+      this.$emit("detailS", data);
     },
     clickLogout() {
       this.isLogin = false;

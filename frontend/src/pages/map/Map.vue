@@ -78,6 +78,7 @@ export default {
   },
   props: {
     marker: Object,
+    detailList: Array,
   },
   watch: {
     qnaResiList: function (newVal) {
@@ -85,6 +86,11 @@ export default {
         this.isResiShow = false;
       }
       this.isQnAshow = true;
+    },
+    detailList: function (newVal) {
+      console.log(newVal);
+      this.resiList = newVal;
+      this.isResiShow = true;
     },
     resiList: function (newVal) {
       console.log("new", newVal);
