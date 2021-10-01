@@ -2,6 +2,19 @@
   <div>
     <div class="section">
       <div class="container">
+        <div class="modalrwrap">
+          <modal
+            class="resiDetailModal"
+            :show.sync="showResiDetail"
+            modal-classes="modal-lg"
+            header-classes="justify-content-center"
+          >
+            <ResiDetail
+              v-if="resiDetail != null"
+              v-bind:resiDetail="resiDetail"
+            />
+          </modal>
+        </div>
         <div class="card row" style="margin-top: 15px">
           <tabs
             type="primary"
@@ -108,103 +121,67 @@
                   v-bind="settings"
                   style="padding: 20px 30px 20px 30px"
                 >
-                  <div class="card" style="width: 20rem; border-radius: 0.2rem">
+                  <div
+                    v-for="(a, idx) in myfavorite"
+                    :key="idx"
+                    class="card mydata"
+                    style="width: 20rem; border-radius: 0.2rem"
+                  >
                     <img
-                      class="card-img-top"
-                      src="img/main.jpg"
+                      class="card-img-top myimg"
+                      :src="a.residenceInfo.imageUrl[0].url"
                       alt="Card image cap"
                     />
                     <div class="card-body">
-                      <h4 class="card-title">Card title</h4>
+                      <h4 class="card-title">
+                        <strong>
+                          {{ a.residenceInfo.residenceType.type }}
+                        </strong>
+                        <strong
+                          v-if="a.residenceInfo.residenceType.type == '전세'"
+                        >
+                          {{ showPrice(a.residenceInfo.jeonseCost) }}
+                        </strong>
+                        <strong
+                          v-else-if="
+                            a.residenceInfo.residenceType.type == '매매'
+                          "
+                        >
+                          {{ showPrice(a.residenceInfo.cost) }}
+                        </strong>
+                        <strong
+                          v-else-if="
+                            a.residenceInfo.residenceType.type == '월세'
+                          "
+                        >
+                          {{ showPrice(a.residenceInfo.deposit) }}/{{
+                            a.residenceInfo.wolseCost
+                          }}
+                        </strong>
+                      </h4>
                       <p class="card-text">
-                        Some quick example text to build on the card title and
-                        make up the bulk of the card's content.
+                        {{ a.residenceInfo.residenceCategory.categoryName }}
+                        {{ showResiName(a.residenceInfo.name) }} <br />
+                        {{ a.residenceInfo.myFloor }}/{{
+                          a.residenceInfo.area
+                        }}평 <br />
+                        {{ showFeature(a.residenceInfo.feature) }}
                       </p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                  </div>
-
-                  <div class="card" style="width: 20rem">
-                    <img
-                      class="card-img-top"
-                      src="img/main.jpg"
-                      alt="Card image cap"
-                    />
-                    <div class="card-body">
-                      <h4 class="card-title">Card title</h4>
-                      <p class="card-text">
-                        Some quick example text to build on the card title and
-                        make up the bulk of the card's content.
-                      </p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                  </div>
-
-                  <div class="card" style="width: 20rem">
-                    <img
-                      class="card-img-top"
-                      src="img/main.jpg"
-                      alt="Card image cap"
-                    />
-                    <div class="card-body">
-                      <h4 class="card-title">Card title</h4>
-                      <p class="card-text">
-                        Some quick example text to build on the card title and
-                        make up the bulk of the card's content.
-                      </p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                      <div class="row mt-1">
+                        <a
+                          href="#"
+                          class="btn btn-info mr-2"
+                          @click="showModal(idx)"
+                          >상세 보기</a
+                        >
+                        <a href="#" class="btn" @click="delFavorite(idx)"
+                          >찜 삭제</a
+                        >
+                      </div>
                     </div>
                   </div>
                 </VueSlickCarousel>
               </template>
-            </tab-pane>
-
-            <tab-pane
-              ><!--검색 필터 저장-->
-              <span slot="label">
-                <i class="now-ui-icons design_bullet-list-67"></i> Filter
-              </span>
-              <div class="col-md-10 ml-auto mr-auto">
-                <div class="row collections">
-                  <div class="col-md-2">
-                    <span class="badge badge-neutral">방 유형</span>
-                  </div>
-                  <div class="col-md-2">
-                    <span class="badge badge-neutral">거래 유형</span>
-                  </div>
-                  <div class="col-md-3">
-                    <span class="badge badge-neutral">가격</span>
-                  </div>
-                  <div class="col-md-5">
-                    <span class="badge badge-neutral">추가필터</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-10 ml-auto mr-auto">
-                <div class="row collections">
-                  <div class="col-md-2">
-                    <span class="badge badge-primary">원룸</span>
-                    <span class="badge badge-info">투,쓰리룸</span>
-                  </div>
-                  <div class="col-md-2">
-                    <span class="badge badge-success">전세</span>
-                    <span class="badge badge-warning">매매</span>
-                  </div>
-                  <div class="col-md-3">
-                    <span class="badge badge-success"> 0~1억5000만원</span>
-                    <span class="badge badge-warning"> 1억~2억5000만원</span>
-                  </div>
-                  <div class="col-md-3">
-                    <span class="badge badge-default">없음</span>
-                  </div>
-                  <div class="col-md-2">
-                    <span @click="remove()" class="badge badge-danger"
-                      ><i class="now-ui-icons ui-1_simple-remove"></i
-                    ></span>
-                  </div>
-                </div>
-              </div>
             </tab-pane>
           </tabs>
         </div>
@@ -219,7 +196,10 @@ import VueSlickCarousel from "vue-slick-carousel";
 import "vue-slick-carousel/dist/vue-slick-carousel.css";
 // optional style for arrows & dots
 import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
-
+import http from "@/util/http-common";
+import VueSimpleAlert from "vue-simple-alert";
+import ResiDetail from "@/pages/map/ResiDetail.vue";
+import Modal from "@/components/Modal.vue";
 export default {
   name: "profile",
   bodyClass: "profile-page",
@@ -228,6 +208,8 @@ export default {
     TabPane,
     [FormGroupInput.name]: FormGroupInput,
     VueSlickCarousel,
+    ResiDetail,
+    Modal,
   },
   data: function () {
     return {
@@ -235,6 +217,7 @@ export default {
       total: 100,
       columns: [""],
       actions: [""],
+
       settings: {
         dots: true,
         infinite: true,
@@ -244,6 +227,8 @@ export default {
         slidesToScroll: 1,
         swipeToSlide: true,
       },
+      myfavorite: [],
+      resiDetail: null,
       isClick: false,
       user: {
         userName: "",
@@ -252,20 +237,69 @@ export default {
         userPhone: "",
         userEmail: "",
       },
+      showResiDetail: false,
     };
   },
   computed: {
-    ...mapGetters("user", ["getUserInfo"]),
+    ...mapGetters("user", ["getUserInfo", "getMyfavoriteList"]),
   },
   methods: {
     ...mapActions("user", [
       "requestUserInfo",
       "requestDelete",
       "requestModify",
+      "requsetFavoriteList",
     ]),
+    showModal(res) {
+      this.showResiDetail = !this.showResiDetail;
+      this.resiDetail = this.myfavorite[res].residenceInfo;
+      console.log(this.resiDetail);
+    },
+    delFavorite(idx) {
+      var deldata = this.myfavorite[idx].residenceInfo.id;
+      const CSRF_TOKEN = localStorage.getItem("accessToken");
+
+      console.log(deldata);
+
+      http
+        .delete("/api/v1/favorites?userFavoriteIds=" + deldata, {
+          headers: {
+            Authorization: "Bearer " + CSRF_TOKEN,
+          },
+        })
+        .then((res) => {
+          VueSimpleAlert.fire({
+            title: "찜 제거 성공",
+            text: "찜 제거 성공 ! 마이 페이지를 확인해주세요",
+            type: "error",
+          });
+        });
+    },
     click() {
       this.isClick = !this.isClick;
       console.log(this.isClick);
+    },
+    showResiName(name) {
+      if (name == "") {
+        return "";
+      } else {
+        return " ," + name;
+      }
+    },
+    showFeature(feature) {
+      var resFeature = "";
+      for (var i = 0; i < feature.length; i++) {
+        if (i == feature.length - 1) {
+          resFeature += feature[i].featureName;
+        } else {
+          resFeature += feature[i].featureName + "/";
+        }
+        if (resFeature.length >= 10) {
+          resFeature += "...";
+          break;
+        }
+      }
+      return resFeature;
     },
     clickModify() {
       console.log(this.isClick);
@@ -281,9 +315,36 @@ export default {
     },
     init() {
       this.requestUserInfo();
+      this.requsetFavoriteList();
+      this.myfavorite = this.getMyfavoriteList;
+      console.log("compo", this.myfavorite);
     },
     remove() {
       alert("삭제완료");
+    },
+    showPrice(number) {
+      var inputNumber = number < 0 ? false : number;
+      var unitWords = ["", "억", "조", "경"];
+      var splitUnit = 10000;
+      var splitCount = unitWords.length;
+      var resultArray = [];
+      var resultString = "";
+
+      for (var i = 0; i < splitCount; i++) {
+        var unitResult =
+          (inputNumber % Math.pow(splitUnit, i + 1)) / Math.pow(splitUnit, i);
+        unitResult = Math.floor(unitResult);
+        if (unitResult > 0) {
+          resultArray[i] = unitResult;
+        }
+      }
+
+      for (var i = 0; i < resultArray.length; i++) {
+        if (!resultArray[i]) continue;
+        resultString = String(resultArray[i]) + unitWords[i] + resultString;
+      }
+
+      return resultString;
     },
   },
   created() {
@@ -295,6 +356,17 @@ export default {
 };
 </script>
 <style>
+.modalrwrap {
+}
+.myimg {
+  min-height: calc(100vh - 700px);
+  max-height: calc(100vh - 700px);
+}
+.mydata {
+  padding: 20px 30px 20px 30px !important;
+  min-height: calc(100vh - 450px);
+  max-height: calc(100vh - 450px);
+}
 .profile-page .gallery {
   margin-top: 5px;
 }
