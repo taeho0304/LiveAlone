@@ -141,7 +141,6 @@ public class ResidenceController {
             residenceService.createResidence(residence);
             return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Success"));
         } catch (NoSuchElementException | IOException e) {
-            System.out.println(e);
             return ResponseEntity.status(500).body(BaseResponseBody.of(500, "fail"));
         }
     }

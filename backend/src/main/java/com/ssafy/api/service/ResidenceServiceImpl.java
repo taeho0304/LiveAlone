@@ -6,6 +6,7 @@ import com.ssafy.api.model.PositionModel;
 import com.ssafy.api.request.ResidenceDetailGetReq;
 import com.ssafy.api.request.ResidenceGetReq;
 import com.ssafy.api.request.ResidencePostReq;
+import com.ssafy.common.auth.UserDetail;
 import com.ssafy.db.entity.*;
 import com.ssafy.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,17 +58,18 @@ public class ResidenceServiceImpl implements ResidenceService {
 	FeatureRepository featureRepository;
 
 	@Autowired
-	UserFavoriteService userFavoriteService;
+	UserFavoriteRepositorySupport userFavoriteRepositorySupport;
 
 	@Override
 	public List<ResidenceModel> getResidenceDetails(ResidenceDetailGetReq residenceDetailGetReq, Authentication authentication) {
 		List<ResidenceInfo> residenceInfos = residenceInfoRepositorySupport.findRooms(residenceDetailGetReq);
 		List<ResidenceModel> residenceModels = new ArrayList<>();
+		UserDetail userDetail = (UserDetail) authentication.getDetails();
 
 		for(int i=0; i<residenceInfos.size(); i++){
 			ResidenceModel residenceModel = new ResidenceModel();
 			residenceModel.setResidenceInfo(residenceInfos.get(i));
-//			residenceModel.setPresent();
+			residenceModel.setPresent(userFavoriteRepositorySupport.checkIsFavorite(userDetail.getUser().getId(), residenceInfos.get(i).getId()));
 			residenceModels.add(residenceModel);
 		}
 		return residenceModels;

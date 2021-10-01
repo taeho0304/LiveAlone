@@ -57,9 +57,9 @@ public class UserFavoriteServiceImpl implements UserFavoriteService {
 	}
 
 	@Override
-	public Optional<UserFavorite> getFavoriteResidences(Authentication authentication, Long residenceId) {
+	public Boolean getFavoriteResidences(Authentication authentication, Long residenceId) {
 		UserDetail userDetail = (UserDetail) authentication.getDetails();
-		Optional<UserFavorite> userFavorite = userFavoriteRepositorySupport.checkIsFavorite(userDetail.getUser().getId(), residenceId);
-		return userFavorite;
+		Boolean isFavorite = userFavoriteRepositorySupport.checkIsFavorite(userDetail.getUser().getId(), residenceId);
+		return isFavorite;
 	}
 }

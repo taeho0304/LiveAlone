@@ -58,19 +58,19 @@ public class UserFavoriteController {
     }
 
     @GetMapping("/isfavorite")
-    @ApiOperation(value = "찜한 관심 매물 조회", notes = "찜한 관심 매물을 조회한다.")
+    @ApiOperation(value = "찜했는지 확인", notes = "찜한 관심 매물을 조회한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 409, message = "중복 있음"),
+            @ApiResponse(code = 409, message = "매물 있음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> checkIsFavorite(
             @ApiIgnore Authentication authentication, @RequestParam Long ResidenceId) {
-        Optional<UserFavorite> userFavorite = userFavoriteService.getFavoriteResidences(authentication, ResidenceId);
-        if(userFavorite.isPresent())
-            return ResponseEntity.status(409).body(BaseResponseBody.of(200, "중복 있음"));
+        Boolean isFavorite = userFavoriteService.getFavoriteResidences(authentication, ResidenceId);
+        if(isFavorite == true)
+            return ResponseEntity.status(409).body(BaseResponseBody.of(409, "매물 있음"));
         else
-            return ResponseEntity.status(200).body(BaseResponseBody.of(409, "중복 없음"));
+            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "매물 없음"));
     }
 
     @DeleteMapping()
