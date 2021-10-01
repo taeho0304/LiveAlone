@@ -27,64 +27,61 @@
           :key="idx"
           class="card-nav-tabs text-center"
           header-classes="card-header-warning"
-          style="min-width: 300px; max-height: 280px"
+          style="min-width: 300px; min-height: 170px; max-height: 170px"
         >
           <div class="row" style="margin-rigth: 0">
-            <div class="col-md-8">
+            <div class="col-md-6" style="min-height: 160px; max-height: 160px">
               <img class="imgthum" :src="a.imageUrl[0].url" />
             </div>
             <div class="col-md-4 pr-0 pl-0">
-              <div class="col-md-12 pl-0 pb-0 title">
+              <div class="col-md-12 pl-0 pb-0 pt-0 title">
                 <strong
-                  ><h5 class="mb-1">{{ a.residenceType.type }}</h5></strong
+                  ><h6 class="mb-1">
+                    {{ a.residenceType.type }}
+                    <strong v-if="a.residenceType.type == '전세'">
+                      {{ showPrice(a.jeonseCost) }}
+                    </strong>
+                    <strong v-else-if="a.residenceType.type == '매매'">
+                      {{ showPrice(a.cost) }}
+                    </strong>
+                    <strong v-else-if="a.residenceType.type == '월세'">
+                      {{ showPrice(a.jeonseCost) }}/{{ a.wolseCost }}
+                    </strong>
+                  </h6></strong
                 >
+              </div>
+              <div class="col-md-12 pt-1 pl-0 pr-0 pb-1 title">
+                {{ a.residenceCategory.categoryName }}
+                {{ showResiName(a.name) }}
+              </div>
+              <div class="col-md-12 pt-1 pl-0 pr-0 pb-1 title">
+                <h6 class="mb-1">{{ a.myFloor }}/{{ a.area }}평</h6>
               </div>
               <div class="col-md-12 pt-1 pl-0 pr-0 title">
-                <strong v-if="a.residenceType.type == '전세'"
-                  ><h5 class="mb-1">
-                    {{ showPrice(a.jeonseCost) }}
-                  </h5></strong
-                >
-                <strong v-else-if="a.residenceType.type == '매매'"
-                  ><h5 class="mb-1">
-                    {{ showPrice(a.cost) }}
-                  </h5></strong
-                >
-                <strong v-else-if="a.residenceType.type == '월세'"
-                  ><h5 class="mb-1">
-                    {{ showPrice(a.jeonseCost) }}/{{ a.wolseCost }}
-                  </h5></strong
-                >
-              </div>
-              <div class="col-md-12 pt-1 pl-0 pr-0 title">
-                <h6 class="mb-1">{{ a.residenceCategory.categoryName }}</h6>
-              </div>
-              <div
-                class="row col-md-12 ml-auto mr-auto mt-1 pt-1 pl-0 pr-0 title"
-              >
-                <div class="col-md-6 pr-0">
-                  <i
-                    class="now-ui-icons ui-2_favourite-28"
-                    @click="myFavorite"
-                  ></i>
-                </div>
-                <div class="col-md-6 pr-0">
-                  <i
-                    class="now-ui-icons ui-1_zoom-bold"
-                    @click="showModal(idx)"
-                  ></i>
-                </div>
+                <h6 class="mb-1">
+                  <strong>
+                    <!-- {{ name.featureName }} -->
+                    {{ showFeature(a.feature) }}
+                  </strong>
+                </h6>
               </div>
             </div>
-            <div slot="footer" class="col-md-12 mt-0 text-muted mb-2">
-              <p>
-                {{ a.myFloor }}/{{ a.area }}평/
 
-                <strong>
-                  <!-- {{ name.featureName }} -->
-                  {{ showFeature(a.feature) }}
-                </strong>
-              </p>
+            <div class="col-md-2">
+              <div class="iconwrapper">
+                <i
+                  slot="icon"
+                  class="now-ui-icons ui-2_favourite-28"
+                  @click="myFavorite(idx)"
+                ></i>
+              </div>
+              <div class="iconwrapper detail" style="margin-top: 50%">
+                <i
+                  slot="icon"
+                  class="now-ui-icons ui-1_zoom-bold"
+                  @click="showModal(idx)"
+                ></i>
+              </div>
             </div>
           </div>
         </card>
@@ -108,6 +105,7 @@ import Modal from "@/components/Modal.vue";
 import ResiDetail from "@/pages/map/ResiDetail.vue";
 import VueSimpleAlert from "vue-simple-alert";
 import VueStar from "vue-star";
+import http from "@/util/http-common";
 export default {
   components: {
     Card,
@@ -124,6 +122,13 @@ export default {
   },
   watch: {},
   methods: {
+    showResiName(name) {
+      if (name == "") {
+        return "";
+      } else {
+        return " ," + name;
+      }
+    },
     showFeature(feature) {
       var resFeature = "";
       for (var i = 0; i < feature.length; i++) {
@@ -169,10 +174,28 @@ export default {
       this.resiDetail = this.resiList[res];
       console.log(this.resiDetail);
     },
-    myFavorite() {
+    myFavorite(idx) {
       console.log("aaaaa");
+      var postdata = this.resiList[idx].id;
+      const CSRF_TOKEN = localStorage.getItem("accessToken");
+
       if (localStorage.getItem("accessToken")) {
         //NOTE: 로그인시 로직 구현 필요! 매물 데이터 필요!!
+
+        http
+          .post("/api/v1/favorites", postdata, {
+            headers: { Authorization: "Bearer " + CSRF_TOKEN },
+          })
+          .then((res) => {
+            console.log(res);
+            if (res.status == 201) {
+              VueSimpleAlert.fire({
+                title: "찜하기 성공",
+                text: "찜하기 성공 ! 마이 페이지를 확인해주세요",
+                type: "success",
+              });
+            }
+          });
       } else {
         VueSimpleAlert.fire({
           title: "서비스 권한 없음",
