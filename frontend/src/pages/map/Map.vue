@@ -3,6 +3,10 @@
     <div v-show="isResiShow" class="Resi col-md-3" style="max-width: 430px">
       <ResidenceList v-bind:resiList="resiList" />
     </div>
+    <div v-show="isQnAshow" class="Resi col-md-3" style="max-width: 430px">
+      <QnAResList />
+    </div>
+
     <div id="map" style="width: 100%; height: 100%"></div>
     <ul id="category" v-show="isShow">
       <li id="BK9" data-order="0">
@@ -41,12 +45,13 @@
 import { Button } from "@/components";
 import ResidenceList from "./ResidenceList.vue";
 import http from "@/util/http-common";
-
+import QnAResList from "@/pages/qna/QnAResult.vue";
 export default {
   computed: {},
   components: {
     [Button.name]: Button,
     ResidenceList,
+    QnAResList,
   },
   name: "index",
   bodyClass: "index-page",
@@ -60,6 +65,8 @@ export default {
     return {
       isShow: false,
       isResiShow: false,
+      isQnAshow: true,
+      qnaResiList: [],
       markerList: [],
       resiList: [],
       map: null,
@@ -73,8 +80,17 @@ export default {
     marker: Object,
   },
   watch: {
+    qnaResiList: function (newVal) {
+      if (this.isResiShow) {
+        this.isResiShow = false;
+      }
+      this.isQnAshow = true;
+    },
     resiList: function (newVal) {
       console.log("new", newVal);
+      if (this.isQnAshow) {
+        this.isQnAshow = false;
+      }
       this.isResiShow = true;
     },
     markerList: function (newVal) {

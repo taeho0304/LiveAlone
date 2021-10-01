@@ -37,7 +37,8 @@ export default {
         setQnARes({ commit }, data) {
             // console.log("done")
             commit("SETRES", data);
-            router.push('/');
+
+            router.push('/search');
         }
     },
     getters: {
