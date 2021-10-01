@@ -13,6 +13,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 /**
  * 찜하기 API 요청 처리를 위한 컨트롤러 정의.
@@ -32,7 +33,7 @@ public class UserFavoriteController {
             @ApiResponse(code = 500, message = "실패")
     })
     public ResponseEntity<? extends BaseResponseBody> createFavoriteResidence(
-            @RequestParam @ApiParam(value = "방 종류", required = true) Long residenceId, @ApiIgnore Authentication authentication) {
+            @RequestParam @ApiParam(value = "방 번호", required = true) Long residenceId, @ApiIgnore Authentication authentication) {
         try {
             userFavoriteService.createFavoriteResidence(residenceId, authentication);
             return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Success"));
@@ -41,13 +42,13 @@ public class UserFavoriteController {
         }
     }
 
-    @GetMapping("/isfavorite")
+    @GetMapping()
     @ApiOperation(value = "찜한 관심 매물 조회", notes = "찜한 관심 매물인지 조회한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<UserFavoriteRes> getFavoriteResidence(@ApiIgnore Authentication authentication) {
+    public ResponseEntity<UserFavoriteRes> getFavoriteResidence( @ApiIgnore Authentication authentication ) {
         try {
             List<UserFavorite> userFavorites = userFavoriteService.checkDuplicate(authentication);
             return ResponseEntity.status(200).body(UserFavoriteRes.of(userFavorites));
@@ -56,21 +57,20 @@ public class UserFavoriteController {
         }
     }
 
-    @GetMapping()
+    @GetMapping("/isfavorite")
     @ApiOperation(value = "찜한 관심 매물 조회", notes = "찜한 관심 매물을 조회한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 409, message = "중복 있음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> checkDuplicated(
+    public ResponseEntity<? extends BaseResponseBody> checkIsFavorite(
             @ApiIgnore Authentication authentication, @RequestParam Long ResidenceId) {
-        try {
-            userFavoriteService.getFavoriteResidences(authentication, ResidenceId);
+        Optional<UserFavorite> userFavorite = userFavoriteService.getFavoriteResidences(authentication, ResidenceId);
+        if(userFavorite.isPresent())
             return ResponseEntity.status(409).body(BaseResponseBody.of(200, "중복 있음"));
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "중복 없음"));
-        }
+        else
+            return ResponseEntity.status(200).body(BaseResponseBody.of(409, "중복 없음"));
     }
 
     @DeleteMapping()

@@ -1,6 +1,5 @@
 package com.ssafy.api.service;
 
-import com.querydsl.core.Tuple;
 import com.ssafy.api.Model.ResidenceModel;
 import com.ssafy.api.model.CountModel;
 import com.ssafy.api.model.PositionModel;
@@ -10,6 +9,7 @@ import com.ssafy.api.request.ResidencePostReq;
 import com.ssafy.db.entity.*;
 import com.ssafy.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -56,8 +56,11 @@ public class ResidenceServiceImpl implements ResidenceService {
 	@Autowired
 	FeatureRepository featureRepository;
 
+	@Autowired
+	UserFavoriteService userFavoriteService;
+
 	@Override
-	public List<ResidenceInfo> getResidenceDetails(ResidenceDetailGetReq residenceDetailGetReq) {
+	public List<ResidenceModel> getResidenceDetails(ResidenceDetailGetReq residenceDetailGetReq, Authentication authentication) {
 		List<ResidenceInfo> residenceInfos = residenceInfoRepositorySupport.findRooms(residenceDetailGetReq);
 		List<ResidenceModel> residenceModels = new ArrayList<>();
 
@@ -65,8 +68,9 @@ public class ResidenceServiceImpl implements ResidenceService {
 			ResidenceModel residenceModel = new ResidenceModel();
 			residenceModel.setResidenceInfo(residenceInfos.get(i));
 //			residenceModel.setPresent();
+			residenceModels.add(residenceModel);
 		}
-		return residenceInfoRepositorySupport.findRooms(residenceDetailGetReq);
+		return residenceModels;
 	}
 
 	@Override
@@ -89,8 +93,6 @@ public class ResidenceServiceImpl implements ResidenceService {
 		}
 		ResidenceInfo residenceInfo = new ResidenceInfo();
 		residenceInfo.setDong(dongRepositorySupport.findDongByName(residence.getDong()));
-		System.out.println(residenceInfo.getDong().getDongName());
-		System.out.println(residenceInfo.getDong().getId());
 		residenceInfo.setImageUrl(imageUrls);
 		residenceInfo.setFeature(setFeature(residence.getFeature()));
 		residenceInfo.setEstateInfo(estateInfoRepository.findById(residence.getEstateId()).get());

@@ -25,9 +25,10 @@ public class UserFavoriteRepositorySupport {
         return userFavorites;
     }
 
-    public UserFavorite checkDuplicate(Long userId, Long residenceId) {
+    public Optional<UserFavorite> checkIsFavorite(Long userId, Long residenceId) {
         UserFavorite userFavorite = jpaQueryFactory.select(quserFavorite).from(quserFavorite)
                 .where(quserFavorite.user.id.eq(userId), quserFavorite.residenceInfo.id.eq(residenceId)).fetchOne();
-        return userFavorite;
+        if(userFavorite == null) return Optional.empty();
+        return Optional.ofNullable(userFavorite);
     }
 }

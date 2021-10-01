@@ -2,7 +2,6 @@ package com.ssafy.api.response;
 
 import com.ssafy.api.Model.ResidenceModel;
 import com.ssafy.common.model.response.BaseResponseBody;
-import com.ssafy.db.entity.ResidenceInfo;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,20 +14,20 @@ import java.util.List;
  */
 @Getter
 @Setter
-@ApiModel("ResidenceRes")
-public class ResidenceRes extends BaseResponseBody {
-	List<ResidenceInfo> residenceInfo = new ArrayList<>();
+@ApiModel("ResidenceDetailRes")
+public class ResidenceDetailRes extends BaseResponseBody {
+	List<ResidenceModel> residenceInfo = new ArrayList<>();
 
-	public static ResidenceRes of(List<ResidenceInfo> roomRes) {
-		ResidenceRes res = new ResidenceRes();
+	public static ResidenceDetailRes of(List<ResidenceModel> roomRes) {
+		ResidenceDetailRes res = new ResidenceDetailRes();
 		res.setStatusCode(200);
 		res.setMessage("success");
 		res.setResidenceInfo(roomRes);
 		return res;
 	}
 
-	public static ResidenceRes of(Integer setStatusCode, String message) {
-		ResidenceRes res = new ResidenceRes();
+	public static ResidenceDetailRes of(Integer setStatusCode, String message) {
+		ResidenceDetailRes res = new ResidenceDetailRes();
 		res.setStatusCode(setStatusCode);
 		res.setMessage(message);
 		return res;

@@ -1,5 +1,6 @@
 package com.ssafy.api.controller;
 
+import com.ssafy.api.Model.ResidenceModel;
 import com.ssafy.api.model.CountModel;
 import com.ssafy.api.model.PositionModel;
 import com.ssafy.api.request.ResidenceDetailGetReq;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.swing.text.Position;
 import java.io.File;
@@ -86,15 +88,15 @@ public class ResidenceController {
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "실패")
     })
-    public ResponseEntity<ResidenceRes> getResidencesDetail(
-            @RequestBody @ApiParam(value = "매물 상세", required = true) ResidenceDetailGetReq residenceDetailGetReq
-//            ,Authentication authentication
+    public ResponseEntity<ResidenceDetailRes> getResidencesDetail(
+            @RequestBody @ApiParam(value = "매물 상세", required = true) ResidenceDetailGetReq residenceDetailGetReq,
+            @ApiIgnore Authentication authentication
     ) {
         try {
-            List<ResidenceInfo> rooms = residenceService.getResidenceDetails(residenceDetailGetReq);
-            return ResponseEntity.status(200).body(ResidenceRes.of(rooms));
+            List<ResidenceModel> rooms = residenceService.getResidenceDetails(residenceDetailGetReq, authentication);
+            return ResponseEntity.status(200).body(ResidenceDetailRes.of(rooms));
         } catch (NoSuchElementException e) {
-            return ResponseEntity.status(500).body(ResidenceRes.of(500, "fail"));
+            return ResponseEntity.status(500).body(ResidenceDetailRes.of(500, "fail"));
         }
     }
 
