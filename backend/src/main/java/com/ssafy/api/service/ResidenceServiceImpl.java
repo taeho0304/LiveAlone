@@ -64,14 +64,35 @@ public class ResidenceServiceImpl implements ResidenceService {
 	public List<ResidenceModel> getResidenceDetails(ResidenceDetailGetReq residenceDetailGetReq, Authentication authentication) {
 		List<ResidenceInfo> residenceInfos = residenceInfoRepositorySupport.findRooms(residenceDetailGetReq);
 		List<ResidenceModel> residenceModels = new ArrayList<>();
-		UserDetail userDetail = (UserDetail) authentication.getDetails();
+		UserDetail userDetail = null;
+		if (authentication != null)
+			userDetail = (UserDetail) authentication.getDetails();
 
 		for(int i=0; i<residenceInfos.size(); i++){
 			ResidenceModel residenceModel = new ResidenceModel();
 			residenceModel.setResidenceInfo(residenceInfos.get(i));
-			residenceModel.setPresent(userFavoriteRepositorySupport.checkIsFavorite(userDetail.getUser().getId(), residenceInfos.get(i).getId()));
+			if (authentication != null)
+				residenceModel.setPresent(userFavoriteRepositorySupport.checkIsFavorite(userDetail.getUser().getId(), residenceInfos.get(i).getId()));
 			residenceModels.add(residenceModel);
 		}
+		return residenceModels;
+	}
+
+	@Override
+	public List<ResidenceModel> getResidencesById(List<Long> residenceIds, Authentication authentication) {
+		List<ResidenceModel> residenceModels = new ArrayList<>();
+		UserDetail userDetail = null;
+		if (authentication != null)
+			userDetail = (UserDetail) authentication.getDetails();
+
+		for(Long id : residenceIds){
+			ResidenceModel residenceModel = new ResidenceModel();
+			residenceModel.setResidenceInfo(residenceInfoRepository.findById(id).get());
+			if (authentication != null)
+				residenceModel.setPresent(userFavoriteRepositorySupport.checkIsFavorite(userDetail.getUser().getId(), id));
+			residenceModels.add(residenceModel);
+		}
+
 		return residenceModels;
 	}
 
@@ -151,17 +172,6 @@ public class ResidenceServiceImpl implements ResidenceService {
 	public List<PositionModel> getPosition(String dongName) {
 		List<PositionModel> positionModels = residenceInfoRepositorySupport.findPositionsByDongName(dongName);
 		return positionModels;
-	}
-
-	@Override
-	public List<ResidenceInfo> getResidencesById(List<Long> residenceIds) {
-		List<ResidenceInfo> residenceInfos = new ArrayList<>();
-		for(Long id : residenceIds){
-			ResidenceInfo residenceInfo = residenceInfoRepository.findById(id).get();
-			residenceInfos.add(residenceInfo);
-		}
-
-		return residenceInfos;
 	}
 
 	private List<Feature> setFeature(List<String> featureList) {

@@ -58,12 +58,12 @@ public class ResidenceController {
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "실패")
     })
-    public ResponseEntity<ResidenceRes> getResidences( @RequestBody List<Long> residenceIds) {
+    public ResponseEntity<ResidenceDetailRes> getResidences( @RequestBody List<Long> residenceIds, @ApiIgnore Authentication authentication) {
         try {
-            List<ResidenceInfo> rooms = residenceService.getResidencesById(residenceIds);
-            return ResponseEntity.status(200).body(ResidenceRes.of(rooms));
+            List<ResidenceModel> rooms = residenceService.getResidencesById(residenceIds, authentication);
+            return ResponseEntity.status(200).body(ResidenceDetailRes.of(rooms));
         } catch (NoSuchElementException e) {
-            return ResponseEntity.status(500).body(ResidenceRes.of(500, "fail"));
+            return ResponseEntity.status(500).body(ResidenceDetailRes.of(500, "fail"));
         }
     }
 
@@ -89,8 +89,7 @@ public class ResidenceController {
             @ApiResponse(code = 500, message = "실패")
     })
     public ResponseEntity<ResidenceDetailRes> getResidencesDetail(
-            @RequestBody @ApiParam(value = "매물 상세", required = true) ResidenceDetailGetReq residenceDetailGetReq,
-            @ApiIgnore Authentication authentication
+            @RequestBody @ApiParam(value = "매물 상세", required = true) ResidenceDetailGetReq residenceDetailGetReq, @ApiIgnore Authentication authentication
     ) {
         try {
             List<ResidenceModel> rooms = residenceService.getResidenceDetails(residenceDetailGetReq, authentication);
