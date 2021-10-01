@@ -42,7 +42,7 @@ public class UserFavoriteServiceImpl implements UserFavoriteService {
 	}
 
 	@Override
-	public List<UserFavorite> getFavoriteResidence(Authentication authentication) {
+	public List<UserFavorite> checkDuplicate(Authentication authentication) {
 		UserDetail userDetail = (UserDetail) authentication.getDetails();
 		List<UserFavorite> userFavorites = userFavoriteRepositorySupport.findByUserId(userService.getUserByUserId(userDetail.getUsername()).getId());
 		return userFavorites;
@@ -56,7 +56,7 @@ public class UserFavoriteServiceImpl implements UserFavoriteService {
 	}
 
 	@Override
-	public UserFavorite checkDuplicated(Authentication authentication, Long residenceId) {
+	public UserFavorite getFavoriteResidences(Authentication authentication, Long residenceId) {
 		UserDetail userDetail = (UserDetail) authentication.getDetails();
 		return userFavoriteRepositorySupport.checkDuplicate(userDetail.getUser().getId(), residenceId);
 	}

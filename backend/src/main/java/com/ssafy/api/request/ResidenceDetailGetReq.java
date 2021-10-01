@@ -15,10 +15,14 @@ import java.util.List;
 @Setter
 @ApiModel("ResidenceDetailGetReq")
 public class ResidenceDetailGetReq {
-	@ApiModelProperty(name="방 종류", example="원룸")
+	@ApiModelProperty(name="방 종류", example="원룸, 투룸")
 	List<String> residenceCategory = new ArrayList<>();
-	@ApiModelProperty(name="거래 타입", example="월세")
+	@ApiModelProperty(name="거래 타입", example="월세, 전세")
 	List<String> residenceType = new ArrayList<>();
+	@ApiModelProperty(name="최저 보증금", example="10")
+	int startDeposit;
+	@ApiModelProperty(name="최고 보증금", example="10")
+	int endDeposit;
 	@ApiModelProperty(name="최저 매매 가격대(만원)", example="40")
 	int startPrice;
 	@ApiModelProperty(name="최고 매매 가격대(만원)", example="100")

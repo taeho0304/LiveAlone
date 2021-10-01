@@ -41,15 +41,15 @@ public class UserFavoriteController {
         }
     }
 
-    @GetMapping("/checkDuplicate")
-    @ApiOperation(value = "찜한 관심 매물 조회", notes = "찜한 관심 매물을 조회한다.")
+    @GetMapping("/isfavorite")
+    @ApiOperation(value = "찜한 관심 매물 조회", notes = "찜한 관심 매물인지 조회한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<UserFavoriteRes> getFavoriteResidence(@ApiIgnore Authentication authentication) {
         try {
-            List<UserFavorite> userFavorites = userFavoriteService.getFavoriteResidence(authentication);
+            List<UserFavorite> userFavorites = userFavoriteService.checkDuplicate(authentication);
             return ResponseEntity.status(200).body(UserFavoriteRes.of(userFavorites));
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(500).body(UserFavoriteRes.of(500, "fail"));
@@ -66,7 +66,7 @@ public class UserFavoriteController {
     public ResponseEntity<? extends BaseResponseBody> checkDuplicated(
             @ApiIgnore Authentication authentication, @RequestParam Long ResidenceId) {
         try {
-            userFavoriteService.checkDuplicated(authentication, ResidenceId);
+            userFavoriteService.getFavoriteResidences(authentication, ResidenceId);
             return ResponseEntity.status(409).body(BaseResponseBody.of(200, "중복 있음"));
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "중복 없음"));

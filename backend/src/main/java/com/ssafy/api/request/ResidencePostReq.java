@@ -20,14 +20,14 @@ import java.util.List;
 @Setter
 @Data
 public class ResidencePostReq {
-//	@ApiModelProperty(name="매물 거래 타입", example="매매")
+//	@ApiModelProperty(name="매물 거래 타입", example="1")
 	Long residenceType;
 //	@ApiModelProperty(name="부동산 등록 번호", example="1")
 	Long estateId;
 //	@ApiModelProperty(name="매물 타입", example="원룸")
 	Long residenceCategory;
 //	@ApiModelProperty(name="매물 동 이름", example="가양동")
-	Long dong;
+	String dong;
 //	@ApiModelProperty(name="매물 툭징", example="주차가능")
 	List<String> feature;
 //	@ApiModelProperty(name="건물 이름", example="삼성래미안")
@@ -40,6 +40,8 @@ public class ResidencePostReq {
 	int cost;
 //	@ApiModelProperty(name="월세비", example="100")
 	int wolseCost;
+//	@ApiModelProperty(name="보증금", example="100")
+	int deposit;
 //	@ApiModelProperty(name="전세비 or 보증금", example="0")
 	int jeonseCost;
 //	@ApiModelProperty(name="관리비", example="20")

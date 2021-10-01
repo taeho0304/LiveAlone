@@ -12,6 +12,7 @@ import com.ssafy.db.entity.ResidenceInfo;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -86,7 +87,9 @@ public class ResidenceController {
             @ApiResponse(code = 500, message = "실패")
     })
     public ResponseEntity<ResidenceRes> getResidencesDetail(
-            @RequestBody @ApiParam(value = "매물 상세", required = true) ResidenceDetailGetReq residenceDetailGetReq) {
+            @RequestBody @ApiParam(value = "매물 상세", required = true) ResidenceDetailGetReq residenceDetailGetReq
+//            ,Authentication authentication
+    ) {
         try {
             List<ResidenceInfo> rooms = residenceService.getResidenceDetails(residenceDetailGetReq);
             return ResponseEntity.status(200).body(ResidenceRes.of(rooms));

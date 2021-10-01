@@ -1,6 +1,7 @@
 package com.ssafy.api.service;
 
 import com.querydsl.core.Tuple;
+import com.ssafy.api.Model.ResidenceModel;
 import com.ssafy.api.model.CountModel;
 import com.ssafy.api.model.PositionModel;
 import com.ssafy.api.request.ResidenceDetailGetReq;
@@ -57,6 +58,14 @@ public class ResidenceServiceImpl implements ResidenceService {
 
 	@Override
 	public List<ResidenceInfo> getResidenceDetails(ResidenceDetailGetReq residenceDetailGetReq) {
+		List<ResidenceInfo> residenceInfos = residenceInfoRepositorySupport.findRooms(residenceDetailGetReq);
+		List<ResidenceModel> residenceModels = new ArrayList<>();
+
+		for(int i=0; i<residenceInfos.size(); i++){
+			ResidenceModel residenceModel = new ResidenceModel();
+			residenceModel.setResidenceInfo(residenceInfos.get(i));
+//			residenceModel.setPresent();
+		}
 		return residenceInfoRepositorySupport.findRooms(residenceDetailGetReq);
 	}
 
@@ -79,7 +88,7 @@ public class ResidenceServiceImpl implements ResidenceService {
 			imageUrls.add(imageUrl);
 		}
 		ResidenceInfo residenceInfo = new ResidenceInfo();
-		residenceInfo.setDong(dongRepository.findById(residence.getDong()).get());
+		residenceInfo.setDong(dongRepositorySupport.findDongByName(residence.getDong()));
 		System.out.println(residenceInfo.getDong().getDongName());
 		System.out.println(residenceInfo.getDong().getId());
 		residenceInfo.setImageUrl(imageUrls);

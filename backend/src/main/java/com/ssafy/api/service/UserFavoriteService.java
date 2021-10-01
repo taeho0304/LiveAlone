@@ -13,9 +13,9 @@ public interface UserFavoriteService {
 
 	void createFavoriteResidence(Long residenceId, Authentication authentication);
 
-	List<UserFavorite> getFavoriteResidence(Authentication authentication);
+	List<UserFavorite> checkDuplicate(Authentication authentication);
 
 	void deleteFavoriteResidence(List<Long> userFavoriteIds);
 
-	UserFavorite checkDuplicated(Authentication authentication, Long residenceId);
+	UserFavorite getFavoriteResidences(Authentication authentication, Long residenceId);
 }

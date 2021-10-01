@@ -31,9 +31,9 @@ public class ResidenceInfoRepositorySupport {
 
         BooleanBuilder builder = new BooleanBuilder();
         for (int i = 0; i< residenceDetailGetReq.getResidenceType().size(); i++)
-            builder.and(qresidenceInfo.residenceType.type.eq(residenceDetailGetReq.getResidenceType().get(i)));
+            builder.or(qresidenceInfo.residenceType.type.eq(residenceDetailGetReq.getResidenceType().get(i)));
         for (int i = 0; i< residenceDetailGetReq.getResidenceCategory().size(); i++)
-            builder.and(qresidenceInfo.residenceCategory.categoryName.eq(residenceDetailGetReq.getResidenceCategory().get(i)));
+            builder.or(qresidenceInfo.residenceCategory.categoryName.eq(residenceDetailGetReq.getResidenceCategory().get(i)));
         if (residenceDetailGetReq.getStartPrice() > 0) builder.and(qresidenceInfo.cost.goe(residenceDetailGetReq.getStartPrice()));
         if (residenceDetailGetReq.getEndPrice() > 0) builder.and(qresidenceInfo.cost.loe(residenceDetailGetReq.getEndPrice()));
         if (residenceDetailGetReq.getStartJPrice() > 0) builder.and(qresidenceInfo.jeonseCost.goe(residenceDetailGetReq.getStartPrice()));
@@ -44,6 +44,8 @@ public class ResidenceInfoRepositorySupport {
         if (residenceDetailGetReq.getEndManagePrice() > 0) builder.and(qresidenceInfo.manageCost.loe(residenceDetailGetReq.getEndManagePrice()));
         if (residenceDetailGetReq.getStartArea() > 0) builder.and(qresidenceInfo.area.goe(residenceDetailGetReq.getStartArea()));
         if (residenceDetailGetReq.getEndArea() > 0) builder.and(qresidenceInfo.area.loe(residenceDetailGetReq.getEndArea()));
+        if (residenceDetailGetReq.getStartDeposit() > 0) builder.and(qresidenceInfo.deposit.goe(residenceDetailGetReq.getStartDeposit()));
+        if (residenceDetailGetReq.getEndDeposit() > 0) builder.and(qresidenceInfo.deposit.loe(residenceDetailGetReq.getEndDeposit()));
         if (residenceDetailGetReq.getGugun() != null) builder.and(qresidenceInfo.dong.Gugun.gugunName.eq(residenceDetailGetReq.getGugun()));
         if (residenceDetailGetReq.getDong() != null) builder.and(qresidenceInfo.dong.dongName.eq(residenceDetailGetReq.getDong()));
         residences.where(builder);

@@ -25,7 +25,7 @@ public class DongRepositorySupport {
         return dongs;
     }
 
-    public Dong getDongByDongName(String dongName) {
+    public Dong findDongByName(String dongName) {
         Dong dong = jpaQueryFactory.select(qDong).from(qDong)
                 .where(qDong.dongName.eq(dongName)).fetchOne();
         return dong;
