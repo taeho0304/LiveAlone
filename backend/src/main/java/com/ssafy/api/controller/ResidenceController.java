@@ -161,6 +161,4 @@ public class ResidenceController {
             return ResponseEntity.status(500).body(UserLoginPostRes.of(500, "fail"));
         }
     }
-
-
 }
