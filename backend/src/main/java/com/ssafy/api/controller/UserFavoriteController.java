@@ -37,7 +37,7 @@ public class UserFavoriteController {
         try {
             userFavoriteService.createFavoriteResidence(residenceId, authentication);
             return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Success"));
-        } catch (NoSuchElementException e) {
+        } catch (NoSuchElementException | NullPointerException e) {
             return ResponseEntity.status(500).body(BaseResponseBody.of(500, "fail"));
         }
     }
