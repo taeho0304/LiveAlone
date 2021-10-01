@@ -31,4 +31,9 @@ public class UserFavoriteRepositorySupport {
         if(userFavorite == null) return false;
         return true;
     }
+
+    @Transactional
+    public void deleteByIds(Long userResidenceId, Long userId) {
+        jpaQueryFactory.delete(quserFavorite).where(quserFavorite.user.id.eq(userId), quserFavorite.residenceInfo.id.eq(userResidenceId)).execute();
+    }
 }

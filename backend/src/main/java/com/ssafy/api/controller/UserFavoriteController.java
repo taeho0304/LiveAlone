@@ -80,9 +80,10 @@ public class UserFavoriteController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<BaseResponseBody> deleteFavoriteResidence(
-            @RequestBody @ApiParam(value = "찜한 관심 매물 삭제", required = true) List<Long> userFavoriteIds) {
+            @RequestBody @ApiParam(value = "찜한 관심 매물 삭제", required = true)
+                    Long userFavoriteIds, @ApiIgnore Authentication authentication) {
         try {
-            userFavoriteService.deleteFavoriteResidence(userFavoriteIds);
+            userFavoriteService.deleteFavoriteResidence(userFavoriteIds, authentication);
             return ResponseEntity.status(200).body(UserLoginPostRes.of(201, "Success"));
         }catch (Exception e){
             return ResponseEntity.status(500).body(UserLoginPostRes.of(500, "Fail"));

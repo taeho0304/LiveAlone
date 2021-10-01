@@ -108,12 +108,20 @@ public class ResidenceServiceImpl implements ResidenceService {
 
 	@Override
 	public void createResidence(ResidencePostReq residence) throws IOException {
+		System.out.println("---------------------------------");
+		System.out.println(residence);
+		System.out.println("---------------------------------");
 		List<ImageUrl> imageUrls = new ArrayList<>();
-		for (MultipartFile thumbnail:residence.getThumbnails()) {
-			ImageUrl imageUrl = new ImageUrl();
-			imageUrl.setUrl(saveThumbnail(thumbnail));
-			imageUrls.add(imageUrl);
+		try {
+			for (MultipartFile thumbnail:residence.getThumbnails()) {
+				ImageUrl imageUrl = new ImageUrl();
+				imageUrl.setUrl(saveThumbnail(thumbnail));
+				imageUrls.add(imageUrl);
+			}
+		}catch (NullPointerException e){
+
 		}
+
 		ResidenceInfo residenceInfo = new ResidenceInfo();
 		residenceInfo.setDong(dongRepositorySupport.findDongByName(residence.getDong()));
 		residenceInfo.setImageUrl(imageUrls);

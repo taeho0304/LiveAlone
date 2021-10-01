@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.FetchType;
@@ -19,6 +20,7 @@ import java.util.List;
 @Getter
 @Setter
 @Data
+@ToString
 public class ResidencePostReq {
 //	@ApiModelProperty(name="매물 거래 타입", example="1")
 	Long residenceType;

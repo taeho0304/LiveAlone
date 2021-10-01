@@ -8,7 +8,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  *	유저 관심 매물 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
@@ -50,10 +49,9 @@ public class UserFavoriteServiceImpl implements UserFavoriteService {
 	}
 
 	@Override
-	public void deleteFavoriteResidence(List<Long> userFavoriteIds) {
-		for (Long userFavoriteId:userFavoriteIds){
-			userFavoriteRepository.deleteById(userFavoriteId);
-		}
+	public void deleteFavoriteResidence(Long userFavoriteId, Authentication authentication) {
+		UserDetail userDetail = (UserDetail) authentication.getDetails();
+		userFavoriteRepositorySupport.deleteByIds(userFavoriteId, userService.getUserByUserId(userDetail.getUsername()).getId() );
 	}
 
 	@Override
