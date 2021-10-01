@@ -32,8 +32,9 @@
               >
             </div>
           </div>
-          <div class="col-md-5">
+          <div class="col-md-4">
             <n-checkbox
+              style="max-width: 100px"
               value="4"
               v-model="checkedResiCategory[0].checkResi3"
               @input="changeResiCategory"
@@ -313,17 +314,6 @@
           >
             아파트 설정 불가
           </div>
-
-          <div class="col-md-1 pl-0 pr-0">
-            <div class="col-md-11">
-              <a
-                class="btn btn-warning btn-round btn-block"
-                style="margin-top: 90px; color: #5e2c04"
-                @click="setDetailSave"
-                >저장</a
-              >
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -333,9 +323,11 @@
 <script>
 import { Slider, Checkbox } from "@/components";
 import http from "@/util/http-common";
+
 export default {
   components: {
     Slider,
+
     [Checkbox.name]: Checkbox,
   },
   data() {
@@ -688,32 +680,6 @@ export default {
         console.log("deatailRES", res.data.residenceInfo);
         this.$emit("mydetailS", res.data.residenceInfo);
       });
-    },
-    setDetailSave() {
-      const mySave = {
-        gugun: this.juso.gugun,
-        dong: this.juso.dong,
-        residenceCategory: this.checkedResiCategory[1].checkCategory,
-        residenceType: this.checkedResiType[1].checkType,
-        floorDetail: this.checkedFloorType[1].checkedFloor,
-        roomStrucDeail: this.checkedRoomStruc[1].checkStruc,
-
-        startPrice: this.dealTradingRange[0],
-        endPrice:
-          this.dealTradingRange[1] == 1500 ? 0 : this.dealTradingRange[1],
-
-        startJPrice: this.rangeSlider[0],
-        endJPrice: this.rangeSlider[1] == 1000 ? 0 : this.rangeSlider[1],
-
-        startWPrice: this.dealMonthRange[0],
-        endWPrice: this.dealMonthRange[1] == 350 ? 0 : this.dealMonthRange[1],
-
-        startManagePrice: this.CofMrange[0],
-        endManagePrice: this.CofMrange[1] == 50 ? 0 : this.CofMrange[1],
-
-        startArea: this.roomSize[0],
-        endArea: this.roomSize[0] == 50 ? 0 : this.roomSize[1],
-      };
     },
   },
   props: { juso: Object },
