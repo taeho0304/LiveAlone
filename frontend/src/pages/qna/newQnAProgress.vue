@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <card>
+    <card style="border-radius: 13px">
       <div slot="header" class="col-md-12 my-3">
         <h4>
-          <n-progress class="my-4" type="warning" :value="pr" show-value>
+          <n-progress class="my-4" type="info" :value="pr" show-value>
           </n-progress>
           <strong> {{ QnA[index].question }}</strong>
         </h4>
@@ -17,7 +17,7 @@
             ml-auto
             mr-auto
             my-4
-            btn btn-warning btn-round btn-lg btn-block
+            btn btn-info btn-round btn-lg btn-block
           "
           :title="areatitle"
         >
@@ -39,7 +39,7 @@
             mr-auto
             my-4
             select
-            btn btn-warning btn-round btn-lg btn-block
+            btn btn-info btn-round btn-lg btn-block
             my-4
           "
           @click="next(areatitle, areaindex)"
@@ -60,7 +60,7 @@
             ml-auto
             my-4
             mr-auto
-            btn btn-warning btn-round btn-lg btn-block
+            btn btn-info btn-round btn-lg btn-block
           "
           >{{ a }}
         </a>
