@@ -31,37 +31,45 @@
         >
           <div class="row" style="margin-rigth: 0">
             <div class="col-md-6" style="min-height: 160px; max-height: 160px">
-              <img class="imgthum" :src="a.imageUrl[0].url" />
+              <img class="imgthum" :src="a.residenceInfo.imageUrl[0].url" />
             </div>
             <div class="col-md-4 pr-0 pl-0">
               <div class="col-md-12 pl-0 pb-0 pt-0 title">
                 <strong
                   ><h6 class="mb-1">
-                    {{ a.residenceType.type }}
-                    <strong v-if="a.residenceType.type == '전세'">
-                      {{ showPrice(a.jeonseCost) }}
+                    {{ a.residenceInfo.residenceType.type }}
+                    <strong v-if="a.residenceInfo.residenceType.type == '전세'">
+                      {{ showPrice(a.residenceInfo.jeonseCost) }}
                     </strong>
-                    <strong v-else-if="a.residenceType.type == '매매'">
-                      {{ showPrice(a.cost) }}
+                    <strong
+                      v-else-if="a.residenceInfo.residenceType.type == '매매'"
+                    >
+                      {{ showPrice(a.residenceInfo.cost) }}
                     </strong>
-                    <strong v-else-if="a.residenceType.type == '월세'">
-                      {{ showPrice(a.jeonseCost) }}/{{ a.wolseCost }}
+                    <strong
+                      v-else-if="a.residenceInfo.residenceType.type == '월세'"
+                    >
+                      {{ showPrice(a.residenceInfo.deposit) }}/{{
+                        a.residenceInfo.wolseCost
+                      }}
                     </strong>
                   </h6></strong
                 >
               </div>
               <div class="col-md-12 pt-1 pl-0 pr-0 pb-1 title">
-                {{ a.residenceCategory.categoryName }}
-                {{ showResiName(a.name) }}
+                {{ a.residenceInfo.residenceCategory.categoryName }}
+                {{ showResiName(a.residenceInfo.name) }}
               </div>
               <div class="col-md-12 pt-1 pl-0 pr-0 pb-1 title">
-                <h6 class="mb-1">{{ a.myFloor }}/{{ a.area }}평</h6>
+                <h6 class="mb-1">
+                  {{ a.residenceInfo.myFloor }}/{{ a.residenceInfo.area }}평
+                </h6>
               </div>
               <div class="col-md-12 pt-1 pl-0 pr-0 title">
                 <h6 class="mb-1">
                   <strong>
                     <!-- {{ name.featureName }} -->
-                    {{ showFeature(a.feature) }}
+                    {{ showFeature(a.residenceInfo.feature) }}
                   </strong>
                 </h6>
               </div>
@@ -69,11 +77,18 @@
 
             <div class="col-md-2">
               <div class="iconwrapper">
-                <i
-                  slot="icon"
-                  class="now-ui-icons ui-2_favourite-28"
+                <font-awesome-icon
+                  v-if="!a.present"
+                  :icon="['far', 'heart']"
                   @click="myFavorite(idx)"
-                ></i>
+                />
+
+                <font-awesome-icon
+                  v-if="a.present"
+                  :icon="['fas', 'heart']"
+                  :style="{ color: 'red' }"
+                  @click="delFavorite(idx)"
+                />
               </div>
               <div class="iconwrapper detail" style="margin-top: 50%">
                 <i
@@ -106,6 +121,7 @@ import ResiDetail from "@/pages/map/ResiDetail.vue";
 import VueSimpleAlert from "vue-simple-alert";
 import VueStar from "vue-star";
 import http from "@/util/http-common";
+
 export default {
   components: {
     Card,
@@ -171,12 +187,33 @@ export default {
 
     showModal(res) {
       this.showResiDetail = !this.showResiDetail;
-      this.resiDetail = this.resiList[res];
+      this.resiDetail = this.resiList[res].residenceInfo;
       console.log(this.resiDetail);
     },
+    delFavorite(idx) {
+      var deldata = this.resiList[idx].residenceInfo.id;
+      const CSRF_TOKEN = localStorage.getItem("accessToken");
+
+      console.log(deldata);
+
+      http
+        .delete("/api/v1/favorites?userFavoriteIds=" + deldata, {
+          headers: {
+            Authorization: "Bearer " + CSRF_TOKEN,
+          },
+        })
+        .then((res) => {
+          VueSimpleAlert.fire({
+            title: "찜 제거 성공",
+            text: "찜 제거 성공 ! 마이 페이지를 확인해주세요",
+            type: "error",
+          });
+          this.resiList[idx].present = false;
+        });
+    },
     myFavorite(idx) {
-      console.log("aaaaa");
-      var postdata = this.resiList[idx].id;
+      var postdata = this.resiList[idx].residenceInfo.id;
+      console.log(postdata);
       const CSRF_TOKEN = localStorage.getItem("accessToken");
 
       if (localStorage.getItem("accessToken")) {
@@ -194,6 +231,7 @@ export default {
                 text: "찜하기 성공 ! 마이 페이지를 확인해주세요",
                 type: "success",
               });
+              this.resiList[idx].present = true;
             }
           });
       } else {
@@ -238,5 +276,6 @@ export default {
 }
 .resiDetailModal {
   display: flex;
+  margin-left: 6%;
 }
 </style>

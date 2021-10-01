@@ -180,13 +180,26 @@ export default {
     temp(cluster) {
       var clickcluster = cluster.getMarkers().length;
       var Item = [];
+      const CSRF_TOKEN = localStorage.getItem("accessToken");
       for (var i = 0; i < clickcluster; i++) {
         Item.push(cluster.getMarkers()[i].Fb);
       }
-      http.post("/api/v1/residences/ids", Item).then((res) => {
-        this.resiList = res.data.residenceInfo;
-        console.log(this.resiList);
-      });
+
+      if (CSRF_TOKEN != null) {
+        http
+          .post("/api/v1/residences/ids", Item, {
+            headers: { Authorization: "Bearer " + CSRF_TOKEN },
+          })
+          .then((res) => {
+            this.resiList = res.data.residenceInfo;
+            console.log("받아온데이터", this.resiList);
+          });
+      } else {
+        http.post("/api/v1/residences/ids", Item).then((res) => {
+          this.resiList = res.data.residenceInfo;
+          console.log("받아온데이터", this.resiList);
+        });
+      }
     },
   },
 };
