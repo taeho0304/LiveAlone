@@ -109,7 +109,7 @@
         modal-classes="modal-lg"
         header-classes="justify-content-center"
       >
-        <ResiDetail v-if="resiDetail != null" v-bind:resiDetail="resiDetail" />
+        <ResiDetail :v-if="resiDetail != null" v-bind:resiDetail="resiDetail" />
       </modal>
     </template>
   </div>
@@ -276,6 +276,6 @@ export default {
 }
 .resiDetailModal {
   display: flex;
-  margin-left: 6%;
+  margin-top: 1.8% !important;
 }
 </style>

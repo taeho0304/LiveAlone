@@ -39,6 +39,7 @@
     "vue-star": "^0.0.4",
     "vue-stepper": "^1.4.2",
     "vue-tables": "^1.6.44",
+    "vue2-simplert-plugin": "^0.6.0-beta.2",
     "vue2-transitions": "^0.3.0",
     "vuelidate": "^0.7.6",
     "vuetable-2": "^2.0.0-beta.4",

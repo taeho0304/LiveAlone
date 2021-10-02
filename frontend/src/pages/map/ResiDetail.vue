@@ -133,25 +133,4 @@ export default {
   height: 245px;
   margin-top: 10px;
 }
-.slick-dots {
-  position: absolute;
-  bottom: 0px;
-  display: block;
-  width: 100%;
-  padding: 0;
-  padding-right: 0px;
-  margin: 0;
-  list-style: none;
-  text-align: center;
-}
-.slick-prev:before,
-.slick-next:before {
-  font-family: "slick";
-  font-size: 20px;
-  line-height: 1;
-  opacity: 0.75;
-  color: coral;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
 </style>

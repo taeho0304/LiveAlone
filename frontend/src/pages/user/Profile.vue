@@ -2,19 +2,18 @@
   <div>
     <div class="section">
       <div class="container">
-        <div class="modalrwrap">
-          <modal
-            class="resiDetailModal"
-            :show.sync="showResiDetail"
-            modal-classes="modal-lg"
-            header-classes="justify-content-center"
-          >
-            <ResiDetail
-              v-if="resiDetail != null"
-              v-bind:resiDetail="resiDetail"
-            />
-          </modal>
-        </div>
+        <modal
+          class="myfavotieModal"
+          :show.sync="showResiDetail"
+          modal-classes="modal-lg"
+          header-classes="justify-content-center"
+        >
+          <ResiDetail
+            v-if="resiDetail != null"
+            v-bind:resiDetail="resiDetail"
+          />
+        </modal>
+
         <div class="card row" style="margin-top: 15px">
           <tabs
             type="primary"
@@ -251,8 +250,8 @@ export default {
       "requsetFavoriteList",
     ]),
     showModal(res) {
-      this.showResiDetail = !this.showResiDetail;
       this.resiDetail = this.myfavorite[res].residenceInfo;
+      this.showResiDetail = !this.showResiDetail;
       console.log(this.resiDetail);
     },
     delFavorite(idx) {
@@ -356,7 +355,9 @@ export default {
 };
 </script>
 <style>
-.modalrwrap {
+.myfavotieModal {
+  margin-top: 0 !important;
+  margin-left: 6% !important;
 }
 .myimg {
   min-height: calc(100vh - 700px);

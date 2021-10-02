@@ -8,7 +8,10 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import VueSimpleAlert from "vue-simple-alert";
 import "@/fontAwesomeIcon.js";
+import { Simplert } from 'vue2-simplert-plugin'
+import 'vue2-simplert-plugin/dist/vue2-simplert-plugin.min.css'
 
+Vue.use(Simplert)
 
 Vue.config.productionTip = false;
 
