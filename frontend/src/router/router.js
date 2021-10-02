@@ -9,6 +9,7 @@ import MainFooter from '../layout/MainFooter.vue';
 import signupPage from '../view/signupPage.vue';
 import QnAPage from '../view/QnAPage.vue';
 import Service from '../view/servicePage.vue';
+import ManageRegist from '../view/residenceRegistPage.vue';
 import VueSimpleAlert from "vue-simple-alert";
 Vue.use(Router);
 const requireAuth = () => (to, from, next) => {
@@ -62,9 +63,14 @@ export default new Router({
       props: {
         header: { colorOnScroll: 400 },
         footer: { backgroundColor: 'black' }
-      }
+      },
+      children: [
+        {
+          path: "/manage/regist",
+          component: ManageRegist,
+        }
+      ],
     },
-    
     {
       path: '/signup',
       name: 'signup',

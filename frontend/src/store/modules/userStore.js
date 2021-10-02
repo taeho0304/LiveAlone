@@ -202,21 +202,8 @@ export default {
           if(residence.thumbnails.length>-1){
             for(let i=0;i<residence.thumbnails.length;i++){
               const imageForm=residence.thumbnails[i]
-              formData.append('thumbnails',imageForm);
+              formData.append(`thumbnails[${i}]`,imageForm);
             }
-          }
-
-
-          for (var key of formData.keys()) {
-
-            console.log(key);
-          
-          }
-          
-          for (var value of formData.values()) {
-          
-            console.log(value);
-          
           }
           http
               .post(`/api/v1/residences`, formData,
@@ -224,6 +211,7 @@ export default {
               })
               .then(({ data }) => {
                   console.log(data);
+                  
                   
               })
               .catch((err) => {
