@@ -4,6 +4,7 @@
       v-bind:isAvailable="false"
       @maker="getMarkerData"
       @detailS="getDetailSearch"
+      @move="getMoveData"
     />
 
     <Map v-bind:marker="marker" v-bind:detailList="detailList" />
@@ -22,6 +23,7 @@ export default {
   data() {
     return {
       marker: null,
+      move:null,
       detailList: [],
       isAvailable: false,
     };
@@ -30,6 +32,10 @@ export default {
     getMarkerData(data) {
       this.marker = data;
       console.log(this.marker);
+    },
+    getMoveData(data) {
+      this.move = data;
+      console.log(this.move);
     },
     getDetailSearch(data) {
       this.detailList = data;

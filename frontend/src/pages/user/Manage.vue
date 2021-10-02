@@ -22,7 +22,7 @@
               <span slot="label">
                 <i class="now-ui-icons shopping_shop"></i> Registed
               </span>
-              
+              <ManageConfirm />
             </tab-pane>
 
             <tab-pane>
@@ -42,6 +42,7 @@
 import { Tabs, TabPane, FormGroupInput, Button } from "@/components";
 import ManageInfo from "./ManageInfo.vue";
 import ManageRegist from "./ManageRegist.vue";
+import ManageConfirm from "./ManageConfirm.vue";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
@@ -54,6 +55,7 @@ export default {
     [Button.name]: Button,
     ManageInfo,
     ManageRegist,
+    ManageConfirm,
   },
   data: function () {
     return {};

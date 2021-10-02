@@ -103,7 +103,7 @@
               :key="index"
               class="dropdown-item"
               @click="clickCategory(categories, index)"
-              >{{ categories.name }}
+              >{{ categories.categoryName }}
             </a>
           </ul>
         </drop-down>
@@ -138,7 +138,7 @@
               :key="index"
               class="dropdown-item"
               @click="clickType(types, index)"
-              >{{ types.name }}
+              >{{ types.type }}
             </a>
           </ul>
         </drop-down>
@@ -313,12 +313,6 @@
             ><span>매물 방향</span></label
           >
         </h6>
-        <!-- <treeselect
-                                          placeholder="매물 방향"
-                                          v-model="residence.direction"
-                                          :options="directionList"
-                                          style="border-radius: 10px; background: #edf2ff;"
-                                          /> -->
         <treeselect
           v-model="residence.direction"
           :multiple="false"
@@ -395,6 +389,7 @@ import { Tabs, TabPane, FormGroupInput, Button, DropDown } from "@/components";
 import { mapActions, mapGetters } from "vuex";
 import Treeselect from "@riophae/vue-treeselect";
 import axios from "axios";
+import http from "@/util/http-common";
 import VueUploadMultipleImage from "vue-upload-multiple-image-korean";
 export default {
   name: "manage",
@@ -423,18 +418,8 @@ export default {
         { id: "보안/안전", label: "보안/안전" },
         { id: "옵션 없음", label: "옵션 없음" },
       ],
-      categoryList: [
-        { id: 1, name: "원룸" },
-        { id: 2, name: "투룸" },
-        { id: 3, name: "쓰리룸" },
-        { id: 4, name: "오피스텔" },
-        { id: 5, name: "아파트" },
-      ],
-      typeList: [
-        { id: 1, name: "매매" },
-        { id: 2, name: "전세" },
-        { id: 3, name: "월세" },
-      ],
+      categoryList: [],
+      typeList: [],
       structureList: [
         { id: "분리형", name: "주방 분리형(1.5룸)", valid: true },
         { id: "복층", name: "복층", valid: true },
@@ -442,61 +427,33 @@ export default {
         { id: "", name: "쓰리룸 이상", valid: true },
       ],
       directionList: [
-        {
-          id: "동",
-          label: "동",
-        },
-        {
-          id: "서",
-          label: "서",
-        },
-        {
-          id: "남",
-          label: "남",
+        { id: "동", label: "동"},
+        { id: "서", label: "서"},
+        { id: "남", label: "남",
           children: [
-            {
-              id: "남동",
-              label: "남동",
-            },
-            {
-              id: "남서",
-              label: "남서",
-            },
+            { id: "남동", label: "남동"},
+            { id: "남서", label: "남서"},
           ],
         },
-        {
-          id: "북",
-          label: "북",
+        { id: "북", label: "북",
           children: [
-            {
-              id: "북동",
-              label: "북동",
-            },
-            {
-              id: "북서",
-              label: "북서",
-            },
+            { id: "북동", label: "북동"},
+            { id: "북서", label: "북서"},
           ],
         },
       ],
 
-      pagination: {
-        sortBy: "name",
-      },
-      selected: [],
-      search: "",
-      isMobile: false,
       zip: "",
       addr1: "",
       addr2: "",
       isMonthType: true,
       isStructureType: false,
-      ////////////////컴포넌트 초기 정의///////////////////
+      
       categoryName: "매물 유형",
       typeName: "거래 유형",
       structureName: "방 구조",
       directionName: "매물 방향",
-      //////////////////////////////////////
+      
       residence: {
         residenceCategory: 0, //매물유형
         residenceType: 0, //거래유형
@@ -568,31 +525,41 @@ export default {
       this.residence.structure = items.id;
     },
     clickCategory(items, index) {
-      this.categoryName = items.name;
+      this.categoryName = items.categoryName;
       this.residence.residenceCategory = items.id;
-      if (items.name == "원룸" || items.name == "오피스텔") {
+      if (
+        items.categoryName == "원룸" ||
+        items.categoryName == "오피스텔" ||
+        items.categoryName == "도시형생활주택"
+      ) {
         this.structureList[0].valid = true;
         this.structureList[1].valid = true;
         this.structureList[2].valid = false;
         this.structureList[3].valid = false;
         this.isStructureType = false;
-      } else if (items.name == "투룸" || items.name == "쓰리룸") {
+      } else if (items.categoryName == "투룸") {
         this.structureList[0].valid = false;
         this.structureList[1].valid = false;
         this.structureList[2].valid = true;
+        this.structureList[3].valid = false;
+        this.isStructureType = false;
+      } else if (items.categoryName == "쓰리룸 이상") {
+        this.structureList[0].valid = false;
+        this.structureList[1].valid = false;
+        this.structureList[2].valid = false;
         this.structureList[3].valid = true;
         this.isStructureType = false;
-      } else if (items.name == "아파트") {
+      } else if (items.categoryName == "아파트") {
         this.isStructureType = true;
       }
     },
     clickType(items) {
-      if (items.name == "월세") {
+      if (items.type == "월세") {
         this.isMonthType = false;
       } else {
         this.isMonthType = true;
       }
-      this.typeName = items.name;
+      this.typeName = items.type;
       this.residence.residenceType = items.id;
     },
     findAddr() {
@@ -644,6 +611,13 @@ export default {
     },
     init() {
       this.requestUserInfo();
+      http.get("/api/v1/search/roomtypes").then((res) => {
+        this.categoryList = res.data.residenceCategoryList;
+      });
+      http.get("/api/v1/search/bargaintypes").then((res) => {
+        this.typeList = res.data.residenceTypeList;
+        console.log(this.typeList);
+      });
     },
   },
   created() {
