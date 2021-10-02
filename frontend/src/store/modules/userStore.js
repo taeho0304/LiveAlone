@@ -2,7 +2,7 @@ import jwt_decode from 'jwt-decode';
 import http from '@/util/http-common';
 import router from "@/router/router";
 import VueSimpleAlert from "vue-simple-alert";
-
+import axios from 'axios';
 export default {
     namespaced: true,
     state: {
@@ -35,6 +35,7 @@ export default {
             state.accessEstate = info.isEstate;
             state.accessToken = payload.accessToken;
             localStorage.setItem("accessToken", state.accessToken);
+            localStorage.setItem("accessEstate", state.accessEstate);
         },
         USERINFO(state, payload) {
             state.userInfo = payload;
@@ -56,7 +57,7 @@ export default {
                 router.push('/login');
             }).catch((err) => {
               if(err.response.status==409){
-                VueSimpleAlert.alert("아이디를 다시 확인해주세요.😭");
+                VueSimpleAlert.alert("중복된 아이디 입니다.😭");
               }
             });
         },
@@ -116,7 +117,6 @@ export default {
                   type: "success",
                 })
                 window.location.reload();
-                this.requestUserInfo();
               })
               .catch(() => {
 
@@ -168,6 +168,59 @@ export default {
                 }
             });
         },
+        requestRegistResi({ commit }, residence) {
+          var formData = new FormData();
+
+          formData.append('area', residence.area);
+          formData.append('buildingFloor', residence.buildingFloor);
+          formData.append('cost', residence.cost);
+          formData.append('deposit', residence.deposit);
+          formData.append('direction', residence.direction);
+          formData.append('dong', residence.dong);
+          formData.append('estateId', residence.estateId);
+          
+          formData.append('jeonseCost', residence.jeonseCost);
+          formData.append('wolseCost', residence.wolseCost);
+          formData.append('lat', residence.lat);
+          formData.append('lon', residence.lon);
+          formData.append('manageCost', residence.manageCost);
+          formData.append('myFloor', residence.myFloor);
+          formData.append('name', residence.name);
+          formData.append('residenceCategory', residence.residenceCategory);
+          formData.append('residenceType', residence.residenceType);
+          formData.append('structure', residence.structure);
+          
+
+          // formData.append('feature', residence[variable]);
+          // formData.append('feature', residence[variable]);
+
+          if(residence.feature.length>-1){
+            for(let i=0;i<residence.feature.length;i++){
+              formData.append(`feature[${i}]`,residence.feature[i]);
+            }
+          }
+          if(residence.thumbnails.length>-1){
+            for(let i=0;i<residence.thumbnails.length;i++){
+              const imageForm=residence.thumbnails[i]
+              formData.append(`thumbnails[${i}]`,imageForm);
+            }
+          }
+          http
+              .post(`/api/v1/residences`, formData,
+                {headers:  { 'Content-Type': 'multipart/form-data' },
+              })
+              .then(({ data }) => {
+                  console.log(data);
+                  
+                  
+              })
+              .catch((err) => {
+                console.log(err);
+                
+              });
+      },
+
+        
     },
 
 }

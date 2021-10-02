@@ -1,8 +1,12 @@
 <template>
   <div>
-    <div class="Resi col-md-3" style="max-width: 430px">
-      <ResidenceList />
+    <div v-show="isResiShow" class="Resi col-md-3" style="max-width: 430px">
+      <ResidenceList v-bind:resiList="resiList" />
     </div>
+    <div v-show="isQnAshow" class="Resi col-md-3" style="max-width: 430px">
+      <QnAResList />
+    </div>
+
     <div id="map" style="width: 100%; height: 100%"></div>
     <ul id="category" v-show="isShow">
       <li id="BK9" data-order="0">
@@ -40,32 +44,92 @@
 <script>
 import { Button } from "@/components";
 import ResidenceList from "./ResidenceList.vue";
-
+import http from "@/util/http-common";
+import QnAResList from "@/pages/qna/QnAResult.vue";
 export default {
+  computed: {},
   components: {
     [Button.name]: Button,
     ResidenceList,
+    QnAResList,
   },
   name: "index",
   bodyClass: "index-page",
+  computed: {},
   mounted() {
     window.kakao && window.kakao.maps
       ? this.initMap()
       : this.addKakaoMapScript();
   },
   data() {
-    return { isShow: false };
+    return {
+      isShow: false,
+      isResiShow: false,
+      isQnAshow: true,
+      qnaResiList: [],
+      markerList: [],
+      resiList: [],
+      map: null,
+      gugunCount: this.$store.getters[`search/getgugunCount`],
+      dongCount: this.$store.getters[`search/getdongCount`],
+      marking: null,
+      cluster: null,
+    };
   },
   props: {
     marker: Object,
+    detailList: Array,
   },
   watch: {
+    qnaResiList: function (newVal) {
+      if (this.isResiShow) {
+        this.isResiShow = false;
+      }
+      this.isQnAshow = true;
+    },
+    detailList: function (newVal) {
+      console.log(newVal);
+      this.resiList = newVal;
+      this.isResiShow = true;
+    },
+    resiList: function (newVal) {
+      console.log("new", newVal);
+      if (this.isQnAshow) {
+        this.isQnAshow = false;
+      }
+      this.isResiShow = true;
+    },
+    markerList: function (newVal) {
+      console.log(newVal);
+      var markers = newVal.positionModelList.map(function (position) {
+        return new kakao.maps.Marker({
+          position: new kakao.maps.LatLng(position.lat, position.lon),
+          title: position.id,
+        });
+      });
+      this.cluster.addMarkers(markers);
+    },
     marker: function (newVal) {
-      console.log("wacth : ", newVal);
       var moveLatLon = new kakao.maps.LatLng(newVal.lat, newVal.long);
+      this.cluster.clear();
+      console.log("moveTo", moveLatLon);
+      this.map.setLevel(6);
       this.map.panTo(moveLatLon);
+
+      console.log(newVal.dong);
+
+      http
+        .get(
+          "/api/v1/residences/positions?%EB%8F%99%EC%9D%B4%EB%A6%84=" +
+            newVal.dong
+        )
+        .then((res) => {
+          console.log(res.data);
+          this.markerList = res.data;
+        });
     },
   },
+  created() {},
   methods: {
     clickShow() {
       this.isShow = !this.isShow;
@@ -75,18 +139,67 @@ export default {
       /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
       script.src =
-        "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=f52d6b75a8a65ca935ff31e1ba7eace5";
+        "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=f52d6b75a8a65ca935ff31e1ba7eace5&libraries=clusterer";
       document.head.appendChild(script);
     },
     initMap() {
       var container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
       var options = {
         //지도를 생성할 때 필요한 기본 옵션
-        center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
-        level: 3, //지도의 레벨(확대, 축소 정도)
+        center: new kakao.maps.LatLng(37.564214, 127.001699),
+        level: 8, //지도의 레벨(확대, 축소 정도)
       };
 
-      this.map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+      var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+      this.map = map;
+      var clusterer = new kakao.maps.MarkerClusterer({
+        map: this.map,
+        // 마커들을 클러스터로 관리하고 표시할 지도 객체
+        averageCenter: true,
+        // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+        minLevel: 2,
+        disableClickZoom: true,
+        // 클러스터 할 최소 지도 레벨
+      });
+      this.cluster = clusterer;
+
+      var zoomControl = new kakao.maps.ZoomControl();
+      map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+      // 지도가 확대 또는 축소되면 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
+      kakao.maps.event.addListener(map, "zoom_changed", function () {
+        // 지도의 현재 레벨을 얻어옵니다
+        var level = map.getLevel();
+
+        var message = "현재 지도 레벨은 " + level + " 입니다";
+        console.log(message);
+      });
+
+      kakao.maps.event.addListener(clusterer, "clusterclick", this.temp);
+    },
+    temp(cluster) {
+      var clickcluster = cluster.getMarkers().length;
+      var Item = [];
+      const CSRF_TOKEN = localStorage.getItem("accessToken");
+      for (var i = 0; i < clickcluster; i++) {
+        Item.push(cluster.getMarkers()[i].Fb);
+      }
+
+      if (CSRF_TOKEN != null) {
+        http
+          .post("/api/v1/residences/ids", Item, {
+            headers: { Authorization: "Bearer " + CSRF_TOKEN },
+          })
+          .then((res) => {
+            this.resiList = res.data.residenceInfo;
+            console.log("받아온데이터", this.resiList);
+          });
+      } else {
+        http.post("/api/v1/residences/ids", Item).then((res) => {
+          this.resiList = res.data.residenceInfo;
+          console.log("받아온데이터", this.resiList);
+        });
+      }
     },
   },
 };

@@ -6,48 +6,63 @@ import router from "@/router/router";
 export default {
     namespaced: true,
     state: {
-        roomType:[],
-        bargainType:[],
+        roomType: [],
+        bargainType: [],
+        gugunCount: [],
+        dongcount: [],
     },
     mutations: {
-        ROOMTYPE(state, payload){
-            state.roomType=payload;
+        ROOMTYPE(state, payload) {
+            state.roomType = payload;
             localStorage.setItem("roomType", JSON.stringify(payload));
         },
-        BARGAINTYPE(state, payload){
-            state.bargainType=payload;
+        BARGAINTYPE(state, payload) {
+            state.bargainType = payload;
             localStorage.setItem("bargainType", JSON.stringify(payload));
+        },
+        GUGUNCOUNT(state, payload) {
+            state.gugunCount = payload.counts;
+            console.log(state.gugunCount)
+        },
+        DONGCOUNT(state, payload) {
+            state.dongcount = payload.counts;
+            console.log(state.dongcount)
         }
     },
     actions: {
-        requestRoomType({commit}){
+        requestRoomType({ commit }) {
             http
-            .get(`/api/v1/search/roomtypes`)
-            .then(({data})=> {
-                commit("ROOMTYPE", data);
-               // console.log(data);
-            })
-            .catch((err)=>{
-               // console.log(err);
-            })
+                .get(`/api/v1/search/roomtypes`)
+                .then(({ data }) => {
+                    commit("ROOMTYPE", data);
+                    // console.log(data);
+                })
+                .catch((err) => {
+                    // console.log(err);
+                })
         },
-        requestBargainType({commit}){
+        requestBargainType({ commit }) {
             http
-            .get(`/api/v1/search/bargaintypes`)
-            .then(({data})=>{
-                commit("BARGAINTYPE", data);
-               // console.log(data);
-            }).catch((err)=>{
-               // console.log(err);
-            })
+                .get(`/api/v1/search/bargaintypes`)
+                .then(({ data }) => {
+                    commit("BARGAINTYPE", data);
+                    // console.log(data);
+                }).catch((err) => {
+                    // console.log(err);
+                })
         }
-
     },
     getters: {
-        getRoomType(state){
+        getdongCount(state) {
+            return state.dongcount;
+        },
+        getgugunCount(state) {
+            return state.gugunCount;
+        },
+        getRoomType(state) {
             return state.roomType;
         },
-        getBargainType(state){
+        getBargainType(state) {
             return state.bargainType;
         }
     }

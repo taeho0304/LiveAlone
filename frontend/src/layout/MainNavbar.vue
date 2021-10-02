@@ -1,6 +1,10 @@
 <template>
   <div>
-    <DetailSearch v-show="isdetail" />
+    <DetailSearch
+      v-show="isdetail"
+      v-bind:juso="emitData"
+      @mydetailS="requestDetailSearch"
+    />
 
     <navbar
       position="fixed"
@@ -28,6 +32,7 @@
       <template slot="navbar-menu">
         <drop-down class="nav-item">
           <n-button
+            :disabled="isAvailable"
             slot="title"
             class="dropdown-toggle btn-neutral"
             data-toggle="dropdown"
@@ -48,13 +53,13 @@
 
         <drop-down class="nav-item">
           <n-button
+            :disabled="isAvailable"
             slot="title"
-            type="warning"
-            class="dropdown-toggle"
+            class="dropdown-toggle btn-neutral"
             data-toggle="dropdown"
             block
             round
-            style="color: #5e2c04"
+            style="color: #000000"
           >
             {{ Gu }}
           </n-button>
@@ -71,13 +76,13 @@
 
         <drop-down class="nav-item" style="margin-right: 100px">
           <n-button
+            :disabled="isAvailable"
             slot="title"
-            type="warning"
-            class="dropdown-toggle"
+            class="dropdown-toggle btn-neutral"
             data-toggle="dropdown"
             block
             round
-            style="color: #5e2c04"
+            style="color: #000000"
           >
             {{ Dong }}
           </n-button>
@@ -94,7 +99,9 @@
       </template>
       <template slot="navbar-menu">
         <li class="nav-item" style="margin-left: 80px">
-          <a class="nav-link mt-2" @click="changeItem()"> 상세 검색 </a>
+          <a class="nav-link mt-2" @click="changeItem(isAvailable)">
+            상세 검색
+          </a>
         </li>
 
         <template v-if="!isLogin">
@@ -144,7 +151,7 @@
 <script>
 import { DropDown, Navbar, Button } from "@/components";
 import { Popover } from "element-ui";
-import {mapGetters, mapActions} from 'vuex';
+import { mapGetters, mapActions } from "vuex";
 import DetailSearch from "../pages/map/detailSearch.vue";
 import http from "@/util/http-common";
 export default {
@@ -152,6 +159,7 @@ export default {
   props: {
     transparent: Boolean,
     colorOnScroll: Number,
+    isAvailable: Boolean,
   },
   components: {
     DetailSearch,
@@ -162,13 +170,11 @@ export default {
   },
   data() {
     return {
-      isLogin: false,
-      isEstate:false,
-      isUser:false,
+      isEstate: false,
+      isUser: false,
       SiIdx: 0,
       GuIdx: 0,
       DongIdx: 0,
-
       Dong: "동 선택하세요",
       Si: "시 선택하세요",
       Gu: "구 선택하세요",
@@ -182,13 +188,18 @@ export default {
     };
   },
   computed: {
-      ...mapGetters('user', ["getAccessInfo"]),
-
-    },
+    ...mapGetters("user", ["getUserInfo"]),
+  },
   methods: {
-    ...mapActions('user', ["requestUserInfo"]),
-    changeItem() {
-      this.isdetail = !this.isdetail;
+    ...mapActions("user", ["requestUserInfo"]),
+    changeItem(check) {
+      if (check == false) {
+        this.isdetail = !this.isdetail;
+      }
+    },
+    requestDetailSearch(data) {
+      console.log("mainnav", data);
+      this.$emit("detailS", data);
     },
     clickLogout() {
       this.isLogin = false;
@@ -202,7 +213,9 @@ export default {
       console.log(dongItems);
 
       const data = {
-        juso: temp,
+        si: this.Si,
+        gugun: this.Gu,
+        dong: this.Dong,
         lat: dongItems.lat,
         long: dongItems.lon,
       };
@@ -214,8 +227,7 @@ export default {
       console.log("emit : ", this.emitData);
       this.$emit("maker", this.emitData);
     },
-    getInfo(){
-      console.log("얼레");
+    getInfo() {
       this.requestUserInfo();
     },
     clickGu(guName, idx) {
@@ -237,10 +249,10 @@ export default {
   },
   mounted() {
     if (localStorage.getItem("accessToken") != null) {
-      if(this.getAccessInfo != 'null'){
+      if (localStorage.getItem("accessEstate") != "null") {
         this.isEstate = true;
         this.isUser = false;
-      }else{
+      } else {
         this.isEstate = false;
         this.isUser = true;
       }
@@ -253,10 +265,10 @@ export default {
   },
   create() {
     if (localStorage.getItem("accessToken") != null) {
-      if(this.getAccessInfo != 'null'){
+      if (localStorage.getItem("accessEstate") != "null") {
         this.isEstate = true;
         this.isUser = false;
-      }else{
+      } else {
         this.isEstate = false;
         this.isUser = true;
       }

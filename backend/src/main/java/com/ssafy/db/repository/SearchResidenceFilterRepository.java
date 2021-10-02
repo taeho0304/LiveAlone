@@ -1,8 +1,6 @@
 package com.ssafy.db.repository;
 
-import com.ssafy.db.entity.ResidenceInfo;
 import com.ssafy.db.entity.SearchResidenceFilter;
-import com.ssafy.db.idmodel.ResidenceInfoPK;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

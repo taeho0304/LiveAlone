@@ -53,7 +53,7 @@ public class AuthController {
 		try {
 			User user = userService.getUserByUserId(userId);
 			if(passwordEncoder.matches(password, user.getUserPass()))
-				return ResponseEntity.ok(UserLoginPostRes.of(200, "Success", JwtTokenUtil.getToken(userId)));
+				return ResponseEntity.ok(UserLoginPostRes.of(200, "Success", JwtTokenUtil.getToken(user)));
 			return ResponseEntity.status(401).body(UserLoginPostRes.of(401, "잘못된 비밀번호입니다.", null));
 		} catch (NoSuchElementException e){
 			return ResponseEntity.status(404).body(UserLoginPostRes.of(404, "존재하지 않는 계정입니다.", null));

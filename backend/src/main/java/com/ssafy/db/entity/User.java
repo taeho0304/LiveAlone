@@ -15,10 +15,14 @@ import javax.persistence.*;
 @Getter
 @Setter
 public class User extends BaseEntity{
+    @ManyToOne(fetch = FetchType.LAZY)
+    private EstateInfo estateInfo;
+
     String userId;
     String userName;
     String userEmail;
     String userPhone;
+    Boolean isManger;
 
     @JsonIgnore
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

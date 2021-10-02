@@ -32,8 +32,9 @@
               >
             </div>
           </div>
-          <div class="col-md-5">
+          <div class="col-md-4">
             <n-checkbox
+              style="max-width: 100px"
               value="4"
               v-model="checkedResiCategory[0].checkResi3"
               @input="changeResiCategory"
@@ -77,7 +78,7 @@
             <div class="category">가격</div>
           </div>
           <div class="col-md-3 lineL" v-show="checkedResiType[0].TradingJ">
-            <strong>보증금/전세가</strong>
+            <strong>전세가</strong>
             <div class="row">
               <div class="col-md-6 ml-auto mr-auto">
                 <p>{{ JrangeS }} ~</p>
@@ -103,7 +104,27 @@
             전세 체크 후 이용해 주세요
           </div>
           <div class="col-md-3" v-show="checkedResiType[0].TradingW">
-            <strong> 월세</strong>
+            <strong>보증금</strong>
+            <div class="row">
+              <div class="col-md-6 ml-auto mr-auto">
+                <p>{{ DrangeS }} ~</p>
+              </div>
+              <div class="col-md-6 end">
+                <p>{{ DrangeE }}</p>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <slider
+                class="slider-info mt-4"
+                v-model="DepositeRange"
+                :range="Drange"
+                :connect="true"
+                @input="changeDRange"
+                type="primary"
+              >
+              </slider>
+            </div>
+            <strong>월세</strong>
             <div class="row">
               <div class="col-md-6 ml-auto mr-auto">
                 <p>{{ WrangeS }} ~</p>
@@ -293,17 +314,6 @@
           >
             아파트 설정 불가
           </div>
-
-          <div class="col-md-1 pl-0 pr-0">
-            <div class="col-md-11">
-              <a
-                class="btn btn-warning btn-round btn-block"
-                style="margin-top: 90px; color: #5e2c04"
-                @click="setDetailSave"
-                >저장</a
-              >
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -312,10 +322,12 @@
 
 <script>
 import { Slider, Checkbox } from "@/components";
+import http from "@/util/http-common";
 
 export default {
   components: {
     Slider,
+
     [Checkbox.name]: Checkbox,
   },
   data() {
@@ -324,6 +336,9 @@ export default {
 
       JrangeS: "0",
       JrangeE: "무제한",
+
+      DrangeS: "0",
+      DrangeE: "무제한",
 
       WrangeS: "0",
       WrangeE: "무제한",
@@ -370,7 +385,10 @@ export default {
         },
         { checkCategory: [] },
       ],
-
+      Drange: {
+        min: 0,
+        max: 1000,
+      },
       Jrange: {
         min: 0,
         max: 1000,
@@ -387,6 +405,7 @@ export default {
         min: 0,
         max: 50,
       },
+      DepositeRange: [0, 1000],
       rangeSlider: [0, 1000],
       dealMonthRange: [0, 350],
       dealTradingRange: [0, 1500],
@@ -395,6 +414,42 @@ export default {
     };
   },
   methods: {
+    changeDRange() {
+      this.DepositeRange[0] = parseInt(this.DepositeRange[0]);
+      this.DepositeRange[1] = parseInt(this.DepositeRange[1]);
+
+      if (parseInt(this.DepositeRange[0] / 100) == 0) {
+        this.DrangeS = parseInt(this.DepositeRange[0] % 100) + "00만 원";
+      } else if (parseInt(this.rangeSlider[0] % 10) == 0) {
+        this.DrangeS = parseInt(this.DepositeRange[0] / 100) + "억";
+      } else {
+        this.DrangeS =
+          parseInt(this.DepositeRange[0] / 100) +
+          "억" +
+          parseInt(this.DepositeRange[0] % 100) +
+          "00만 원";
+      }
+
+      if (parseInt(this.DepositeRange[1] / 100) == 0) {
+        this.DrangeE = parseInt(this.DepositeRange[1] % 100) + "00만 원";
+      } else if (parseInt(this.DepositeRange[1] % 100) == 0) {
+        this.DrangeE = parseInt(this.DepositeRange[1] / 100) + "억";
+      } else {
+        this.DrangeE =
+          parseInt(this.DepositeRange[1] / 100) +
+          "억" +
+          parseInt(this.DepositeRange[1] % 100) +
+          "00만 원";
+      }
+      if (this.DepositeRange[1] == 1000) {
+        this.DrangeE = "무제한";
+      }
+      if (this.DepositeRange[0] == 0) {
+        this.DrangeS = "0";
+      }
+      this.requestDetailSave();
+    },
+
     changeRoomsize() {
       this.roomSize[0] = parseInt(this.roomSize[0]);
       this.roomSize[1] = parseInt(this.roomSize[1]);
@@ -471,7 +526,7 @@ export default {
       if (this.dealMonthRange[0] == 0) {
         this.WrangeS = "0";
       }
-      this.setDetailSave();
+      this.requestDetailSave();
     },
     chaneJRange() {
       this.rangeSlider[0] = parseInt(this.rangeSlider[0]);
@@ -525,7 +580,8 @@ export default {
         this.checkedResiCategory[1].checkCategory.push("원룸");
       }
       if (this.checkedResiCategory[0].checkResi1) {
-        this.checkedResiCategory[1].checkCategory.push("투.쓰리룸");
+        this.checkedResiCategory[1].checkCategory.push("투룸");
+        this.checkedResiCategory[1].checkCategory.push("쓰리룸 이상");
       }
       if (this.checkedResiCategory[0].checkResi2) {
         this.checkedResiCategory[1].checkCategory.push("오피스텔");
@@ -591,6 +647,8 @@ export default {
     },
     requestDetailSave() {
       const mySave = {
+        gugun: this.juso.gugun,
+        dong: this.juso.dong,
         residenceCategory: this.checkedResiCategory[1].checkCategory,
         residenceType: this.checkedResiType[1].checkType,
         floorDetail: this.checkedFloorType[1].checkedFloor,
@@ -603,43 +661,28 @@ export default {
         startJPrice: this.rangeSlider[0],
         endJPrice: this.rangeSlider[1] == 1000 ? 0 : this.rangeSlider[1],
 
+        startDprice: this.Drange[0],
+        endDprice: this.Drange[1] == 1000 ? 0 : this.Drange[1],
+
         startWPrice: this.dealMonthRange[0],
         endWPrice: this.dealMonthRange[1] == 350 ? 0 : this.dealMonthRange[1],
 
-        startManagePrice: this.CofMrange[0],
-        endManagePrice: this.CofMrange[1] == 50 ? 0 : this.CofMrange[1],
+        startManagePrice: this.costOfManage[0],
+        endManagePrice: this.costOfManage[1] == 50 ? 0 : this.costOfManage[1],
 
         startArea: this.roomSize[0],
         endArea: this.roomSize[0] == 50 ? 0 : this.roomSize[1],
       };
+      //NOTE : api 호출
       console.log(mySave);
-    },
-    setDetailSave() {
-      const mySave = {
-        residenceCategory: this.checkedResiCategory[1].checkCategory,
-        residenceType: this.checkedResiType[1].checkType,
-        floorDetail: this.checkedFloorType[1].checkedFloor,
-        roomStrucDeail: this.checkedRoomStruc[1].checkStruc,
 
-        startPrice: this.dealTradingRange[0],
-        endPrice:
-          this.dealTradingRange[1] == 1500 ? 0 : this.dealTradingRange[1],
-
-        startJPrice: this.rangeSlider[0],
-        endJPrice: this.rangeSlider[1] == 1000 ? 0 : this.rangeSlider[1],
-
-        startWPrice: this.dealMonthRange[0],
-        endWPrice: this.dealMonthRange[1] == 350 ? 0 : this.dealMonthRange[1],
-
-        startManagePrice: this.CofMrange[0],
-        endManagePrice: this.CofMrange[1] == 50 ? 0 : this.CofMrange[1],
-
-        startArea: this.roomSize[0],
-        endArea: this.roomSize[0] == 50 ? 0 : this.roomSize[1],
-      };
+      http.post("/api/v1/residences/detail", mySave).then((res) => {
+        console.log("deatailRES", res.data.residenceInfo);
+        this.$emit("mydetailS", res.data.residenceInfo);
+      });
     },
   },
-  props: {},
+  props: { juso: Object },
 };
 </script>
 

@@ -2,7 +2,7 @@
     <div>
         <div class="container">
             
-            <tabs style="margin-top: 0px;" type="primary" tabContentClasses="tab-subcategories" centered="centered">
+            <tabs style="margin-top: 15px;" type="primary" tabContentClasses="tab-subcategories" centered="centered">
                 <tab-pane>
                     <span slot="label" @click="click()">
                         <i class="now-ui-icons business_badge"></i>
@@ -12,6 +12,7 @@
                         <label for="name" class="label col-md-7 col-12"><span>이름</span></label>
                         <fg-input class="col-md-7 col-12" style="border:0px; float: none;margin: 0px auto; padding-top:3px; padding-bottom: 0px;" @blur="checkName()" placeholder="나혼족" v-model="user.userName"></fg-input>
                         <div v-if="!errors.requireName" class="check col-md-6 col-12">필수 정보입니다.</div>
+                        <div v-if="!errors.checkName" class="check col-md-6 col-12">이름은 한글만 입력해야합니다.</div>
                         <label for="name" class="label col-md-7 col-12"><span>아이디</span></label>
                         <fg-input class="col-md-6 col-12" style="float: none; margin:0 0 0 20.7%; padding-bottom: 0px; padding-top:3px; " placeholder="alive" v-model="user.userId" @blur="checkID()"></fg-input>
                         <div class="col-md-2 col-12" style="float: none; margin:0 0 0 0; padding: 0 0 0 0;">
@@ -21,7 +22,7 @@
                         <div class="check col-md-6 col-12" v-if="!errors.maxID">
                             최대 16자까지 입력 가능합니다.</div>
                         <label for="name" class="label col-md-7 col-12"><span>비밀번호</span></label>                            
-                        <fg-input class="col-md-7 col-12" style="float: none;margin: 0px auto; padding-bottom: 0px; padding-top:3px; " @blur="checkPass()" placeholder="alive123@" v-model="user.userPass"></fg-input>
+                        <fg-input type="password" class="col-md-7 col-12" style="float: none;margin: 0px auto; padding-bottom: 0px; padding-top:3px; " @blur="checkPass()" placeholder="alive123@" v-model="user.userPass"></fg-input>
                         <div class="check col-md-6 col-12" v-if="!errors.requirePass" style="color:red;">필수 정보입니다.</div>
                         <div class="check col-md-6 col-12" v-if="!errors.minPass" style="color:red;">
                             최소 9 글자까지 입력 해야 합니다.</div>
@@ -30,7 +31,7 @@
                         <div class="check col-md-6 col-12" v-if="!errors.matchPass" style="color:red;">
                             비밀번호는 영문, 숫자, 특수문자가 조합되어야합니다.</div>
                         <label for="name" class="label col-md-7 col-12"><span>비밀번호 확인</span></label>
-                        <fg-input class="col-md-7 col-12" style="float: none;margin: 0px auto; padding-bottom: 0px; padding-top:3px; " @blur="matchPass()" placeholder="alive123@" v-model="passwordcheck"></fg-input>
+                        <fg-input type="password" class="col-md-7 col-12" style="float: none;margin: 0px auto; padding-bottom: 0px; padding-top:3px; " @blur="matchPass()" placeholder="alive123@" v-model="passwordcheck"></fg-input>
                         <div class="check col-md-6 col-12" v-if="!errors.checkPass" style="">비밀번호가 일치하지 않습니다.</div>
                         <label for="name" class="label col-md-7 col-12"><span>이메일</span></label>
                         <fg-input class="col-md-7 col-12" style="float: none;margin: 0px auto; padding-bottom: 0px; padding-top:3px; " @blur="checkEmail()" placeholder="alive@alive.com" v-model="user.userEmail"></fg-input>
@@ -52,21 +53,22 @@
                         <i class="now-ui-icons business_badge"></i>
                         기업회원
                     </span>
-                    <alert type="info">기업회원일 경우 사업자 번호가 필요합니다!</alert>
+                    <alert style="margin-top:-15px" type="info">기업회원일 경우 사업자 번호가 필요합니다!</alert>
                     <div class="row ml-auto mr-auto">
                         <label for="name" class="label col-md-7 col-12"><span>사업자 번호</span></label>
                         <fg-input class="col-md-6 col-12" style="float: none; margin:0 0 0 20.7%; padding-bottom: 0px; padding-top:3px; " @blur="checkNumber()" placeholder="11111-2222-33444" v-model="estateNumber"></fg-input>
                         <div class="col-md-2 col-12" style="float: none; margin:0 0 0 0; padding: 0;">
-                            <n-button @click="clickCertification(estateNumber)" size="sm" type="primary" style="margin-top: 5px;">인증</n-button>
+                            <n-button @click="clickCertification(estateNumber)" size="sm" type="info" style="margin-top: 5px;">인증</n-button>
                         </div>
                         <div class="check col-md-6 col-12" v-if="!errors2.requireNumber">필수 정보입니다.</div>
                         <label for="name" class="label col-md-7 col-12"><span>이름</span></label>
                         <fg-input class="col-md-7 col-12" style="float: none;margin: 0px auto; padding-bottom: 0px; padding-top:3px; " @blur="checkName2()" placeholder="나고독" v-model="estate.userName"></fg-input>
                         <div v-if="!errors2.requireName" class="check col-md-6 col-12">필수 정보입니다.</div>
+                        <div v-if="!errors2.checkName" class="check col-md-6 col-12">이름은 한글만 입력해야합니다.</div>
                         <label for="name" class="label col-md-7 col-12"><span>아이디</span></label>
                         <fg-input class="col-md-6 col-12" style="float: none; margin:0 0 0 20.7%; padding-bottom: 0px; padding-top:3px; " placeholder="alive" v-model="estate.userId" @blur="checkID2()"></fg-input>
                         <div class="col-md-2 col-12" style="float: none; margin:0 0 0 0; padding: 0;">
-                            <n-button @click="clickDuplicate(estate.userId)" size="sm" type="primary" style="margin-top: 5px;">확인</n-button>
+                            <n-button @click="clickDuplicate(estate.userId)" size="sm" type="info" style="margin-top: 5px;">확인</n-button>
                         </div>
                         <div class="check col-md-6 col-12" v-if="!errors2.requireID">필수 정보입니다.</div>
                         <div class="check col-md-6 col-12" v-if="!errors2.maxID">
@@ -94,7 +96,7 @@
                     </div>
                     <div class="col-md-2 col-6" style="float: none; margin:0 auto;">
                         <div class="text-center">
-                            <a @click="clickRegisterEstate()" class="btn btn-primary btn-round btn-lg btn-block">회원가입</a>
+                            <a @click="clickRegisterEstate()" class="btn btn-info btn-round btn-lg btn-block">회원가입</a>
                         </div>
                     </div>
                 </tab-pane>
