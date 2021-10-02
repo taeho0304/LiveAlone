@@ -1,129 +1,5 @@
 <template>
-    <div>
 
-        <div class="section">
-            <div class="container">
-
-
-                <div style="margin-top:15px;">
-                    <tabs type="primary" tabContentClasses="tab-subcategories" square centered class="nav-align-center">
-                        <tab-pane>
-                            <span slot="label">
-                                <i class="now-ui-icons business_badge"></i> Profile
-                            </span>
-                            <div v-if="getUserInfo" class="col-md-10 ml-auto mr-auto" style="margin-top:0px">
-                                <div class="row collections">
-                                    <div class="col-md-1">
-                                    </div>
-                                    <div class="col-md-10">
-                                        <fg-input class="input-lg" disabled type="text" placeholder="이름" v-model="getUserInfo.user.estateInfo.name" name="userName">
-                                        </fg-input>
-                                        <fg-input class="input-lg" disabled type="text" placeholder="아이디" v-model="getUserInfo.user.estateInfo.address" name="userId">
-                                        </fg-input>
-                                        <fg-input class="input-lg" disabled type="text" placeholder="이메일" v-model="getUserInfo.user.estateInfo.representative" name="email">
-                                        </fg-input>
-                                    </div>
-                                    <div class="col-md-1">
-                                    </div>
-                                </div>
-                                <hr style="margin-top:0;">
-                                <div class="row collections">
-                                    <div class="col-md-1">
-                                    </div>
-                                    <div class="col-md-10">
-                                        <fg-input class="no-border input-lg" v-bind:disabled="!isClick" type="text" addon-left-icon="now-ui-icons users_circle-08" placeholder="이름" v-model="getUserInfo.user.userName" name="userName">
-                                        </fg-input>
-                                        <fg-input class="no-border input-lg" v-bind:disabled="!isClick" type="text" addon-left-icon="now-ui-icons users_circle-08" placeholder="아이디" v-model="getUserInfo.user.userId" name="userId">
-                                        </fg-input>
-                                        <fg-input class="no-border input-lg" v-bind:disabled="!isClick" type="text" addon-left-icon="now-ui-icons users_circle-08" placeholder="이메일" v-model="getUserInfo.user.userEmail" name="email">
-                                        </fg-input>
-                                        <fg-input class="no-border input-lg" v-bind:disabled="!isClick" type="text" addon-left-icon="now-ui-icons users_circle-08" v-model="getUserInfo.user.userPhone" name="phone">
-                                        </fg-input>
-                                    </div>
-                                    <div class="col-md-1">
-                                    </div>
-                                    <div class="col-md-3">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div style="margin-top:-10px;" class="text-center">
-                                            <a v-if="!isClick" @click="click()" class="btn btn-info btn-round btn-lg btn-block">수정</a>
-                                            <a v-if="isClick" @click="clickModify()" class="btn btn-info btn-round btn-lg btn-block">확인</a>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div style="margin-top:-10px;" class="text-center">
-                                            <a class="btn btn-info btn-round btn-lg btn-block">탈퇴</a>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </tab-pane>
-
-                        <tab-pane>
-                            <!--등록된 매물-->
-                            <span slot="label">
-                                <i class="now-ui-icons shopping_shop"></i> Registed
-                            </span>
-                            <template>
-                                <!-- <v-app id="inspire">
-                                  <v-toolbar dark color="primary" fixed>
-                                    <v-toolbar-title class="white--text">Nutrition</v-toolbar-title>
-                                    <v-spacer></v-spacer>
-                                    <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
-                                    <v-menu offset-y :nudge-left="170" :close-on-content-click="false">
-                                        <v-btn icon slot="activator">
-                                            <v-icon>more_vert</v-icon>
-                                          </v-btn>
-                                        <v-list>
-                                          <v-list-tile  v-for="(item) in headers"  :key="item.value"   @click="changeSort(item.value)">
-                                            <v-list-tile-title>{{ item.text }}<v-icon v-if="pagination.sortBy === item.value">{{pagination.descending ? 'arrow_downward':'arrow_upward'}}</v-icon></v-list-tile-title>
-                                          </v-list-tile>
-                                        </v-list>
-                                      </v-menu>
-                                  </v-toolbar>
-                                      <v-layout v-resize="onResize" column style="padding-top:56px">
-                                        <v-data-table :headers="headers" :items="desserts" :search="search" :pagination.sync="pagination" :hide-headers="isMobile" :class="{mobile: isMobile}">
-                                          <template slot="items" slot-scope="props">
-                                            <tr v-if="!isMobile">
-                                              <td>{{ props.item.name }}</td>
-                                              <td class="text-xs-right">{{ props.item.calories }}</td>
-                                              <td class="text-xs-right">{{ props.item.fat }}</td>
-                                              <td class="text-xs-right">{{ props.item.carbs }}</td>
-                                              <td class="text-xs-right">{{ props.item.protein }}</td>
-                                              <td class="text-xs-right">{{ props.item.iron }}</td>
-                                            </tr>
-                                            <tr v-else>
-                                              <td>
-                                                <ul class="flex-content">
-                                                  <li class="flex-item" data-label="Name">{{ props.item.name }}</li>
-                                                  <li class="flex-item" data-label="Calories">{{ props.item.calories }}</li>
-                                                  <li class="flex-item" data-label="Fat (g)">{{ props.item.fat }}</li>
-                                                  <li class="flex-item" data-label="Carbs (g)">{{ props.item.carbs }}</li>
-                                                  <li class="flex-item" data-label="Protein (g)">{{ props.item.protein }}</li>
-                                                  <li class="flex-item" data-label="Iron (%)">{{ props.item.iron }}</li>
-                                                </ul>
-                                              </td>
-                                            </tr>
-                                          </template>
-                                          <v-alert slot="no-results" :value="true" color="error" icon="warning">
-                                            Your search for "{{ search }}" found no results.
-                                          </v-alert>
-                                        </v-data-table>
-                                      </v-layout>
-                                </v-app> -->
-                            </template>
-
-                        </tab-pane>
-
-                        <tab-pane>
-                            <!--검색 필터 저장-->
-                            <span slot="label">
-                                <i class="now-ui-icons design_bullet-list-67"></i> Regist
-                            </span>
                             <div id="residenceInput" v-if="getUserInfo" class="col-md-10 ml-auto mr-auto" style="margin-top:0px">
                                 <div class="row collections">
                                     
@@ -153,7 +29,7 @@
                                         </fg-input>
                                     
                                 </div>
-                                <div id="info" class="row collections">
+                                <div class="row collections">
                                     <div style="padding-left:5px; padding-right:5px;" class="col-md-12">
                                         <label for="name"><span>매물 정보</span></label>
                                         <hr style="margin-top:0;">
@@ -363,13 +239,6 @@
 
                                 </div>
                           </div>
-                        </tab-pane>
-                    </tabs>
-
-                </div>
-            </div>
-        </div>
-    </div>
 </template>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=f52d6b75a8a65ca935ff31e1ba7eace5&libraries=services,clusterer,drawing"/>
@@ -692,8 +561,8 @@
               // footer: '<a href="">Why do I have this issue?</a>'
             })
             this.requestRegistResi(this.residence);
-         
-            this.$(".info").reload(location.href+".info");
+            var url = window.location.href;
+            $(".residenceInput").load(window.location.href+".residenceInput");
           },
 
           clickStructure(items, index){

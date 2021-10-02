@@ -294,7 +294,7 @@ export default {
   mounted() {},
 };
 </script>
-<style>
+<style scope>
 .profile-page .gallery {
   margin-top: 5px;
 }
