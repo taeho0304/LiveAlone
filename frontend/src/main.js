@@ -9,6 +9,12 @@ import vuetify from './plugins/vuetify'
 import VueSimpleAlert from "vue-simple-alert";
 import VueLazyload from 'vue-lazyload'
 import "@/fontAwesomeIcon.js";
+import DataTable from "@andresouzaabreu/vue-data-table";
+
+import "@andresouzaabreu/vue-data-table/dist/DataTable.css";
+
+Vue.component("data-table", DataTable);
+
 
 Vue.config.productionTip = false;
 

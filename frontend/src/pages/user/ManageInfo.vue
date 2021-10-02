@@ -5,83 +5,106 @@
     style="margin-top: 0px"
   >
     <div class="row collections">
-      <div class="col-md-1"></div>
-      <div class="col-md-10">
-        <fg-input
-          class="input-lg"
-          disabled
-          type="text"
-          placeholder="이름"
-          v-model="getUserInfo.user.estateInfo.name"
-          name="userName"
-        >
-        </fg-input>
-        <fg-input
-          class="input-lg"
-          disabled
-          type="text"
-          placeholder="아이디"
-          v-model="getUserInfo.user.estateInfo.address"
-          name="userId"
-        >
-        </fg-input>
-        <fg-input
-          class="input-lg"
-          disabled
-          type="text"
-          placeholder="이메일"
-          v-model="getUserInfo.user.estateInfo.representative"
-          name="email"
-        >
-        </fg-input>
+      <div class="col-md-12 inputLabel">
+        <label for="name"><span>부동산 정보</span></label>
+        <hr style="margin-top: 0" />
       </div>
-      <div class="col-md-1"></div>
+      <h6 class="col-md-12 inputLabel">
+        <label style="margin-bottom: 0px" for="name"
+          ><span>부동산 이름</span></label
+        >
+      </h6>
+      <fg-input
+        style="padding-left: 5px; padding-right: 5px"
+        class="col-md-12 input-lg"
+        disabled
+        type="text"
+        v-model="getUserInfo.user.estateInfo.name"
+        name="userName"
+      >
+      </fg-input>
+      <h6 class="col-md-12 inputLabel">
+        <label style="margin-bottom: 0px" for="name"
+          ><span>부동산 위치</span></label
+        >
+      </h6>
+      <fg-input
+        style="padding-left: 5px; padding-right: 5px"
+        class="col-md-12 input-lg"
+        disabled
+        type="text"
+        v-model="getUserInfo.user.estateInfo.address"
+        name="userId"
+      >
+      </fg-input>
+      <h6 class="col-md-12 inputLabel">
+        <label style="margin-bottom: 0px" for="name"
+          ><span>부동산 연락처</span></label
+        >
+      </h6>
+      <fg-input
+        style="padding-left: 5px; padding-right: 5px"
+        class="col-md-12 input-lg"
+        disabled
+        type="text"
+        v-model="getUserInfo.user.estateInfo.phone"
+      >
+      </fg-input>
     </div>
-    <hr style="margin-top: 0" />
     <div class="row collections">
-      <div class="col-md-1"></div>
-      <div class="col-md-10">
-        <fg-input
-          class="no-border input-lg"
-          v-bind:disabled="!isClick"
-          type="text"
-          addon-left-icon="now-ui-icons users_circle-08"
-          placeholder="이름"
-          v-model="getUserInfo.user.userName"
-          name="userName"
-        >
-        </fg-input>
-        <fg-input
-          class="no-border input-lg"
-          v-bind:disabled="!isClick"
-          type="text"
-          addon-left-icon="now-ui-icons users_circle-08"
-          placeholder="아이디"
-          v-model="getUserInfo.user.userId"
-          name="userId"
-        >
-        </fg-input>
-        <fg-input
-          class="no-border input-lg"
-          v-bind:disabled="!isClick"
-          type="text"
-          addon-left-icon="now-ui-icons users_circle-08"
-          placeholder="이메일"
-          v-model="getUserInfo.user.userEmail"
-          name="email"
-        >
-        </fg-input>
-        <fg-input
-          class="no-border input-lg"
-          v-bind:disabled="!isClick"
-          type="text"
-          addon-left-icon="now-ui-icons users_circle-08"
-          v-model="getUserInfo.user.userPhone"
-          name="phone"
-        >
-        </fg-input>
+      <div class="col-md-12 inputLabel">
+        <label for="name"><span>개인 정보</span></label>
+        <hr style="margin-top: 0" />
       </div>
-      <div class="col-md-1"></div>
+      <h6 class="col-md-12 inputLabel">
+        <label style="margin-bottom: 0px" for="name"><span>이름</span></label>
+      </h6>
+      <fg-input
+        style="padding-left: 5px; padding-right: 5px"
+        class="col-md-12 input-lg"
+        v-bind:disabled="!isClick"
+        type="text"
+        v-model="getUserInfo.user.userName"
+        name="userName"
+      >
+      </fg-input>
+      <h6 class="col-md-12 inputLabel">
+        <label style="margin-bottom: 0px" for="name"><span>아이디</span></label>
+      </h6>
+      <fg-input
+        style="padding-left: 5px; padding-right: 5px"
+        class="col-md-12 input-lg"
+        v-bind:disabled="!isClick"
+        type="text"
+        v-model="getUserInfo.user.userId"
+        name="userId"
+      >
+      </fg-input>
+      <h6 class="col-md-12 inputLabel">
+        <label style="margin-bottom: 0px" for="name"><span>이메일</span></label>
+      </h6>
+      <fg-input
+        style="padding-left: 5px; padding-right: 5px"
+        class="col-md-12 input-lg"
+        v-bind:disabled="!isClick"
+        type="text"
+        v-model="getUserInfo.user.userEmail"
+      >
+      </fg-input>
+      <h6 class="col-md-12 inputLabel">
+        <label style="margin-bottom: 0px" for="name"><span>연락처</span></label>
+      </h6>
+      <fg-input
+        style="padding-left: 5px; padding-right: 5px"
+        class="col-md-12 input-lg"
+        v-bind:disabled="!isClick"
+        type="text"
+        v-model="getUserInfo.user.userPhone"
+      >
+      </fg-input>
+    </div>
+
+    <div class="row collections mt-4">
       <div class="col-md-3"></div>
       <div class="col-md-3">
         <div style="margin-top: -10px" class="text-center">

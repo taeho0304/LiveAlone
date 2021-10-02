@@ -74,6 +74,7 @@ export default {
       dongCount: this.$store.getters[`search/getdongCount`],
       marking: null,
       cluster: null,
+      moveDong: null,
     };
   },
   props: {
@@ -139,7 +140,7 @@ export default {
       /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
       script.src =
-        "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=f52d6b75a8a65ca935ff31e1ba7eace5&libraries=clusterer";
+        "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=f52d6b75a8a65ca935ff31e1ba7eace5&libraries=services,clusterer,drawing";
       document.head.appendChild(script);
     },
     initMap() {
@@ -152,6 +153,28 @@ export default {
 
       var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
       this.map = map;
+      kakao.maps.event.addListener(map, "dragend", function () {
+        // 지도 중심좌표를 얻어옵니다
+        var latlng = map.getCenter();
+
+        var message = "변경된 지도 중심좌표는 " + latlng.getLat() + " 이고, ";
+        message += "경도는 " + latlng.getLng() + " 입니다";
+
+        console.log(message);
+        var geocoder = new kakao.maps.services.Geocoder();
+        // 좌표로 행정동 주소 정보를 요청합니다
+
+        var callback = function (result, status) {
+          if (status === kakao.maps.services.Status.OK) {
+            const move = {
+              dong: result[0].region_3depth_name,
+            };
+            console.log(move.dong);
+          }
+        };
+        geocoder.coord2RegionCode(latlng.getLng(), latlng.getLat(), callback);
+      });
+
       var clusterer = new kakao.maps.MarkerClusterer({
         map: this.map,
         // 마커들을 클러스터로 관리하고 표시할 지도 객체

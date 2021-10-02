@@ -29,7 +29,7 @@
         </el-popover>
       </template>
 
-      <template slot="navbar-menu">
+      <template v-if="!isAvailable" slot="navbar-menu">
         <drop-down class="nav-item">
           <n-button
             :disabled="isAvailable"
@@ -98,44 +98,56 @@
         </drop-down>
       </template>
       <template slot="navbar-menu">
-        <li class="nav-item" style="margin-left: 80px">
-          <a class="nav-link mt-2" @click="changeItem(isAvailable)">
-            상세 검색
-          </a>
-        </li>
-
-        <template v-if="!isLogin">
-          <li class="nav-item">
-            <a class="nav-link mt-2">
-              <router-link to="/login">
-                <i class="now-ui-icons media-1_button-power"></i>
-                <p>로그인</p></router-link
-              >
+        <template>
+          <li
+            v-if="!isAvailable"
+            class="nav-item mt-auto mb-auto"
+            style="margin-left: 80px"
+          >
+            <a class="nav-link" @click="changeItem(isAvailable)"> 상세 검색 </a>
+          </li>
+        </template>
+        <template>
+          <li v-if="isAvailable" class="nav-item mt-auto mb-auto">
+            <a class="nav-link">
+              <router-link to="/search">
+                <p>매물 검색</p>
+              </router-link>
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link mt-2">
+        </template>
+        <template v-if="!isLogin">
+          <li class="nav-item mt-auto mb-auto">
+            <a class="nav-link">
+              <router-link to="/login">
+                <i class="now-ui-icons media-1_button-power"></i>
+                <p>로그인</p>
+              </router-link>
+            </a>
+          </li>
+          <li class="nav-item mt-auto mb-auto">
+            <a class="nav-link">
               <router-link to="/signup"><p>회원가입</p></router-link>
             </a>
           </li>
         </template>
 
         <template v-if="isLogin">
-          <li class="nav-item">
-            <a class="nav-link mt-2">
+          <li class="nav-item mt-auto mb-auto">
+            <a class="nav-link">
               <span @click="clickLogout()"><p>로그아웃</p></span>
             </a>
           </li>
-          <li class="nav-item" v-if="isUser" @click="getInfo()">
-            <a class="nav-link mt-2">
+          <li class="nav-item mt-auto mb-auto" v-if="isUser" @click="getInfo()">
+            <a class="nav-link">
               <router-link to="/profile"
                 ><i class="now-ui-icons users_circle-08"></i>
                 <p>마이페이지</p></router-link
               >
             </a>
           </li>
-          <li class="nav-item" v-if="isEstate">
-            <a class="nav-link mt-2">
+          <li class="nav-item mt-auto mb-auto" v-if="isEstate">
+            <a class="nav-link">
               <router-link to="/manage"
                 ><i class="now-ui-icons education_paper"></i>
                 <p>관리페이지</p></router-link
