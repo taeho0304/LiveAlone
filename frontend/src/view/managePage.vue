@@ -1,23 +1,28 @@
 <template >
-    <div class="Site">
-        <main-navbar/>
-        <Manage class="Site-content"/>
-        <main-footer/>
-    </div>
+  <div class="Site">
+    <main-navbar v-bind:isAvailable="true" />
+    <Manage class="Site-content" />
+    <main-footer />
+  </div>
 </template>
 
 <script>
-import MainFooter from '../layout/Footer.vue'
-import MainNavbar from '../layout/MainNavbar.vue'
-import Manage from '../pages/user/Manage.vue'
+import MainFooter from "../layout/Footer.vue";
+import MainNavbar from "../layout/MainNavbar.vue";
+import Manage from "../pages/user/Manage.vue";
 
 export default {
-    components:{
-        Manage,
-        MainNavbar,
-        MainFooter,  
-    }
-}
+  components: {
+    Manage,
+    MainNavbar,
+    MainFooter,
+  },
+  data() {
+    return {
+      isAvailable: true,
+    };
+  },
+};
 </script>
 <style lang="scss" scoped>
 .Site {
@@ -33,12 +38,12 @@ export default {
 ::-webkit-scrollbar {
   width: 10px;
 }
- 
+
 ::-webkit-scrollbar-track {
   background: #eeeeee;
   border-radius: 5px;
 }
- 
+
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(#c2e59c, #64b3f4);
 }

@@ -1,6 +1,6 @@
 <template >
   <div class="Site">
-    <main-navbar v-bind:isAvailable="isAvailable" />
+    <main-navbar v-bind:isAvailable="true" />
     <Profile class="Site-content" />
     <main-footer />
   </div>

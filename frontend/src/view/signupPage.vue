@@ -1,32 +1,22 @@
 <template >
-    <div class="app" v-bind:style="{ background: color }">   
-
-<Signup/>
-
- 
-           
-        
-  
-    </div>
+  <div class="app" v-bind:style="{ background: color }">
+    <Signup />
+  </div>
 </template>
 
 <script>
-
-
-import Signup from '../pages/user/Signup.vue'
+import Signup from "../pages/user/Signup.vue";
 
 export default {
-    data(){
-        return {
+  data() {
+    return {
       color: "linear-gradient(0deg,#fdfbfb,#ebedee)",
     };
-    },
-    components:{
-
-        Signup,
-        
-    }
-}
+  },
+  components: {
+    Signup,
+  },
+};
 </script>
 <style scoped>
 .app {
