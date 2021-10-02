@@ -250,7 +250,7 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  max-height: 180px;
+  max-height: 130px;
 }
 .title {
   text-align: left;

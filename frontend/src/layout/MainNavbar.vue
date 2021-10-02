@@ -32,6 +32,7 @@
       <template slot="navbar-menu">
         <drop-down class="nav-item">
           <n-button
+            :disabled="isAvailable"
             slot="title"
             class="dropdown-toggle btn-neutral"
             data-toggle="dropdown"
@@ -52,6 +53,7 @@
 
         <drop-down class="nav-item">
           <n-button
+            :disabled="isAvailable"
             slot="title"
             class="dropdown-toggle btn-neutral"
             data-toggle="dropdown"
@@ -74,6 +76,7 @@
 
         <drop-down class="nav-item" style="margin-right: 100px">
           <n-button
+            :disabled="isAvailable"
             slot="title"
             class="dropdown-toggle btn-neutral"
             data-toggle="dropdown"
@@ -96,7 +99,9 @@
       </template>
       <template slot="navbar-menu">
         <li class="nav-item" style="margin-left: 80px">
-          <a class="nav-link mt-2" @click="changeItem()"> 상세 검색 </a>
+          <a class="nav-link mt-2" @click="changeItem(isAvailable)">
+            상세 검색
+          </a>
         </li>
 
         <template v-if="!isLogin">
@@ -154,6 +159,7 @@ export default {
   props: {
     transparent: Boolean,
     colorOnScroll: Number,
+    isAvailable: Boolean,
   },
   components: {
     DetailSearch,
@@ -187,8 +193,10 @@ export default {
   },
   methods: {
     ...mapActions("user", ["requestUserInfo"]),
-    changeItem() {
-      this.isdetail = !this.isdetail;
+    changeItem(check) {
+      if (check == false) {
+        this.isdetail = !this.isdetail;
+      }
     },
     requestDetailSearch(data) {
       console.log("mainnav", data);

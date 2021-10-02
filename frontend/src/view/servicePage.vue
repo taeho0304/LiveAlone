@@ -1,23 +1,28 @@
 <template >
-    <div class="Site">
-        <main-navbar/>
-        <Profile class="Site-content"/>
-        <main-footer/>
-    </div>
+  <div class="Site">
+    <main-navbar v-bind:isAvailable="isAvailable" />
+    <Profile class="Site-content" />
+    <main-footer />
+  </div>
 </template>
 
 <script>
-import MainFooter from '../layout/Footer.vue'
-import MainNavbar from '../layout/MainNavbar.vue'
-import Profile from '../pages/user/Manage.vue'
+import MainFooter from "../layout/Footer.vue";
+import MainNavbar from "../layout/MainNavbar.vue";
+import Profile from "../pages/user/Manage.vue";
 
 export default {
-    components:{
-        Profile,
-        MainNavbar,
-        MainFooter,  
-    }
-}
+  components: {
+    Profile,
+    MainNavbar,
+    MainFooter,
+  },
+  data() {
+    return {
+      isAvailable: true,
+    };
+  },
+};
 </script>
 <style lang="scss" scoped>
 .Site {

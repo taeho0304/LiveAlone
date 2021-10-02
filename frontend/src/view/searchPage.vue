@@ -1,6 +1,10 @@
 <template >
   <div>
-    <MainNav @maker="getMarkerData" @detailS="getDetailSearch" />
+    <MainNav
+      v-bind:isAvailable="isAvailable"
+      @maker="getMarkerData"
+      @detailS="getDetailSearch"
+    />
 
     <Map v-bind:marker="marker" v-bind:detailList="detailList" />
   </div>
@@ -21,6 +25,7 @@ export default {
     return {
       marker: null,
       detailList: [],
+      isAvailable: false,
     };
   },
   methods: {
