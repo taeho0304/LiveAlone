@@ -32,4 +32,6 @@ public interface ResidenceService {
 	List<PositionModel> getPosition(String dongName);
 
 	List<ResidenceModel> getResidencesById(List<Long> residenceIds, Authentication authentication);
+
+    List<ResidenceInfo> getResidencesByEstateId(Long residenceId);
 }

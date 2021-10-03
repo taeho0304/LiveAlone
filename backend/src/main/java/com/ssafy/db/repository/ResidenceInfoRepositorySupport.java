@@ -105,4 +105,10 @@ public class ResidenceInfoRepositorySupport {
 
         return positionModels;
     }
+
+    public List<ResidenceInfo> findRoomsByEstateId(Long estateId) {
+        List<ResidenceInfo> residenceInfos= jpaQueryFactory.select(qresidenceInfo).from(qresidenceInfo)
+                .where(qresidenceInfo.estateInfo.id.eq(estateId)).limit(10).fetch();
+        return residenceInfos;
+    }
 }

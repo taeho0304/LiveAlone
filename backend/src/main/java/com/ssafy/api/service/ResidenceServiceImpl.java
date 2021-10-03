@@ -97,6 +97,12 @@ public class ResidenceServiceImpl implements ResidenceService {
 	}
 
 	@Override
+	public List<ResidenceInfo> getResidencesByEstateId(Long residenceId) {
+		List<ResidenceInfo> residenceInfos = residenceInfoRepositorySupport.findRoomsByEstateId(residenceId);
+		return residenceInfos;
+	}
+
+	@Override
 	public List<ResidenceInfo> getResidencesBySiGuDong(ResidenceGetReq residenceGetReq) {
 		return residenceInfoRepositorySupport.findRoomsBySiGuDong(residenceGetReq).fetch();
 	}
