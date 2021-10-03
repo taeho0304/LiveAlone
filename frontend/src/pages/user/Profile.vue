@@ -115,13 +115,13 @@
               <span slot="label">
                 <i class="now-ui-icons shopping_shop"></i> Room
               </span>
-              <template>
+              <template v-if="myfavorite != null">
                 <VueSlickCarousel
                   v-bind="settings"
                   style="padding: 20px 30px 20px 30px"
                 >
                   <div
-                    v-for="(a, idx) in myfavorite"
+                    v-for="(a, idx) in getMyfavoriteList"
                     :key="idx"
                     class="card mydata"
                     style="width: 20rem; border-radius: 0.2rem"
@@ -181,6 +181,7 @@
                   </div>
                 </VueSlickCarousel>
               </template>
+              <template v-if="myfavorite == null"> 매물을 찜해주세요 </template>
             </tab-pane>
           </tabs>
         </div>
@@ -258,7 +259,7 @@ export default {
       var deldata = this.myfavorite[idx].residenceInfo.id;
       const CSRF_TOKEN = localStorage.getItem("accessToken");
 
-      console.log(deldata);
+      console.log(idx);
 
       http
         .delete("/api/v1/favorites?userFavoriteIds=" + deldata, {
@@ -272,7 +273,14 @@ export default {
             text: "찜 제거 성공 ! 마이 페이지를 확인해주세요",
             type: "error",
           });
+          this.requsetFavoriteList();
+
+          if (this.myfavorite.length == 1) {
+            this.myfavorite = null;
+          }
+          console.log(this.myfavorite);
         });
+      this.myfavorite = this.getMyfavoriteList;
     },
     click() {
       this.isClick = !this.isClick;
@@ -314,9 +322,6 @@ export default {
     },
     init() {
       this.requestUserInfo();
-      this.requsetFavoriteList();
-      this.myfavorite = this.getMyfavoriteList;
-      console.log("compo", this.myfavorite);
     },
     remove() {
       alert("삭제완료");
@@ -348,13 +353,16 @@ export default {
   },
   created() {
     this.init();
-
+    console.log("assdasd", this.getMyfavoriteList);
+    this.myfavorite = this.getMyfavoriteList;
     console.log(this.getUserInfo);
   },
   mounted() {},
 };
 </script>
-<style>
+
+
+<style scope>
 .myfavotieModal {
   margin-top: 0 !important;
   margin-left: 6% !important;

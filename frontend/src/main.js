@@ -7,15 +7,22 @@ import '@progress/kendo-theme-default/dist/all.css';
 import store from './store'
 import vuetify from './plugins/vuetify'
 import VueSimpleAlert from "vue-simple-alert";
+import VueLazyload from 'vue-lazyload'
 import "@/fontAwesomeIcon.js";
 import { Simplert } from 'vue2-simplert-plugin'
 import 'vue2-simplert-plugin/dist/vue2-simplert-plugin.min.css'
+import DataTable from "@andresouzaabreu/vue-data-table";
+
+import "@andresouzaabreu/vue-data-table/dist/DataTable.css";
+
+Vue.component("data-table", DataTable);
 
 Vue.use(Simplert)
 
 Vue.config.productionTip = false;
 
 Vue.use(NowUiKit);
+Vue.use(VueLazyload);
 Vue.use(VueSimpleAlert, { reverseButtons: true });
 
 new Vue({

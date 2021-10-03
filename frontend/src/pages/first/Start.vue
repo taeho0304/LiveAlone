@@ -55,7 +55,7 @@
   </div>
 </template>
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import { Modal } from "@/components";
 import seoulMap from "../first/seoulMap.vue";
 export default {
@@ -72,7 +72,9 @@ export default {
   },
   name: "start",
   bodyClass: "start-page",
+
   methods: {
+    ...mapActions("user", ["requsetFavoriteList"]),
     ...mapActions("question", ["requestQuestion"]),
     getQuestionList() {
       console.log("질문옵션");
@@ -81,6 +83,7 @@ export default {
   },
   created() {
     this.getQuestionList();
+    this.requsetFavoriteList();
   },
 };
 </script>

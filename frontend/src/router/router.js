@@ -8,7 +8,6 @@ import Manage from '../view/managePage.vue';
 import MainFooter from '../layout/MainFooter.vue';
 import signupPage from '../view/signupPage.vue';
 import QnAPage from '../view/QnAPage.vue';
-import Service from '../view/servicePage.vue';
 import VueSimpleAlert from "vue-simple-alert";
 Vue.use(Router);
 const requireAuth = () => (to, from, next) => {
@@ -62,9 +61,9 @@ export default new Router({
       props: {
         header: { colorOnScroll: 400 },
         footer: { backgroundColor: 'black' }
-      }
+      },
+
     },
-    
     {
       path: '/signup',
       name: 'signup',

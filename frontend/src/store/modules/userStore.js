@@ -2,7 +2,7 @@ import jwt_decode from 'jwt-decode';
 import http from '@/util/http-common';
 import router from "@/router/router";
 import VueSimpleAlert from "vue-simple-alert";
-
+import axios from 'axios';
 export default {
   namespaced: true,
   state: {
@@ -54,13 +54,15 @@ export default {
   actions: {
     requsetFavoriteList({ commit }) {
       const CSRF_TOKEN = localStorage.getItem("accessToken");
-      http.get('/api/v1/favorites', {
-        headers: { "Authorization": 'Bearer ' + CSRF_TOKEN }
-      }).then((res) => {
+      if (CSRF_TOKEN != null) {
+        http.get('/api/v1/favorites', {
+          headers: { "Authorization": 'Bearer ' + CSRF_TOKEN }
+        }).then((res) => {
 
-        commit("FAVORITELIST", res.data.userFavoriteList);
-
-      })
+          commit("FAVORITELIST", res.data.userFavoriteList);
+          console.log("reqfavorite", res.data.userFavoriteList)
+        })
+      }
     },
     requestRegister(context, payload) {
       let body = payload
@@ -174,6 +176,55 @@ export default {
             type: "success",
           })
 
+
+
+            .catch((error) => {
+              if (error.response.data.statusCode == 500) {
+                commit("ESTATENUMBER", false);
+                VueSimpleAlert.fire({
+                  title: "FAIL",
+                  text: "사업자 번호가 존재하지 않습니다.",
+                  type: "error",
+                })
+              }
+            });
+
+        });
+    },
+    requestDuplicate({ commit }, userId) {
+      http
+        .get(`/api/v1/users/` + userId)
+        .then((res) => {
+          VueSimpleAlert.fire({
+            title: "SUCCESS",
+            text: "사용가능한 아이디입니다.",
+            type: "success",
+          })
+          commit('user/USERID', true, { root: true });
+        })
+        .catch((error) => {
+          if (error.response.data.statusCode == 409) {
+            commit('user/USERID', false, { root: true });
+            VueSimpleAlert.fire({
+              title: "FAIL",
+              text: "이미 존재하는 아이디입니다.",
+              type: "error",
+            })
+          }
+        });
+    },
+    requestEstate({ commit }, estateNum) {
+      console.log(estateNum);
+      http
+        .get(`/api/v1/users/estate`, { params: { registrationNumber: estateNum } })
+        .then((res) => {
+          commit("user/ESTATEINFO", res.data.estateInfo, { root: true });
+          VueSimpleAlert.fire({
+            title: "SUCCESS",
+            text: "사업자 번호가 확인되었습니다.",
+            type: "success",
+          })
+
         })
         .catch((error) => {
           if (error.response.data.statusCode == 500) {
@@ -186,6 +237,59 @@ export default {
           }
         });
     },
+    requestRegistResi({ commit }, residence) {
+      var formData = new FormData();
+
+      formData.append('area', residence.area);
+      formData.append('buildingFloor', residence.buildingFloor);
+      formData.append('cost', residence.cost);
+      formData.append('deposit', residence.deposit);
+      formData.append('direction', residence.direction);
+      formData.append('dong', residence.dong);
+      formData.append('estateId', residence.estateId);
+
+      formData.append('jeonseCost', residence.jeonseCost);
+      formData.append('wolseCost', residence.wolseCost);
+      formData.append('lat', residence.lat);
+      formData.append('lon', residence.lon);
+      formData.append('manageCost', residence.manageCost);
+      formData.append('myFloor', residence.myFloor);
+      formData.append('name', residence.name);
+      formData.append('residenceCategory', residence.residenceCategory);
+      formData.append('residenceType', residence.residenceType);
+      formData.append('structure', residence.structure);
+
+
+      // formData.append('feature', residence[variable]);
+      // formData.append('feature', residence[variable]);
+
+      if (residence.feature.length > -1) {
+        for (let i = 0; i < residence.feature.length; i++) {
+          formData.append(`feature[${i}]`, residence.feature[i]);
+        }
+      }
+      if (residence.thumbnails.length > -1) {
+        for (let i = 0; i < residence.thumbnails.length; i++) {
+          const imageForm = residence.thumbnails[i]
+          formData.append(`thumbnails[${i}]`, imageForm);
+        }
+      }
+      http
+        .post(`/api/v1/residences`, formData,
+          {
+            headers: { 'Content-Type': 'multipart/form-data' },
+          })
+        .then(({ data }) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
+
+
   },
+
 
 }

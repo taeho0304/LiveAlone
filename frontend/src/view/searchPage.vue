@@ -1,6 +1,11 @@
 <template >
   <div>
-    <MainNav @maker="getMarkerData" @detailS="getDetailSearch" />
+    <MainNav
+      v-bind:isAvailable="false"
+      @maker="getMarkerData"
+      @detailS="getDetailSearch"
+      @move="getMoveData"
+    />
 
     <Map v-bind:marker="marker" v-bind:detailList="detailList" />
   </div>
@@ -8,25 +13,29 @@
 
 <script>
 import MainNav from "../layout/MainNavbar.vue";
-
 import Map from "../pages/map/Map.vue";
 
 export default {
   components: {
     MainNav,
-
     Map,
   },
   data() {
     return {
       marker: null,
+      move:null,
       detailList: [],
+      isAvailable: false,
     };
   },
   methods: {
     getMarkerData(data) {
       this.marker = data;
       console.log(this.marker);
+    },
+    getMoveData(data) {
+      this.move = data;
+      console.log(this.move);
     },
     getDetailSearch(data) {
       this.detailList = data;

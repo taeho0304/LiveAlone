@@ -324,11 +324,11 @@ export default {
               }
           },
           checkNumber(){
-              if(!this.estate.estateNumber){
-                  this.errors2.requireNumber=false;
-                    return;
+            if(!this.estateNumber){
+                this.errors2.requireNumber=false;
+                return;
             }else{
-              this.errors2.requireNumber=true;
+                this.errors2.requireNumber=true;
               return;
             }
           }
