@@ -5,10 +5,7 @@ import com.ssafy.api.Model.ResidenceSearchPaging;
 import com.ssafy.api.Model.ResidenceModel;
 import com.ssafy.api.model.CountModel;
 import com.ssafy.api.model.PositionModel;
-import com.ssafy.api.request.ResidenceDetailGetReq;
-import com.ssafy.api.request.ResidenceEstateIdsPostReq;
-import com.ssafy.api.request.ResidenceGetReq;
-import com.ssafy.api.request.ResidencePostReq;
+import com.ssafy.api.request.*;
 import com.ssafy.db.entity.ResidenceInfo;
 import org.springframework.security.core.Authentication;
 
@@ -33,7 +30,7 @@ public interface ResidenceService {
 
 	List<PositionModel> getPosition(String dongName);
 
-	List<ResidenceModel> getResidencesById(List<Long> residenceIds, Authentication authentication);
+	ResidenceSearchPaging getResidencesById(ResidenceIdsPostReq residenceIdsPostReq, Authentication authentication);
 
 	ResidencePaging getResidencesByEstateId(ResidenceEstateIdsPostReq residenceId);
 

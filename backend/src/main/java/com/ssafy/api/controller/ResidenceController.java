@@ -5,10 +5,7 @@ import com.ssafy.api.Model.ResidenceSearchPaging;
 import com.ssafy.api.Model.ResidenceModel;
 import com.ssafy.api.model.CountModel;
 import com.ssafy.api.model.PositionModel;
-import com.ssafy.api.request.ResidenceDetailGetReq;
-import com.ssafy.api.request.ResidenceEstateIdsPostReq;
-import com.ssafy.api.request.ResidenceGetReq;
-import com.ssafy.api.request.ResidencePostReq;
+import com.ssafy.api.request.*;
 import com.ssafy.api.response.*;
 import com.ssafy.api.service.ResidenceService;
 import com.ssafy.common.model.response.BaseResponseBody;
@@ -56,12 +53,13 @@ public class ResidenceController {
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "실패")
     })
-    public ResponseEntity<ResidenceDetailRes> getResidences( @RequestBody List<Long> residenceIds, @ApiIgnore Authentication authentication) {
+    public ResponseEntity<ResidenceSearchRes> getResidences(
+            @RequestBody @ApiParam(value = "매물 아이디로 조회", required = true)ResidenceIdsPostReq residenceIdsPostReq, @ApiIgnore Authentication authentication) {
         try {
-            List<ResidenceModel> rooms = residenceService.getResidencesById(residenceIds, authentication);
-            return ResponseEntity.status(200).body(ResidenceDetailRes.of(rooms));
+            ResidenceSearchPaging rooms = residenceService.getResidencesById(residenceIdsPostReq, authentication);
+            return ResponseEntity.status(200).body(ResidenceSearchRes.of(rooms));
         } catch (NoSuchElementException e) {
-            return ResponseEntity.status(500).body(ResidenceDetailRes.of(500, "fail"));
+            return ResponseEntity.status(500).body(ResidenceSearchRes.of(500, "fail"));
         }
     }
 
@@ -72,7 +70,7 @@ public class ResidenceController {
             @ApiResponse(code = 500, message = "실패")
     })
     public ResponseEntity<ResidenceRes> getResidencesByEstateId(
-            @RequestBody @ApiParam(value = "매물 상세", required = true) ResidenceEstateIdsPostReq residenceEstateIdsPostReq
+            @RequestBody @ApiParam(value = "매물 부동산 아이디로 조회", required = true) ResidenceEstateIdsPostReq residenceEstateIdsPostReq
             ) {
         try {
             ResidencePaging residencePaging = residenceService.getResidencesByEstateId(residenceEstateIdsPostReq);

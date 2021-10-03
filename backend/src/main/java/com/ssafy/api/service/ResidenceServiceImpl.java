@@ -5,10 +5,7 @@ import com.ssafy.api.Model.ResidenceModel;
 import com.ssafy.api.Model.ResidencePaging;
 import com.ssafy.api.model.CountModel;
 import com.ssafy.api.model.PositionModel;
-import com.ssafy.api.request.ResidenceDetailGetReq;
-import com.ssafy.api.request.ResidenceEstateIdsPostReq;
-import com.ssafy.api.request.ResidenceGetReq;
-import com.ssafy.api.request.ResidencePostReq;
+import com.ssafy.api.request.*;
 import com.ssafy.common.auth.UserDetail;
 import com.ssafy.db.entity.*;
 import com.ssafy.db.repository.*;
@@ -88,21 +85,29 @@ public class ResidenceServiceImpl implements ResidenceService {
 	}
 
 	@Override
-	public List<ResidenceModel> getResidencesById(List<Long> residenceIds, Authentication authentication) {
+	public ResidenceSearchPaging getResidencesById(ResidenceIdsPostReq residenceIdsPostReq, Authentication authentication) {
+
+		ResidenceSearchPaging residenceSearchPaging = new ResidenceSearchPaging();
+
 		List<ResidenceModel> residenceModels = new ArrayList<>();
 		UserDetail userDetail = null;
 		if (authentication != null)
 			userDetail = (UserDetail) authentication.getDetails();
 
-		for(Long id : residenceIds){
+		int start = (int) ((residenceIdsPostReq.getPageNum()-1)*10);
+		for(int i=start; i<start+10; i++){
+			if(i>=residenceIdsPostReq.getResidenceIds().size()) break;
 			ResidenceModel residenceModel = new ResidenceModel();
-			residenceModel.setResidenceInfo(residenceInfoRepository.findById(id).get());
+			residenceModel.setResidenceInfo(residenceInfoRepository.findById(residenceIdsPostReq.getResidenceIds().get(i)).get());
 			if (authentication != null)
-				residenceModel.setPresent(userFavoriteRepositorySupport.checkIsFavorite(userDetail.getUser().getId(), id));
+				residenceModel.setPresent(userFavoriteRepositorySupport.checkIsFavorite(userDetail.getUser().getId(), residenceIdsPostReq.getResidenceIds().get(i)));
 			residenceModels.add(residenceModel);
 		}
 
-		return residenceModels;
+		residenceSearchPaging.setResidenceModels(residenceModels);
+		residenceSearchPaging.setPageSize((residenceIdsPostReq.getResidenceIds().size()-1)/10+1);
+
+		return residenceSearchPaging;
 	}
 
 	@Override
