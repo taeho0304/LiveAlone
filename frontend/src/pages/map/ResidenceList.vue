@@ -109,7 +109,7 @@
         modal-classes="modal-lg"
         header-classes="justify-content-center"
       >
-        <ResiDetail v-if="resiDetail != null" v-bind:resiDetail="resiDetail" />
+        <ResiDetail :v-if="resiDetail != null" v-bind:resiDetail="resiDetail" />
       </modal>
     </template>
   </div>
@@ -121,7 +121,7 @@ import ResiDetail from "@/pages/map/ResiDetail.vue";
 import VueSimpleAlert from "vue-simple-alert";
 import VueStar from "vue-star";
 import http from "@/util/http-common";
-
+import { mapActions } from "vuex";
 export default {
   components: {
     Card,
@@ -138,6 +138,7 @@ export default {
   },
   watch: {},
   methods: {
+    ...mapActions("user", ["requsetFavoriteList"]),
     showResiName(name) {
       if (name == "") {
         return "";
@@ -208,6 +209,7 @@ export default {
             text: "찜 제거 성공 ! 마이 페이지를 확인해주세요",
             type: "error",
           });
+          this.requsetFavoriteList();
           this.resiList[idx].present = false;
         });
     },
@@ -231,6 +233,7 @@ export default {
                 text: "찜하기 성공 ! 마이 페이지를 확인해주세요",
                 type: "success",
               });
+              this.requsetFavoriteList();
               this.resiList[idx].present = true;
             }
           });
@@ -276,6 +279,6 @@ export default {
 }
 .resiDetailModal {
   display: flex;
-  margin-left: 6%;
+  margin-top: 1.8% !important;
 }
 </style>

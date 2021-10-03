@@ -20,14 +20,11 @@
           min-width: 600px;
           max-width: 600px;
           overflow: hidden;
-          margin-right: 44.8%;
+          margin-right: 39.5%;
           border-radius: 10px;
         "
       >
-        <div
-          class="modal-content"
-          style="margin-top: 30px; border-radius: 10px"
-        >
+        <div class="modal-content" style="border-radius: 10px">
           <div style="margin-right: 15px; margin-top: 10px">
             <button
               style="justify-content: right"
