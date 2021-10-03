@@ -18,6 +18,7 @@ public class UserFavoriteRepositorySupport {
     @Autowired
     private JPAQueryFactory jpaQueryFactory;
     QUserFavorite quserFavorite = QUserFavorite.userFavorite;
+    QImageUrl qImageUrl = QImageUrl.imageUrl;
 
     public List<UserFavorite> findByUserId(Long id) {
         List<UserFavorite> userFavorites = jpaQueryFactory.select(quserFavorite).from(quserFavorite)

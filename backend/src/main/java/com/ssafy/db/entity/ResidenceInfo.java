@@ -47,4 +47,9 @@ public class ResidenceInfo extends BaseEntity{
     String structure; // 방 구조
     String buildingFloor; // 층
     String direction;
+
+    public void removeUrl(ImageUrl image) {
+        this.imageUrl.remove(image);
+        image.getResidenceInfos().remove(this);
+    }
 }

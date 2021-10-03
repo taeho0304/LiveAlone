@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -150,6 +151,19 @@ public class ResidenceServiceImpl implements ResidenceService {
 
 	@Override
 	public void deleteResidence(Long residenceId) {
+		ResidenceInfo residenceInfo = residenceInfoRepository.findById(residenceId).get();
+
+		for (ImageUrl imageUrl : residenceInfo.getImageUrl()){
+//			imageUrl.removeResidence(residenceInfo);
+//			residenceInfo.removeUrl(imageUrl);
+			residenceInfo.setImageUrl(null);
+			imageUrl.setResidenceInfos(null);
+			imageUrl.getResidenceInfos().remove(residenceInfo);
+			residenceInfo.getImageUrl().remove(imageUrl);
+		}
+//		for (Feature feature : residenceInfo.getFeature())
+//			residenceInfo.getFeature().remove(feature);
+		residenceInfoRepository.save(residenceInfo);
 		residenceInfoRepository.deleteById(residenceId);
 	}
 

@@ -12,9 +12,9 @@ public interface UserFavoriteService {
 
 	void createFavoriteResidence(Long residenceId, Authentication authentication);
 
-	List<UserFavorite> checkDuplicate(Authentication authentication);
+	List<UserFavorite> getMyResidence(Authentication authentication);
 
 	void deleteFavoriteResidence(Long userFavoriteIds, Authentication authentication);
 
-	Boolean getFavoriteResidences(Authentication authentication, Long residenceId);
+	Boolean checkIsFavorite(Authentication authentication, Long residenceId);
 }

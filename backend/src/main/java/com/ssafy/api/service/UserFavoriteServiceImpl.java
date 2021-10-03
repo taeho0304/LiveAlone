@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  *	유저 관심 매물 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
@@ -35,14 +36,17 @@ public class UserFavoriteServiceImpl implements UserFavoriteService {
 	@Override
 	public void createFavoriteResidence(Long residenceId, Authentication authentication) {
 		UserDetail userDetail = (UserDetail) authentication.getDetails();
-		UserFavorite userFavorite = new UserFavorite();
-		userFavorite.setResidenceInfo(residenceInfoRepository.findById(residenceId).get());
-		userFavorite.setUser(userService.getUserByUserId(userDetail.getUsername()));
-		userFavoriteRepository.save(userFavorite);
+		Boolean isFavorite = userFavoriteRepositorySupport.checkIsFavorite(userDetail.getUser().getId(), residenceId);
+		if(!isFavorite){
+			UserFavorite userFavorite = new UserFavorite();
+			userFavorite.setResidenceInfo(residenceInfoRepository.findById(residenceId).get());
+			userFavorite.setUser(userService.getUserByUserId(userDetail.getUsername()));
+			userFavoriteRepository.save(userFavorite);
+		}
 	}
 
 	@Override
-	public List<UserFavorite> checkDuplicate(Authentication authentication) {
+	public List<UserFavorite> getMyResidence(Authentication authentication) {
 		UserDetail userDetail = (UserDetail) authentication.getDetails();
 		List<UserFavorite> userFavorites = userFavoriteRepositorySupport.findByUserId(userService.getUserByUserId(userDetail.getUsername()).getId());
 		return userFavorites;
@@ -55,7 +59,7 @@ public class UserFavoriteServiceImpl implements UserFavoriteService {
 	}
 
 	@Override
-	public Boolean getFavoriteResidences(Authentication authentication, Long residenceId) {
+	public Boolean checkIsFavorite(Authentication authentication, Long residenceId) {
 		UserDetail userDetail = (UserDetail) authentication.getDetails();
 		Boolean isFavorite = userFavoriteRepositorySupport.checkIsFavorite(userDetail.getUser().getId(), residenceId);
 		return isFavorite;

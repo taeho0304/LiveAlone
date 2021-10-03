@@ -175,18 +175,35 @@ public class ResidenceController {
     }
 
     @DeleteMapping()
-    @ApiOperation(value = "방 종류 삭제", notes = "방 종류를 삭제한다.")
+    @ApiOperation(value = "매물 삭제", notes = "매물정보를 수정 한다.")
     @ApiResponses({
-            @ApiResponse(code = 201, message = "삭제 성공"),
-            @ApiResponse(code = 500, message = "서버 오류")
+            @ApiResponse(code = 201, message = "성공"),
+            @ApiResponse(code = 500, message = "실패")
     })
-    public ResponseEntity<BaseResponseBody> deleteResidenceType(
-            @RequestBody @ApiParam(value = "매물 삭제", required = true) Long residenceId) {
+    public ResponseEntity<? extends BaseResponseBody> deleteResidence(
+            @RequestParam @ApiParam(value = "매물 삭제", required = true) Long residenceId
+    ) {
         try {
             residenceService.deleteResidence(residenceId);
-            return ResponseEntity.status(200).body(UserLoginPostRes.of(201, "Success"));
-        }catch (Exception e){
-            return ResponseEntity.status(500).body(UserLoginPostRes.of(500, "fail"));
+            return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Success"));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(500).body(BaseResponseBody.of(500, "fail"));
         }
     }
+
+//    @DeleteMapping()
+//    @ApiOperation(value = "방 종류 삭제", notes = "방 종류를 삭제한다.")
+//    @ApiResponses({
+//            @ApiResponse(code = 201, message = "삭제 성공"),
+//            @ApiResponse(code = 500, message = "서버 오류")
+//    })
+//    public ResponseEntity<BaseResponseBody> deleteResidenceType(
+//            @RequestBody @ApiParam(value = "매물 삭제", required = true) Long residenceId) {
+//        try {
+//            residenceService.deleteResidence(residenceId);
+//            return ResponseEntity.status(200).body(UserLoginPostRes.of(201, "Success"));
+//        }catch (Exception e){
+//            return ResponseEntity.status(500).body(UserLoginPostRes.of(500, "fail"));
+//        }
+//    }
 }

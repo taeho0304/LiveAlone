@@ -50,7 +50,7 @@ public class UserFavoriteController {
     })
     public ResponseEntity<UserFavoriteRes> getFavoriteResidence( @ApiIgnore Authentication authentication ) {
         try {
-            List<UserFavorite> userFavorites = userFavoriteService.checkDuplicate(authentication);
+            List<UserFavorite> userFavorites = userFavoriteService.getMyResidence(authentication);
             return ResponseEntity.status(200).body(UserFavoriteRes.of(userFavorites));
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(500).body(UserFavoriteRes.of(500, "fail"));
@@ -66,11 +66,11 @@ public class UserFavoriteController {
     })
     public ResponseEntity<? extends BaseResponseBody> checkIsFavorite(
             @ApiIgnore Authentication authentication, @RequestParam Long ResidenceId) {
-        Boolean isFavorite = userFavoriteService.getFavoriteResidences(authentication, ResidenceId);
+        Boolean isFavorite = userFavoriteService.checkIsFavorite(authentication, ResidenceId);
         if(isFavorite == true)
-            return ResponseEntity.status(409).body(BaseResponseBody.of(409, "매물 있음"));
+            return ResponseEntity.status(409).body(BaseResponseBody.of(409, "찜한매물"));
         else
-            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "매물 없음"));
+            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "찜하지 않은 매물"));
     }
 
     @DeleteMapping()
