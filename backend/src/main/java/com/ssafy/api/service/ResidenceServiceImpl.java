@@ -103,37 +103,30 @@ public class ResidenceServiceImpl implements ResidenceService {
 	}
 
 	@Override
-	public List<ResidenceInfo> getResidencesBySiGuDong(ResidenceGetReq residenceGetReq) {
-		return residenceInfoRepositorySupport.findRoomsBySiGuDong(residenceGetReq).fetch();
+	public void patchResidence(ResidencePostReq residence, long residenceId) throws IOException {
+		ResidenceInfo residenceInfo = residenceInfoRepository.findById(residenceId).get();
+		residenceInfoRepository.save(setResidence(residenceInfo,residence));
 	}
 
-	@Override
-	public void deleteResidence(Long residenceId) {
-		residenceInfoRepository.deleteById(residenceId);
-	}
+	private ResidenceInfo setResidence(ResidenceInfo residenceInfo, ResidencePostReq residence) throws IOException {
 
-	@Override
-	public void createResidence(ResidencePostReq residence) throws IOException {
-		System.out.println("---------------------------------");
-		System.out.println(residence);
-		System.out.println("---------------------------------");
-		List<ImageUrl> imageUrls = new ArrayList<>();
-		try {
-			for (MultipartFile thumbnail:residence.getThumbnails()) {
+		if(residence.getDong() != null)
+			residenceInfo.setDong(dongRepositorySupport.findDongByName(residence.getDong()));
+		if(residence.getThumbnails()!=null) {
+			List<ImageUrl> imageUrls = new ArrayList<>();
+			for (MultipartFile thumbnail : residence.getThumbnails()) {
 				ImageUrl imageUrl = new ImageUrl();
 				imageUrl.setUrl(saveThumbnail(thumbnail));
 				imageUrls.add(imageUrl);
 			}
-		}catch (NullPointerException e){
-
+			residenceInfo.setImageUrl(imageUrls);
 		}
-
-		ResidenceInfo residenceInfo = new ResidenceInfo();
-		residenceInfo.setDong(dongRepositorySupport.findDongByName(residence.getDong()));
-		residenceInfo.setImageUrl(imageUrls);
-		residenceInfo.setFeature(setFeature(residence.getFeature()));
+		if(residence.getFeature() != null)
+			residenceInfo.setFeature(setFeature(residence.getFeature()));
 		residenceInfo.setEstateInfo(estateInfoRepository.findById(residence.getEstateId()).get());
-		residenceInfo.setResidenceType(residenceTypeRepository.findById(residence.getResidenceType()).get());
+		if(residence.getResidenceType() != null)
+			residenceInfo.setResidenceType(residenceTypeRepository.findById(residence.getResidenceType()).get());
+		if(residence.getResidenceCategory() != null)
 		residenceInfo.setResidenceCategory(residenceCategoryRepository.findById(residence.getResidenceCategory()).get());
 		residenceInfo.setArea(residence.getArea());
 		residenceInfo.setBuildingFloor(residence.getBuildingFloor());
@@ -147,7 +140,23 @@ public class ResidenceServiceImpl implements ResidenceService {
 		residenceInfo.setMyFloor(residence.getMyFloor());
 		residenceInfo.setName(residence.getName());
 		residenceInfo.setStructure(residence.getStructure());
-		residenceInfoRepository.save(residenceInfo);
+		return residenceInfo;
+	}
+
+	@Override
+	public List<ResidenceInfo> getResidencesBySiGuDong(ResidenceGetReq residenceGetReq) {
+		return residenceInfoRepositorySupport.findRoomsBySiGuDong(residenceGetReq).fetch();
+	}
+
+	@Override
+	public void deleteResidence(Long residenceId) {
+		residenceInfoRepository.deleteById(residenceId);
+	}
+
+	@Override
+	public void createResidence(ResidencePostReq residence) throws IOException {
+		ResidenceInfo residenceInfo = new ResidenceInfo();
+		residenceInfoRepository.save(setResidence(residenceInfo,residence));
 	}
 
 	@Override

@@ -145,16 +145,29 @@ public class ResidenceController {
     }
 
     @PostMapping()
-    @ApiOperation(value = "매물 생성", notes = "방 종류를 생성 한다.")
+    @ApiOperation(value = "매물 생성", notes = "매물을 생성 한다.")
     @ApiResponses({
             @ApiResponse(code = 201, message = "성공"),
             @ApiResponse(code = 500, message = "실패")
     })
-    public ResponseEntity<? extends BaseResponseBody> createResidenceType(
-            ResidencePostReq residence
-    ) {
+    public ResponseEntity<? extends BaseResponseBody> createResidenceType( ResidencePostReq residence ) {
         try {
             residenceService.createResidence(residence);
+            return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Success"));
+        } catch (NoSuchElementException | IOException e) {
+            return ResponseEntity.status(500).body(BaseResponseBody.of(500, "fail"));
+        }
+    }
+
+    @PatchMapping()
+    @ApiOperation(value = "매물 수정", notes = "매울정보를 수정 한다.")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "성공"),
+            @ApiResponse(code = 500, message = "실패")
+    })
+    public ResponseEntity<? extends BaseResponseBody> patchType(ResidencePostReq residence, @RequestBody long residenceId) {
+        try {
+            residenceService.patchResidence(residence, residenceId);
             return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Success"));
         } catch (NoSuchElementException | IOException e) {
             return ResponseEntity.status(500).body(BaseResponseBody.of(500, "fail"));

@@ -8,7 +8,6 @@ import com.ssafy.api.request.ResidenceGetReq;
 import com.ssafy.api.request.ResidencePostReq;
 import com.ssafy.db.entity.ResidenceInfo;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -34,4 +33,6 @@ public interface ResidenceService {
 	List<ResidenceModel> getResidencesById(List<Long> residenceIds, Authentication authentication);
 
     List<ResidenceInfo> getResidencesByEstateId(Long residenceId);
+
+	void patchResidence(ResidencePostReq residence, long residenceId) throws IOException;
 }
