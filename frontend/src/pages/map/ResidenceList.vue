@@ -109,7 +109,7 @@
         modal-classes="modal-lg"
         header-classes="justify-content-center"
       >
-        <ResiDetail :v-if="resiDetail != null" v-bind:resiDetail="resiDetail" />
+        <ResiDetail v-if="resiDetail != null" v-bind:resiDetail="resiDetail" />
       </modal>
     </template>
   </div>
