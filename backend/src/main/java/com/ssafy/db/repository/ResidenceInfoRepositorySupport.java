@@ -4,8 +4,10 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.ssafy.api.Model.ResidencePaging;
 import com.ssafy.api.model.PositionModel;
 import com.ssafy.api.request.ResidenceDetailGetReq;
+import com.ssafy.api.request.ResidenceEstateIdsPostReq;
 import com.ssafy.api.request.ResidenceGetReq;
 import com.ssafy.db.entity.QResidenceInfo;
 import com.ssafy.db.entity.QUserFavorite;
@@ -25,8 +27,9 @@ public class ResidenceInfoRepositorySupport {
     private JPAQueryFactory jpaQueryFactory;
     QResidenceInfo qresidenceInfo = QResidenceInfo.residenceInfo;
     QUserFavorite quserFavorite = QUserFavorite.userFavorite;
+    int pageSize = 10;
 
-    public List<ResidenceInfo> findRooms(ResidenceDetailGetReq residenceDetailGetReq) {
+    public ResidencePaging findRooms(ResidenceDetailGetReq residenceDetailGetReq) {
         JPAQuery<ResidenceInfo> residences = jpaQueryFactory.select(qresidenceInfo).from(qresidenceInfo);
 
         BooleanBuilder builder = new BooleanBuilder();
@@ -65,17 +68,23 @@ public class ResidenceInfoRepositorySupport {
                 if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(quserFavorite.residenceInfo.id.count().desc());
             }
         }
-        return residences.fetch();
+        ResidencePaging residencePaging = new ResidencePaging();
+        residencePaging.setResidenceInfos(residences.offset((residenceDetailGetReq.getPageNum()-1)*pageSize).limit(pageSize).fetch());
+        residencePaging.setPageSize((residences.fetchCount()+1)/10+1);
+        return residencePaging;
     }
 
-    public JPAQuery<ResidenceInfo> findRoomsBySiGuDong(ResidenceGetReq residenceDetailGetReq) {
+    public ResidencePaging findRoomsBySiGuDong(ResidenceGetReq residenceDetailGetReq) {
         JPAQuery<ResidenceInfo> residences = jpaQueryFactory.select(qresidenceInfo).from(qresidenceInfo);
         BooleanBuilder builder = new BooleanBuilder();
         if (residenceDetailGetReq.getGugun() != null) builder.and(qresidenceInfo.dong.Gugun.gugunName.eq(residenceDetailGetReq.getGugun()));
         if (residenceDetailGetReq.getDong() != null) builder.and(qresidenceInfo.dong.dongName.eq(residenceDetailGetReq.getDong()));
         residences.where(builder);
 
-        return residences;
+        ResidencePaging residencePaging = new ResidencePaging();
+        residencePaging.setResidenceInfos(residences.offset((residenceDetailGetReq.getPageNum()-1)*pageSize).limit(pageSize).fetch());
+        residencePaging.setPageSize((residences.fetchCount()+1)/10+1);
+        return residencePaging;
     }
 
     public long findGuGunCount(Long id) {
@@ -106,9 +115,13 @@ public class ResidenceInfoRepositorySupport {
         return positionModels;
     }
 
-    public List<ResidenceInfo> findRoomsByEstateId(Long estateId) {
-        List<ResidenceInfo> residenceInfos= jpaQueryFactory.select(qresidenceInfo).from(qresidenceInfo)
-                .where(qresidenceInfo.estateInfo.id.eq(estateId)).limit(10).fetch();
-        return residenceInfos;
+    public ResidencePaging findRoomsByEstateId(ResidenceEstateIdsPostReq residenceEstateIdsPostReq) {
+        JPAQuery<ResidenceInfo> residenceInfos = jpaQueryFactory.select(qresidenceInfo).from(qresidenceInfo)
+                .where(qresidenceInfo.estateInfo.id.eq(residenceEstateIdsPostReq.getEstateId()));
+
+        ResidencePaging residencePaging = new ResidencePaging();
+        residencePaging.setResidenceInfos(residenceInfos.offset((residenceEstateIdsPostReq.getPageNum()-1)*pageSize).limit(pageSize).fetch());
+        residencePaging.setPageSize((residenceInfos.fetchCount()+1)/10+1);
+        return residencePaging;
     }
 }

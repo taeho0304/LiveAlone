@@ -1,9 +1,8 @@
 package com.ssafy.api.response;
 
+import com.ssafy.api.Model.ResidenceSearchPaging;
 import com.ssafy.api.Model.ResidenceModel;
-import com.ssafy.api.Model.ResidencePaging;
 import com.ssafy.common.model.response.BaseResponseBody;
-import com.ssafy.db.entity.ResidenceInfo;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,22 +15,22 @@ import java.util.List;
  */
 @Getter
 @Setter
-@ApiModel("ResidenceRes")
-public class ResidenceRes extends BaseResponseBody {
-	List<ResidenceInfo> residenceInfo = new ArrayList<>();
+@ApiModel("ResidenceSearchRes")
+public class ResidenceSearchRes extends BaseResponseBody {
+	List<ResidenceModel> residenceInfo = new ArrayList<>();
 	long pageSize;
 
-	public static ResidenceRes of(ResidencePaging roomRes) {
-		ResidenceRes res = new ResidenceRes();
+	public static ResidenceSearchRes of(ResidenceSearchPaging roomRes) {
+		ResidenceSearchRes res = new ResidenceSearchRes();
 		res.setStatusCode(200);
 		res.setMessage("success");
-		res.setResidenceInfo(roomRes.getResidenceInfos());
+		res.setResidenceInfo(roomRes.getResidenceModels());
 		res.setPageSize(roomRes.getPageSize());
 		return res;
 	}
 
-	public static ResidenceRes of(Integer setStatusCode, String message) {
-		ResidenceRes res = new ResidenceRes();
+	public static ResidenceSearchRes of(Integer setStatusCode, String message) {
+		ResidenceSearchRes res = new ResidenceSearchRes();
 		res.setStatusCode(setStatusCode);
 		res.setMessage(message);
 		return res;

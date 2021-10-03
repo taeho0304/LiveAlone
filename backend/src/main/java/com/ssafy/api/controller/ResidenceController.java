@@ -1,9 +1,12 @@
 package com.ssafy.api.controller;
 
+import com.ssafy.api.Model.ResidencePaging;
+import com.ssafy.api.Model.ResidenceSearchPaging;
 import com.ssafy.api.Model.ResidenceModel;
 import com.ssafy.api.model.CountModel;
 import com.ssafy.api.model.PositionModel;
 import com.ssafy.api.request.ResidenceDetailGetReq;
+import com.ssafy.api.request.ResidenceEstateIdsPostReq;
 import com.ssafy.api.request.ResidenceGetReq;
 import com.ssafy.api.request.ResidencePostReq;
 import com.ssafy.api.response.*;
@@ -15,14 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
-import javax.swing.text.Position;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -45,7 +43,7 @@ public class ResidenceController {
     })
     public ResponseEntity<ResidenceRes> getResidences( @ModelAttribute ResidenceGetReq residenceGetReq) {
         try {
-            List<ResidenceInfo> rooms = residenceService.getResidencesBySiGuDong(residenceGetReq);
+            ResidencePaging rooms = residenceService.getResidencesBySiGuDong(residenceGetReq);
             return ResponseEntity.status(200).body(ResidenceRes.of(rooms));
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(500).body(ResidenceRes.of(500, "fail"));
@@ -73,10 +71,12 @@ public class ResidenceController {
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "실패")
     })
-    public ResponseEntity<ResidenceRes> getResidencesByEstateId( @RequestBody Long residenceId) {
+    public ResponseEntity<ResidenceRes> getResidencesByEstateId(
+            @RequestBody @ApiParam(value = "매물 상세", required = true) ResidenceEstateIdsPostReq residenceEstateIdsPostReq
+            ) {
         try {
-            List<ResidenceInfo> rooms = residenceService.getResidencesByEstateId(residenceId);
-            return ResponseEntity.status(200).body(ResidenceRes.of(rooms));
+            ResidencePaging residencePaging = residenceService.getResidencesByEstateId(residenceEstateIdsPostReq);
+            return ResponseEntity.status(200).body(ResidenceRes.of(residencePaging));
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(500).body(ResidenceRes.of(500, "fail"));
         }
@@ -103,14 +103,14 @@ public class ResidenceController {
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "실패")
     })
-    public ResponseEntity<ResidenceDetailRes> getResidencesDetail(
+    public ResponseEntity<ResidenceSearchRes> getResidencesDetail(
             @RequestBody @ApiParam(value = "매물 상세", required = true) ResidenceDetailGetReq residenceDetailGetReq, @ApiIgnore Authentication authentication
     ) {
         try {
-            List<ResidenceModel> rooms = residenceService.getResidenceDetails(residenceDetailGetReq, authentication);
-            return ResponseEntity.status(200).body(ResidenceDetailRes.of(rooms));
+            ResidenceSearchPaging rooms = residenceService.getResidenceDetails(residenceDetailGetReq, authentication);
+            return ResponseEntity.status(200).body(ResidenceSearchRes.of(rooms));
         } catch (NoSuchElementException e) {
-            return ResponseEntity.status(500).body(ResidenceDetailRes.of(500, "fail"));
+            return ResponseEntity.status(500).body(ResidenceSearchRes.of(500, "fail"));
         }
     }
 

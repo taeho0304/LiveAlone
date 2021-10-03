@@ -1,9 +1,12 @@
 package com.ssafy.api.service;
 
+import com.ssafy.api.Model.ResidencePaging;
+import com.ssafy.api.Model.ResidenceSearchPaging;
 import com.ssafy.api.Model.ResidenceModel;
 import com.ssafy.api.model.CountModel;
 import com.ssafy.api.model.PositionModel;
 import com.ssafy.api.request.ResidenceDetailGetReq;
+import com.ssafy.api.request.ResidenceEstateIdsPostReq;
 import com.ssafy.api.request.ResidenceGetReq;
 import com.ssafy.api.request.ResidencePostReq;
 import com.ssafy.db.entity.ResidenceInfo;
@@ -16,9 +19,9 @@ import java.util.List;
  *	매물 관련 비즈니스 로직 처리를 위한 서비스 인터페이스 정의.
  */
 public interface ResidenceService {
-	List<ResidenceModel> getResidenceDetails(ResidenceDetailGetReq residenceDetailGetReq, Authentication authentication);
+	ResidenceSearchPaging getResidenceDetails(ResidenceDetailGetReq residenceDetailGetReq, Authentication authentication);
 
-	List<ResidenceInfo> getResidencesBySiGuDong(ResidenceGetReq residenceGetReq);
+	ResidencePaging getResidencesBySiGuDong(ResidenceGetReq residenceGetReq);
 
 	void deleteResidence(Long residenceId);
 
@@ -32,7 +35,7 @@ public interface ResidenceService {
 
 	List<ResidenceModel> getResidencesById(List<Long> residenceIds, Authentication authentication);
 
-    List<ResidenceInfo> getResidencesByEstateId(Long residenceId);
+	ResidencePaging getResidencesByEstateId(ResidenceEstateIdsPostReq residenceId);
 
 	void patchResidence(ResidencePostReq residence, long residenceId) throws IOException;
 }

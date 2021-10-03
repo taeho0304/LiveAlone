@@ -1,9 +1,12 @@
 package com.ssafy.api.service;
 
+import com.ssafy.api.Model.ResidenceSearchPaging;
 import com.ssafy.api.Model.ResidenceModel;
+import com.ssafy.api.Model.ResidencePaging;
 import com.ssafy.api.model.CountModel;
 import com.ssafy.api.model.PositionModel;
 import com.ssafy.api.request.ResidenceDetailGetReq;
+import com.ssafy.api.request.ResidenceEstateIdsPostReq;
 import com.ssafy.api.request.ResidenceGetReq;
 import com.ssafy.api.request.ResidencePostReq;
 import com.ssafy.common.auth.UserDetail;
@@ -14,7 +17,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -62,13 +64,16 @@ public class ResidenceServiceImpl implements ResidenceService {
 	UserFavoriteRepositorySupport userFavoriteRepositorySupport;
 
 	@Override
-	public List<ResidenceModel> getResidenceDetails(ResidenceDetailGetReq residenceDetailGetReq, Authentication authentication) {
-		List<ResidenceInfo> residenceInfos = residenceInfoRepositorySupport.findRooms(residenceDetailGetReq);
+	public ResidenceSearchPaging getResidenceDetails(ResidenceDetailGetReq residenceDetailGetReq, Authentication authentication) {
+		ResidenceSearchPaging residenceSearchPaging = new ResidenceSearchPaging();
+		ResidencePaging residencePaging = residenceInfoRepositorySupport.findRooms(residenceDetailGetReq);
+		List<ResidenceInfo> residenceInfos = residencePaging.getResidenceInfos();
+		long pageSize = residencePaging.getPageSize();
+
 		List<ResidenceModel> residenceModels = new ArrayList<>();
 		UserDetail userDetail = null;
 		if (authentication != null)
 			userDetail = (UserDetail) authentication.getDetails();
-
 		for(int i=0; i<residenceInfos.size(); i++){
 			ResidenceModel residenceModel = new ResidenceModel();
 			residenceModel.setResidenceInfo(residenceInfos.get(i));
@@ -76,7 +81,10 @@ public class ResidenceServiceImpl implements ResidenceService {
 				residenceModel.setPresent(userFavoriteRepositorySupport.checkIsFavorite(userDetail.getUser().getId(), residenceInfos.get(i).getId()));
 			residenceModels.add(residenceModel);
 		}
-		return residenceModels;
+
+		residenceSearchPaging.setResidenceModels(residenceModels);
+		residenceSearchPaging.setPageSize(pageSize);
+		return residenceSearchPaging;
 	}
 
 	@Override
@@ -98,9 +106,9 @@ public class ResidenceServiceImpl implements ResidenceService {
 	}
 
 	@Override
-	public List<ResidenceInfo> getResidencesByEstateId(Long residenceId) {
-		List<ResidenceInfo> residenceInfos = residenceInfoRepositorySupport.findRoomsByEstateId(residenceId);
-		return residenceInfos;
+	public ResidencePaging getResidencesByEstateId(ResidenceEstateIdsPostReq residenceEstateIdsPostReq) {
+		ResidencePaging residencePaging = residenceInfoRepositorySupport.findRoomsByEstateId(residenceEstateIdsPostReq);
+		return residencePaging;
 	}
 
 	@Override
@@ -145,8 +153,8 @@ public class ResidenceServiceImpl implements ResidenceService {
 	}
 
 	@Override
-	public List<ResidenceInfo> getResidencesBySiGuDong(ResidenceGetReq residenceGetReq) {
-		return residenceInfoRepositorySupport.findRoomsBySiGuDong(residenceGetReq).fetch();
+	public ResidencePaging getResidencesBySiGuDong(ResidenceGetReq residenceGetReq) {
+		return residenceInfoRepositorySupport.findRoomsBySiGuDong(residenceGetReq);
 	}
 
 	@Override
