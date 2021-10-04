@@ -18,7 +18,7 @@ import java.util.List;
 public interface ResidenceService {
 	ResidenceSearchPaging getResidenceDetails(ResidenceDetailGetReq residenceDetailGetReq, Authentication authentication);
 
-	ResidencePaging getResidencesBySiGuDong(ResidenceGetReq residenceGetReq);
+	ResidenceSearchPaging getResidencesBySiGuDong(ResidenceGetReq residenceGetReq, Authentication authentication);
 
 	void deleteResidence(Long residenceId);
 

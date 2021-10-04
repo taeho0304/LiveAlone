@@ -38,12 +38,13 @@ public class ResidenceController {
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "실패")
     })
-    public ResponseEntity<ResidenceRes> getResidences( @ModelAttribute ResidenceGetReq residenceGetReq) {
+    public ResponseEntity<ResidenceSearchRes> getResidences(
+            @ModelAttribute ResidenceGetReq residenceGetReq, @ApiIgnore Authentication authentication) {
         try {
-            ResidencePaging rooms = residenceService.getResidencesBySiGuDong(residenceGetReq);
-            return ResponseEntity.status(200).body(ResidenceRes.of(rooms));
+            ResidenceSearchPaging rooms = residenceService.getResidencesBySiGuDong(residenceGetReq, authentication);
+            return ResponseEntity.status(200).body(ResidenceSearchRes.of(rooms));
         } catch (NoSuchElementException e) {
-            return ResponseEntity.status(500).body(ResidenceRes.of(500, "fail"));
+            return ResponseEntity.status(500).body(ResidenceSearchRes.of(500, "fail"));
         }
     }
 

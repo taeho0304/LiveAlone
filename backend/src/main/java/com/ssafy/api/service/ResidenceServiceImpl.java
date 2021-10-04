@@ -158,8 +158,27 @@ public class ResidenceServiceImpl implements ResidenceService {
 	}
 
 	@Override
-	public ResidencePaging getResidencesBySiGuDong(ResidenceGetReq residenceGetReq) {
-		return residenceInfoRepositorySupport.findRoomsBySiGuDong(residenceGetReq);
+	public  ResidenceSearchPaging getResidencesBySiGuDong(ResidenceGetReq residenceGetReq, Authentication authentication) {
+		ResidenceSearchPaging residenceSearchPaging = new ResidenceSearchPaging();
+		ResidencePaging residencePaging = residenceInfoRepositorySupport.findRoomsBySiGuDong(residenceGetReq);
+		List<ResidenceModel> residenceModels = new ArrayList<>();
+		List<ResidenceInfo> residenceInfos = residencePaging.getResidenceInfos();
+
+		UserDetail userDetail = null;
+		if (authentication != null)
+			userDetail = (UserDetail) authentication.getDetails();
+
+		for(int i=0; i<residenceInfos.size(); i++){
+			ResidenceModel residenceModel = new ResidenceModel();
+			residenceModel.setResidenceInfo(residenceInfoRepository.findById(residenceInfos.get(i).getId()).get());
+			if (authentication != null)
+				residenceModel.setPresent(userFavoriteRepositorySupport.checkIsFavorite(userDetail.getUser().getId(), residenceInfos.get(i).getId()));
+			residenceModels.add(residenceModel);
+		}
+
+		residenceSearchPaging.setResidenceModels(residenceModels);
+		residenceSearchPaging.setPageSize(0);
+		return residenceSearchPaging;
 	}
 
 	@Override
