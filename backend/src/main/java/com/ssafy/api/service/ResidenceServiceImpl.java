@@ -177,7 +177,7 @@ public class ResidenceServiceImpl implements ResidenceService {
 		}
 
 		residenceSearchPaging.setResidenceModels(residenceModels);
-		residenceSearchPaging.setPageSize(0);
+		residenceSearchPaging.setPageSize(residencePaging.getPageSize());
 		return residenceSearchPaging;
 	}
 

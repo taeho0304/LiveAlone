@@ -13,13 +13,9 @@ import java.util.List;
  */
 @Getter
 @Setter
-//@ApiModel("residenceGetReq")
 public class ResidenceGetReq {
-//	@ApiModelProperty(name="시", example="서울특별시")
 	String si;
-//	@ApiModelProperty(name="동", example="가양동")
 	String dong;
-//	@ApiModelProperty(name="동", example="가양동")
 	String gugun;
 	long pageNum;
 }
