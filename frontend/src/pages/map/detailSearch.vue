@@ -2,7 +2,7 @@
   <div class="contaioner">
     <div class="col-md-9 wrap" style="dispaly: flex; position: absolute">
       <div class="wraptemp">
-        <div class="row">
+        <div class="row pt-1 pb-1">
           <div class="col-md-2">
             <div class="category">방 유형</div>
           </div>
@@ -43,7 +43,7 @@
           </div>
         </div>
 
-        <div class="row">
+        <div class="row pt-1 pb-1">
           <div class="col-md-2 mt-auto mb-auto">
             <div class="category">거래 유형</div>
           </div>
@@ -73,7 +73,7 @@
           </div>
         </div>
 
-        <div class="row">
+        <div class="row pt-1 pb-1">
           <div class="col-md-2 mt-auto mb-auto">
             <div class="category">가격</div>
           </div>
@@ -177,7 +177,7 @@
           </div>
         </div>
 
-        <div class="row">
+        <div class="row pt-1 pb-1">
           <div class="col-md-2">
             <div class="category">추가필터</div>
           </div>
@@ -672,14 +672,12 @@ export default {
 
         startArea: this.roomSize[0],
         endArea: this.roomSize[0] == 50 ? 0 : this.roomSize[1],
+        pageNum: 1,
       };
-      //NOTE : api 호출
+      //NOTE : 부모로 에밋
       console.log(mySave);
 
-      http.post("/api/v1/residences/detail", mySave).then((res) => {
-        console.log("deatailRES", res.data.residenceInfo);
-        this.$emit("mydetailS", res.data.residenceInfo);
-      });
+      this.$emit("mydetailS", mySave);
     },
   },
   props: { juso: Object },
@@ -718,19 +716,8 @@ export default {
 .save {
   text-align: bottom;
 }
-.lineAll {
-  border: 1px solid #eb8816;
-}
-.lineTRL {
-  border-top: 1px solid #eb8816;
-  border-right: 1px solid #eb8816;
-  border-left: 1px solid #eb8816;
-}
-.lineRL {
-  border-right: 1px solid #eb8816;
-  border-left: 1px solid #eb8816;
-}
+
 .lineL {
-  border-left: 1px solid #eb8816;
+  border-left: 1px solid rgb(4, 190, 254);
 }
 </style>
