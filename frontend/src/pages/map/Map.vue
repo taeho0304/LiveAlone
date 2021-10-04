@@ -1,7 +1,12 @@
 <template>
   <div>
     <div v-show="isResiShow" class="Resi col-md-3" style="max-width: 430px">
-      <ResidenceList v-bind:resiList="resiList" />
+      <ResidenceList
+        v-if="resiList != null"
+        v-bind:resiList="resiList"
+        v-bind:pageItem="pageItem"
+        @requestNextItem="requestNextItem"
+      />
     </div>
     <div v-show="isQnAshow" class="Resi col-md-3" style="max-width: 430px">
       <QnAResList />
@@ -46,6 +51,15 @@ export default {
       cluster: null,
       moveDong: null,
       mark: null,
+      pageItem: {
+        curpage: null,
+        total: null,
+        type: null,
+      },
+      requestForIds: {
+        residenceIds: [],
+        pageNum: 1,
+      },
     };
   },
   props: {
@@ -89,6 +103,28 @@ export default {
     moveDong: function (newVal) {
       this.cluster.clear();
       console.log(newVal);
+      this.pageItem.curpage = 1;
+      this.pageItem.type = "dong";
+      const CSRF_TOKEN = localStorage.getItem("accessToken");
+      if (CSRF_TOKEN != null) {
+        http
+          .get("/api/v1/residences?dong=" + newVal + "&pageNum=" + "1", {
+            headers: { Authorization: "Bearer " + CSRF_TOKEN },
+          })
+          .then((res) => {
+            console.log("movemap", res.data);
+            this.pageItem.total = res.data.pageSize;
+            this.resiList = res.data.residenceInfo;
+          });
+      } else {
+        http
+          .get("/api/v1/residences?dong=" + newVal + "&pageNum=" + "1")
+          .then((res) => {
+            console.log("movemap", res.data);
+            this.pageItem.total = res.data.pageSize;
+            this.resiList = res.data.residenceInfo;
+          });
+      }
 
       http
         .get(
@@ -102,6 +138,60 @@ export default {
   },
   created() {},
   methods: {
+    requestNextItem(itemnum) {
+      console.log(itemnum);
+      this.pageItem.curpage = itemnum;
+      console.log(this.pageItem.type);
+      const CSRF_TOKEN = localStorage.getItem("accessToken");
+      if (this.pageItem.type == "dong") {
+        if (CSRF_TOKEN != null) {
+          http
+            .get(
+              "/api/v1/residences?dong=" +
+                this.moveDong +
+                "&pageNum=" +
+                itemnum,
+              {
+                headers: { Authorization: "Bearer " + CSRF_TOKEN },
+              }
+            )
+            .then((res) => {
+              console.log("movemap", res.data);
+              this.resiList = res.data.residenceInfo;
+            });
+        } else {
+          http
+            .get(
+              "/api/v1/residences?dong=" + this.moveDong + "&pageNum=" + itemnum
+            )
+            .then((res) => {
+              console.log("movemap", res.data);
+              this.resiList = res.data.residenceInfo;
+            });
+        }
+      } else if (this.pageItem.type == "ids") {
+        this.pageItem.curpage = itemnum;
+        this.requestForIds.pageNum = itemnum;
+        if (CSRF_TOKEN != null) {
+          http
+            .post("/api/v1/residences/ids", this.requestForIds, {
+              headers: { Authorization: "Bearer " + CSRF_TOKEN },
+            })
+            .then((res) => {
+              this.resiList = res.data.residenceInfo;
+              console.log("받아온데이터", this.resiList);
+            });
+        } else {
+          http
+            .post("/api/v1/residences/ids", this.requestForIds)
+            .then((res) => {
+              this.resiList = res.data.residenceInfo;
+              console.log("받아온데이터", this.resiList);
+            });
+        }
+      }
+      
+    },
     drawMarker(positions) {
       var mark = new kakao.maps.Marker({
         position: new kakao.maps.LatLng(positions.lat, positions.lon),
@@ -115,9 +205,15 @@ export default {
     },
     makeClickListener(mark) {
       console.log(mark);
-      var Item = [];
+      var Item = {
+        residenceIds: [],
+        pageNum: 1,
+      };
+      this.pageItem.curpage = 1;
+      this.pageItem.total = 1;
+      this.pageItem.type = "ids";
       const CSRF_TOKEN = localStorage.getItem("accessToken");
-      Item.push(mark.Fb);
+      Item.residenceIds.push(mark.Fb);
       if (CSRF_TOKEN != null) {
         http
           .post("/api/v1/residences/ids", Item, {
@@ -134,7 +230,6 @@ export default {
         });
       }
     },
-
     clickShow() {
       this.isShow = !this.isShow;
     },
@@ -212,24 +307,29 @@ export default {
     },
     temp(cluster) {
       var clickcluster = cluster.getMarkers().length;
-      var Item = [];
+
       const CSRF_TOKEN = localStorage.getItem("accessToken");
+      this.pageItem.type = "ids";
+      this.requestForIds.residenceIds = [];
+      this.pageItem.curpage = 1;
       for (var i = 0; i < clickcluster; i++) {
-        Item.push(cluster.getMarkers()[i].Fb);
+        this.requestForIds.residenceIds.push(cluster.getMarkers()[i].Fb);
       }
 
       if (CSRF_TOKEN != null) {
         http
-          .post("/api/v1/residences/ids", Item, {
+          .post("/api/v1/residences/ids", this.requestForIds, {
             headers: { Authorization: "Bearer " + CSRF_TOKEN },
           })
           .then((res) => {
             this.resiList = res.data.residenceInfo;
+            this.pageItem.total = res.data.pageSize;
             console.log("받아온데이터", this.resiList);
           });
       } else {
-        http.post("/api/v1/residences/ids", Item).then((res) => {
+        http.post("/api/v1/residences/ids", this.requestForIds).then((res) => {
           this.resiList = res.data.residenceInfo;
+          this.pageItem.total = res.data.pageSize;
           console.log("받아온데이터", this.resiList);
         });
       }
