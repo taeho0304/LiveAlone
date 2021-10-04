@@ -7,7 +7,7 @@
       @move="getMoveData"
     />
 
-    <Map v-bind:marker="marker" v-bind:detailList="detailList" />
+    <Map v-bind:marker="marker" v-bind:detailFilter="detailFilter" />
   </div>
 </template>
 
@@ -23,8 +23,8 @@ export default {
   data() {
     return {
       marker: null,
-      move:null,
-      detailList: [],
+      move: null,
+      detailFilter: null,
       isAvailable: false,
     };
   },
@@ -38,8 +38,8 @@ export default {
       console.log(this.move);
     },
     getDetailSearch(data) {
-      this.detailList = data;
-      console.log("디테일검색 결과", data);
+      this.detailFilter = data;
+      console.log("디테일검색 필터", data);
     },
   },
 };

@@ -64,7 +64,7 @@ export default {
   },
   props: {
     marker: Object,
-    detailList: Array,
+    detailFilter: Object,
   },
   watch: {
     qnaResiList: function (newVal) {
@@ -73,10 +73,28 @@ export default {
       }
       this.isQnAshow = true;
     },
-    detailList: function (newVal) {
-      console.log(newVal);
-      this.resiList = newVal;
-      this.isResiShow = true;
+    detailFilter: function (newVal) {
+      console.log("change", newVal);
+      this.pageItem.curpage = 1;
+      this.pageItem.type = "details";
+      const CSRF_TOKEN = localStorage.getItem("accessToken");
+      if (CSRF_TOKEN != null) {
+        http
+          .post("/api/v1/residences/detail", newVal, {
+            headers: { Authorization: "Bearer " + CSRF_TOKEN },
+          })
+          .then((res) => {
+            this.pageItem.total = res.data.pageSize;
+            this.resiList = res.data.residenceInfo;
+            console.log("deatailRES", this.resiList);
+          });
+      } else {
+        http.post("/api/v1/residences/detail", newVal).then((res) => {
+          console.log("deatailRES", res.data.residenceInfo);
+          this.pageItem.total = res.data.pageSize;
+          this.resiList = res.data.residenceInfo;
+        });
+      }
     },
     resiList: function (newVal) {
       console.log("new", newVal);
@@ -189,8 +207,30 @@ export default {
               console.log("받아온데이터", this.resiList);
             });
         }
+      } else if (this.pageItem.type == "details") {
+        this.detailFilter.pageNum = itemnum;
+        this.pageItem.curpage = itemnum;
+        const CSRF_TOKEN = localStorage.getItem("accessToken");
+        if (CSRF_TOKEN != null) {
+          http
+            .post("/api/v1/residences/detail", this.detailFilter, {
+              headers: { Authorization: "Bearer " + CSRF_TOKEN },
+            })
+            .then((res) => {
+              this.pageItem.total = res.data.pageSize;
+              this.resiList = res.data.residenceInfo;
+              console.log("deatailRES", this.resiList);
+            });
+        } else {
+          http
+            .post("/api/v1/residences/detail", this.detailFilter)
+            .then((res) => {
+              console.log("deatailRES", res.data.residenceInfo);
+              this.pageItem.total = res.data.pageSize;
+              this.resiList = res.data.residenceInfo;
+            });
+        }
       }
-      
     },
     drawMarker(positions) {
       var mark = new kakao.maps.Marker({
@@ -279,6 +319,7 @@ export default {
       kakao.maps.event.addListener(clusterer, "clusterclick", this.temp);
     },
     mapdrag() {
+      this.moveDong = null;
       // 지도 중심좌표를 얻어옵니다
       var latlng = this.map.getCenter();
 
@@ -301,6 +342,7 @@ export default {
         const move = {
           dong: result[0].region_3depth_name,
         };
+
         this.moveDong = move.dong;
         console.log(move.dong);
       }
