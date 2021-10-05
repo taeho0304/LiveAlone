@@ -184,6 +184,7 @@ export default {
       this.click();
     },
     init() {
+      console.log("Manage.vue 2");
       this.requestUserInfo();
     },
     remove() {

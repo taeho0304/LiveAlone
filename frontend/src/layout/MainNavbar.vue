@@ -172,6 +172,14 @@ export default {
     transparent: Boolean,
     colorOnScroll: Number,
     isAvailable: Boolean,
+    moveMapDong: Object,
+  },
+  watch: {
+    moveMapDong: function () {
+      this.Dong = this.moveMapDong.dong;
+      this.Gu = this.moveMapDong.gu;
+      this.Si = this.moveMapDong.si;
+    },
   },
   components: {
     DetailSearch,
