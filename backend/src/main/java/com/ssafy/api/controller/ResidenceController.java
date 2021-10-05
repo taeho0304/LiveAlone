@@ -196,7 +196,7 @@ public class ResidenceController {
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "실패")
     })
-    public ResponseEntity<CommercialCountRes> getCommercialCountByDongName( @RequestParam(value = "동이름") String dongName ) {
+    public ResponseEntity<CommercialCountRes> getCommercialCountByDongName( @RequestParam String dongName ) {
         try {
             List<CommercialCountModel> commercialCountModel = residenceService.getCommercialCount(dongName);
             return ResponseEntity.status(200).body(CommercialCountRes.of(commercialCountModel));
