@@ -179,6 +179,14 @@ export default {
       this.Dong = this.moveMapDong.dong;
       this.Gu = this.moveMapDong.gu;
       this.Si = this.moveMapDong.si;
+
+      const data = {
+        si: this.Si,
+        gugun: this.Gu,
+        dong: this.Dong,
+      };
+
+      this.emitData = data;
     },
   },
   components: {
