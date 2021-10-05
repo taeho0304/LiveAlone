@@ -168,6 +168,20 @@ public class ResidenceInfoRepositorySupport {
         JPAQuery<ResidenceInfo> residenceInfos = jpaQueryFactory.select(qresidenceInfo).from(qresidenceInfo)
                 .where(qresidenceInfo.id.in(residenceIdsPostReq.getResidenceIds()));
 
+        // 정렬
+        if(residenceIdsPostReq.getSortType()!=null){
+            if(residenceIdsPostReq.getSortType().equals("cost")){
+                if(residenceIdsPostReq.getSortOrder().equals("asc")) residenceInfos.orderBy(qresidenceInfo.wolseCost.asc(), qresidenceInfo.jeonseCost.asc(), qresidenceInfo.cost.asc());
+                if(residenceIdsPostReq.getSortOrder().equals("desc")) residenceInfos.orderBy(qresidenceInfo.wolseCost.desc(), qresidenceInfo.jeonseCost.desc(), qresidenceInfo.cost.desc());
+            } else if(residenceIdsPostReq.getSortType().equals("area")){
+                if(residenceIdsPostReq.getSortOrder().equals("asc")) residenceInfos.orderBy(qresidenceInfo.area.asc());
+                if(residenceIdsPostReq.getSortOrder().equals("desc")) residenceInfos.orderBy(qresidenceInfo.area.desc());
+            } else if(residenceIdsPostReq.getSortType().equals("favorite")){
+                if(residenceIdsPostReq.getSortOrder().equals("asc")) residenceInfos.orderBy(quserFavorite.residenceInfo.id.count().asc());
+                if(residenceIdsPostReq.getSortOrder().equals("desc")) residenceInfos.orderBy(quserFavorite.residenceInfo.id.count().desc());
+            }
+        }
+
         ResidencePaging residencePaging = new ResidencePaging();
         residencePaging.setResidenceInfos(residenceInfos.offset((residenceIdsPostReq.getPageNum()-1)*pageSize).limit(pageSize).fetch());
         residencePaging.setPageSize((residenceInfos.fetchCount()-1)/10+1);

@@ -243,7 +243,7 @@ public class ResidenceServiceImpl implements ResidenceService {
 //			imageUrl.removeResidence(residenceInfo);
 //			residenceInfo.removeUrl(imageUrl);
 			residenceInfo.setImageUrl(null);
-			imageUrl.setResidenceInfos(null);
+//			imageUrl.setResidenceInfos(null);
 			//residenceInfo.getImageUrl().remove(imageUrl);
 		}
 
