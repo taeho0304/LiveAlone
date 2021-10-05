@@ -235,12 +235,12 @@ public class ResidenceServiceImpl implements ResidenceService {
 	public void deleteResidence(Long residenceId) {
 		ResidenceInfo residenceInfo = residenceInfoRepository.findById(residenceId).get();
 
-		System.out.println(residenceInfo.getImageUrl().size());
+		//System.out.println(residenceInfo.getImageUrl().size());
 		//모든 연관관계를 끊어야 된다..
 
 		//imageUrl 연관관계 삭제 (ManyToMany)
 		for (ImageUrl imageUrl : residenceInfo.getImageUrl()){
-			System.out.println(imageUrl.getUrl());
+			//System.out.println(imageUrl.getUrl());
 //			imageUrl.removeResidence(residenceInfo);
 //			residenceInfo.removeUrl(imageUrl);
 			residenceInfo.setImageUrl(null);
@@ -249,7 +249,7 @@ public class ResidenceServiceImpl implements ResidenceService {
 		}
 
 		//feature 연관관계 삭제 (ManyToMany)
-		System.out.println("feature"+residenceInfo.getFeature().size());
+		//System.out.println("feature"+residenceInfo.getFeature().size());
 		for (Feature feature : residenceInfo.getFeature())
 			residenceInfo.setFeature(null);
 
