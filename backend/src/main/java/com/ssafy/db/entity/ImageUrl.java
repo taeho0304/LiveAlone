@@ -14,6 +14,7 @@ import java.util.List;
 @Setter
 public class ImageUrl extends BaseEntity {
     String url;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ResidenceInfo> residenceInfos;
 

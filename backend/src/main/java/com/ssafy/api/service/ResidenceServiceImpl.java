@@ -149,7 +149,7 @@ public class ResidenceServiceImpl implements ResidenceService {
 		for(ResidenceInfo residenceInfo : residenceInfos){
 			RecommendModel recommendModel = new RecommendModel();
 			recommendModel.setResidenceInfo(residenceInfo);
-			recommendModel.setTotalWeight(calTotalWeight(residenceInfo.getId(), residenceRecommendPostReq.getResiStore(), residenceRecommendPostReq.getResiMove()));
+			recommendModel.setTotalWeight(calTotalWeight(residenceInfo.getId(), residenceRecommendPostReq.getScore()));
 			if (authentication != null)
 				recommendModel.setPresent(userFavoriteRepositorySupport.checkIsFavorite(userDetail.getUser().getId(), residenceInfo.getId()));
 			recommendModels.add(recommendModel);
@@ -164,18 +164,12 @@ public class ResidenceServiceImpl implements ResidenceService {
 		return recommendModels;
 	}
 
-	private double calTotalWeight(Long residenceId, List<ResiStore> resiStores, List<ResiMove> resiMoves) {
+	private double calTotalWeight(Long residenceId, List<Double> score) {
 		List<ResidenceWeight> residenceWeights = residenceWeightRepositorySupport.findWeightsByResidenceId(residenceId);
 
-		Map<Long, Integer> weight = new HashMap<>();
-		for(ResiStore resiStore : resiStores)
-			weight.put(resiStore.getCategoryId(), resiStore.getScore());
-		for(ResiMove resiMove : resiMoves)
-			weight.put(resiMove.getCategoryId(), resiMove.getScore());
-
 		double totalWeight = 0;
-		for (ResidenceWeight residenceWeight : residenceWeights)
-			totalWeight += (Double.parseDouble(residenceWeight.getWeight()) * weight.get(residenceWeight.getCommercialCategory().getId()));
+		for (int i=0; i<residenceWeights.size(); i++)
+			totalWeight += (Double.parseDouble(residenceWeights.get(i).getWeight()) * score.get(residenceWeights.get(i).getCommercialCategory().getId().intValue()));
 		return totalWeight;
 	}
 

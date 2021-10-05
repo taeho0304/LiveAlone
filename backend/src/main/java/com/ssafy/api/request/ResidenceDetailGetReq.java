@@ -45,7 +45,7 @@ public class ResidenceDetailGetReq {
 	int endArea;
 	@ApiModelProperty(name="정렬 기준", example="cost")
 	String sortType;
-	@ApiModelProperty(name="정렬 방식", example="asc")
+	@ApiModelProperty(name="정렬 방식", example="asc, desc")
 	String sortOrder;
 	@ApiModelProperty(name="동", example="가양동")
 	String dong;

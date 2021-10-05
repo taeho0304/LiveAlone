@@ -1,7 +1,5 @@
 package com.ssafy.api.request;
 
-import com.ssafy.api.model.ResiMove;
-import com.ssafy.api.model.ResiStore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -28,8 +26,7 @@ public class ResidenceRecommendPostReq {
 	int resiCostEnd;
 	@ApiModelProperty(name="최대 보증금", example="0")
 	int resiDeposit;
-	@ApiModelProperty(name="유저 ID", example="[{score:1, categoryId : 1}]")
-	List<ResiStore> resiStore;
-	@ApiModelProperty(name="유저 ID", example="[{score:1, categoryId : 3}]")
-	List<ResiMove> resiMove;
+	@ApiModelProperty(name="상권 가중치", example="0")
+	List<Double> score;
+
 }
