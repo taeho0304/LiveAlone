@@ -18,4 +18,6 @@ public class ResidenceGetReq {
 	String dong;
 	String gugun;
 	long pageNum;
+	String sortType;
+	String sortOrder;
 }

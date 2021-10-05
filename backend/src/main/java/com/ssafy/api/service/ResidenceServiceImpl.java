@@ -61,6 +61,7 @@ public class ResidenceServiceImpl implements ResidenceService {
 
 	@Autowired
 	ResidenceWeightRepositorySupport residenceWeightRepositorySupport;
+	ResidenceWeightRepositorySupport residenceWeightRepositorySupport;
 
 	@Override
 	public ResidenceSearchPaging getResidenceDetails(ResidenceDetailGetReq residenceDetailGetReq, Authentication authentication) {
@@ -88,21 +89,20 @@ public class ResidenceServiceImpl implements ResidenceService {
 
 	@Override
 	public ResidenceSearchPaging getResidencesById(ResidenceIdsPostReq residenceIdsPostReq, Authentication authentication) {
-
 		ResidenceSearchPaging residenceSearchPaging = new ResidenceSearchPaging();
 
 		List<ResidenceModel> residenceModels = new ArrayList<>();
-		UserDetail userDetail = null;
+		ResidencePaging residencePaging = residenceInfoRepositorySupport.findById(residenceIdsPostReq);
+		UserDetail userDetail=null;
 		if (authentication != null)
 			userDetail = (UserDetail) authentication.getDetails();
 
-		int start = (int) ((residenceIdsPostReq.getPageNum()-1)*10);
-		for(int i=start; i<start+10; i++){
-			if(i>=residenceIdsPostReq.getResidenceIds().size()) break;
+
+		for(ResidenceInfo residenceInfo : residencePaging.getResidenceInfos()){
 			ResidenceModel residenceModel = new ResidenceModel();
-			residenceModel.setResidenceInfo(residenceInfoRepository.findById(residenceIdsPostReq.getResidenceIds().get(i)).get());
+			residenceModel.setResidenceInfo(residenceInfo);
 			if (authentication != null)
-				residenceModel.setPresent(userFavoriteRepositorySupport.checkIsFavorite(userDetail.getUser().getId(), residenceIdsPostReq.getResidenceIds().get(i)));
+				residenceModel.setPresent(userFavoriteRepositorySupport.checkIsFavorite(userDetail.getUser().getId(), residenceInfo.getId()));
 			residenceModels.add(residenceModel);
 		}
 
@@ -240,12 +240,8 @@ public class ResidenceServiceImpl implements ResidenceService {
 
 		//imageUrl 연관관계 삭제 (ManyToMany)
 		for (ImageUrl imageUrl : residenceInfo.getImageUrl()){
-			//System.out.println(imageUrl.getUrl());
-//			imageUrl.removeResidence(residenceInfo);
-//			residenceInfo.removeUrl(imageUrl);
+
 			residenceInfo.setImageUrl(null);
-			imageUrl.setResidenceInfos(null);
-			//residenceInfo.getImageUrl().remove(imageUrl);
 		}
 
 		//feature 연관관계 삭제 (ManyToMany)

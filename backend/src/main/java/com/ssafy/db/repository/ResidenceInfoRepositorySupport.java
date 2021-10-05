@@ -6,10 +6,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.api.model.ResidencePaging;
 import com.ssafy.api.model.PositionModel;
-import com.ssafy.api.request.ResidenceDetailGetReq;
-import com.ssafy.api.request.ResidenceEstateIdsPostReq;
-import com.ssafy.api.request.ResidenceGetReq;
-import com.ssafy.api.request.ResidenceRecommendPostReq;
+import com.ssafy.api.request.*;
 import com.ssafy.db.entity.QResidenceInfo;
 import com.ssafy.db.entity.QUserFavorite;
 import com.ssafy.db.entity.ResidenceInfo;
@@ -59,16 +56,15 @@ public class ResidenceInfoRepositorySupport {
             if(residenceDetailGetReq.getSortType().equals("cost")){
                 if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(qresidenceInfo.wolseCost.asc(), qresidenceInfo.jeonseCost.asc(), qresidenceInfo.cost.asc());
                 if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(qresidenceInfo.wolseCost.desc(), qresidenceInfo.jeonseCost.desc(), qresidenceInfo.cost.desc());
-            }
-            if(residenceDetailGetReq.getSortType().equals("area")){
+            }else if(residenceDetailGetReq.getSortType().equals("area")){
                 if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(qresidenceInfo.area.asc());
                 if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(qresidenceInfo.area.desc());
-            }
-            if(residenceDetailGetReq.getSortType().equals("favorite")){
+            }else if(residenceDetailGetReq.getSortType().equals("favorite")){
                 if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(quserFavorite.residenceInfo.id.count().asc());
                 if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(quserFavorite.residenceInfo.id.count().desc());
             }
         }
+
         ResidencePaging residencePaging = new ResidencePaging();
         residencePaging.setResidenceInfos(residences.offset((residenceDetailGetReq.getPageNum()-1)*pageSize).limit(pageSize).fetch());
         residencePaging.setPageSize((residences.fetchCount()-1)/10+1);
@@ -81,6 +77,20 @@ public class ResidenceInfoRepositorySupport {
         if (residenceDetailGetReq.getGugun() != null) builder.and(qresidenceInfo.dong.Gugun.gugunName.eq(residenceDetailGetReq.getGugun()));
         if (residenceDetailGetReq.getDong() != null) builder.and(qresidenceInfo.dong.dongName.eq(residenceDetailGetReq.getDong()));
         residences.where(builder);
+
+        // 정렬
+        if(residenceDetailGetReq.getSortType()!=null){
+            if(residenceDetailGetReq.getSortType().equals("cost")){
+                if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(qresidenceInfo.wolseCost.asc(), qresidenceInfo.jeonseCost.asc(), qresidenceInfo.cost.asc());
+                if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(qresidenceInfo.wolseCost.desc(), qresidenceInfo.jeonseCost.desc(), qresidenceInfo.cost.desc());
+            } else if(residenceDetailGetReq.getSortType().equals("area")){
+                if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(qresidenceInfo.area.asc());
+                if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(qresidenceInfo.area.desc());
+            } else if(residenceDetailGetReq.getSortType().equals("favorite")){
+                if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(quserFavorite.residenceInfo.id.count().asc());
+                if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(quserFavorite.residenceInfo.id.count().desc());
+            }
+        }
 
         ResidencePaging residencePaging = new ResidencePaging();
         residencePaging.setResidenceInfos(residences.offset((residenceDetailGetReq.getPageNum()-1)*pageSize).limit(pageSize).fetch());
@@ -152,5 +162,30 @@ public class ResidenceInfoRepositorySupport {
         residenceInfos.where(builder);
 
         return residenceInfos.fetch();
+    }
+
+    public ResidencePaging findById(ResidenceIdsPostReq residenceIdsPostReq) {
+        JPAQuery<ResidenceInfo> residenceInfos = jpaQueryFactory.select(qresidenceInfo).from(qresidenceInfo)
+                .where(qresidenceInfo.id.in(residenceIdsPostReq.getResidenceIds()));
+
+        // 정렬
+        if(residenceIdsPostReq.getSortType()!=null){
+            if(residenceIdsPostReq.getSortType().equals("cost")){
+                if(residenceIdsPostReq.getSortOrder().equals("asc")) residenceInfos.orderBy(qresidenceInfo.wolseCost.asc(), qresidenceInfo.jeonseCost.asc(), qresidenceInfo.cost.asc());
+                if(residenceIdsPostReq.getSortOrder().equals("desc")) residenceInfos.orderBy(qresidenceInfo.wolseCost.desc(), qresidenceInfo.jeonseCost.desc(), qresidenceInfo.cost.desc());
+            } else if(residenceIdsPostReq.getSortType().equals("area")){
+                if(residenceIdsPostReq.getSortOrder().equals("asc")) residenceInfos.orderBy(qresidenceInfo.area.asc());
+                if(residenceIdsPostReq.getSortOrder().equals("desc")) residenceInfos.orderBy(qresidenceInfo.area.desc());
+            } else if(residenceIdsPostReq.getSortType().equals("favorite")){
+                if(residenceIdsPostReq.getSortOrder().equals("asc")) residenceInfos.orderBy(quserFavorite.residenceInfo.id.count().asc());
+                if(residenceIdsPostReq.getSortOrder().equals("desc")) residenceInfos.orderBy(quserFavorite.residenceInfo.id.count().desc());
+            }
+        }
+
+        ResidencePaging residencePaging = new ResidencePaging();
+        residencePaging.setResidenceInfos(residenceInfos.offset((residenceIdsPostReq.getPageNum()-1)*pageSize).limit(pageSize).fetch());
+        residencePaging.setPageSize((residenceInfos.fetchCount()-1)/10+1);
+
+        return residencePaging;
     }
 }
