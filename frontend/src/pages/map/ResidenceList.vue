@@ -4,20 +4,70 @@
       class="row col-md-12 resiwrap"
       style="padding-bottom: 0; padding-top: 0:"
     >
-      <div class="col-md-4 ml-auto mr-auto">
-        <a class="btn btn-neutral btn-round btn-block" style="color: #000000"
-          >가격</a
-        >
+      <div v-show="!clickCost" class="col-md-4 ml-auto mr-auto">
+        <a
+          class="btn btn-neutral btn-round btn-block"
+          style="color: #000000"
+          @click="SortByCost()"
+          >가격
+        </a>
       </div>
-      <div class="col-md-4 ml-auto mr-auto">
-        <a class="btn btn-neutral btn-round btn-block" style="color: #000000"
-          >면적</a
-        >
+
+      <div v-show="clickCost" class="col-md-4 ml-auto mr-auto">
+        <a
+          class="btn btn-info btn-round btn-block"
+          style="color: #000000"
+          @click="SortByCost()"
+          >가격
+          <i
+            v-if="sortCost"
+            slot="icon"
+            class="now-ui-icons arrows-1_minimal-down"
+          ></i>
+          <i v-else slot="icon" class="now-ui-icons arrows-1_minimal-up"></i
+        ></a>
       </div>
-      <div class="col-md-4 ml-auto mr-auto">
-        <a class="btn btn-neutral btn-round btn-block" style="color: #000000"
-          >선호</a
-        >
+
+      <div v-show="!clickArea" class="col-md-4 ml-auto mr-auto">
+        <a
+          class="btn btn-neutral btn-round btn-block"
+          style="color: #000000"
+          @click="SortByArea()"
+          >면적
+        </a>
+      </div>
+
+      <div v-show="clickArea" class="col-md-4 ml-auto mr-auto">
+        <a class="btn btn-info btn-round btn-block" @click="SortByArea()"
+          >면적
+          <i
+            v-if="sortArea"
+            slot="icon"
+            class="now-ui-icons arrows-1_minimal-down"
+          ></i>
+          <i v-else slot="icon" class="now-ui-icons arrows-1_minimal-up"></i
+        ></a>
+      </div>
+
+      <div v-show="!clickLike" class="col-md-4 ml-auto mr-auto">
+        <a
+          class="btn btn-neutral btn-round btn-block"
+          style="color: #000000"
+          @click="SortByLike()"
+          >선호
+        </a>
+      </div>
+
+      <div v-show="clickLike" class="col-md-4 ml-auto mr-auto">
+        <a class="btn btn-info btn-round btn-block" @click="SortByLike()"
+          >선호
+          <i
+            v-if="sortLike"
+            slot="icon"
+            class="now-ui-icons arrows-1_minimal-down"
+          ></i>
+          <i v-else slot="icon" class="now-ui-icons arrows-1_minimal-up"></i
+        ></a>
       </div>
     </div>
     <template>
@@ -145,15 +195,83 @@ export default {
     ResiDetail,
   },
   setup() {},
-  props: { resiList: Array[Object], pageItem: Object },
+  props: { resiList: Array[Object], pageItem: Object, sortFilter: String },
+  watch: {},
   data() {
     return {
       showResiDetail: false,
       resiDetail: null,
+      clickCost: false,
+      clickArea: false,
+      clickLike: false,
+      sortCost: true,
+      sortArea: true,
+      sortLike: true,
+      sortType: null,
     };
   },
-  watch: {},
+  watch: {
+    sortFilter: function () {
+      if (this.sortFilter == "cost") {
+        this.sortArea = true;
+        this.sortLike = true;
+        this.clickCost = true;
+
+        this.clickArea = false;
+        this.clickLike = false;
+      } else if (this.sortFilter == "area") {
+        this.sortCost = true;
+        this.sortLike = true;
+        this.clickArea = true;
+
+        this.clickCost = false;
+        this.clickLike = false;
+      } else if (this.sortFilter == "favorite") {
+        this.sortCost = true;
+        this.sortArea = true;
+        this.clickLike = true;
+
+        this.clickCost = false;
+        this.clickArea = false;
+      } else {
+        this.sortCost = true;
+        this.sortArea = true;
+        this.sortLike = true;
+        this.clickLike = false;
+        this.clickCost = false;
+        this.clickArea = false;
+      }
+    },
+  },
   methods: {
+    SortByLike() {
+      console.log("fafaa");
+
+      var sortData = {
+        sortType: "favorite",
+        sortOrder: this.sortLike,
+      };
+      this.sortLike = !this.sortLike;
+      this.$emit("sort", sortData);
+    },
+    SortByArea() {
+      var sortData = {
+        sortType: "area",
+        sortOrder: this.sortArea,
+      };
+      this.sortArea = !this.sortArea;
+      this.$emit("sort", sortData);
+    },
+    SortByCost() {
+      var sortData = {
+        sortType: "cost",
+        sortOrder: this.sortCost,
+      };
+      this.clickCost = true;
+      this.sortCost = !this.sortCost;
+      this.$emit("sort", sortData);
+    },
+
     requestNext(itemnum) {
       console.log(itemnum);
       this.$emit("requestNextItem", itemnum);

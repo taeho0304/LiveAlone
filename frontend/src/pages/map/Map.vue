@@ -5,7 +5,9 @@
         v-if="resiList != null"
         v-bind:resiList="resiList"
         v-bind:pageItem="pageItem"
+        v-bind:sortFilter="sortFilter"
         @requestNextItem="requestNextItem"
+        @sort="sort"
       />
     </div>
     <div v-show="isQnAshow" class="Resi col-md-3" style="max-width: 430px">
@@ -66,12 +68,17 @@ export default {
       cluster: null,
       moveDong: null,
       mark: null,
+      sortFilter: null,
+      dongSortType: null,
+      dongSortOrder: null,
       pageItem: {
         curpage: null,
         total: null,
         type: null,
       },
       requestForIds: {
+        sortOrder: null,
+        sortType: null,
         residenceIds: [],
         pageNum: 1,
       },
@@ -96,6 +103,7 @@ export default {
     },
     detailFilter: function (newVal) {
       console.log("change", newVal);
+      this.sortFilter = "none";
       this.pageItem.curpage = 1;
       this.pageItem.type = "details";
       const CSRF_TOKEN = localStorage.getItem("accessToken");
@@ -145,6 +153,9 @@ export default {
       console.log(newVal);
       this.pageItem.curpage = 1;
       this.pageItem.type = "dong";
+      this.sortFilter = "none";
+      this.dongSortType = null;
+      this.dongSortOrder = null;
       const CSRF_TOKEN = localStorage.getItem("accessToken");
       if (CSRF_TOKEN != null) {
         http
@@ -167,9 +178,7 @@ export default {
       }
       this.requestDongCommercial(newVal);
       http
-        .get(
-          "/api/v1/residences/positions?%EB%8F%99%EC%9D%B4%EB%A6%84=" + newVal
-        )
+        .get("/api/v1/residences/positions?dongName=" + newVal)
         .then((res) => {
           console.log(res.data);
           this.markerList = res.data;
@@ -181,6 +190,107 @@ export default {
     ...mapActions("search", [
       "requestDongCommercial",
     ]),
+    sort(res) {
+      console.log(res);
+      //NOTE: ids , 동 , 상세 중 현재 검색한 타입으로 정렬
+      const CSRF_TOKEN = localStorage.getItem("accessToken");
+      this.sortFilter = res.sortType;
+      if (this.pageItem.type == "ids") {
+        console.log("thisType", this.pageItem.type);
+        this.pageItem.curpage = 1;
+        this.pageItem.type = "ids";
+        this.requestForIds.sortOrder = res.sortOrder ? "asc" : "desc";
+        this.requestForIds.sortType = res.sortType;
+        if (CSRF_TOKEN != null) {
+          http
+            .post("/api/v1/residences/ids", this.requestForIds, {
+              headers: { Authorization: "Bearer " + CSRF_TOKEN },
+            })
+            .then((res) => {
+              this.resiList = res.data.residenceInfo;
+              this.pageItem.total = res.data.pageSize;
+              console.log("받아온데이터", this.resiList);
+            });
+        } else {
+          http
+            .post("/api/v1/residences/ids", this.requestForIds)
+            .then((res) => {
+              this.resiList = res.data.residenceInfo;
+              this.pageItem.total = res.data.pageSize;
+              console.log("받아온데이터", this.resiList);
+            });
+        }
+      } else if (this.pageItem.type == "dong") {
+        this.dongSortOrder = res.sortOrder ? "asc" : "desc";
+        this.dongSortType = res.sortType;
+        console.log("thisType", this.pageItem.type);
+        if (CSRF_TOKEN != null) {
+          http
+            .get(
+              "/api/v1/residences?dong=" +
+                this.moveDong +
+                "&pageNum=" +
+                "1" +
+                "&sortOrder=" +
+                this.dongSortOrder +
+                "&sortType=" +
+                this.dongSortType,
+              {
+                headers: { Authorization: "Bearer " + CSRF_TOKEN },
+              }
+            )
+            .then((res) => {
+              console.log("movemap", res.data);
+              this.pageItem.total = res.data.pageSize;
+              this.resiList = res.data.residenceInfo;
+            });
+        } else {
+          http
+            .get(
+              "/api/v1/residences?dong=" +
+                this.moveDong +
+                "&pageNum=" +
+                "1" +
+                "&sortOrder=" +
+                this.dongSortOrder +
+                "&sortType=" +
+                this.dongSortType
+            )
+            .then((res) => {
+              console.log("movemap", res.data);
+              this.pageItem.total = res.data.pageSize;
+              this.resiList = res.data.residenceInfo;
+            });
+        }
+      } else if (this.pageItem.type == "details") {
+        console.log("thisType", this.pageItem.type);
+
+        this.pageItem.curpage = 1;
+        this.pageItem.type = "details";
+        this.detailFilter.sortOrder = res.sortOrder ? "asc" : "desc";
+        this.detailFilter.sortType = res.sortType;
+        console.log(this.detailFilter);
+        if (CSRF_TOKEN != null) {
+          http
+            .post("/api/v1/residences/detail", this.detailFilter, {
+              headers: { Authorization: "Bearer " + CSRF_TOKEN },
+            })
+            .then((res) => {
+              this.pageItem.total = res.data.pageSize;
+              this.resiList = res.data.residenceInfo;
+              console.log("sortDetails", this.resiList);
+            });
+        } else {
+          http
+            .post("/api/v1/residences/detail", this.detailFilter)
+            .then((res) => {
+              console.log("sortDetails", res.data.residenceInfo);
+              this.pageItem.total = res.data.pageSize;
+              this.resiList = res.data.residenceInfo;
+            });
+        }
+      }
+    },
     requestNextItem(itemnum) {
       console.log(itemnum);
       this.pageItem.curpage = itemnum;
@@ -194,6 +304,10 @@ export default {
                 this.moveDong +
                 "&pageNum=" +
                 itemnum,
+              +"&sortOrder=" +
+                this.dongSortOrder +
+                "&sortType=" +
+                this.dongSortType,
               {
                 headers: { Authorization: "Bearer " + CSRF_TOKEN },
               }
@@ -205,7 +319,14 @@ export default {
         } else {
           http
             .get(
-              "/api/v1/residences?dong=" + this.moveDong + "&pageNum=" + itemnum
+              "/api/v1/residences?dong=" +
+                this.moveDong +
+                "&pageNum=" +
+                itemnum +
+                "&sortOrder=" +
+                this.dongSortOrder +
+                "&sortType=" +
+                this.dongSortType
             )
             .then((res) => {
               console.log("movemap", res.data);
@@ -371,9 +492,7 @@ export default {
         };
 
         this.$emit("moveJuso", move);
-        if(move.dong != null){
-          this.moveDong = move.dong;
-        }
+        this.moveDong=move.dong;
         
       }
     },
@@ -384,6 +503,7 @@ export default {
       this.pageItem.type = "ids";
       this.requestForIds.residenceIds = [];
       this.pageItem.curpage = 1;
+      this.sortFilter = "none";
       for (var i = 0; i < clickcluster; i++) {
         this.requestForIds.residenceIds.push(cluster.getMarkers()[i].Fb);
       }

@@ -61,17 +61,17 @@
                                         {{info.residenceType.type}}
                                     </td>
                                     <td v-if="info.residenceType.id === 1">
-                                        전세가 : {{info.jeonseCost}}<br/>
-                                        관리비 : {{info.manageCost}}
+                                        전세가 : {{showPrice(info.jeonseCost)}}만원<br/>
+                                        관리비 : {{showPrice(info.manageCost)}}만원
                                     </td>
                                     <td v-if="info.residenceType.id === 2">
-                                        매매가 : {{info.cost}}<br/>
-                                        관리비 : {{info.manageCost}}
+                                        매매가 : {{showPrice(info.cost)}}만원<br/>
+                                        관리비 : {{showPrice(info.manageCost)}}만원
                                     </td>
                                     <td v-if="info.residenceType.id === 3">
-                                        보증금 : {{info.deposit}}<br/>
-                                        월세가 : {{info.wolseCost}}<br/>
-                                        관리비 : {{info.manageCost}}
+                                        보증금 : {{showPrice(info.deposit)}}만원<br/>
+                                        월세가 : {{showPrice(info.wolseCost)}}만원<br/>
+                                        관리비 : {{showPrice(info.manageCost)}}만원
                                     </td>
                                     <td>
                                         {{info.dong.gugun.si.siName}} {{info.dong.gugun.gugunName}} {{info.dong.dongName}}
@@ -430,6 +430,30 @@ export default {
       "requestGetResi",
       "requestModifyResi",
     ]),
+    showPrice(number) {
+      var inputNumber = number < 0 ? false : number;
+      var unitWords = ["", "억", "조", "경"];
+      var splitUnit = 10000;
+      var splitCount = unitWords.length;
+      var resultArray = [];
+      var resultString = "";
+
+      for (var i = 0; i < splitCount; i++) {
+        var unitResult =
+          (inputNumber % Math.pow(splitUnit, i + 1)) / Math.pow(splitUnit, i);
+        unitResult = Math.floor(unitResult);
+        if (unitResult > 0) {
+          resultArray[i] = unitResult;
+        }
+      }
+
+      for (var i = 0; i < resultArray.length; i++) {
+        if (!resultArray[i]) continue;
+        resultString = String(resultArray[i]) + unitWords[i] + resultString;
+      }
+
+      return resultString;
+    },
     clickModifyResi(items) {
       this.getResidenceInfo[this.modifyIndex].feature=[];
         for(var idx in this.residence.feature){
