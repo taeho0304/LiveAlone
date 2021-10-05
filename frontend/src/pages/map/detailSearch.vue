@@ -673,6 +673,8 @@ export default {
         startArea: this.roomSize[0],
         endArea: this.roomSize[0] == 50 ? 0 : this.roomSize[1],
         pageNum: 1,
+        sortOrder: null,
+        sortType: null,
       };
       //NOTE : 부모로 에밋
       console.log(mySave);
