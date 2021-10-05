@@ -1,5 +1,18 @@
 <template>
   <div id="app">
+    <card>
+      <div class="col-md-12">반경 500m내 상권🚀</div>
+      <div class="row col-md-12">
+        <div class="col-md-4">
+          편의점🏪 :{{ this.resiCommercial.convenienceCount }}
+        </div>
+        <div class="col-md-4">카페☕️ :{{ this.resiCommercial.cafeCount }}</div>
+        <div class="col-md-4">
+          헬스장🏋️ : {{ this.resiCommercial.healthCount }}
+        </div>
+      </div>
+    </card>
+
     <VueSlickCarousel
       v-bind="settings"
       style="margin-left: 4%; width: 500px; max-height: 245px"
@@ -87,6 +100,7 @@ export default {
   },
   props: {
     resiDetail: Object,
+    resiCommercial: Object,
   },
   components: {
     Card,

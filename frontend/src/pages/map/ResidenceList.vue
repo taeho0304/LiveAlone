@@ -173,7 +173,11 @@
         modal-classes="modal-lg"
         header-classes="justify-content-center"
       >
-        <ResiDetail v-if="resiDetail != null" v-bind:resiDetail="resiDetail" />
+        <ResiDetail
+          v-if="resiDetail != null"
+          v-bind:resiDetail="resiDetail"
+          v-bind:resiCommercial="resiCommercial"
+        />
       </modal>
     </template>
   </div>
@@ -208,6 +212,7 @@ export default {
       sortArea: true,
       sortLike: true,
       sortType: null,
+      resiCommercial: null,
     };
   },
   watch: {
@@ -332,6 +337,16 @@ export default {
       this.showResiDetail = !this.showResiDetail;
       this.resiDetail = this.resiList[res].residenceInfo;
       console.log(this.resiDetail);
+
+      http
+        .post(
+          "/api/v1/residences/residencecommercialcount?residenceId=" +
+            this.resiDetail.id
+        )
+        .then((res) => {
+          console.log(res.data.residenceCommercialCountModel);
+          this.resiCommercial = res.data.residenceCommercialCountModel[0];
+        });
     },
     delFavorite(idx) {
       var deldata = this.resiList[idx].residenceInfo.id;
