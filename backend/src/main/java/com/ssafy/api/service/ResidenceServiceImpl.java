@@ -61,7 +61,6 @@ public class ResidenceServiceImpl implements ResidenceService {
 
 	@Autowired
 	ResidenceWeightRepositorySupport residenceWeightRepositorySupport;
-	ResidenceWeightRepositorySupport residenceWeightRepositorySupport;
 
 	@Override
 	public ResidenceSearchPaging getResidenceDetails(ResidenceDetailGetReq residenceDetailGetReq, Authentication authentication) {
