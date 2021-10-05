@@ -5,9 +5,14 @@
       @maker="getMarkerData"
       @detailS="getDetailSearch"
       @move="getMoveData"
+      v-bind:moveMapDong="moveMapDong"
     />
 
-    <Map v-bind:marker="marker" v-bind:detailList="detailList" />
+    <Map
+      v-bind:marker="marker"
+      v-bind:detailFilter="detailFilter"
+      @moveJuso="moveJuso"
+    />
   </div>
 </template>
 
@@ -23,12 +28,17 @@ export default {
   data() {
     return {
       marker: null,
-      move:null,
-      detailList: [],
+      move: null,
+      detailFilter: null,
       isAvailable: false,
+      moveMapDong: null,
     };
   },
   methods: {
+    moveJuso(data) {
+      console.log("맵이동 emit", data);
+      this.moveMapDong = data;
+    },
     getMarkerData(data) {
       this.marker = data;
       console.log(this.marker);
@@ -38,8 +48,8 @@ export default {
       console.log(this.move);
     },
     getDetailSearch(data) {
-      this.detailList = data;
-      console.log("디테일검색 결과", data);
+      this.detailFilter = data;
+      console.log("디테일검색 필터", data);
     },
   },
 };

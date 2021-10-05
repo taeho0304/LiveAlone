@@ -101,6 +101,20 @@
           </div>
         </card>
       </div>
+      <template>
+        <div class="ml-auto mr-auto mt-2" style="justify-content: center">
+          <n-pagination
+            class="ml-auto mr-auto"
+            type="info"
+            :value="pageItem.curpage"
+            :pageCount="pageItem.total"
+            @input="requestNext"
+          >
+            <span slot="prev">Previous</span>
+            <span slot="next">Next</span></n-pagination
+          >
+        </div>
+      </template>
     </template>
     <template>
       <modal
@@ -109,7 +123,7 @@
         modal-classes="modal-lg"
         header-classes="justify-content-center"
       >
-        <ResiDetail :v-if="resiDetail != null" v-bind:resiDetail="resiDetail" />
+        <ResiDetail v-if="resiDetail != null" v-bind:resiDetail="resiDetail" />
       </modal>
     </template>
   </div>
@@ -117,11 +131,13 @@
 <script>
 import { Card } from "@/components";
 import Modal from "@/components/Modal.vue";
+
 import ResiDetail from "@/pages/map/ResiDetail.vue";
 import VueSimpleAlert from "vue-simple-alert";
 import VueStar from "vue-star";
 import http from "@/util/http-common";
 import { mapActions } from "vuex";
+
 export default {
   components: {
     Card,
@@ -129,7 +145,7 @@ export default {
     ResiDetail,
   },
   setup() {},
-  props: { resiList: Array },
+  props: { resiList: Array[Object], pageItem: Object },
   data() {
     return {
       showResiDetail: false,
@@ -138,6 +154,14 @@ export default {
   },
   watch: {},
   methods: {
+    requestNext(itemnum) {
+      console.log(itemnum);
+      this.$emit("requestNextItem", itemnum);
+    },
+    onChangePage(pageOfItems) {
+      // update page of items
+      this.pageOfItems = pageOfItems;
+    },
     ...mapActions("user", ["requsetFavoriteList"]),
     showResiName(name) {
       if (name == "") {
