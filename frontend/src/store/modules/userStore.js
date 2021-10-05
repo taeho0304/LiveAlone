@@ -11,8 +11,8 @@ export default {
     accessEstate: null,
     estateInfo: null,
     myfavoriteList: null,
-    residenceInfo:null,
-    totalPage:0,
+    residenceInfo: null,
+    totalPage: 0,
   },
   getters: {
     getAccessToken(state) {
@@ -33,11 +33,11 @@ export default {
     getMyfavoriteList(state) {
       return state.myfavoriteList;
     },
-    getResidenceInfo(state){
+    getResidenceInfo(state) {
       console.log(state.residenceInfo);
       return state.residenceInfo;
     },
-    getTotalPage(state){
+    getTotalPage(state) {
       return state.totalPage;
     }
   },
@@ -59,7 +59,7 @@ export default {
     FAVORITELIST(state, payload) {
       state.myfavoriteList = payload;
     },
-    RESIDENCEINFO(state,payload){
+    RESIDENCEINFO(state, payload) {
       console.log(payload);
       state.residenceInfo = payload.residenceInfo;
       state.totalPage = payload.pageSize;
@@ -77,6 +77,17 @@ export default {
           console.log("reqfavorite", res.data.userFavoriteList)
         })
       }
+    },
+    requestResiSaled(context, payload) {
+      console.log(payload);
+      http
+        .delete("/api/v1/residences?residenceId=" + payload)
+        .then(({ data }) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     requestRegister(context, payload) {
       let body = payload
@@ -302,16 +313,16 @@ export default {
         .then(({ data }) => {
           console.log(data);
           commit("user/RESIDENCEINFO", data, { root: true });
-          
+
         })
         .catch((err) => {
           console.log(err);
         });
     },
-    requestModifyResi({ commit },data){
+    requestModifyResi({ commit }, data) {
       console.log(data.residenceId);
       http
-        .patch("/api/v1/residences?residenceId="+data.residenceId, data)
+        .patch("/api/v1/residences?residenceId=" + data.residenceId, data)
         .then(({ data }) => {
           console.log(data);
         })
@@ -320,5 +331,5 @@ export default {
         });
     }
   },
-  
+
 }
