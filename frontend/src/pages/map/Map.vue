@@ -340,8 +340,12 @@ export default {
       console.log(status);
       if (status === kakao.maps.services.Status.OK) {
         const move = {
+          si: result[0].region_1depth_name,
+          gu: result[0].region_2depth_name,
           dong: result[0].region_3depth_name,
         };
+
+        this.$emit("moveJuso", move);
 
         this.moveDong = move.dong;
         console.log(move.dong);

@@ -5,9 +5,14 @@
       @maker="getMarkerData"
       @detailS="getDetailSearch"
       @move="getMoveData"
+      v-bind:moveMapDong="moveMapDong"
     />
 
-    <Map v-bind:marker="marker" v-bind:detailFilter="detailFilter" />
+    <Map
+      v-bind:marker="marker"
+      v-bind:detailFilter="detailFilter"
+      @moveJuso="moveJuso"
+    />
   </div>
 </template>
 
@@ -26,9 +31,14 @@ export default {
       move: null,
       detailFilter: null,
       isAvailable: false,
+      moveMapDong: null,
     };
   },
   methods: {
+    moveJuso(data) {
+      console.log("맵이동 emit", data);
+      this.moveMapDong = data;
+    },
     getMarkerData(data) {
       this.marker = data;
       console.log(this.marker);
