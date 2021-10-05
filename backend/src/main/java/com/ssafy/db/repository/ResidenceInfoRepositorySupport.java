@@ -68,6 +68,7 @@ public class ResidenceInfoRepositorySupport {
         ResidencePaging residencePaging = new ResidencePaging();
         residencePaging.setResidenceInfos(residences.offset((residenceDetailGetReq.getPageNum()-1)*pageSize).limit(pageSize).fetch());
         residencePaging.setPageSize((residences.fetchCount()-1)/10+1);
+
         return residencePaging;
     }
 
