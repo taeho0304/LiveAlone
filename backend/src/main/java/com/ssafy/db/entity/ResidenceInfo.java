@@ -15,6 +15,7 @@ import java.util.List;
 @Setter
 @EqualsAndHashCode
 public class ResidenceInfo extends BaseEntity{
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private ResidenceType residenceType;
 
