@@ -28,8 +28,8 @@ pipeline {
                                 sh 'docker images -f "dangling=true" -q \
                                         | xargs -r docker rmi'
 
-                                sh 'docker run -d --name front -p 80:80 front'
-                                sh 'docker run -d --name back -p 8080:8080 back'
+                                sh 'docker run -d --name front -p 80:80 -p 443:443 -v /home/ubuntu/cert:/usr/share/nginx/html/homepage/cert --network alone front'
+                                sh 'docker run -d --name back -p 8080:8080 --network alone back'
                         }
                 }
         }
