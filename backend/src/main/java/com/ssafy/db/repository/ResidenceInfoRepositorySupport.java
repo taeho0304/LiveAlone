@@ -60,8 +60,8 @@ public class ResidenceInfoRepositorySupport {
                 if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(qresidenceInfo.area.asc());
                 if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(qresidenceInfo.area.desc());
             }else if(residenceDetailGetReq.getSortType().equals("favorite")){
-                if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(quserFavorite.residenceInfo.id.count().asc());
-                if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(quserFavorite.residenceInfo.id.count().desc());
+                if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(qresidenceInfo.favoriteCnt.asc());
+                if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(qresidenceInfo.favoriteCnt.desc());
             }
         }
 
@@ -87,8 +87,8 @@ public class ResidenceInfoRepositorySupport {
                 if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(qresidenceInfo.area.asc());
                 if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(qresidenceInfo.area.desc());
             } else if(residenceDetailGetReq.getSortType().equals("favorite")){
-                if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(quserFavorite.residenceInfo.id.count().asc());
-                if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(quserFavorite.residenceInfo.id.count().desc());
+                if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(qresidenceInfo.favoriteCnt.asc());
+                if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(qresidenceInfo.favoriteCnt.desc());
             }
         }
 
@@ -177,8 +177,8 @@ public class ResidenceInfoRepositorySupport {
                 if(residenceIdsPostReq.getSortOrder().equals("asc")) residenceInfos.orderBy(qresidenceInfo.area.asc());
                 if(residenceIdsPostReq.getSortOrder().equals("desc")) residenceInfos.orderBy(qresidenceInfo.area.desc());
             } else if(residenceIdsPostReq.getSortType().equals("favorite")){
-                if(residenceIdsPostReq.getSortOrder().equals("asc")) residenceInfos.orderBy(quserFavorite.residenceInfo.id.count().asc());
-                if(residenceIdsPostReq.getSortOrder().equals("desc")) residenceInfos.orderBy(quserFavorite.residenceInfo.id.count().desc());
+                if(residenceIdsPostReq.getSortOrder().equals("asc")) residenceInfos.orderBy(qresidenceInfo.favoriteCnt.asc());
+                if(residenceIdsPostReq.getSortOrder().equals("desc")) residenceInfos.orderBy(qresidenceInfo.favoriteCnt.desc());
             }
         }
 

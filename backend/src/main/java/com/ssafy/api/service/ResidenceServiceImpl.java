@@ -231,6 +231,7 @@ public class ResidenceServiceImpl implements ResidenceService {
 		residenceInfo.setMyFloor(residence.getMyFloor());
 		residenceInfo.setName(residence.getName());
 		residenceInfo.setStructure(residence.getStructure());
+		residenceInfo.setFavoriteCnt(0);
 		return residenceInfo;
 	}
 

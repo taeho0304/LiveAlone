@@ -148,7 +148,7 @@ public class ResidenceController {
             @ApiResponse(code = 201, message = "성공"),
             @ApiResponse(code = 500, message = "실패")
     })
-    public ResponseEntity<? extends BaseResponseBody> createResidenceType( ResidencePostReq residence ) {
+    public ResponseEntity<? extends BaseResponseBody> createResidence( ResidencePostReq residence ) {
         try {
             residenceService.createResidence(residence);
             return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Success"));
