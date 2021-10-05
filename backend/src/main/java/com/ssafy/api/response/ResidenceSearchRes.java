@@ -1,7 +1,7 @@
 package com.ssafy.api.response;
 
-import com.ssafy.api.Model.ResidenceSearchPaging;
-import com.ssafy.api.Model.ResidenceModel;
+import com.ssafy.api.model.ResidenceSearchPaging;
+import com.ssafy.api.model.ResidenceModel;
 import com.ssafy.common.model.response.BaseResponseBody;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;

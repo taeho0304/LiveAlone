@@ -1,9 +1,9 @@
 package com.ssafy.api.service;
 
-import com.ssafy.api.Model.CommercialCountModel;
-import com.ssafy.api.Model.RecommendModel;
-import com.ssafy.api.Model.ResidencePaging;
-import com.ssafy.api.Model.ResidenceSearchPaging;
+import com.ssafy.api.model.CommercialCountModel;
+import com.ssafy.api.model.RecommendModel;
+import com.ssafy.api.model.ResidencePaging;
+import com.ssafy.api.model.ResidenceSearchPaging;
 import com.ssafy.api.model.CountModel;
 import com.ssafy.api.model.PositionModel;
 import com.ssafy.api.request.*;

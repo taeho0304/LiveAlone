@@ -1,7 +1,6 @@
 package com.ssafy.api.response;
 
-import com.ssafy.api.Model.ResidenceModel;
-import com.ssafy.api.Model.ResidencePaging;
+import com.ssafy.api.model.ResidencePaging;
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.ResidenceInfo;
 import io.swagger.annotations.ApiModel;

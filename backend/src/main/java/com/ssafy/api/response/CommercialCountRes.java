@@ -1,9 +1,7 @@
 package com.ssafy.api.response;
 
-import com.ssafy.api.Model.CommercialCountModel;
-import com.ssafy.api.model.CountModel;
+import com.ssafy.api.model.CommercialCountModel;
 import com.ssafy.common.model.response.BaseResponseBody;
-import com.ssafy.db.entity.CommercialCount;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.Setter;

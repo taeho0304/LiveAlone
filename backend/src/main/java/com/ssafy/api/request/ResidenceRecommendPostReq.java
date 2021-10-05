@@ -1,7 +1,7 @@
 package com.ssafy.api.request;
 
-import com.ssafy.api.Model.ResiMove;
-import com.ssafy.api.Model.ResiStore;
+import com.ssafy.api.model.ResiMove;
+import com.ssafy.api.model.ResiStore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;

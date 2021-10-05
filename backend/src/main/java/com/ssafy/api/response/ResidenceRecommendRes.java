@@ -1,9 +1,7 @@
 package com.ssafy.api.response;
 
-import com.ssafy.api.Model.RecommendModel;
-import com.ssafy.api.Model.ResidencePaging;
+import com.ssafy.api.model.RecommendModel;
 import com.ssafy.common.model.response.BaseResponseBody;
-import com.ssafy.db.entity.ResidenceInfo;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.Setter;

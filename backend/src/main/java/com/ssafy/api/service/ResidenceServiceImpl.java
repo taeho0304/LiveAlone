@@ -1,6 +1,6 @@
 package com.ssafy.api.service;
 
-import com.ssafy.api.Model.*;
+import com.ssafy.api.model.*;
 import com.ssafy.api.model.CountModel;
 import com.ssafy.api.model.PositionModel;
 import com.ssafy.api.request.*;

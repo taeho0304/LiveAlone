@@ -1,14 +1,12 @@
 package com.ssafy.api.controller;
 
-import com.ssafy.api.Model.*;
+import com.ssafy.api.model.*;
 import com.ssafy.api.model.CountModel;
 import com.ssafy.api.model.PositionModel;
 import com.ssafy.api.request.*;
 import com.ssafy.api.response.*;
 import com.ssafy.api.service.ResidenceService;
 import com.ssafy.common.model.response.BaseResponseBody;
-import com.ssafy.db.entity.CommercialCount;
-import com.ssafy.db.entity.ResidenceInfo;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.ssafy.api.Model;
+package com.ssafy.api.model;
 
 import com.ssafy.db.entity.ResidenceInfo;
 import lombok.Getter;
@@ -8,6 +8,7 @@ import lombok.Setter;
 @RequiredArgsConstructor
 @Getter
 @Setter
-public class RecommendModel extends ResidenceModel{
-    double totalWeight;
+public class ResidenceModel {
+    ResidenceInfo residenceInfo;
+    boolean isPresent;
 }
