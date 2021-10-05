@@ -229,7 +229,7 @@ public class ResidenceController {
             @ApiResponse(code = 500, message = "실패")
     })
     public ResponseEntity<ResidenceCommercialRes> getResidenceCommercial(
-            @RequestParam(value = "매물 id") long residenceId) {
+            @RequestParam long residenceId) {
         try {
             List<ResidenceCommercialCountModel> residenceCommercialCount = residenceService.getResidenceCommercial(residenceId);
             return ResponseEntity.status(200).body(ResidenceCommercialRes.of(residenceCommercialCount));
