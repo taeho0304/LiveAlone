@@ -122,7 +122,7 @@ public class ResidenceServiceImpl implements ResidenceService {
 	}
 
 	@Override
-	public void patchResidence(ResidencePatchReq residence, long residenceId) throws IOException {
+	public void patchResidence(ResidencePatchReq residence, long residenceId){
 		ResidenceInfo residenceInfo = residenceInfoRepository.findById(residenceId).get();
 		residenceInfoRepository.save(setPatchResidence(residenceInfo,residence));
 	}
@@ -133,6 +133,9 @@ public class ResidenceServiceImpl implements ResidenceService {
 		residenceInfo.setWolseCost(residence.getWolseCost());
 		residenceInfo.setManageCost(residence.getManageCost());
 		residenceInfo.setName(residence.getName());
+
+		if(residence.getFeature() != null)
+			residenceInfo.setFeature(setFeature(residence.getFeature()));
 		return residenceInfo;
 	}
 

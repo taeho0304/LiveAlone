@@ -19,7 +19,7 @@ import java.util.List;
 @ToString
 @ApiModel("ResidencePatchReq")
 public class ResidencePatchReq {
-	@ApiModelProperty(name="매물 ㅑㅇ", example="1")
+	@ApiModelProperty(name="매물 id", example="1")
 	Long residenceId;
 	@ApiModelProperty(name="매물 툭징", example="주차가능")
 	List<String> feature;
