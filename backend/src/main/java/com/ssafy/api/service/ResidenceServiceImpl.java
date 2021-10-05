@@ -235,6 +235,7 @@ public class ResidenceServiceImpl implements ResidenceService {
 		residenceInfo.setName(residence.getName());
 		residenceInfo.setStructure(residence.getStructure());
 		residenceInfo.setFavoriteCnt(0);
+		residenceInfo.setSale(false);
 		return residenceInfo;
 	}
 
@@ -266,31 +267,22 @@ public class ResidenceServiceImpl implements ResidenceService {
 	public void deleteResidence(Long residenceId) {
 		ResidenceInfo residenceInfo = residenceInfoRepository.findById(residenceId).get();
 
-		System.out.println(residenceInfo.getImageUrl().size());
-		//모든 연관관계를 끊어야 된다..
-
-		//imageUrl 연관관계 삭제 (ManyToMany)
-		for (ImageUrl imageUrl : residenceInfo.getImageUrl()){
-			System.out.println(imageUrl.getUrl());
-			residenceInfo.setImageUrl(null);
-		}
-
-		//feature 연관관계 삭제 (ManyToMany)
-		System.out.println("feature"+residenceInfo.getFeature().size());
-		for (Feature feature : residenceInfo.getFeature())
-			residenceInfo.setFeature(null);
-
-		//Dong null로 표시
-		residenceInfo.setDong(null);
-		//estateInfo null로 표시
-		residenceInfo.setEstateInfo(null);
-		//ResidenceCategory null
-		residenceInfo.setResidenceCategory(null);
-		//ResidenceType
-		residenceInfo.setResidenceType(null);
-
+//		for (ImageUrl imageUrl : residenceInfo.getImageUrl()){
+//			System.out.println(imageUrl.getUrl());
+//			residenceInfo.setImageUrl(null);
+//		}
+//
+//		for (Feature feature : residenceInfo.getFeature())
+//			residenceInfo.setFeature(null);
+//
+//
+//		residenceInfo.setDong(null);
+//		residenceInfo.setEstateInfo(null);
+//		residenceInfo.setResidenceCategory(null);
+//		residenceInfo.setResidenceType(null);
+		residenceInfo.setSale(true);
 		residenceInfoRepository.save(residenceInfo);
-		residenceInfoRepository.deleteById(residenceId);
+//		residenceInfoRepository.deleteById(residenceId);
 
 	}
 

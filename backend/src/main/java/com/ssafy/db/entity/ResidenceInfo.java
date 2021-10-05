@@ -49,4 +49,5 @@ public class ResidenceInfo extends BaseEntity{
     String buildingFloor; // 층
     String direction;
     long favoriteCnt;
+    boolean sale;
 }
