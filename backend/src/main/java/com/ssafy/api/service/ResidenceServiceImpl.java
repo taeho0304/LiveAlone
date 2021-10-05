@@ -240,11 +240,7 @@ public class ResidenceServiceImpl implements ResidenceService {
 		//imageUrl 연관관계 삭제 (ManyToMany)
 		for (ImageUrl imageUrl : residenceInfo.getImageUrl()){
 			System.out.println(imageUrl.getUrl());
-//			imageUrl.removeResidence(residenceInfo);
-//			residenceInfo.removeUrl(imageUrl);
 			residenceInfo.setImageUrl(null);
-//			imageUrl.setResidenceInfos(null);
-			//residenceInfo.getImageUrl().remove(imageUrl);
 		}
 
 		//feature 연관관계 삭제 (ManyToMany)
