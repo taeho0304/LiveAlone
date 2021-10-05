@@ -58,7 +58,7 @@ public class JwtTokenUtil {
             token.put("name", user.getUserName());
             token.put("isManager",String.valueOf(user.getIsManger()));
             if(user.getEstateInfo() != null) {
-                token.put("isEstate",user.getEstateInfo().getName());
+                token.put("isEstate",Long.toString(user.getEstateInfo().getId()));
             }
             else {
                 token.put("isEstate","null");

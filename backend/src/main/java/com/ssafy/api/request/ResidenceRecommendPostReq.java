@@ -29,7 +29,7 @@ public class ResidenceRecommendPostReq {
 	@ApiModelProperty(name="최대 보증금", example="0")
 	int resiDeposit;
 	@ApiModelProperty(name="유저 ID", example="[{score:1, categoryId : 1}]")
-	List<ResiStore> resiStore;
+	Double resiStore;
 	@ApiModelProperty(name="유저 ID", example="[{score:1, categoryId : 3}]")
 	List<ResiMove> resiMove;
 }

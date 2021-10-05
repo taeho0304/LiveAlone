@@ -57,8 +57,8 @@ public class ResidenceInfoRepositorySupport {
         // 정렬
         if(residenceDetailGetReq.getSortType()!=null){
             if(residenceDetailGetReq.getSortType().equals("cost")){
-                if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(qresidenceInfo.cost.asc());
-                if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(qresidenceInfo.cost.desc());
+                if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(qresidenceInfo.wolseCost.asc(),qresidenceInfo.jeonseCost.asc(), qresidenceInfo.cost.asc());
+                if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(qresidenceInfo.wolseCost.desc(),qresidenceInfo.jeonseCost.desc(), qresidenceInfo.cost.desc());
             }
             if(residenceDetailGetReq.getSortType().equals("area")){
                 if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(qresidenceInfo.area.asc());
