@@ -86,7 +86,7 @@ public class ResidenceController {
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "실패")
     })
-    public ResponseEntity<PositionRes> getPositions( @RequestParam(value = "동이름") String dongName ) {
+    public ResponseEntity<PositionRes> getPositions( @RequestParam String dongName ) {
         try {
             List<PositionModel> positionModels = residenceService.getPosition(dongName);
             return ResponseEntity.status(200).body(PositionRes.of(positionModels));
