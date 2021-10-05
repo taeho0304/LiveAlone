@@ -308,6 +308,17 @@ export default {
           console.log(err);
         });
     },
+    requestModifyResi({ commit },data){
+      console.log(data.residenceId);
+      http
+        .patch("/api/v1/residences?residenceId="+data.residenceId, data)
+        .then(({ data }) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   },
   
 }

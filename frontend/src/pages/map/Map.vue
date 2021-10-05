@@ -14,14 +14,14 @@
 
     <div id="map" style="width: 100%; height: 100%"></div>
 
-    <div class="card temp card-neutral" size="" style="width: 300px;margin-top: 34.5%;margin-right: 7px; margin-bottom:0px">
+    <div v-if="isCount" class="card temp card-neutral" size="" style="width: 300px;margin-top: 34.5%;margin-right: 7px; margin-bottom:0px">
       <!----><!----><!----><!----><!---->
       <ul class="list-group list-group-flush">
-    <li class="list-group-item">Cras justo odio</li>
-    <li class="list-group-item">Dapibus ac facilisis in</li>
-    <li class="list-group-item">Vestibulum at eros</li>
-    <li class="list-group-item">Vestibulum at eros</li>
-  </ul>
+        <li class="list-group-item">우리동네 {{this.moveDong}} 상권🤳</li>
+        <li class="list-group-item">편의점🏪 : {{getDongCommercial[1] == null ? 0 : getDongCommercial[1].count}}</li>
+        <li class="list-group-item">카페☕️ : {{getDongCommercial[0] == null ? 0 : getDongCommercial[0].count}}</li>
+        <li class="list-group-item">헬스장🏋️ : {{getDongCommercial[2] == null ? 0 : getDongCommercial[2].count}}</li>
+      </ul>
       
     </div>
   </div>
@@ -32,6 +32,7 @@ import {  } from "@/components";
 import ResidenceList from "./ResidenceList.vue";
 import http from "@/util/http-common";
 import QnAResList from "@/pages/qna/QnAResult.vue";
+import { mapActions, mapGetters } from "vuex";
 export default {
   computed: {},
   components: {
@@ -41,7 +42,9 @@ export default {
   },
   name: "index",
   bodyClass: "index-page",
-  computed: {},
+  computed: {
+    ...mapGetters("search", ["getDongCommercial"]),
+  },
   mounted() {
     window.kakao && window.kakao.maps
       ? this.initMap()
@@ -49,6 +52,7 @@ export default {
   },
   data() {
     return {
+      isCount:false,
       isShow: false,
       isResiShow: false,
       isQnAshow: true,
@@ -71,6 +75,12 @@ export default {
         residenceIds: [],
         pageNum: 1,
       },
+
+      dong:{
+        convenienceCount:0,
+        cafeCount:0,
+        healthCount:0,
+      }
     };
   },
   props: {
@@ -130,6 +140,7 @@ export default {
       this.moveDong = newVal.dong;
     },
     moveDong: function (newVal) {
+      this.isCount=true;
       this.cluster.clear();
       console.log(newVal);
       this.pageItem.curpage = 1;
@@ -154,7 +165,7 @@ export default {
             this.resiList = res.data.residenceInfo;
           });
       }
-
+      this.requestDongCommercial(newVal);
       http
         .get(
           "/api/v1/residences/positions?%EB%8F%99%EC%9D%B4%EB%A6%84=" + newVal
@@ -167,6 +178,9 @@ export default {
   },
   created() {},
   methods: {
+    ...mapActions("search", [
+      "requestDongCommercial",
+    ]),
     requestNextItem(itemnum) {
       console.log(itemnum);
       this.pageItem.curpage = itemnum;
@@ -357,9 +371,10 @@ export default {
         };
 
         this.$emit("moveJuso", move);
-
-        this.moveDong = move.dong;
-        console.log(move.dong);
+        if(move.dong != null){
+          this.moveDong = move.dong;
+        }
+        
       }
     },
     temp(cluster) {

@@ -97,7 +97,7 @@
                                         </button>
                                     </td>
                                     <td class="action-cell">
-                                        <button class="btn btn-outline-primary" @click="clickModify()">
+                                        <button class="btn btn-outline-primary" @click="clickModify(info, index)">
                                             <i data-v-88002dec="" class="fa fa-edit"></i>
                                         </button>
                                     </td>
@@ -111,98 +111,180 @@
                           </table>
                         </div>
                         <VueModal v-model="showModal"
-                          title="매물 가격 수정"
+                          title="매물 수정"
                           modal-class="modal-lg"
                         >
                           <form novalidate>
                           <div class="row collections">
 
-                            <div style="padding-left: 5px; padding-right: 5px" class="col-md-6">
+                            <div class="col-md-6">
                               <h6 class="inputLabel">
-                                <label style="margin-bottom: 0px" for="name"><span>부동산 이름</span></label>
+                                <label style="margin-bottom: 0px" for="name"><span>매물 타입</span></label>
                               </h6>
                               <fg-input
                               class="input-lg"
-                              disabled
                               type="text"
-                              v-model="getUserInfo.user.estateInfo.name"
-                              name="userName"
+                              disabled
+                              v-model="residence.category"
                             />
                             </div>
-                            <div style="padding-left: 5px; padding-right: 5px" class="col-md-6">
+                            <div class="col-md-6">
                               <h6 class="inputLabel">
-                                <label style="margin-bottom: 0px" for="name"><span>부동산 이름</span></label>
+                                <label style="margin-bottom: 0px" for="name"><span>매물 유형</span></label>
                               </h6>
                               <fg-input
                               class="input-lg"
-                              disabled
                               type="text"
-                              v-model="getUserInfo.user.estateInfo.name"
-                              name="userName"
+                              disabled
+                              v-model="residence.type"
                             />
                             </div>
+                            <div class="col-md-4">
+                              <h6 class="inputLabel">
+                                <label style="margin-bottom: 0px" for="name"><span>보증금</span></label>
+                              </h6>
+                              <fg-input
+                              :disabled="!this.isMonth"
+                              class="input-lg"
+                              type="text"
+                              v-model="residence.deposit"
+                            />
+                            </div>
+                            <div class="col-md-4">
+                              <h6 class="inputLabel">
+                                <label style="margin-bottom: 0px" for="name"><span>{{residence.type}}가</span></label>
+                              </h6>
+                              <fg-input
+                              class="input-lg"
+                              type="text"
+                              v-model="residence.cost"
+                            />
+                            </div>
+                            <div class="col-md-4">
+                              <h6 class="inputLabel">
+                                <label style="margin-bottom: 0px" for="name"><span>관리비</span></label>
+                              </h6>
+                              <fg-input
+                              class="input-lg"
+                              type="text"
+                              v-model="residence.manage"
+                            />
+                            </div>
+                            <div class="col-md-6">
+                              <h6 class="inputLabel">
+                                <label style="margin-bottom: 0px" for="name"><span>이름</span></label>
+                              </h6>
+                              <fg-input
+                              class="input-lg"
+                              type="text"
+                              v-model="residence.name"
+                            />
+                            </div>
+                            <div class="col-md-2">
+                              <h6 class="inputLabel">
+                                <label style="margin-bottom: 0px" for="name"><span>매물 층수</span></label>
+                              </h6>
+                              <fg-input
+                              class="input-lg"
+                              type="text"
+                              disabled
+                              v-model="residence.myFloor"
+                            />
+                            </div>
+                            <div class="col-md-2">
+                              <h6 class="inputLabel">
+                                <label style="margin-bottom: 0px" for="name"><span>전체 층수</span></label>
+                              </h6>
+                              <fg-input
+                              class="input-lg"
+                              type="text"
+                              disabled
+                              v-model="residence.buildingFloor"
+                            />
+                            </div>
+                            <div class="col-md-2">
+                              <h6 class="inputLabel">
+                                <label style="margin-bottom: 0px" for="name"><span>매물 평수</span></label>
+                              </h6>
+                              <fg-input
+                              class="input-lg"
+                              type="text"
+                              disabled
+                              v-model="residence.area"
+                            />
+                            </div>
+                            <div class="col-md-6">
+                              <h6 class="inputLabel">
+                                <label style="margin-bottom: 0px" for="name"
+                                  ><span>방 구조</span></label
+                                >
+                              </h6>
+                              <fg-input
+                              class="input-lg"
+                              type="text"
+                              disabled
+                              v-model="residence.structureType"
+                            />
+                            </div>
+                            <div class="col-md-6">
+                              <h6 class="inputLabel">
+                                <label style="margin-bottom: 0px" for="name"><span>매물방향</span></label>
+                              </h6>
+                              <treeselect
+                                v-model="residence.direction"
+                                :options="directionList"
+                                placeholder="동, 서, 남, 북"
+                                style="border-radius: 10px; background: #edf2ff"
+                              />
+                            </div>
+                            
+                            <div class="col-md-12">
+                              <h6 class="inputLabel">
+                                <label style="margin-bottom: 0px" for="name"><span>상세정보</span></label>
+                              </h6>
+                              <treeselect
+                                v-model="residence.feature"
+                                :multiple="true"
+                                :options="featureList"
+                                placeholder="다중 선택 가능"
+                                style="border-radius: 10px; background: #edf2ff"
+                              />
+                            </div>
+                          </div>
+                          <div class="row collections mt-4">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4">
+                              <div class="text-center">
+                                <a
+                                  @click="clickModifyResi(residence)"
+                                  class="btn btn-info btn-round btn-lg btn-block"
+                                  >수정</a
+                                >
+                              </div>
+                            </div>
+
+                            <div class="col-md-4"></div>
                           </div>
                         </form>
                         </VueModal>
-                        <div class="data-table-info">
+                        <!-- <div class="data-table-info">
                             Showing 1 to 10 of {{this.getTotalPage}} entries
                         </div>
-                        <!-- <div class="data-table-pagination">
-                            <div class="pagination-search">
-                                <span>Go to page</span>
-                                <input max="31" min="1" type="number" class="form-control">
-                                    <button class="btn btn-primary">
-                                        GO
-                                    </button>
-                                </div>
+                        -->
+                        <div class="data-table-pagination">
                                 <ul class="pagination">
-                                    <li class="page-item disabled">
-                                        <span class="page-link">
-                                            Previous
-                                        </span>
-                                    </li>
-                                    <li class="page-item active">
-                                        <span class="page-link">
-                                            1
-                                        </span>
-                                    </li>
-                                    <li class="page-item">
-                                        <span class="page-link">
-                                            2
-                                        </span>
-                                    </li>
-                                    <li class="page-item">
-                                        <span class="page-link">
-                                            3
-                                        </span>
-                                    </li>
-                                    <li class="page-item">
-                                        <span class="page-link">
-                                            4
-                                        </span>
-                                    </li>
-                                    <li class="page-item">
-                                        <span class="page-link">
-                                            5
-                                        </span>
-                                    </li>
-                                    <li class="page-item disabled">
-                                        <span class="page-link">
-                                            ...
-                                        </span>
-                                    </li>
-                                    <li class="page-item">
-                                        <span class="page-link">
-                                            31
-                                        </span>
-                                    </li>
-                                    <li class="page-item">
-                                        <span class="page-link">
-                                            Next
-                                        </span>
-                                    </li>
+                                    <n-pagination
+                                    class="ml-auto mr-auto"
+                                    type="info"
+                                    :value="data.pageNum"
+                                    :pageCount="this.getTotalPage"
+                                    @input="requestNext"
+                                  >
+                                    <span slot="prev">Previous</span>
+                                    <span slot="next">Next</span>
+                                    </n-pagination>
                                 </ul>
-                            </div> -->
+                            </div>
 
                         </div>
                         <br></main>
@@ -247,14 +329,17 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import { Tabs, TabPane, FormGroupInput, Button, DropDown } from "@/components";
+import { Tabs, TabPane, FormGroupInput, } from "@/components";
 import VueModal from '@kouts/vue-modal'
 import '@kouts/vue-modal/dist/vue-modal.css'
+import Treeselect from "@riophae/vue-treeselect";
 export default {
   name: "App",
   data(){
     return{
       showModal: false,
+      isMonth:true,
+      modifyIndex:0,
       headers:[
         {name: "ID"},
         {name: "매물타입"},
@@ -273,20 +358,67 @@ export default {
         pageNum: 1
       },
       totalPage:null,
+      residence:{
+        id:null,
+        type:null,
+        category:null,
+        deposit:0,
+        cost:0,
+        manage:0,
+        name:null,
+        direction:null,
+        feature:[],
+        myFloor:null,
+        buildingFloor:null,
+        area:0,
+        structure:"",
+        structureType:"",
+      },
+      featureList: [
+        { id: "보증금조절가능", label: "보증금조절가능" },
+        { id: "주차가능", label: "주차가능" },
+        { id: "엘리베이터", label: "엘리베이터" },
+        { id: "단기가능", label: "단기가능" },
+        { id: "빌트인", label: "빌트인" },
+        { id: "발코니", label: "발코니" },
+        { id: "풀옵션", label: "풀옵션" },
+        { id: "보안/안전", label: "보안/안전" },
+        { id: "옵션 없음", label: "옵션 없음" },
+      ],
+      directionList: [
+        { id: "동", label: "동"},
+        { id: "서", label: "서"},
+        { id: "남", label: "남",
+          children: [
+            { id: "남동", label: "남동"},
+            { id: "남서", label: "남서"},
+          ],
+        },
+        { id: "북", label: "북",
+          children: [
+            { id: "북동", label: "북동"},
+            { id: "북서", label: "북서"},
+          ],
+        },
+      ],
     }
   },
   created(){
     this.init();
   },
   mounted(){
-    //this.init();
+    this.init();
   },
   components:{
     VueModal,
     [FormGroupInput.name]: FormGroupInput,
+    Treeselect,
   },
   computed: {
     ...mapGetters("user", ["getUserInfo","getResidenceInfo","getTotalPage"]),
+    get: function () {
+      return this.residence.direction === "" ? null : this.residence.direction;
+    },
   },
 
   methods: {
@@ -296,26 +428,158 @@ export default {
       "requestModify",
       "requestRegistResi",
       "requestGetResi",
+      "requestModifyResi",
     ]),
+    clickModifyResi(items) {
+      this.getResidenceInfo[this.modifyIndex].feature=[];
+        for(var idx in this.residence.feature){
+          var insert={
+            id:idx,
+            featureName:this.residence.feature[idx]
+          }
+          this.getResidenceInfo[this.modifyIndex].feature.push(insert);
+        }
+      console.log(items);
+      if(items.type==='매매'){
+        let modify={
+          residenceId:this.residence.id,
+          cost:parseInt(this.residence.cost),
+          manageCost:parseInt(this.residence.manage),
+          feature:this.residence.feature,
+          name:this.residence.name,
+          jeonseCost:0,
+          wolseCost:0,
+          deposit:0,
+        };
+        
+
+        this.getResidenceInfo[this.modifyIndex].manageCost=parseInt(this.residence.manage);
+        this.getResidenceInfo[this.modifyIndex].cost=parseInt(this.residence.cost);
+        this.getResidenceInfo[this.modifyIndex].name=this.residence.name;
+        
+        this.requestModifyResi(modify);
+      }else if(items.type==='전세'){
+        let modify={
+          residenceId:this.residence.id,
+          jeonseCost:parseInt(this.residence.cost),
+          manageCost:parseInt(this.residence.manage),
+          feature:this.residence.feature,
+          name:this.residence.name,
+          cost:0,
+          wolseCost:0,
+          deposit:0,
+        };
+        this.getResidenceInfo[this.modifyIndex].manageCost=parseInt(this.residence.manage);
+        this.getResidenceInfo[this.modifyIndex].jeonseCost=parseInt(this.residence.cost);
+        this.getResidenceInfo[this.modifyIndex].name=this.residence.name;
+        this.requestModifyResi(modify);
+      }else{
+        let modify={
+          residenceId:this.residence.id,
+          deposit:parseInt(this.residence.deposit),
+          wolseCost:parseInt(this.residence.cost),
+          manageCost:parseInt(this.residence.manage),
+          feature:this.residence.feature,
+          name:this.residence.name,
+          cost:0,
+          jeonseCost:0,
+        };
+        this.getResidenceInfo[this.modifyIndex].manageCost=parseInt(this.residence.manage);
+        this.getResidenceInfo[this.modifyIndex].deposit=parseInt(this.residence.deposit);
+        this.getResidenceInfo[this.modifyIndex].wolseCost=parseInt(this.residence.cost);
+        this.getResidenceInfo[this.modifyIndex].name=this.residence.name;
+
+        this.requestModifyResi(modify);
+
+      }
+      
+      
+      this.showModal=false;
+
+
+      this.$fire({
+        type: "success",
+        title: "수정 완료",
+        text: "매물정보가 수정되었습니다.",
+
+        // footer: '<a href="">Why do I have this issue?</a>'
+      });
+      
+    },
+    requestNext(itemnum) {
+      console.log(itemnum);
+      this.data.pageNum = itemnum;
+      this.requestGetResi(this.data);
+    },
+    onChangePage(pageOfItems) {
+      // update page of items
+      this.pageOfItems = pageOfItems;
+    },
     init(){
       this.requestGetResi(this.data)
     },
     clickDetail(data){
-      var detail="";
-      for(var idx in data.feature){
+      var detail="<strong>옵션</strong><br>";
+      for(var idx in data.feature){ 
         detail+=data.feature[idx].featureName+"<br>"
         console.log(data.feature[idx].featureName)
       }
+      
       console.log(detail)
       this.$fire({
         title: "상세정보",
         html: `${detail}`,
-
-        // footer: '<a href="">Why do I have this issue?</a>'
       });
     },
-    clickModify(){
+    clickModify(info, index){
+      this.modifyIndex=index;
+      console.log(info);
+      this.residence.id=info.id;
       this.showModal=true;
+      this.residence.category=info.residenceCategory.categoryName;
+      this.residence.type=info.residenceType.type;
+      this.residence.name=info.name;
+      this.residence.myFloor=info.myFloor;
+      this.residence.buildingFloor=info.buildingFloor;
+      this.residence.area=info.area+"평";
+      if(info.residenceType.type === '월세'){
+        this.isMonth=true;
+        this.residence.deposit=info.deposit;
+        this.residence.cost=info.wolseCost;
+        this.residence.manage=info.manageCost;
+      }else if(info.residenceType.type === '전세'){
+        this.isMonth=false;
+        this.residence.cost=info.jeonseCost;
+        this.residence.manage=info.manageCost;
+
+      }else if(info.residenceType.type === '매매'){
+        this.isMonth=false;
+        this.residence.cost=info.cost;
+        this.residence.manage=info.manageCost;
+      }
+      
+      if(info.residenceCategory.categoryName === '투룸'){
+        this.residence.structureType="투룸";
+        this.residence.structure=info.structure;
+      }else if(info.residenceCategory.categoryName === '쓰리룸 이상'){
+        this.residence.structureType="쓰리룸 이상";
+        this.residence.structure=info.structure;
+      }else{
+        if(info.structure === '분리형'){
+          this.residence.structureType="주방 분리형(1.5룸)";
+          this.residence.structure=info.structure;
+        }else{
+          this.residence.structureType=info.structure;
+          this.residence.structure=info.structure;
+        }
+        
+      }
+      console.log(info.direction);
+      for(var idx in info.feature){
+        this.residence.feature[idx]=info.feature[idx].featureName;
+      }
+      this.residence.direction=info.direction;
+      this.residence.name=info.name;
     },
     clickClose(){
       this.showModal=false;

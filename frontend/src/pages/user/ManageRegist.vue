@@ -320,7 +320,6 @@
           placeholder="동, 서, 남, 북"
           style="border-radius: 10px; background: #edf2ff"
         />
-        {{ get }}
       </div>
       <h6 class="col-md-12 inputLabel">
         <label style="margin-bottom: 0px" for="name"
@@ -359,7 +358,7 @@
           id="input-file"
           ref="images"
           type="file"
-          style="margin-left: -71px"
+          style="margin-left: -73px"
         />
       </div>
     </div>
