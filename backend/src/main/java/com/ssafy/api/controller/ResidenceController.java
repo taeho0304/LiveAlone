@@ -163,7 +163,8 @@ public class ResidenceController {
             @ApiResponse(code = 201, message = "성공"),
             @ApiResponse(code = 500, message = "실패")
     })
-    public ResponseEntity<? extends BaseResponseBody> patchType(ResidencePostReq residence, @RequestBody long residenceId) {
+    public ResponseEntity<? extends BaseResponseBody> patchType(
+            @RequestBody ResidencePatchReq residence, @RequestParam long residenceId) {
         try {
             residenceService.patchResidence(residence, residenceId);
             return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Success"));

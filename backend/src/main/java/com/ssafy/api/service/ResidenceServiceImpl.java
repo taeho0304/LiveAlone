@@ -65,6 +65,7 @@ public class ResidenceServiceImpl implements ResidenceService {
 	@Autowired
 	ResidenceCommercialCountRepositorySupport residenceCommercialCountRepositorySupport;
 
+
 	@Override
 	public ResidenceSearchPaging getResidenceDetails(ResidenceDetailGetReq residenceDetailGetReq, Authentication authentication) {
 		ResidenceSearchPaging residenceSearchPaging = new ResidenceSearchPaging();
@@ -99,6 +100,7 @@ public class ResidenceServiceImpl implements ResidenceService {
 		if (authentication != null)
 			userDetail = (UserDetail) authentication.getDetails();
 
+
 		for(ResidenceInfo residenceInfo : residencePaging.getResidenceInfos()){
 			ResidenceModel residenceModel = new ResidenceModel();
 			residenceModel.setResidenceInfo(residenceInfo);
@@ -120,9 +122,18 @@ public class ResidenceServiceImpl implements ResidenceService {
 	}
 
 	@Override
-	public void patchResidence(ResidencePostReq residence, long residenceId) throws IOException {
+	public void patchResidence(ResidencePatchReq residence, long residenceId) throws IOException {
 		ResidenceInfo residenceInfo = residenceInfoRepository.findById(residenceId).get();
-		residenceInfoRepository.save(setResidence(residenceInfo,residence));
+		residenceInfoRepository.save(setPatchResidence(residenceInfo,residence));
+	}
+
+	private ResidenceInfo setPatchResidence(ResidenceInfo residenceInfo, ResidencePatchReq residence) {
+		residenceInfo.setCost(residence.getCost());
+		residenceInfo.setJeonseCost(residence.getJeonseCost());
+		residenceInfo.setWolseCost(residence.getWolseCost());
+		residenceInfo.setManageCost(residence.getManageCost());
+		residenceInfo.setName(residence.getName());
+		return residenceInfo;
 	}
 
 	@Override
@@ -252,18 +263,26 @@ public class ResidenceServiceImpl implements ResidenceService {
 		ResidenceInfo residenceInfo = residenceInfoRepository.findById(residenceId).get();
 
 		System.out.println(residenceInfo.getImageUrl().size());
+		//모든 연관관계를 끊어야 된다..
 
+		//imageUrl 연관관계 삭제 (ManyToMany)
 		for (ImageUrl imageUrl : residenceInfo.getImageUrl()){
 			System.out.println(imageUrl.getUrl());
 			residenceInfo.setImageUrl(null);
 		}
 
+		//feature 연관관계 삭제 (ManyToMany)
+		System.out.println("feature"+residenceInfo.getFeature().size());
 		for (Feature feature : residenceInfo.getFeature())
 			residenceInfo.setFeature(null);
 
+		//Dong null로 표시
 		residenceInfo.setDong(null);
+		//estateInfo null로 표시
 		residenceInfo.setEstateInfo(null);
+		//ResidenceCategory null
 		residenceInfo.setResidenceCategory(null);
+		//ResidenceType
 		residenceInfo.setResidenceType(null);
 
 		residenceInfoRepository.save(residenceInfo);

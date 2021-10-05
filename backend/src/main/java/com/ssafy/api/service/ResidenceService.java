@@ -2,7 +2,6 @@ package com.ssafy.api.service;
 
 import com.ssafy.api.model.*;
 import com.ssafy.api.request.*;
-import com.ssafy.db.entity.ResidenceCommercialCount;
 import org.springframework.security.core.Authentication;
 
 import java.io.IOException;
@@ -30,7 +29,7 @@ public interface ResidenceService {
 
 	ResidencePaging getResidencesByEstateId(ResidenceEstateIdsPostReq residenceId);
 
-	void patchResidence(ResidencePostReq residence, long residenceId) throws IOException;
+	void patchResidence(ResidencePatchReq residence, long residenceId) throws IOException;
 
 	List<CommercialCountModel> getCommercialCount(String dongName);
 
