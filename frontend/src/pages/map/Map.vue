@@ -8,48 +8,29 @@
     </div>
 
     <div id="map" style="width: 100%; height: 100%"></div>
-    <ul id="category" v-show="isShow">
-      <li id="BK9" data-order="0">
-        <span class="category_bg bank"></span>
-        은행
-      </li>
-      <li id="MT1" data-order="1">
-        <span class="category_bg mart"></span>
-        마트
-      </li>
-      <li id="PM9" data-order="2">
-        <span class="category_bg pharmacy"></span>
-        약국
-      </li>
-      <li id="OL7" data-order="3">
-        <span class="category_bg oil"></span>
-        주유소
-      </li>
-      <li id="CE7" data-order="4">
-        <span class="category_bg cafe"></span>
-        카페
-      </li>
-      <li id="CS2" data-order="5">
-        <span class="category_bg store"></span>
-        편의점
-      </li>
-    </ul>
 
-    <n-button class="temp" type="neutral" round size="" @click="clickShow()">
-      <i class="now-ui-icons ui-1_zoom-bold"></i
-    ></n-button>
+    <div class="card temp card-neutral" size="" style="width: 300px;margin-top: 34.5%;margin-right: 7px; margin-bottom:0px">
+      <!----><!----><!----><!----><!---->
+      <ul class="list-group list-group-flush">
+    <li class="list-group-item">Cras justo odio</li>
+    <li class="list-group-item">Dapibus ac facilisis in</li>
+    <li class="list-group-item">Vestibulum at eros</li>
+    <li class="list-group-item">Vestibulum at eros</li>
+  </ul>
+      
+    </div>
   </div>
 </template>
 
 <script>
-import { Button } from "@/components";
+import {  } from "@/components";
 import ResidenceList from "./ResidenceList.vue";
 import http from "@/util/http-common";
 import QnAResList from "@/pages/qna/QnAResult.vue";
 export default {
   computed: {},
   components: {
-    [Button.name]: Button,
+
     ResidenceList,
     QnAResList,
   },
@@ -248,13 +229,10 @@ export default {
   padding-top: 0;
 }
 .temp {
-  position: absolute;
-  left: 50%;
-
-  transform: translate(-50%, -50%);
-
+  float: right;
+  transform: translate(0%, 0%);
   bottom: 0;
-  border-radius: 5px;
+  border-radius: 10px;
   border: 1px solid #909090;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
   background: #fff;

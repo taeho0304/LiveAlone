@@ -11,6 +11,8 @@ export default {
     accessEstate: null,
     estateInfo: null,
     myfavoriteList: null,
+    residenceInfo:null,
+    totalPage:0,
   },
   getters: {
     getAccessToken(state) {
@@ -30,6 +32,13 @@ export default {
     },
     getMyfavoriteList(state) {
       return state.myfavoriteList;
+    },
+    getResidenceInfo(state){
+      console.log(state.residenceInfo);
+      return state.residenceInfo;
+    },
+    getTotalPage(state){
+      return state.totalPage;
     }
   },
   mutations: {
@@ -49,6 +58,11 @@ export default {
     },
     FAVORITELIST(state, payload) {
       state.myfavoriteList = payload;
+    },
+    RESIDENCEINFO(state,payload){
+      console.log(payload);
+      state.residenceInfo = payload.residenceInfo;
+      state.totalPage = payload.pageSize;
     }
   },
   actions: {
@@ -90,7 +104,7 @@ export default {
             text: "로그인이 완료 되었습니다.🙌",
             type: "success",
           })
-          router.push('/search');
+          router.go(-1);
         })
         .catch((err) => {
 
@@ -258,11 +272,6 @@ export default {
       formData.append('residenceCategory', residence.residenceCategory);
       formData.append('residenceType', residence.residenceType);
       formData.append('structure', residence.structure);
-
-
-      // formData.append('feature', residence[variable]);
-      // formData.append('feature', residence[variable]);
-
       if (residence.feature.length > -1) {
         for (let i = 0; i < residence.feature.length; i++) {
           formData.append(`feature[${i}]`, residence.feature[i]);
@@ -286,10 +295,19 @@ export default {
           console.log(err);
         });
     },
-
-
-
+    requestGetResi({ commit }, data) {
+      console.log(data);
+      http
+        .post(`/api/v1/residences/estateIds`, data)
+        .then(({ data }) => {
+          console.log(data);
+          commit("user/RESIDENCEINFO", data, { root: true });
+          
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
-
-
+  
 }

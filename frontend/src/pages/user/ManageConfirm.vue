@@ -1,20 +1,212 @@
 <template>
   <div id="app">
-    <link
-      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-      rel="stylesheet"
-      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
-      crossorigin="anonymous"
-    />
-    <h1>VUE DATA TABLE</h1>
-    <main>
-      <h2>TABLE 1</h2>
-      <br />
-      <data-table v-bind="parametersTable1" @actionTriggered="handleAction" />
-      <br />
-      <br />
-    </main>
-  </div>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <main>
+            <br>
+                <div v-if="getResidenceInfo" class="data-table" actionmode="multiple" actions="view,Edit,Delete">
+                    <!-- <div class="data-table-per-page">
+                        <span>Show</span>
+                        <select>
+                            <option value="10">
+                                10
+                            </option>
+                            <option value="25">
+                                25
+                            </option>
+                            <option value="50">
+                                50
+                            </option>
+                            <option value="100">
+                                100
+                            </option>
+                        </select>
+                        <span>entries</span>
+                    </div> -->
+                    <div class="data-table-search-filter">
+                        <span>search:</span>
+                        <input type="text"></div>
+                        <div class="data-table-table">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <!-- <th data-sorting="" class="column sortable">
+                                          
+                                            <div class="column-content">
+                                                <span>Name</span><div class="data-table-sorting-icons">
+                                                    <div class="icon asc"></div>
+                                                    <div class="icon desc"></div>
+                                                </div>
+                                            </div>
+                                        </th>-->
+                                      
+                                    <th v-for="(header,index) in headers" :key="index" data-sorting="" class="column sortable">
+                                            <div class="column-content">
+                                                <span>{{header.name}}</span>
+                                                <div class="data-table-sorting-icons">
+                                                    
+                                                </div>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                  <tr v-for="(info, index) in getResidenceInfo" :key="index">
+                                    <td>
+                                        {{info.id}}
+                                    </td>
+                                    <td>
+                                        {{info.residenceCategory.categoryName}}
+                                    </td>
+                                    <td>
+                                        {{info.residenceType.type}}
+                                    </td>
+                                    <td v-if="info.residenceType.id === 1">
+                                        전세가 : {{info.jeonseCost}}<br/>
+                                        관리비 : {{info.manageCost}}
+                                    </td>
+                                    <td v-if="info.residenceType.id === 2">
+                                        매매가 : {{info.cost}}<br/>
+                                        관리비 : {{info.manageCost}}
+                                    </td>
+                                    <td v-if="info.residenceType.id === 3">
+                                        보증금 : {{info.deposit}}<br/>
+                                        월세가 : {{info.wolseCost}}<br/>
+                                        관리비 : {{info.manageCost}}
+                                    </td>
+                                    <td>
+                                        {{info.dong.gugun.si.siName}} {{info.dong.gugun.gugunName}} {{info.dong.dongName}}
+                                    </td>
+                                    <td>
+                                        {{info.name}}
+                                    </td>
+                                    <td>
+                                        {{info.direction}}
+                                    </td>
+                                    <td>
+                                        {{info.area}}평<br>
+                                        {{info.myFloor}}/{{info.buildingFloor}}
+                                    </td>
+                                    <!-- <td >
+                                        <div v-for="(feat,idx) in info.feature" :key="idx" >
+                                          {{feat.featureName}}
+                                        </div>
+                                    </td> -->
+                                    <td class="action-cell">
+                                        <button class="btn btn-outline-success" @click="clickDetail(info)">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                    </td>
+                                    <td class="action-cell">
+                                        <button class="btn btn-outline-primary" @click="clickModify()">
+                                            <i data-v-88002dec="" class="fa fa-edit"></i>
+                                        </button>
+                                    </td>
+                                    <td data-v-2cc91267="" class="action-cell">
+                                        <button data-v-436722bd="" data-v-2cc91267="" class="btn btn-outline-dark">
+                                            <i data-v-436722bd="" class="fa fa-trash"></i>
+                                        </button>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                          </table>
+                        </div>
+                        <VueModal v-model="showModal"
+                          title="매물 가격 수정"
+                          modal-class="modal-lg"
+                        >
+                          <form novalidate>
+                          <div class="row collections">
+
+                            <div style="padding-left: 5px; padding-right: 5px" class="col-md-6">
+                              <h6 class="inputLabel">
+                                <label style="margin-bottom: 0px" for="name"><span>부동산 이름</span></label>
+                              </h6>
+                              <fg-input
+                              class="input-lg"
+                              disabled
+                              type="text"
+                              v-model="getUserInfo.user.estateInfo.name"
+                              name="userName"
+                            />
+                            </div>
+                            <div style="padding-left: 5px; padding-right: 5px" class="col-md-6">
+                              <h6 class="inputLabel">
+                                <label style="margin-bottom: 0px" for="name"><span>부동산 이름</span></label>
+                              </h6>
+                              <fg-input
+                              class="input-lg"
+                              disabled
+                              type="text"
+                              v-model="getUserInfo.user.estateInfo.name"
+                              name="userName"
+                            />
+                            </div>
+                          </div>
+                        </form>
+                        </VueModal>
+                        <div class="data-table-info">
+                            Showing 1 to 10 of {{this.getTotalPage}} entries
+                        </div>
+                        <!-- <div class="data-table-pagination">
+                            <div class="pagination-search">
+                                <span>Go to page</span>
+                                <input max="31" min="1" type="number" class="form-control">
+                                    <button class="btn btn-primary">
+                                        GO
+                                    </button>
+                                </div>
+                                <ul class="pagination">
+                                    <li class="page-item disabled">
+                                        <span class="page-link">
+                                            Previous
+                                        </span>
+                                    </li>
+                                    <li class="page-item active">
+                                        <span class="page-link">
+                                            1
+                                        </span>
+                                    </li>
+                                    <li class="page-item">
+                                        <span class="page-link">
+                                            2
+                                        </span>
+                                    </li>
+                                    <li class="page-item">
+                                        <span class="page-link">
+                                            3
+                                        </span>
+                                    </li>
+                                    <li class="page-item">
+                                        <span class="page-link">
+                                            4
+                                        </span>
+                                    </li>
+                                    <li class="page-item">
+                                        <span class="page-link">
+                                            5
+                                        </span>
+                                    </li>
+                                    <li class="page-item disabled">
+                                        <span class="page-link">
+                                            ...
+                                        </span>
+                                    </li>
+                                    <li class="page-item">
+                                        <span class="page-link">
+                                            31
+                                        </span>
+                                    </li>
+                                    <li class="page-item">
+                                        <span class="page-link">
+                                            Next
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div> -->
+
+                        </div>
+                        <br></main>
+                    </div>
 </template>
 
 <style lang="css">
@@ -25,96 +217,113 @@
   text-align: center;
   color: #2c3e50;
 }
-main {
-  padding: 32px;
+.modal {
+  min-width: 300px;
+}
+@media (min-width: 480px) {
+  .modal.modal-sm {
+    max-width: 300px;
+  }
+}
+@media (min-width: 992px) {
+  .modal.modal-lg,
+  .modal.modal-xl {
+    max-width: 800px;
+  }
+}
+@media (min-width: 1200px) {
+  .modal.modal-xl {
+    max-width: 1140px;
+  }
+}
+.modal-footer {
+  padding: 15px 0px 0px 0px;
+  border-top: 1px solid #e5e5e5;
+  margin-left: -14px;
+  margin-right: -14px;
 }
 </style>
 
+
 <script>
-import users from "./data";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { mapActions, mapGetters } from "vuex";
+import { Tabs, TabPane, FormGroupInput, Button, DropDown } from "@/components";
+import VueModal from '@kouts/vue-modal'
+import '@kouts/vue-modal/dist/vue-modal.css'
 export default {
   name: "App",
-
+  data(){
+    return{
+      showModal: false,
+      headers:[
+        {name: "ID"},
+        {name: "매물타입"},
+        {name: "거래유형"},
+        {name: "매물가격"},
+        {name: "주소"},
+        {name: "이름"},
+        {name: "매물방향"},
+        {name: "매물정보"},
+        {name: "상세정보"},
+        {name: "Edit"},
+        {name: "Delete"},
+      ],
+      data:{
+        estateId: localStorage.getItem("accessEstate"),
+        pageNum: 1
+      },
+      totalPage:null,
+    }
+  },
+  created(){
+    this.init();
+  },
+  mounted(){
+    //this.init();
+  },
+  components:{
+    VueModal,
+    [FormGroupInput.name]: FormGroupInput,
+  },
   computed: {
-    parametersTable1() {
-      return {
-        data: [
-          {
-            id: 1,
-            name: "Prof. Seth Howell DVM",
-            email: "crystal.prosacco@example.org",
-            email_verified_at: "2012-02-19 13:28:17",
-            created_at: "2020-02-23 21:29:25",
-            updated_at: "2020-02-23 21:29:25",
-            gender: "Female",
-            suffix: "Jr.",
-            title: "Dr.",
-            username: "turner.brenden",
-            userAgent:
-              "Mozilla/5.0 (X11; Linux i686) AppleWebKit/5360 (KHTML, like Gecko) Chrome/40.0.868.0 Mobile Safari/5360",
-            creditCardType: "Visa",
-            creditCardNumber: "2514800271552232",
-            photo: "https://lorempixel.com/640/480/?18703",
-            info: "Occaecati aut rerum aliquam fugiat officia. Eveniet distinctio ut sapiente minus. Corporis omnis molestiae hic itaque neque voluptas.",
-            bio: "Tempora nam ratione inventore aspernatur. Est eius necessitatibus expedita rerum quos quod fuga. Nobis ut saepe itaque ullam. Similique possimus tempora assumenda. Aperiam quasi ratione veritatis placeat enim consequuntur error architecto. Aut unde quasi nostrum blanditiis totam et et. Impedit accusamus enim harum velit quam consequatur.",
-            city: "Hamillport",
-            state: "South Dakota",
-            streetName: "Mohr Mews",
-            country: "American Samoa",
-            timezone: "Europe/Vilnius",
-            job: "Recreational Therapist",
-            phone: "+15372887819",
-            company: "Doyle, Davis and Prohaska",
-          },
-          {
-            id: 2,
-            name: "Corine Kunde",
-            email: "kokuneva@example.org",
-            email_verified_at: "2003-12-07 12:05:58",
-            created_at: "2020-02-23 21:29:25",
-            updated_at: "2020-02-23 21:29:25",
-            gender: "Male",
-            suffix: "PhD",
-            title: "Prof.",
-            username: "archibald.bashirian",
-            userAgent:
-              "Opera/8.89 (X11; Linux i686; sl-SI) Presto/2.8.188 Version/10.00",
-            creditCardType: "Visa",
-            creditCardNumber: "4024007188333",
-            photo: "https://lorempixel.com/640/480/?41675",
-            info: "Voluptas provident voluptate quibusdam sit rem placeat. Rerum id perspiciatis atque nesciunt in nihil qui.",
-            bio: "Possimus enim consequatur esse. Laborum numquam veniam provident impedit. Aut eaque nam explicabo et tempore. Vero ut enim numquam rerum tempora repudiandae architecto. Minima voluptatem doloremque nobis perspiciatis omnis. Consequuntur qui et consequatur voluptatem qui. Officiis et quis est in cum.",
-            city: "North Orieburgh",
-            state: "New Jersey",
-            streetName: "Raynor Course",
-            country: "Mali",
-            timezone: "Indian/Mauritius",
-            job: "Forest and Conservation Technician",
-            phone: "1-817-455-8407",
-            company: "Hammes-Bergstrom",
-          },
-        ],
-        actionMode: "multiple",
-        columnKeys: [
-          "name",
-          "email",
-          "gender",
-          "country",
-          "job",
-          "city",
-          "created_at",
-          "photo",
-        ],
-      };
-    },
+    ...mapGetters("user", ["getUserInfo","getResidenceInfo","getTotalPage"]),
   },
 
   methods: {
+    ...mapActions("user", [
+      "requestUserInfo",
+      "requestDelete",
+      "requestModify",
+      "requestRegistResi",
+      "requestGetResi",
+    ]),
+    init(){
+      this.requestGetResi(this.data)
+    },
+    clickDetail(data){
+      var detail="";
+      for(var idx in data.feature){
+        detail+=data.feature[idx].featureName+"<br>"
+        console.log(data.feature[idx].featureName)
+      }
+      console.log(detail)
+      this.$fire({
+        title: "상세정보",
+        html: `${detail}`,
+
+        // footer: '<a href="">Why do I have this issue?</a>'
+      });
+    },
+    clickModify(){
+      this.showModal=true;
+    },
+    clickClose(){
+      this.showModal=false;
+    },
     handleAction(actionName, data) {
       console.log(actionName, data);
       window.alert("check out the console to see the logs");
-    },
-  },
+    }
+  }
 };
 </script>

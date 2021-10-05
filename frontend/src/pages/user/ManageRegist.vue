@@ -565,8 +565,6 @@ export default {
     findAddr() {
       new window.daum.Postcode({
         oncomplete: (data) => {
-          console.log(data);
-
           let fullRoadAddr = data.roadAddress; // 도로명 주소 변수
           let extraRoadAddr = ""; // 도로명 조합형 주소 변수
 
@@ -616,7 +614,6 @@ export default {
       });
       http.get("/api/v1/search/bargaintypes").then((res) => {
         this.typeList = res.data.residenceTypeList;
-        console.log(this.typeList);
       });
     },
   },

@@ -58,10 +58,10 @@ export default {
     ManageConfirm,
   },
   data: function () {
-    return {};
+    return {
+    };
   },
   computed: {
-    ...mapGetters("user", ["getUserInfo"]),
   },
   methods: {
     ...mapActions("user", [
@@ -72,7 +72,7 @@ export default {
     ]),
 
     init() {
-      this.requestUserInfo();
+      console.log("Manage.vue 1");
     },
   },
   created() {
