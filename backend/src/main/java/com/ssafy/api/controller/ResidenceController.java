@@ -1,14 +1,13 @@
 package com.ssafy.api.controller;
 
-import com.ssafy.api.Model.ResidencePaging;
-import com.ssafy.api.Model.ResidenceSearchPaging;
-import com.ssafy.api.Model.ResidenceModel;
+import com.ssafy.api.Model.*;
 import com.ssafy.api.model.CountModel;
 import com.ssafy.api.model.PositionModel;
 import com.ssafy.api.request.*;
 import com.ssafy.api.response.*;
 import com.ssafy.api.service.ResidenceService;
 import com.ssafy.common.model.response.BaseResponseBody;
+import com.ssafy.db.entity.CommercialCount;
 import com.ssafy.db.entity.ResidenceInfo;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +54,8 @@ public class ResidenceController {
             @ApiResponse(code = 500, message = "실패")
     })
     public ResponseEntity<ResidenceSearchRes> getResidences(
-            @RequestBody @ApiParam(value = "매물 아이디로 조회", required = true)ResidenceIdsPostReq residenceIdsPostReq, @ApiIgnore Authentication authentication) {
+            @RequestBody @ApiParam(value = "매물 아이디로 조회", required = true)ResidenceIdsPostReq residenceIdsPostReq,
+            @ApiIgnore Authentication authentication) {
         try {
             ResidenceSearchPaging rooms = residenceService.getResidencesById(residenceIdsPostReq, authentication);
             return ResponseEntity.status(200).body(ResidenceSearchRes.of(rooms));
@@ -187,6 +187,38 @@ public class ResidenceController {
             return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Success"));
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(500).body(BaseResponseBody.of(500, "fail"));
+        }
+    }
+
+    @GetMapping("/commercialcount")
+    @ApiOperation(value = "동별 상권 개수", notes = "동별 상권 개수")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "실패")
+    })
+    public ResponseEntity<CommercialCountRes> getCommercialCountByDongName( @RequestParam(value = "동이름") String dongName ) {
+        try {
+            List<CommercialCountModel> commercialCountModel = residenceService.getCommercialCount(dongName);
+            return ResponseEntity.status(200).body(CommercialCountRes.of(commercialCountModel));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(500).body(CommercialCountRes.of(500, "fail"));
+        }
+    }
+
+    @PostMapping("/recommend")
+    @ApiOperation(value = "매물 추천", notes = "매물을 가중치가 높은 순으로 추천한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "실패")
+    })
+    public ResponseEntity<ResidenceRecommendRes> getRecommend(
+            @RequestBody @ApiParam(value = "매물 추천", required = true) ResidenceRecommendPostReq residenceRecommendPostReq,
+            @ApiIgnore Authentication authentication) {
+        try {
+            List<RecommendModel> recommendModel = residenceService.getRecommendResidence(residenceRecommendPostReq, authentication);
+            return ResponseEntity.status(200).body(ResidenceRecommendRes.of(recommendModel));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(500).body(ResidenceRecommendRes.of(500, "fail"));
         }
     }
 

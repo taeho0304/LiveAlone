@@ -9,6 +9,7 @@ import com.ssafy.api.model.PositionModel;
 import com.ssafy.api.request.ResidenceDetailGetReq;
 import com.ssafy.api.request.ResidenceEstateIdsPostReq;
 import com.ssafy.api.request.ResidenceGetReq;
+import com.ssafy.api.request.ResidenceRecommendPostReq;
 import com.ssafy.db.entity.QResidenceInfo;
 import com.ssafy.db.entity.QUserFavorite;
 import com.ssafy.db.entity.ResidenceInfo;
@@ -123,5 +124,33 @@ public class ResidenceInfoRepositorySupport {
         residencePaging.setResidenceInfos(residenceInfos.offset((residenceEstateIdsPostReq.getPageNum()-1)*pageSize).limit(pageSize).fetch());
         residencePaging.setPageSize((residenceInfos.fetchCount()-1)/10+1);
         return residencePaging;
+    }
+
+    public List<ResidenceInfo> findRecommendResidence(ResidenceRecommendPostReq residenceRecommendPostReq) {
+        JPAQuery<ResidenceInfo> residenceInfos = jpaQueryFactory.select(qresidenceInfo).from(qresidenceInfo);
+
+        BooleanBuilder builder = new BooleanBuilder();
+        builder.or(qresidenceInfo.residenceType.id.eq(residenceRecommendPostReq.getResiType()));
+        for (int i = 0; i< residenceRecommendPostReq.getResiCategory().size(); i++)
+            builder.or(qresidenceInfo.residenceCategory.id.eq(residenceRecommendPostReq.getResiCategory().get(i)));
+
+        if (residenceRecommendPostReq.getResiType() == 1) {
+            if(residenceRecommendPostReq.getResiDeposit() > 0) builder.and(qresidenceInfo.deposit.loe(residenceRecommendPostReq.getResiDeposit()));
+            if(residenceRecommendPostReq.getResiCostStart() > 0) builder.and(qresidenceInfo.jeonseCost.goe(residenceRecommendPostReq.getResiCostStart()));
+            if(residenceRecommendPostReq.getResiCostEnd() > 0) builder.and(qresidenceInfo.jeonseCost.loe(residenceRecommendPostReq.getResiCostEnd()));
+        } else if(residenceRecommendPostReq.getResiType() == 2){
+            if(residenceRecommendPostReq.getResiCostStart() > 0) builder.and(qresidenceInfo.cost.goe(residenceRecommendPostReq.getResiCostStart()));
+            if(residenceRecommendPostReq.getResiCostEnd() > 0) builder.and(qresidenceInfo.cost.loe(residenceRecommendPostReq.getResiCostEnd()));
+        }else if(residenceRecommendPostReq.getResiType() == 3){
+            if(residenceRecommendPostReq.getResiCostStart() > 0) builder.and(qresidenceInfo.wolseCost.goe(residenceRecommendPostReq.getResiCostStart()));
+            if(residenceRecommendPostReq.getResiCostEnd() > 0) builder.and(qresidenceInfo.wolseCost.loe(residenceRecommendPostReq.getResiCostEnd()));
+        }
+
+
+        for(int i=0; i<residenceRecommendPostReq.getDong().size(); i++)
+            builder.or(qresidenceInfo.dong.id.eq(residenceRecommendPostReq.getDong().get(i)));
+        residenceInfos.where(builder);
+
+        return residenceInfos.fetch();
     }
 }

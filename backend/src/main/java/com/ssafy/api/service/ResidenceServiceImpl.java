@@ -1,8 +1,6 @@
 package com.ssafy.api.service;
 
-import com.ssafy.api.Model.ResidenceSearchPaging;
-import com.ssafy.api.Model.ResidenceModel;
-import com.ssafy.api.Model.ResidencePaging;
+import com.ssafy.api.Model.*;
 import com.ssafy.api.model.CountModel;
 import com.ssafy.api.model.PositionModel;
 import com.ssafy.api.request.*;
@@ -18,9 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  *	매물 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
@@ -59,6 +55,12 @@ public class ResidenceServiceImpl implements ResidenceService {
 
 	@Autowired
 	UserFavoriteRepositorySupport userFavoriteRepositorySupport;
+
+	@Autowired
+	CommercialCountRepositorySupport commercialCountRepositorySupport;
+
+	@Autowired
+	ResidenceWeightRepositorySupport residenceWeightRepositorySupport;
 
 	@Override
 	public ResidenceSearchPaging getResidenceDetails(ResidenceDetailGetReq residenceDetailGetReq, Authentication authentication) {
@@ -122,8 +124,62 @@ public class ResidenceServiceImpl implements ResidenceService {
 		residenceInfoRepository.save(setResidence(residenceInfo,residence));
 	}
 
-	private ResidenceInfo setResidence(ResidenceInfo residenceInfo, ResidencePostReq residence) throws IOException {
+	@Override
+	public List<CommercialCountModel> getCommercialCount(String dongName) {
+		List<CommercialCountModel> commercialCountModels = new ArrayList<>();
+		List<CommercialCount> commercialCounts = commercialCountRepositorySupport.findCommercialCountByDongName(dongName);
 
+		for (CommercialCount commercialCount : commercialCounts) {
+			CommercialCountModel commercialCountModel = new CommercialCountModel();
+			commercialCountModel.setCount(commercialCount.getCount());
+			commercialCountModel.setCommercialName(commercialCount.getCommercialCategory().getCategoryName());
+			commercialCountModels.add(commercialCountModel);
+		}
+		return commercialCountModels;
+	}
+
+	@Override
+	public List<RecommendModel> getRecommendResidence(ResidenceRecommendPostReq residenceRecommendPostReq, Authentication authentication) {
+		List<RecommendModel> recommendModels = new ArrayList<>();
+		List<ResidenceInfo> residenceInfos = residenceInfoRepositorySupport.findRecommendResidence(residenceRecommendPostReq);
+		UserDetail userDetail = null;
+		if (authentication != null)
+			userDetail = (UserDetail) authentication.getDetails();
+
+		for(ResidenceInfo residenceInfo : residenceInfos){
+			RecommendModel recommendModel = new RecommendModel();
+			recommendModel.setResidenceInfo(residenceInfo);
+			recommendModel.setTotalWeight(calTotalWeight(residenceInfo.getId(), residenceRecommendPostReq.getResiStore(), residenceRecommendPostReq.getResiMove()));
+			if (authentication != null)
+				recommendModel.setPresent(userFavoriteRepositorySupport.checkIsFavorite(userDetail.getUser().getId(), residenceInfo.getId()));
+			recommendModels.add(recommendModel);
+		}
+
+		Collections.sort(recommendModels, new Comparator<RecommendModel>() {
+			@Override
+			public int compare(RecommendModel o1, RecommendModel o2) {
+				return (int) (o1.getTotalWeight()-o2.getTotalWeight());
+			}
+		});
+		return recommendModels;
+	}
+
+	private double calTotalWeight(Long residenceId, List<ResiStore> resiStores, List<ResiMove> resiMoves) {
+		List<ResidenceWeight> residenceWeights = residenceWeightRepositorySupport.findWeightsByResidenceId(residenceId);
+
+		Map<Long, Integer> weight = new HashMap<>();
+		for(ResiStore resiStore : resiStores)
+			weight.put(resiStore.getCategoryId(), resiStore.getScore());
+		for(ResiMove resiMove : resiMoves)
+			weight.put(resiMove.getCategoryId(), resiMove.getScore());
+
+		double totalWeight = 0;
+		for (ResidenceWeight residenceWeight : residenceWeights)
+			totalWeight += (Double.parseDouble(residenceWeight.getWeight()) * weight.get(residenceWeight.getCommercialCategory().getId()));
+		return totalWeight;
+	}
+
+	private ResidenceInfo setResidence(ResidenceInfo residenceInfo, ResidencePostReq residence) throws IOException {
 		if(residence.getDong() != null)
 			residenceInfo.setDong(dongRepositorySupport.findDongByName(residence.getDong()));
 		if(residence.getThumbnails()!=null) {

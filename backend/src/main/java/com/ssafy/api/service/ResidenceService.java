@@ -1,12 +1,12 @@
 package com.ssafy.api.service;
 
+import com.ssafy.api.Model.CommercialCountModel;
+import com.ssafy.api.Model.RecommendModel;
 import com.ssafy.api.Model.ResidencePaging;
 import com.ssafy.api.Model.ResidenceSearchPaging;
-import com.ssafy.api.Model.ResidenceModel;
 import com.ssafy.api.model.CountModel;
 import com.ssafy.api.model.PositionModel;
 import com.ssafy.api.request.*;
-import com.ssafy.db.entity.ResidenceInfo;
 import org.springframework.security.core.Authentication;
 
 import java.io.IOException;
@@ -35,4 +35,8 @@ public interface ResidenceService {
 	ResidencePaging getResidencesByEstateId(ResidenceEstateIdsPostReq residenceId);
 
 	void patchResidence(ResidencePostReq residence, long residenceId) throws IOException;
+
+	List<CommercialCountModel> getCommercialCount(String dongName);
+
+	List<RecommendModel> getRecommendResidence(ResidenceRecommendPostReq residenceRecommendPostReq, Authentication authentication);
 }
