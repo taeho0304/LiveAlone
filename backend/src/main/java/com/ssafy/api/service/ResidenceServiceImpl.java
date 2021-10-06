@@ -156,11 +156,13 @@ public class ResidenceServiceImpl implements ResidenceService {
 	@Override
 	public List<RecommendModel> getRecommendResidence(ResidenceRecommendPostReq residenceRecommendPostReq, Authentication authentication) {
 		List<RecommendModel> recommendModels = new ArrayList<>();
+		List<RecommendModel> recommendModelReturn = new ArrayList<>();
 		List<ResidenceInfo> residenceInfos = residenceInfoRepositorySupport.findRecommendResidence(residenceRecommendPostReq);
 		UserDetail userDetail = null;
 		if (authentication != null)
 			userDetail = (UserDetail) authentication.getDetails();
 
+		System.out.println(residenceInfos.size());
 		for(ResidenceInfo residenceInfo : residenceInfos){
 			RecommendModel recommendModel = new RecommendModel();
 			recommendModel.setResidenceInfo(residenceInfo);
@@ -173,10 +175,20 @@ public class ResidenceServiceImpl implements ResidenceService {
 		Collections.sort(recommendModels, new Comparator<RecommendModel>() {
 			@Override
 			public int compare(RecommendModel o1, RecommendModel o2) {
-				return (int) (o1.getTotalWeight()-o2.getTotalWeight());
+				if (o2.getTotalWeight()-o1.getTotalWeight()>0)
+					return 1;
+				if (o2.getTotalWeight()-o1.getTotalWeight()==0)
+					return 0;
+				return -1;
 			}
 		});
-		return recommendModels;
+
+		for(int i=0; i<recommendModels.size(); i++){
+			if(i==10) break;
+			recommendModelReturn.add(recommendModels.get(i));
+		}
+
+		return recommendModelReturn;
 	}
 
 	@Override
@@ -199,7 +211,8 @@ public class ResidenceServiceImpl implements ResidenceService {
 
 		double totalWeight = 0;
 		for (int i=0; i<residenceWeights.size(); i++)
-			totalWeight += (Double.parseDouble(residenceWeights.get(i).getWeight()) * score.get(residenceWeights.get(i).getCommercialCategory().getId().intValue()));
+			totalWeight += (Double.parseDouble(residenceWeights.get(i).getWeight()) * score.get(residenceWeights.get(i).getCommercialCategory().getId().intValue()-1));
+
 		return totalWeight;
 	}
 

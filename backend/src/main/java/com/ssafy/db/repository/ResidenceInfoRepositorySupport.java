@@ -141,23 +141,30 @@ public class ResidenceInfoRepositorySupport {
         JPAQuery<ResidenceInfo> residenceInfos = jpaQueryFactory.select(qresidenceInfo).from(qresidenceInfo);
 
         BooleanBuilder builder = new BooleanBuilder();
-        builder.or(qresidenceInfo.residenceType.id.eq(residenceRecommendPostReq.getResiType()));
+
+        builder.and(qresidenceInfo.residenceType.id.eq(residenceRecommendPostReq.getResiType()));
+        residenceInfos.where(builder);
+
+        builder = new BooleanBuilder();
         for (int i = 0; i< residenceRecommendPostReq.getResiCategory().size(); i++)
             builder.or(qresidenceInfo.residenceCategory.id.eq(residenceRecommendPostReq.getResiCategory().get(i)));
+        residenceInfos.where(builder);
 
         if (residenceRecommendPostReq.getResiType() == 1) {
-            if(residenceRecommendPostReq.getResiDeposit() > 0) builder.and(qresidenceInfo.deposit.loe(residenceRecommendPostReq.getResiDeposit()));
             if(residenceRecommendPostReq.getResiCostStart() > 0) builder.and(qresidenceInfo.jeonseCost.goe(residenceRecommendPostReq.getResiCostStart()));
             if(residenceRecommendPostReq.getResiCostEnd() > 0) builder.and(qresidenceInfo.jeonseCost.loe(residenceRecommendPostReq.getResiCostEnd()));
         } else if(residenceRecommendPostReq.getResiType() == 2){
             if(residenceRecommendPostReq.getResiCostStart() > 0) builder.and(qresidenceInfo.cost.goe(residenceRecommendPostReq.getResiCostStart()));
             if(residenceRecommendPostReq.getResiCostEnd() > 0) builder.and(qresidenceInfo.cost.loe(residenceRecommendPostReq.getResiCostEnd()));
         }else if(residenceRecommendPostReq.getResiType() == 3){
+            if(residenceRecommendPostReq.getResiDepositStart() > 0) builder.and(qresidenceInfo.deposit.goe(residenceRecommendPostReq.getResiDepositStart()));
+            if(residenceRecommendPostReq.getResiDepositEnd() > 0) builder.and(qresidenceInfo.deposit.loe(residenceRecommendPostReq.getResiDepositEnd()));
             if(residenceRecommendPostReq.getResiCostStart() > 0) builder.and(qresidenceInfo.wolseCost.goe(residenceRecommendPostReq.getResiCostStart()));
             if(residenceRecommendPostReq.getResiCostEnd() > 0) builder.and(qresidenceInfo.wolseCost.loe(residenceRecommendPostReq.getResiCostEnd()));
         }
+        residenceInfos.where(builder);
 
-
+        builder = new BooleanBuilder();
         for(int i=0; i<residenceRecommendPostReq.getDong().size(); i++)
             builder.or(qresidenceInfo.dong.id.eq(residenceRecommendPostReq.getDong().get(i)));
         residenceInfos.where(builder);
