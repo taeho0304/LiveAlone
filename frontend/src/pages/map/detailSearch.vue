@@ -420,7 +420,7 @@ export default {
 
       if (parseInt(this.DepositeRange[0] / 100) == 0) {
         this.DrangeS = parseInt(this.DepositeRange[0] % 100) + "00만 원";
-      } else if (parseInt(this.rangeSlider[0] % 10) == 0) {
+      } else if (parseInt(this.DepositeRange[0] % 10) == 0) {
         this.DrangeS = parseInt(this.DepositeRange[0] / 100) + "억";
       } else {
         this.DrangeS =
