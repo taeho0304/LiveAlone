@@ -260,7 +260,7 @@ export default {
       this.requestUserInfo();
     },
     clickGu(guName, idx) {
-      http.get("/api/v1/search/dong" + "?dong=" + guName).then((res) => {
+      http.get("/api/v1/search/dong" + "?guGunName=" + guName).then((res) => {
         console.log(res.data.dongModelList);
         this.dongList = res.data.dongModelList;
       });
