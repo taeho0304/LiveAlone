@@ -648,8 +648,9 @@ export default {
       this.isNextButton=false;
     },
     ...mapActions("question", ["setQnARes"]),
-    setRes(data) {
+    setRes(data) {    
       this.setQnARes(data);
+
     },
   },
 };

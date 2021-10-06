@@ -79,7 +79,7 @@
           header-classes="card-header-warning"
           style="min-width: 300px; min-height: 170px; max-height: 170px"
         >
-          <div class="row" style="margin-rigth: 0">
+          <div class="row" style="margin-rigth: 0" @click="movethisResi(idx)">
             <div class="col-md-6" style="min-height: 160px; max-height: 160px">
               <img class="imgthum" :src="a.residenceInfo.imageUrl[0].url" />
             </div>
@@ -249,6 +249,17 @@ export default {
     },
   },
   methods: {
+    movethisResi(idx) {
+      console.log(
+        this.resiList[idx].residenceInfo.lat,
+        this.resiList[idx].residenceInfo.lon
+      );
+      var position = {
+        lat: this.resiList[idx].residenceInfo.lat,
+        lon: this.resiList[idx].residenceInfo.lon,
+      };
+      this.$emit("moveThisResi", position);
+    },
     SortByLike() {
       console.log("fafaa");
 

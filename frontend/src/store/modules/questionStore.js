@@ -35,13 +35,17 @@ export default {
                 });
         },
         setQnARes({ commit }, data) {
+
             http.post('/api/v1/residences/recommend', data)
-            .then(({ data }) => {
-                console.log(data)
-                commit("SETRES", data);     
-            }).catch((err) => {
-                console.log(err);
-            });
+                .then(({ data }) => {
+                    console.log(data.recommendModelList)
+                    commit("SETRES", data.recommendModelList);
+                }).catch((err) => {
+                    console.log(err);
+                });
+
+            // console.log("done")
+
             router.push('/search');
         }
     },
