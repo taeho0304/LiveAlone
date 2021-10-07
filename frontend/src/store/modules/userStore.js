@@ -299,7 +299,7 @@ export default {
             headers: { 'Content-Type': 'multipart/form-data' },
           })
         .then(({ data }) => {
-       
+          this.router.go();
         })
         .catch((err) => {
        

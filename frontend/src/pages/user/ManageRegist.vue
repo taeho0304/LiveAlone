@@ -69,7 +69,7 @@
     </div>
     <div class="row collections">
       <div style="padding-left: 5px; padding-right: 5px" class="col-md-12">
-        <label for="name"><span>매물 정보</span></label>
+        <label for="name"><span>매물 정보 : 모든 정보를 입력해주세요.</span></label>
         <hr style="margin-top: 0" />
       </div>
 
@@ -210,7 +210,6 @@
           v-model="residence.name"
           type="text"
           placeholder="매물 이름"
-          name="userId"
         >
         </fg-input>
       </div>
@@ -239,7 +238,6 @@
             {{ structureName }}
           </n-button>
           <ul
-            class="dropdown-scrollbar"
             v-for="(structures, index) in structureList"
             :key="index"
             v-show="structures.valid"
@@ -263,7 +261,6 @@
           v-model="residence.myFloor"
           type="text"
           placeholder="매물 층수"
-          name="userId"
         >
         </fg-input>
       </div>
@@ -279,15 +276,13 @@
           v-model="residence.buildingFloor"
           type="text"
           placeholder="전체 층수"
-          name="userId"
         >
         </fg-input>
       </div>
       <div style="padding-left: 5px; padding-right: 5px" class="col-md-3">
         <h6 class="inputLabel">
           <label style="margin-bottom: 0px" for="name"
-            ><span>매물 평수</span></label
-          >
+            ><span>매물 평수</span></label>
         </h6>
 
         <fg-input
@@ -295,7 +290,6 @@
           v-model="residence.area"
           type="text"
           placeholder="매물 평수"
-          name="userId"
         >
         </fg-input>
       </div>
@@ -510,12 +504,9 @@ export default {
       this.$fire({
         type: "info",
         title: "등록완료",
-        text: "adsf",
-
-        // footer: '<a href="">Why do I have this issue?</a>'
+        text: "매물등록이 완료되었습니다!",
       });
       this.requestRegistResi(this.residence);
-      this.$router.go();
     },
 
     clickStructure(items, index) {
