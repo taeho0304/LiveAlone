@@ -19,7 +19,6 @@ public class UserFavoriteRepositorySupport {
     private JPAQueryFactory jpaQueryFactory;
 
     QUserFavorite quserFavorite = QUserFavorite.userFavorite;
-    QImageUrl qImageUrl = QImageUrl.imageUrl;
 
     public List<UserFavorite> findByUserId(Long id) {
         List<UserFavorite> userFavorites = jpaQueryFactory.select(quserFavorite).from(quserFavorite)
@@ -35,7 +34,7 @@ public class UserFavoriteRepositorySupport {
     }
 
     @Transactional
-    public void deleteByIds(Long userResidenceId, Long userId) {
-        jpaQueryFactory.delete(quserFavorite).where(quserFavorite.user.id.eq(userId), quserFavorite.residenceInfo.id.eq(userResidenceId)).execute();
+    public void deleteByIds(Long residenceId, Long userId) {
+        jpaQueryFactory.delete(quserFavorite).where(quserFavorite.user.id.eq(userId), quserFavorite.residenceInfo.id.eq(residenceId)).execute();
     }
 }

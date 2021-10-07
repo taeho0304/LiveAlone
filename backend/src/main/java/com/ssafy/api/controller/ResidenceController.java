@@ -7,6 +7,7 @@ import com.ssafy.api.request.*;
 import com.ssafy.api.response.*;
 import com.ssafy.api.service.ResidenceService;
 import com.ssafy.common.model.response.BaseResponseBody;
+import com.ssafy.db.entity.ResidenceCommercialCount;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -85,7 +86,7 @@ public class ResidenceController {
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "실패")
     })
-    public ResponseEntity<PositionRes> getPositions( @RequestParam(value = "동이름") String dongName ) {
+    public ResponseEntity<PositionRes> getPositions( @RequestParam String dongName ) {
         try {
             List<PositionModel> positionModels = residenceService.getPosition(dongName);
             return ResponseEntity.status(200).body(PositionRes.of(positionModels));
@@ -147,7 +148,7 @@ public class ResidenceController {
             @ApiResponse(code = 201, message = "성공"),
             @ApiResponse(code = 500, message = "실패")
     })
-    public ResponseEntity<? extends BaseResponseBody> createResidenceType( ResidencePostReq residence ) {
+    public ResponseEntity<? extends BaseResponseBody> createResidence( ResidencePostReq residence ) {
         try {
             residenceService.createResidence(residence);
             return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Success"));
@@ -162,7 +163,8 @@ public class ResidenceController {
             @ApiResponse(code = 201, message = "성공"),
             @ApiResponse(code = 500, message = "실패")
     })
-    public ResponseEntity<? extends BaseResponseBody> patchType(ResidencePostReq residence, @RequestBody long residenceId) {
+    public ResponseEntity<? extends BaseResponseBody> patchResidence(
+            @RequestBody ResidencePatchReq residence, @RequestParam long residenceId) {
         try {
             residenceService.patchResidence(residence, residenceId);
             return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Success"));
@@ -194,7 +196,7 @@ public class ResidenceController {
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "실패")
     })
-    public ResponseEntity<CommercialCountRes> getCommercialCountByDongName( @RequestParam(value = "동이름") String dongName ) {
+    public ResponseEntity<CommercialCountRes> getCommercialCountByDongName( @RequestParam String dongName ) {
         try {
             List<CommercialCountModel> commercialCountModel = residenceService.getCommercialCount(dongName);
             return ResponseEntity.status(200).body(CommercialCountRes.of(commercialCountModel));
@@ -217,6 +219,22 @@ public class ResidenceController {
             return ResponseEntity.status(200).body(ResidenceRecommendRes.of(recommendModel));
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(500).body(ResidenceRecommendRes.of(500, "fail"));
+        }
+    }
+
+    @PostMapping("/residencecommercialcount")
+    @ApiOperation(value = "매물 주변 상권 개수", notes = "매물 주변 상권 개수를 출력한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "실패")
+    })
+    public ResponseEntity<ResidenceCommercialRes> getResidenceCommercial(
+            @RequestParam long residenceId) {
+        try {
+            List<ResidenceCommercialCountModel> residenceCommercialCount = residenceService.getResidenceCommercial(residenceId);
+            return ResponseEntity.status(200).body(ResidenceCommercialRes.of(residenceCommercialCount));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(500).body(ResidenceCommercialRes.of(500, "fail"));
         }
     }
 

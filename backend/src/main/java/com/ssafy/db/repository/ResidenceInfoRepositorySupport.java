@@ -60,14 +60,15 @@ public class ResidenceInfoRepositorySupport {
                 if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(qresidenceInfo.area.asc());
                 if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(qresidenceInfo.area.desc());
             }else if(residenceDetailGetReq.getSortType().equals("favorite")){
-                if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(quserFavorite.residenceInfo.id.count().asc());
-                if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(quserFavorite.residenceInfo.id.count().desc());
+                if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(qresidenceInfo.favoriteCnt.asc());
+                if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(qresidenceInfo.favoriteCnt.desc());
             }
         }
 
         ResidencePaging residencePaging = new ResidencePaging();
         residencePaging.setResidenceInfos(residences.offset((residenceDetailGetReq.getPageNum()-1)*pageSize).limit(pageSize).fetch());
         residencePaging.setPageSize((residences.fetchCount()-1)/10+1);
+
         return residencePaging;
     }
 
@@ -87,8 +88,8 @@ public class ResidenceInfoRepositorySupport {
                 if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(qresidenceInfo.area.asc());
                 if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(qresidenceInfo.area.desc());
             } else if(residenceDetailGetReq.getSortType().equals("favorite")){
-                if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(quserFavorite.residenceInfo.id.count().asc());
-                if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(quserFavorite.residenceInfo.id.count().desc());
+                if(residenceDetailGetReq.getSortOrder().equals("asc")) residences.orderBy(qresidenceInfo.favoriteCnt.asc());
+                if(residenceDetailGetReq.getSortOrder().equals("desc")) residences.orderBy(qresidenceInfo.favoriteCnt.desc());
             }
         }
 
@@ -140,23 +141,30 @@ public class ResidenceInfoRepositorySupport {
         JPAQuery<ResidenceInfo> residenceInfos = jpaQueryFactory.select(qresidenceInfo).from(qresidenceInfo);
 
         BooleanBuilder builder = new BooleanBuilder();
-        builder.or(qresidenceInfo.residenceType.id.eq(residenceRecommendPostReq.getResiType()));
+
+        builder.and(qresidenceInfo.residenceType.id.eq(residenceRecommendPostReq.getResiType()));
+        residenceInfos.where(builder);
+
+        builder = new BooleanBuilder();
         for (int i = 0; i< residenceRecommendPostReq.getResiCategory().size(); i++)
             builder.or(qresidenceInfo.residenceCategory.id.eq(residenceRecommendPostReq.getResiCategory().get(i)));
+        residenceInfos.where(builder);
 
         if (residenceRecommendPostReq.getResiType() == 1) {
-            if(residenceRecommendPostReq.getResiDeposit() > 0) builder.and(qresidenceInfo.deposit.loe(residenceRecommendPostReq.getResiDeposit()));
             if(residenceRecommendPostReq.getResiCostStart() > 0) builder.and(qresidenceInfo.jeonseCost.goe(residenceRecommendPostReq.getResiCostStart()));
             if(residenceRecommendPostReq.getResiCostEnd() > 0) builder.and(qresidenceInfo.jeonseCost.loe(residenceRecommendPostReq.getResiCostEnd()));
         } else if(residenceRecommendPostReq.getResiType() == 2){
             if(residenceRecommendPostReq.getResiCostStart() > 0) builder.and(qresidenceInfo.cost.goe(residenceRecommendPostReq.getResiCostStart()));
             if(residenceRecommendPostReq.getResiCostEnd() > 0) builder.and(qresidenceInfo.cost.loe(residenceRecommendPostReq.getResiCostEnd()));
         }else if(residenceRecommendPostReq.getResiType() == 3){
+            if(residenceRecommendPostReq.getResiDepositStart() > 0) builder.and(qresidenceInfo.deposit.goe(residenceRecommendPostReq.getResiDepositStart()));
+            if(residenceRecommendPostReq.getResiDepositEnd() > 0) builder.and(qresidenceInfo.deposit.loe(residenceRecommendPostReq.getResiDepositEnd()));
             if(residenceRecommendPostReq.getResiCostStart() > 0) builder.and(qresidenceInfo.wolseCost.goe(residenceRecommendPostReq.getResiCostStart()));
             if(residenceRecommendPostReq.getResiCostEnd() > 0) builder.and(qresidenceInfo.wolseCost.loe(residenceRecommendPostReq.getResiCostEnd()));
         }
+        residenceInfos.where(builder);
 
-
+        builder = new BooleanBuilder();
         for(int i=0; i<residenceRecommendPostReq.getDong().size(); i++)
             builder.or(qresidenceInfo.dong.id.eq(residenceRecommendPostReq.getDong().get(i)));
         residenceInfos.where(builder);
@@ -177,8 +185,8 @@ public class ResidenceInfoRepositorySupport {
                 if(residenceIdsPostReq.getSortOrder().equals("asc")) residenceInfos.orderBy(qresidenceInfo.area.asc());
                 if(residenceIdsPostReq.getSortOrder().equals("desc")) residenceInfos.orderBy(qresidenceInfo.area.desc());
             } else if(residenceIdsPostReq.getSortType().equals("favorite")){
-                if(residenceIdsPostReq.getSortOrder().equals("asc")) residenceInfos.orderBy(quserFavorite.residenceInfo.id.count().asc());
-                if(residenceIdsPostReq.getSortOrder().equals("desc")) residenceInfos.orderBy(quserFavorite.residenceInfo.id.count().desc());
+                if(residenceIdsPostReq.getSortOrder().equals("asc")) residenceInfos.orderBy(qresidenceInfo.favoriteCnt.asc());
+                if(residenceIdsPostReq.getSortOrder().equals("desc")) residenceInfos.orderBy(qresidenceInfo.favoriteCnt.desc());
             }
         }
 

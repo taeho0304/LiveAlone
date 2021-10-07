@@ -48,4 +48,6 @@ public class ResidenceInfo extends BaseEntity{
     String structure; // 방 구조
     String buildingFloor; // 층
     String direction;
+    long favoriteCnt;
+    boolean sale;
 }

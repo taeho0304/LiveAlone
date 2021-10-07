@@ -24,8 +24,10 @@ public class ResidenceRecommendPostReq {
 	int resiCostStart;
 	@ApiModelProperty(name="마지막 가격(월세, 전세, 매매)", example="0")
 	int resiCostEnd;
+	@ApiModelProperty(name="시작 보증금", example="0")
+	int resiDepositStart;
 	@ApiModelProperty(name="최대 보증금", example="0")
-	int resiDeposit;
+	int resiDepositEnd;
 	@ApiModelProperty(name="상권 가중치", example="0")
 	List<Double> score;
 

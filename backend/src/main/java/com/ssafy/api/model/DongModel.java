@@ -11,6 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 public class DongModel {
+    long id;
     double lat;
     double lon;
     String dongName;

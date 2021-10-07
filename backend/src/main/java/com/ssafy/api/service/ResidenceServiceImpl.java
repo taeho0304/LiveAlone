@@ -62,6 +62,10 @@ public class ResidenceServiceImpl implements ResidenceService {
 	@Autowired
 	ResidenceWeightRepositorySupport residenceWeightRepositorySupport;
 
+	@Autowired
+	ResidenceCommercialCountRepositorySupport residenceCommercialCountRepositorySupport;
+
+
 	@Override
 	public ResidenceSearchPaging getResidenceDetails(ResidenceDetailGetReq residenceDetailGetReq, Authentication authentication) {
 		ResidenceSearchPaging residenceSearchPaging = new ResidenceSearchPaging();
@@ -118,9 +122,21 @@ public class ResidenceServiceImpl implements ResidenceService {
 	}
 
 	@Override
-	public void patchResidence(ResidencePostReq residence, long residenceId) throws IOException {
+	public void patchResidence(ResidencePatchReq residence, long residenceId){
 		ResidenceInfo residenceInfo = residenceInfoRepository.findById(residenceId).get();
-		residenceInfoRepository.save(setResidence(residenceInfo,residence));
+		residenceInfoRepository.save(setPatchResidence(residenceInfo,residence));
+	}
+
+	private ResidenceInfo setPatchResidence(ResidenceInfo residenceInfo, ResidencePatchReq residence) {
+		residenceInfo.setCost(residence.getCost());
+		residenceInfo.setJeonseCost(residence.getJeonseCost());
+		residenceInfo.setWolseCost(residence.getWolseCost());
+		residenceInfo.setManageCost(residence.getManageCost());
+		residenceInfo.setName(residence.getName());
+
+		if(residence.getFeature() != null)
+			residenceInfo.setFeature(setFeature(residence.getFeature()));
+		return residenceInfo;
 	}
 
 	@Override
@@ -140,11 +156,13 @@ public class ResidenceServiceImpl implements ResidenceService {
 	@Override
 	public List<RecommendModel> getRecommendResidence(ResidenceRecommendPostReq residenceRecommendPostReq, Authentication authentication) {
 		List<RecommendModel> recommendModels = new ArrayList<>();
+		List<RecommendModel> recommendModelReturn = new ArrayList<>();
 		List<ResidenceInfo> residenceInfos = residenceInfoRepositorySupport.findRecommendResidence(residenceRecommendPostReq);
 		UserDetail userDetail = null;
 		if (authentication != null)
 			userDetail = (UserDetail) authentication.getDetails();
 
+		System.out.println(residenceInfos.size());
 		for(ResidenceInfo residenceInfo : residenceInfos){
 			RecommendModel recommendModel = new RecommendModel();
 			recommendModel.setResidenceInfo(residenceInfo);
@@ -157,10 +175,35 @@ public class ResidenceServiceImpl implements ResidenceService {
 		Collections.sort(recommendModels, new Comparator<RecommendModel>() {
 			@Override
 			public int compare(RecommendModel o1, RecommendModel o2) {
-				return (int) (o1.getTotalWeight()-o2.getTotalWeight());
+				if (o2.getTotalWeight()-o1.getTotalWeight()>0)
+					return 1;
+				if (o2.getTotalWeight()-o1.getTotalWeight()==0)
+					return 0;
+				return -1;
 			}
 		});
-		return recommendModels;
+
+		for(int i=0; i<recommendModels.size(); i++){
+			if(i==10) break;
+			recommendModelReturn.add(recommendModels.get(i));
+		}
+
+		return recommendModelReturn;
+	}
+
+	@Override
+	public List<ResidenceCommercialCountModel> getResidenceCommercial(long residenceId) {
+		List<ResidenceCommercialCount> residenceCommercialCounts = residenceCommercialCountRepositorySupport.findResidenceCommercialCountByResidenceId(residenceId);
+		List<ResidenceCommercialCountModel> residenceCommercialCountModels = new ArrayList<>();
+		for(ResidenceCommercialCount residenceCommercialCount : residenceCommercialCounts){
+			ResidenceCommercialCountModel residenceCommercialCountModel= new ResidenceCommercialCountModel();
+			residenceCommercialCountModel.setResidenceId(residenceCommercialCount.getResidenceInfo().getId());
+			residenceCommercialCountModel.setCafeCount(residenceCommercialCount.getCafeCount());
+			residenceCommercialCountModel.setConvenienceCount(residenceCommercialCount.getConvenienceCount());
+			residenceCommercialCountModel.setHealthCount(residenceCommercialCount.getHealthCount());
+			residenceCommercialCountModels.add(residenceCommercialCountModel);
+		}
+		return residenceCommercialCountModels;
 	}
 
 	private double calTotalWeight(Long residenceId, List<Double> score) {
@@ -168,7 +211,8 @@ public class ResidenceServiceImpl implements ResidenceService {
 
 		double totalWeight = 0;
 		for (int i=0; i<residenceWeights.size(); i++)
-			totalWeight += (Double.parseDouble(residenceWeights.get(i).getWeight()) * score.get(residenceWeights.get(i).getCommercialCategory().getId().intValue()));
+			totalWeight += (Double.parseDouble(residenceWeights.get(i).getWeight()) * score.get(residenceWeights.get(i).getCommercialCategory().getId().intValue()-1));
+
 		return totalWeight;
 	}
 
@@ -203,6 +247,8 @@ public class ResidenceServiceImpl implements ResidenceService {
 		residenceInfo.setMyFloor(residence.getMyFloor());
 		residenceInfo.setName(residence.getName());
 		residenceInfo.setStructure(residence.getStructure());
+		residenceInfo.setFavoriteCnt(0);
+		residenceInfo.setSale(false);
 		return residenceInfo;
 	}
 
@@ -234,31 +280,22 @@ public class ResidenceServiceImpl implements ResidenceService {
 	public void deleteResidence(Long residenceId) {
 		ResidenceInfo residenceInfo = residenceInfoRepository.findById(residenceId).get();
 
-		//System.out.println(residenceInfo.getImageUrl().size());
-		//모든 연관관계를 끊어야 된다..
-
-		//imageUrl 연관관계 삭제 (ManyToMany)
-		for (ImageUrl imageUrl : residenceInfo.getImageUrl()){
-
-			residenceInfo.setImageUrl(null);
-		}
-
-		//feature 연관관계 삭제 (ManyToMany)
-		//System.out.println("feature"+residenceInfo.getFeature().size());
-		for (Feature feature : residenceInfo.getFeature())
-			residenceInfo.setFeature(null);
-
-		//Dong null로 표시
-		residenceInfo.setDong(null);
-		//estateInfo null로 표시
-		residenceInfo.setEstateInfo(null);
-		//ResidenceCategory null
-		residenceInfo.setResidenceCategory(null);
-		//ResidenceType
-		residenceInfo.setResidenceType(null);
-
+//		for (ImageUrl imageUrl : residenceInfo.getImageUrl()){
+//			System.out.println(imageUrl.getUrl());
+//			residenceInfo.setImageUrl(null);
+//		}
+//
+//		for (Feature feature : residenceInfo.getFeature())
+//			residenceInfo.setFeature(null);
+//
+//
+//		residenceInfo.setDong(null);
+//		residenceInfo.setEstateInfo(null);
+//		residenceInfo.setResidenceCategory(null);
+//		residenceInfo.setResidenceType(null);
+		residenceInfo.setSale(true);
 		residenceInfoRepository.save(residenceInfo);
-		residenceInfoRepository.deleteById(residenceId);
+//		residenceInfoRepository.deleteById(residenceId);
 
 	}
 

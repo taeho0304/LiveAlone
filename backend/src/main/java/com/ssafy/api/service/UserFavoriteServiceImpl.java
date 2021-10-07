@@ -1,6 +1,7 @@
 package com.ssafy.api.service;
 
 import com.ssafy.common.auth.UserDetail;
+import com.ssafy.db.entity.ResidenceInfo;
 import com.ssafy.db.entity.UserFavorite;
 import com.ssafy.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  *	유저 관심 매물 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
@@ -37,12 +37,17 @@ public class UserFavoriteServiceImpl implements UserFavoriteService {
 	public void createFavoriteResidence(Long residenceId, Authentication authentication) {
 		UserDetail userDetail = (UserDetail) authentication.getDetails();
 		Boolean isFavorite = userFavoriteRepositorySupport.checkIsFavorite(userDetail.getUser().getId(), residenceId);
+
 		if(!isFavorite){
 			UserFavorite userFavorite = new UserFavorite();
 			userFavorite.setResidenceInfo(residenceInfoRepository.findById(residenceId).get());
 			userFavorite.setUser(userService.getUserByUserId(userDetail.getUsername()));
 			userFavoriteRepository.save(userFavorite);
 		}
+
+		ResidenceInfo residenceInfo = residenceInfoRepository.findById(residenceId).get();
+		residenceInfo.setFavoriteCnt(residenceInfo.getFavoriteCnt()+1);
+		residenceInfoRepository.save(residenceInfo);
 	}
 
 	@Override
@@ -53,9 +58,13 @@ public class UserFavoriteServiceImpl implements UserFavoriteService {
 	}
 
 	@Override
-	public void deleteFavoriteResidence(Long userFavoriteId, Authentication authentication) {
+	public void deleteFavoriteResidence(Long residenceId, Authentication authentication) {
+		ResidenceInfo residenceInfo = residenceInfoRepository.findById(residenceId).get();
+		residenceInfo.setFavoriteCnt(residenceInfo.getFavoriteCnt()-1);
+		residenceInfoRepository.save(residenceInfo);
+
 		UserDetail userDetail = (UserDetail) authentication.getDetails();
-		userFavoriteRepositorySupport.deleteByIds(userFavoriteId, userService.getUserByUserId(userDetail.getUsername()).getId() );
+		userFavoriteRepositorySupport.deleteByIds(residenceId, userService.getUserByUserId(userDetail.getUsername()).getId());
 	}
 
 	@Override
