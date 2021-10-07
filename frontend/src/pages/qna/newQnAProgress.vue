@@ -30,14 +30,14 @@
           "
           :title="this.Si"
         >
-          <p
+          <a
             class="dropdown-item"
             v-for="(items, index) in SiList"
             :key="index"
             @click="clickSi(items.name, index)"
           >
             {{ items.name }}
-          </p>
+          </a>
         </drop-down>
         <drop-down
           class="
@@ -50,14 +50,16 @@
           "
           :title="this.Gu"
         >
-          <p
-            class="dropdown-item"
-            v-for="(items, index) in GuList"
-            :key="index"
-            @click="clickGu(items, index)"
-          >
-            {{ items }}
-          </p>
+          <ul class="dropdown-scrollbar">
+            <p
+              class="dropdown-item"
+              v-for="(items, index) in GuList"
+              :key="index"
+              @click="clickGu(items, index)"
+            >
+              {{ items }}
+            </p>
+          </ul>
         </drop-down>
         <drop-down
           class="
@@ -70,14 +72,16 @@
           "
           :title="this.Dong"
         >
-          <p
-            class="dropdown-item"
-            v-for="(items, index) in dongList"
-            :key="index"
-            @click="clickDong(items, index)"
-          >
-            {{ items.dongName }}
-          </p>
+          <ul class="dropdown-scrollbar">
+            <p
+              class="dropdown-item"
+              v-for="(items, index) in dongList"
+              :key="index"
+              @click="clickDong(items, index)"
+            >
+              {{ items.dongName }}
+            </p>
+          </ul>
         </drop-down>
         <h6 v-if="isSecond" class="col-md-12 inputLabel">
           <label style="margin-bottom: 0px" for="name"
@@ -118,14 +122,16 @@
           "
           :title="this.Gu2"
         >
-          <p
-            class="dropdown-item"
-            v-for="(items, index) in GuList2"
-            :key="index"
-            @click="clickGu2(items, index)"
-          >
-            {{ items }}
-          </p>
+          <ul class="dropdown-scrollbar">
+            <p
+              class="dropdown-item"
+              v-for="(items, index) in GuList2"
+              :key="index"
+              @click="clickGu2(items, index)"
+            >
+              {{ items }}
+            </p>
+          </ul>
         </drop-down>
         <drop-down
           v-if="isSecond"
@@ -139,14 +145,16 @@
           "
           :title="this.Dong2"
         >
-          <p
-            class="dropdown-item"
-            v-for="(items, index) in dongList2"
-            :key="index"
-            @click="clickDong2(items, index)"
-          >
-            {{ items.dongName }}
-          </p>
+          <ul class="dropdown-scrollbar">
+            <p
+              class="dropdown-item"
+              v-for="(items, index) in dongList2"
+              :key="index"
+              @click="clickDong2(items, index)"
+            >
+              {{ items.dongName }}
+            </p>
+          </ul>
         </drop-down>
         <a
           v-if="isNext"
@@ -663,7 +671,6 @@ export default {
       }
 
       if (this.index == 4) {
-     
         this.setRes(this.recommend);
         return;
       }
