@@ -20,4 +20,7 @@ public class ResidenceCommercialCount extends BaseEntity{
     long cafeCount;
     long healthCount;
     long convenienceCount;
+    long subwayCount;
+    long busCount;
+    long bicycleCount;
 }

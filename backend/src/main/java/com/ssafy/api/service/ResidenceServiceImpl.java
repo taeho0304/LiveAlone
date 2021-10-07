@@ -65,6 +65,9 @@ public class ResidenceServiceImpl implements ResidenceService {
 	@Autowired
 	ResidenceCommercialCountRepositorySupport residenceCommercialCountRepositorySupport;
 
+	@Autowired
+	ResidenceCommercialPositionRepositorySupport residenceCommercialPositionRepositorySupport;
+
 
 	@Override
 	public ResidenceSearchPaging getResidenceDetails(ResidenceDetailGetReq residenceDetailGetReq, Authentication authentication) {
@@ -195,15 +198,35 @@ public class ResidenceServiceImpl implements ResidenceService {
 	public List<ResidenceCommercialCountModel> getResidenceCommercial(long residenceId) {
 		List<ResidenceCommercialCount> residenceCommercialCounts = residenceCommercialCountRepositorySupport.findResidenceCommercialCountByResidenceId(residenceId);
 		List<ResidenceCommercialCountModel> residenceCommercialCountModels = new ArrayList<>();
+
 		for(ResidenceCommercialCount residenceCommercialCount : residenceCommercialCounts){
 			ResidenceCommercialCountModel residenceCommercialCountModel= new ResidenceCommercialCountModel();
 			residenceCommercialCountModel.setResidenceId(residenceCommercialCount.getResidenceInfo().getId());
 			residenceCommercialCountModel.setCafeCount(residenceCommercialCount.getCafeCount());
 			residenceCommercialCountModel.setConvenienceCount(residenceCommercialCount.getConvenienceCount());
 			residenceCommercialCountModel.setHealthCount(residenceCommercialCount.getHealthCount());
+			residenceCommercialCountModel.setBusCount(residenceCommercialCount.getBusCount());
+			residenceCommercialCountModel.setBicycleCount(residenceCommercialCount.getBicycleCount());
+			residenceCommercialCountModel.setSubwayCount(residenceCommercialCount.getSubwayCount());
 			residenceCommercialCountModels.add(residenceCommercialCountModel);
 		}
+
 		return residenceCommercialCountModels;
+	}
+
+	@Override
+	public List<ResidenceCommercialPositionModel> getResidenceCommercialPosition(long residenceId) {
+		List<ResidenceCommercialPositionModel> residenceCommercialPositionModels = new ArrayList<>();
+		List<ResidenceCommercialPosition> residenceCommercialPositions = residenceCommercialPositionRepositorySupport.findCommercialPositionByResidenceId(residenceId);
+		for (ResidenceCommercialPosition residenceCommercialPosition:residenceCommercialPositions) {
+			if(residenceCommercialPosition.getCommercialInfo().getCommercialCategory().getCategoryName().equals("따릉이")){
+				ResidenceCommercialPositionModel residenceCommercialPositionModel = new ResidenceCommercialPositionModel();
+				residenceCommercialPositionModel.setLat(residenceCommercialPosition.getCommercialInfo().getLat());
+				residenceCommercialPositionModel.setLon(residenceCommercialPosition.getCommercialInfo().getLon());
+				residenceCommercialPositionModels.add(residenceCommercialPositionModel);
+			}
+		}
+		return residenceCommercialPositionModels;
 	}
 
 	private double calTotalWeight(Long residenceId, List<Double> score) {
