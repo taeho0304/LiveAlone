@@ -227,7 +227,6 @@ export default {
         this.sortArea = true;
         this.sortLike = true;
         this.clickCost = true;
-        //push event
         this.clickArea = false;
         this.clickLike = false;
       } else if (this.sortFilter == "area") {
