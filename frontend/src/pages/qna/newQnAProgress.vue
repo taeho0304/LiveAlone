@@ -179,7 +179,9 @@
             >{{ a }}
           </a>
         </div>
-        <h6 style="margin-top:8px; margin-bottom:0px;" v-if="isCost">매물에 대한 가격을 설정해주세요.</h6>
+        <h6 style="margin-top: 8px; margin-bottom: 0px" v-if="isCost">
+          매물에 대한 가격을 설정해주세요.
+        </h6>
         <div class="row col-md-12" v-if="isCost">
           <div class="col-md-5 ml-auto mr-auto">
             <p>{{ costStart }} ~</p>
@@ -199,27 +201,31 @@
           >
           </slider>
         </div>
-        <h6 style="margin-top:8px; margin-bottom:0px;" v-if="isMonth">매물에 대한 월세를 설정해주세요.</h6>
+        <h6 style="margin-top: 8px; margin-bottom: 0px" v-if="isMonth">
+          매물에 대한 월세를 설정해주세요.
+        </h6>
         <div class="row col-md-12" v-if="isMonth">
           <div class="col-md-5 ml-auto mr-auto">
-                <p>{{ wolseStart }} ~</p>
-              </div>
-              <div class="col-md-5 end">
-                <p>{{ wolseEnd }}</p>
-              </div>
-            </div>
-            <div class="col-md-8 ml-auto mr-auto" v-if="isMonth">
-              <slider
-                class="slider-info mt-4"
-                v-model="wolseRange"
-                :range="wrange"
-                :connect="true"
-                @input="changeWRange"
-                type="primary"
-              >
-              </slider>
-            </div>
-        <h6 style="margin-top:8px; margin-bottom:0px;" v-if="isMonth">매물에 대한 보증금을 설정해주세요.</h6>
+            <p>{{ wolseStart }} ~</p>
+          </div>
+          <div class="col-md-5 end">
+            <p>{{ wolseEnd }}</p>
+          </div>
+        </div>
+        <div class="col-md-8 ml-auto mr-auto" v-if="isMonth">
+          <slider
+            class="slider-info mt-4"
+            v-model="wolseRange"
+            :range="wrange"
+            :connect="true"
+            @input="changeWRange"
+            type="primary"
+          >
+          </slider>
+        </div>
+        <h6 style="margin-top: 8px; margin-bottom: 0px" v-if="isMonth">
+          매물에 대한 보증금을 설정해주세요.
+        </h6>
         <div class="row col-md-12" v-if="isMonth">
           <div class="col-md-5 ml-auto mr-auto">
             <p>{{ monthStart }} ~</p>
@@ -266,7 +272,7 @@
           </a>
         </div>
       </div>
-      <div v-if="index==1">
+      <div v-if="index == 1">
         <div class="container" v-for="(a, idx) in QnA[index].answer" :key="idx">
           <a
             @click="next(idx, index)"
@@ -279,61 +285,50 @@
             "
             >{{ a }}
           </a>
-          </div>
+        </div>
       </div>
-      <div v-if="index == 3 || index == 4">
+      <div v-if="index == 3">
         <div class="container" v-for="(a, idx) in QnA[index].answer" :key="idx">
-          <a
-            class="
-              col-md-6
-              ml-auto
-              my-4
-              mr-auto
-              btn btn-info btn-round btn-lg btn-block
-            "
-            >{{ a }}
-          </a>
-
-          <div class="row col-md-6 ml-auto mr-auto" style="margin-top: -14px">
-            <button
-              class="btn btn-info btn-icon btn-round ml-auto mr-auto"
-              value="1"
-              @click="clickScore(1, a)"
-            >
-              1
-            </button>
-            <button
-              class="btn btn-info btn-icon btn-round ml-auto mr-auto"
-              value="2"
-              @click="clickScore(2, a)"
-            >
-              2
-            </button>
-            <button
-              class="btn btn-info btn-icon btn-round ml-auto mr-auto"
-              value="3"
-              @click="clickScore(3, a)"
-            >
-              3
-            </button>
-            <button
-              class="btn btn-info btn-icon btn-round ml-auto mr-auto"
-              value="4"
-              @click="clickScore(4, a)"
-            >
-              4
-            </button>
-            <button
-              class="btn btn-info btn-icon btn-round ml-auto mr-auto"
-              value="5"
-              @click="clickScore(5, a)"
-            >
-              5
-            </button>
+          <div class="row mr-auto" style="margin-left: 30px">
+            <div class="col-md-3 ml-auto my-3 btn btn-info btn-lg">
+              {{ a }}
+            </div>
+            <div v-if="idx == 0" class="col-md-6 pt-1 my-3 mr-auto pl-0">
+              <RadioToggleButtons
+                v-model="recommend.score[1]"
+                :values="values"
+                color="#4bb5ff"
+                textColor="#000"
+                selectedTextColor="#fff"
+              />
+            </div>
+            <div v-if="idx == 1" class="col-md-6 pt-1 my-3 mr-auto pl-0">
+              <RadioToggleButtons
+                v-model="recommend.score[0]"
+                :values="values"
+                color="#4bb5ff"
+                textColor="#000"
+                selectedTextColor="#fff"
+              />
+            </div>
+            <div v-if="idx == 2" class="col-md-6 pt-1 my-3 mr-auto pl-0">
+              <RadioToggleButtons
+                v-model="recommend.score[5]"
+                :values="values"
+                color="#4bb5ff"
+                textColor="#000"
+                selectedTextColor="#fff"
+              />
+            </div>
           </div>
         </div>
+
         <a
-          v-if="isNextButton"
+          v-if="
+            recommend.score[0] != 0 &&
+            recommend.score[1] != 0 &&
+            recommend.score[5] != 0
+          "
           @click="next()"
           class="
             col-md-6
@@ -344,8 +339,50 @@
           "
           >다음
         </a>
+      </div>
+
+      <div v-if="index == 4">
+        <div class="container" v-for="(a, idx) in QnA[index].answer" :key="idx">
+          <div class="row mr-auto" style="margin-left: 30px">
+            <div class="col-md-3 ml-auto my-3 btn btn-info btn-lg">
+              {{ a }}
+            </div>
+            <div v-if="idx == 0" class="col-md-6 pt-1 my-3 mr-auto pl-0">
+              <RadioToggleButtons
+                v-model="recommend.score[2]"
+                :values="values"
+                color="#4bb5ff"
+                textColor="#000"
+                selectedTextColor="#fff"
+              />
+            </div>
+            <div v-if="idx == 1" class="col-md-6 pt-1 my-3 mr-auto pl-0">
+              <RadioToggleButtons
+                v-model="recommend.score[4]"
+                :values="values"
+                color="#4bb5ff"
+                textColor="#000"
+                selectedTextColor="#fff"
+              />
+            </div>
+            <div v-if="idx == 2" class="col-md-6 pt-1 my-3 mr-auto pl-0">
+              <RadioToggleButtons
+                v-model="recommend.score[3]"
+                :values="values"
+                color="#4bb5ff"
+                textColor="#000"
+                selectedTextColor="#fff"
+              />
+            </div>
+          </div>
+        </div>
+
         <a
-          v-if="isFinish"
+          v-if="
+            recommend.score[2] != 0 &&
+            recommend.score[4] != 0 &&
+            recommend.score[3] != 0
+          "
           @click="next()"
           class="
             col-md-6
@@ -379,35 +416,44 @@ export default {
   },
   data() {
     return {
+      values: [
+        { label: "1 점", value: "1" },
+        { label: "2 점", value: "2" },
+        { label: "3 점", value: "3" },
+        { label: "4 점", value: "4" },
+        { label: "5 점", value: "5" },
+      ],
+      currentValue: "",
+
       recommend: {
-        dong: [0,0],
+        dong: [0, 0],
         resiCategory: [],
         resiType: 0,
         resiCostStart: 0,
         resiCostEnd: 0,
         resiDepositStart: 0,
-        resiDepositEnd:0,
+        resiDepositEnd: 0,
         score: [0, 0, 0, 0, 0, 0], // (카페, 편의점,지하철,따릉이,버스,헬스장 순서대로!!)
       },
 
       scoreOne: false,
-      isSelect:true,
+      isSelect: true,
       isNextButton: false,
-      isButton:false,
-      isFinish:false,
+      isButton: false,
+      isFinish: false,
       isValue: false,
       isCost: false,
       isMonth: false,
       costRange: [0, 1500],
       monthRange: [0, 1500],
-      wolseRange:[0,350],
+      wolseRange: [0, 350],
       mrange: {
         min: 0,
         max: 1500,
       },
-      wrange:{
-        min:0,
-        max:350,
+      wrange: {
+        min: 0,
+        max: 350,
       },
       range: {
         min: 0,
@@ -417,8 +463,8 @@ export default {
       costEnd: "무제한",
       monthStart: "0",
       monthEnd: "무제한",
-      wolseStart:"0",
-      wolseEnd:"무제한",
+      wolseStart: "0",
+      wolseEnd: "무제한",
 
       isNext: false,
       isSecond: false,
@@ -463,55 +509,34 @@ export default {
         this.wolseStart = "0";
         this.recommend.resiCostStart = 0;
       }
+    },
 
-    },
-    clickScore(value, a) {
-      console.log(value);
-      if (a == "편의점") {
-        this.recommend.score[1] = value;
-      } else if (a == "카페") {
-        this.recommend.score[0] = value;
-      } else if (a == "헬스클럽") {
-        this.recommend.score[5] = value;
-        if (this.recommend.score[0] != 0 && this.recommend.score[1] != 0) {
-          this.isNextButton = true;
-        }
-      } else if(a == "따릉이"){
-        this.recommend.score[3] = value;
-        this.isFinish=true;
-      }else if(a == "지하철"){
-        this.recommend.score[2] = value;
-      }else if(a == "버스"){
-        this.recommend.score[4] = value;
-      }
-      console.log(this.recommend.score);
-    },
     clickCost(a, idx) {
-      this.recommend.resiType=idx;
-      this.isSelect=false;
+      this.recommend.resiType = idx;
+      this.isSelect = false;
       if (a == "월세") {
-        this.isCost =false;
-        this.isMonth =true;
-        this.isButton=true;
-      }else{
+        this.isCost = false;
+        this.isMonth = true;
+        this.isButton = true;
+      } else {
         this.isCost = true;
-        this.isMonth=false;
-        this.isButton=true;
+        this.isMonth = false;
+        this.isButton = true;
       }
-      this.recommend.resiType=idx+1;
+      this.recommend.resiType = idx + 1;
     },
     clickBefore() {
       this.isSelect = true;
       this.isCost = false;
       this.isMonth = false;
-      this.isButton=false;
+      this.isButton = false;
     },
     changeCost() {
       this.costRange[0] = parseInt(this.costRange[0]);
       this.costRange[1] = parseInt(this.costRange[1]);
-      this.recommend.resiCostStart = parseInt(this.costRange[0])*100;
-      this.recommend.resiCostEnd = parseInt(this.costRange[1])*100;
-      
+      this.recommend.resiCostStart = parseInt(this.costRange[0]) * 100;
+      this.recommend.resiCostEnd = parseInt(this.costRange[1]) * 100;
+
       if (parseInt(this.costRange[0] / 100) == 0) {
         this.costStart = parseInt(this.costRange[0] % 100) + "00만 원";
       } else if (parseInt(this.costRange[0] % 10) == 0) {
@@ -547,9 +572,9 @@ export default {
     changeMonth() {
       this.monthRange[0] = parseInt(this.monthRange[0]);
       this.monthRange[1] = parseInt(this.monthRange[1]);
-      this.recommend.resiDepositStart = parseInt(this.monthRange[0])*100;
-      this.recommend.resiDepositEnd = parseInt(this.monthRange[1])*100;
-      
+      this.recommend.resiDepositStart = parseInt(this.monthRange[0]) * 100;
+      this.recommend.resiDepositEnd = parseInt(this.monthRange[1]) * 100;
+
       if (parseInt(this.monthRange[0] / 100) == 0) {
         this.monthStart = parseInt(this.monthRange[0] % 100) + "00만 원";
       } else if (parseInt(this.monthRange[0] % 10) == 0) {
@@ -575,21 +600,21 @@ export default {
       }
       if (this.monthRange[1] == 1500) {
         this.monthEnd = "무제한";
-        this.recommend.resiDepositEnd=0;
+        this.recommend.resiDepositEnd = 0;
       }
       if (this.monthRange[0] == 0) {
         this.monthStart = "0";
-        this.recommend.resiDepositStart=0;
+        this.recommend.resiDepositStart = 0;
       }
     },
     clickDong(dongItems, idx) {
       this.Dong = dongItems.dongName;
-      this.recommend.dong[0]=dongItems.id;
+      this.recommend.dong[0] = dongItems.id;
       this.isSecond = true;
     },
     clickDong2(dongItems, idx) {
       this.Dong2 = dongItems.dongName;
-      this.recommend.dong[1]=dongItems.id;
+      this.recommend.dong[1] = dongItems.id;
       console.log(this.recommend);
       this.isNext = true;
     },
@@ -627,15 +652,14 @@ export default {
       return;
     },
     next(idx, ans) {
-      if(ans==1){
-        if(idx==0){
+      if (ans == 1) {
+        if (idx == 0) {
           this.recommend.resiCategory.push(1);
           this.recommend.resiCategory.push(2);
           this.recommend.resiCategory.push(3);
-        }else{
-          this.recommend.resiCategory.push(idx+3);
+        } else {
+          this.recommend.resiCategory.push(idx + 3);
         }
-        
       }
 
       if (this.index == 4) {
@@ -645,12 +669,11 @@ export default {
       }
       this.index += 1;
       this.pr += 25;
-      this.isNextButton=false;
+      this.isNextButton = false;
     },
     ...mapActions("question", ["setQnARes"]),
-    setRes(data) {    
+    setRes(data) {
       this.setQnARes(data);
-
     },
   },
 };

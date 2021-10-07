@@ -257,6 +257,7 @@ export default {
       var position = {
         lat: this.resiList[idx].residenceInfo.lat,
         lon: this.resiList[idx].residenceInfo.lon,
+        
       };
       this.$emit("moveThisResi", position);
     },
@@ -366,7 +367,7 @@ export default {
       console.log(deldata);
 
       http
-        .delete("/api/v1/favorites?userFavoriteIds=" + deldata, {
+        .delete("/api/v1/favorites?residenceId=" + deldata, {
           headers: {
             Authorization: "Bearer " + CSRF_TOKEN,
           },

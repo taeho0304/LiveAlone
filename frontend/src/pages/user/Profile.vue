@@ -262,7 +262,7 @@ export default {
       console.log(idx);
 
       http
-        .delete("/api/v1/favorites?userFavoriteIds=" + deldata, {
+        .delete("/api/v1/favorites?residenceId=" + deldata, {
           headers: {
             Authorization: "Bearer " + CSRF_TOKEN,
           },

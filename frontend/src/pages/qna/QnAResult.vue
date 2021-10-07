@@ -1,9 +1,11 @@
 <template>
   <div class="container" style="padding-right: 0; padding-top: 0">
     <template>
-      <div class="col-md-12 pt-0 pb-0 ml-auto mr-auto">
+      <div class="col-md-12 mt-2 pt-0 pb-0 ml-auto mr-auto">
         <strong
-          ><h4>추천매물 Top{{ getQuestionResult.length }}</h4></strong
+          ><h4 class="neon">
+            추천매물 Top{{ getQuestionResult.length }}
+          </h4></strong
         >
       </div>
       <div class="scroll row col-md-12 mr-0 mt-0">
@@ -262,7 +264,25 @@ export default {
   position: relative;
   object-fit: cover;
 }
+.neon {
+  animation: neon 1s ease infinite;
+  -moz-animation: neon 1s ease infinite;
+  -webkit-animation: neon 1s ease infinite;
+}
 
+@keyframes neon {
+  0%,
+  100% {
+    text-shadow: 0 0 5 #fa1c16, 0 0 3vw #fa1c16, 0 0 10vw #fa1c16,
+      0 0 10vw #fa1c16, 0 0 0.4vw #fed128, 0.5vw 0.5vw 0.1vw #806914;
+    color: #fed128;
+  }
+  50% {
+    text-shadow: 0 0 1 #800e0b, 0 0 1.5vw #800e0b, 0 0 5vw #800e0b,
+      0 0 5vw #800e0b, 0 0 0.2vw #800e0b, 0.5vw 0.5vw 0.1vw #40340a;
+    color: #806914;
+  }
+}
 .imgthum {
   justify-content: left;
   width: 100%;
