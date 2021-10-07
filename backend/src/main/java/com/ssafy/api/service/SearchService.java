@@ -24,8 +24,6 @@ public interface SearchService {
 
 	void deleteResidenceType(List<Long> residenceType);
 
-	void createSearchResidenceFilter(ResidenceDetailGetReq residenceDetailGetReq, Authentication authentication, ResidenceGetReq residenceGetReq);
-
     List<Si> getSi();
 
 	List<String> getGuGun(String siName);

@@ -31,12 +31,6 @@ public class SearchServiceImpl implements SearchService {
 	UserService userService;
 
 	@Autowired
-	SearchResidenceFilterRepository searchResidenceFilterRepository;
-
-	@Autowired
-	SearchResidenceFilterRepositorySupport searchResidenceFilterRepositorySupport;
-
-	@Autowired
 	ResidenceCategoryRepositorySupport residenceCategoryRepositorySupport;
 
 	@Autowired
@@ -86,20 +80,6 @@ public class SearchServiceImpl implements SearchService {
 	}
 
 	@Override
-	public void createSearchResidenceFilter(ResidenceDetailGetReq residenceDetailGetReq, Authentication authentication, ResidenceGetReq residenceGetReq) {
-		UserDetail userDetail = (UserDetail) authentication.getDetails();
-		User user = userService.getUserByUserId(userDetail.getUsername());
-
-		try{
-			SearchResidenceFilter searchResidenceFilter = searchResidenceFilterRepositorySupport.findSearchFilterByUserId(user.getId());
-			saveFilter(searchResidenceFilter, residenceDetailGetReq, user, residenceGetReq);
-		}catch (Exception e) {
-			SearchResidenceFilter searchResidenceFilter = new SearchResidenceFilter();
-			saveFilter(searchResidenceFilter, residenceDetailGetReq, user, residenceGetReq);
-		}
-	}
-
-	@Override
 	public List<Si> getSi() {
 		return siRepository.findAll();
 	}
@@ -128,33 +108,5 @@ public class SearchServiceImpl implements SearchService {
 		}
 
 		return dongModels;
-	}
-
-	private void saveFilter(SearchResidenceFilter searchResidenceFilter, ResidenceDetailGetReq residenceDetailGetReq, User user, ResidenceGetReq residenceGetReq) {
-		List<ResidenceCategory> residenceCategoryList =  new ArrayList<>();
-		for (int i=0; i<residenceDetailGetReq.getResidenceCategory().size(); i++)
-			residenceCategoryList.add(residenceCategoryRepositorySupport.getResidenceCategoryByCategory(residenceDetailGetReq.getResidenceCategory().get(i)));
-		searchResidenceFilter.setResidenceCategory(residenceCategoryList);
-
-		List<ResidenceType> residenceTypeList =  new ArrayList<>();
-		for (int i=0; i<residenceDetailGetReq.getResidenceType().size(); i++)
-			residenceTypeList.add(residenceTypeRepositorySupport.getResidenceTypeByTypeName(residenceDetailGetReq.getResidenceType().get(i)));
-
-		searchResidenceFilter.setDong(residenceGetReq.getDong());
-		searchResidenceFilter.setSi(residenceGetReq.getSi());
-		searchResidenceFilter.setGugun(residenceGetReq.getGugun());
-		searchResidenceFilter.setResidenceType(residenceTypeList);
-		searchResidenceFilter.setUser(user);
-		searchResidenceFilter.setStartPrice(residenceDetailGetReq.getStartPrice());
-		searchResidenceFilter.setEndPrice(residenceDetailGetReq.getEndPrice());
-		searchResidenceFilter.setStartJPrice(residenceDetailGetReq.getStartJPrice());
-		searchResidenceFilter.setEndJPrice(residenceDetailGetReq.getEndJPrice());
-		searchResidenceFilter.setStartWPrice(residenceDetailGetReq.getStartWPrice());
-		searchResidenceFilter.setEndWPrice(residenceDetailGetReq.getEndWPrice());
-		searchResidenceFilter.setStartManagePrice(residenceDetailGetReq.getStartManagePrice());
-		searchResidenceFilter.setEndManagePrice(residenceDetailGetReq.getEndManagePrice());
-		searchResidenceFilter.setStartArea(residenceDetailGetReq.getStartArea());
-		searchResidenceFilter.setEndArea(residenceDetailGetReq.getEndArea());
-		searchResidenceFilterRepository.save(searchResidenceFilter);
 	}
 }
