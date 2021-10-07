@@ -8,29 +8,51 @@
         v-bind:sortFilter="sortFilter"
         @requestNextItem="requestNextItem"
         @sort="sort"
+        @moveThisResi="moveThisResi"
       />
     </div>
     <div v-show="isQnAshow" class="Resi col-md-3" style="max-width: 430px">
-      <QnAResList />
+      <QnAResList
+        v-bind:getQuestionResult="getQuestionResult"
+        @moveThisResi="moveThisResi"
+      />
     </div>
 
     <div id="map" style="width: 100%; height: 100%"></div>
 
-    <div v-if="isCount" class="card temp card-neutral" size="" style="width: 300px;margin-top: 34.5%;margin-right: 7px; margin-bottom:0px">
+    <div
+      v-if="isCount"
+      class="card temp card-neutral"
+      size=""
+      style="
+        width: 300px;
+        margin-top: 34.5%;
+        margin-right: 7px;
+        margin-bottom: 0px;
+      "
+    >
       <!----><!----><!----><!----><!---->
       <ul class="list-group list-group-flush">
-        <li class="list-group-item">우리동네 {{this.moveDong}} 상권🤳</li>
-        <li class="list-group-item">편의점🏪 : {{getDongCommercial[1] == null ? 0 : getDongCommercial[1].count}}</li>
-        <li class="list-group-item">카페☕️ : {{getDongCommercial[0] == null ? 0 : getDongCommercial[0].count}}</li>
-        <li class="list-group-item">헬스장🏋️ : {{getDongCommercial[2] == null ? 0 : getDongCommercial[2].count}}</li>
+        <li class="list-group-item">우리동네 {{ this.moveDong }} 상권🤳</li>
+        <li class="list-group-item">
+          편의점🏪 :
+          {{ getDongCommercial[1] == null ? 0 : getDongCommercial[1].count }}
+        </li>
+        <li class="list-group-item">
+          카페☕️ :
+          {{ getDongCommercial[0] == null ? 0 : getDongCommercial[0].count }}
+        </li>
+        <li class="list-group-item">
+          헬스장🏋️ :
+          {{ getDongCommercial[2] == null ? 0 : getDongCommercial[2].count }}
+        </li>
       </ul>
-      
     </div>
   </div>
 </template>
 
 <script>
-import {  } from "@/components";
+import {} from "@/components";
 import ResidenceList from "./ResidenceList.vue";
 import http from "@/util/http-common";
 import QnAResList from "@/pages/qna/QnAResult.vue";
@@ -38,13 +60,13 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   computed: {},
   components: {
-
     ResidenceList,
     QnAResList,
   },
   name: "index",
   bodyClass: "index-page",
   computed: {
+    ...mapGetters("question", ["getQuestionResult"]),
     ...mapGetters("search", ["getDongCommercial"]),
   },
   mounted() {
@@ -54,10 +76,10 @@ export default {
   },
   data() {
     return {
-      isCount:false,
+      isCount: false,
       isShow: false,
       isResiShow: false,
-      isQnAshow: true,
+      isQnAshow: false,
       qnaResiList: [],
       markerList: [],
       resiList: [],
@@ -82,12 +104,12 @@ export default {
         residenceIds: [],
         pageNum: 1,
       },
-
-      dong:{
-        convenienceCount:0,
-        cafeCount:0,
-        healthCount:0,
-      }
+      dong: {
+        convenienceCount: 0,
+        cafeCount: 0,
+        healthCount: 0,
+      },
+      qnamakers: [],
     };
   },
   props: {
@@ -95,10 +117,11 @@ export default {
     detailFilter: Object,
   },
   watch: {
-    qnaResiList: function (newVal) {
+    getQuestionResult: function (newVal) {
       if (this.isResiShow) {
         this.isResiShow = false;
       }
+      this.qnaResMaker();
       this.isQnAshow = true;
     },
     detailFilter: function (newVal) {
@@ -142,14 +165,16 @@ export default {
     marker: function (newVal) {
       var moveLatLon = new kakao.maps.LatLng(newVal.lat, newVal.long);
       this.cluster.clear();
+      this.qnaSetMaker(null);
       console.log("moveTo", moveLatLon);
       this.map.setLevel(6);
       this.map.panTo(moveLatLon);
       this.moveDong = newVal.dong;
     },
     moveDong: function (newVal) {
-      this.isCount=true;
+      this.isCount = true;
       this.cluster.clear();
+      this.qnaSetMaker(null);
       console.log(newVal);
       this.pageItem.curpage = 1;
       this.pageItem.type = "dong";
@@ -187,9 +212,46 @@ export default {
   },
   created() {},
   methods: {
-    ...mapActions("search", [
-      "requestDongCommercial",
-    ]),
+    moveThisResi(position) {
+      var moveLatLon = new kakao.maps.LatLng(position.lat, position.lon);
+      this.map.setLevel(1);
+      this.map.panTo(moveLatLon);
+    },
+    async qnaResMaker() {
+      console.log(this.getQuestionResult);
+      console.log("마커 그리기");
+      this.qnaResMaker = [];
+      var imageSrc =
+        "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+      var imageSize = new kakao.maps.Size(24, 35);
+
+      var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+      for (var i = 0; i < this.getQuestionResult.length; i++) {
+        var marker = new kakao.maps.Marker({
+          position: new kakao.maps.LatLng(
+            this.getQuestionResult[i].residenceInfo.lat,
+            this.getQuestionResult[i].residenceInfo.lon
+          ),
+          image: markerImage,
+        });
+        this.qnaResMaker.push(marker);
+      }
+
+      var moveLatLon = new kakao.maps.LatLng(
+        this.getQuestionResult[0].residenceInfo.lat,
+        this.getQuestionResult[0].residenceInfo.lon
+      );
+      this.map.setLevel(2);
+      this.map.panTo(moveLatLon);
+      await this.qnaSetMaker(this.map);
+    },
+    qnaSetMaker(map) {
+      console.log(map);
+      for (var i = 0; i < this.qnaResMaker.length; i++) {
+        this.qnaResMaker[i].setMap(map);
+      }
+    },
+    ...mapActions("search", ["requestDongCommercial"]),
     sort(res) {
       console.log(res);
       //NOTE: ids , 동 , 상세 중 현재 검색한 타입으로 정렬
@@ -492,8 +554,7 @@ export default {
         };
 
         this.$emit("moveJuso", move);
-        this.moveDong=move.dong;
-        
+        this.moveDong = move.dong;
       }
     },
     temp(cluster) {
