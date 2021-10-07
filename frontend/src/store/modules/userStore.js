@@ -115,7 +115,7 @@ export default {
             text: "로그인이 완료 되었습니다.🙌",
             type: "success",
           })
-          router.go(-1);
+          router.push('/');
         })
         .catch((err) => {
 

@@ -84,13 +84,13 @@
                       <a
                         v-if="!isClick"
                         @click="click()"
-                        class="btn btn-primary btn-round btn-lg btn-block"
+                        class="btn btn-info btn-round btn-lg btn-block"
                         >수정</a
                       >
                       <a
                         v-if="isClick"
                         @click="clickModify()"
-                        class="btn btn-primary btn-round btn-lg btn-block"
+                        class="btn btn-info btn-round btn-lg btn-block"
                         >확인</a
                       >
                     </div>
