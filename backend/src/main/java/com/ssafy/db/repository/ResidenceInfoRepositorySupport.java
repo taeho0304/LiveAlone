@@ -36,13 +36,13 @@ public class ResidenceInfoRepositorySupport {
         residences.where(builder);
 
         builder = new BooleanBuilder();
-        for (int i = 0; i< residenceDetailGetReq.getStructure().size(); i++)
-            builder.or(qresidenceInfo.structure.eq(residenceDetailGetReq.getStructure().get(i)));
+        for (int i = 0; i< residenceDetailGetReq.getRoomStrucDeail().size(); i++)
+            builder.or(qresidenceInfo.structure.eq(residenceDetailGetReq.getRoomStrucDeail().get(i)));
         residences.where(builder);
 
         builder = new BooleanBuilder();
-        for (int i = 0; i< residenceDetailGetReq.getMyFloor().size(); i++)
-            builder.or(qresidenceInfo.myFloor.eq(residenceDetailGetReq.getMyFloor().get(i)));
+        for (int i = 0; i< residenceDetailGetReq.getFloorDetail().size(); i++)
+            builder.or(qresidenceInfo.myFloor.eq(residenceDetailGetReq.getFloorDetail().get(i)));
         residences.where(builder);
 
         builder = new BooleanBuilder();

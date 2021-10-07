@@ -52,9 +52,9 @@ public class ResidenceDetailGetReq {
 	@ApiModelProperty(name="구", example="강서구")
 	String gugun;
 	@ApiModelProperty(name="층", example="층")
-	List<String> myFloor;
+	List<String> floorDetail;
 	@ApiModelProperty(name="구조", example="복층")
-	List<String> structure;
+	List<String> roomStrucDeail;
 	@ApiModelProperty(name="페이지 번호", example="1")
 	long pageNum;
 }
