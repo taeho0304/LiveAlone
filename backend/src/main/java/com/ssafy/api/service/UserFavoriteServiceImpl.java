@@ -58,13 +58,13 @@ public class UserFavoriteServiceImpl implements UserFavoriteService {
 	}
 
 	@Override
-	public void deleteFavoriteResidence(Long userFavoriteId, Authentication authentication) {
-		ResidenceInfo residenceInfo = residenceInfoRepository.findById(userFavoriteRepository.findById(userFavoriteId).get().getResidenceInfo().getId()).get();
+	public void deleteFavoriteResidence(Long residenceId, Authentication authentication) {
+		ResidenceInfo residenceInfo = residenceInfoRepository.findById(residenceId).get();
 		residenceInfo.setFavoriteCnt(residenceInfo.getFavoriteCnt()-1);
 		residenceInfoRepository.save(residenceInfo);
 
 		UserDetail userDetail = (UserDetail) authentication.getDetails();
-		userFavoriteRepositorySupport.deleteByIds(userFavoriteId, userService.getUserByUserId(userDetail.getUsername()).getId());
+		userFavoriteRepositorySupport.deleteByIds(residenceId, userService.getUserByUserId(userDetail.getUsername()).getId());
 	}
 
 	@Override

@@ -14,7 +14,7 @@ public interface UserFavoriteService {
 
 	List<UserFavorite> getMyResidence(Authentication authentication);
 
-	void deleteFavoriteResidence(Long userFavoriteIds, Authentication authentication);
+	void deleteFavoriteResidence(Long residenceId, Authentication authentication);
 
 	Boolean checkIsFavorite(Authentication authentication, Long residenceId);
 }
