@@ -358,7 +358,7 @@
           id="input-file"
           ref="images"
           type="file"
-          style="margin-left: -73px"
+          style="margin-left: -76px"
         />
       </div>
     </div>
