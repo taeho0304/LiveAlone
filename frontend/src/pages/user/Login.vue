@@ -81,13 +81,21 @@
           style="background: linear-gradient(60deg, #48c6ef, #6f86d6)"
           class="col-md-6"
         >
-          <h2 class="h2-seo" style="color: white; margin-top: 15%">
+          <h4 class="h2-seo" style="color: white; margin-top: 15%">
+            Welcome !
+          </h4>
+          <h2 class="h2-seo" style="color: white; margin-top: 1%">
             Find the property you want
           </h2>
-          <div style="color: black; text-size: 16px">
-            혼족, 일코노미, 나홀로족...
+          <div class="h2-seo" style="color: white; margin-top: 10%">
+            <h5>어떤집에 살고싶으신가요?..</h5>
           </div>
-          <h5 class="h2-seo" style="color: black">이제는 1인 가구 시대!</h5>
+          <h5 class="h2-seo" style="color: white; margin-top: 5%">
+            이제는 1인 가구 시대!!
+          </h5>
+          <h5 class="h2-seo" style="color: white; margin-top: 5%">
+            당신이 원하는 조건에 따라 매물을 추천해 드립니다! 
+          </h5>
         </div>
       </div>
     </div>

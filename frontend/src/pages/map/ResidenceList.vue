@@ -255,9 +255,9 @@ export default {
         this.resiList[idx].residenceInfo.lon
       );
       var position = {
+        id: this.resiList[idx].residenceInfo.id,
         lat: this.resiList[idx].residenceInfo.lat,
         lon: this.resiList[idx].residenceInfo.lon,
-        
       };
       this.$emit("moveThisResi", position);
     },
@@ -432,7 +432,7 @@ export default {
 }
 .scroll {
   overflow: auto;
-  height: calc(100vh - 170px);
+  height: calc(100vh - 200px);
 }
 .scroll::-webkit-scrollbar {
   width: 5px; /*스크롤바의 너비*/

@@ -76,13 +76,16 @@ export default {
   },
   data() {
     return {
+      preCommercialMaker: [],
+      curCommercialMarker: [],
+
       checkedMarker: false,
       preResimaker: null,
       curResimaker: null,
       isCount: false,
       isShow: false,
       isResiShow: false,
-      isQnAshow: true,
+      isQnAshow: false,
       qnaResiList: [],
       markerList: [],
       resiList: [],
@@ -183,6 +186,7 @@ export default {
       this.cluster.clear();
       this.qnaSetMaker(null);
       this.selectResiSet(null);
+      this.resiForCommecialSet(null);
       console.log(newVal);
       this.pageItem.curpage = 1;
       this.pageItem.type = "dong";
@@ -229,6 +233,40 @@ export default {
       this.map.panTo(moveLatLon);
 
       this.selectResiDraw(moveLatLon);
+      http
+        .post(
+          "/api/v1/residences/commercialposition?residenceId=" + position.id
+        )
+        .then((res) => {
+          console.log(res.data.residenceCommercialPositionModel);
+          this.resiForCommecialDraw(res.data.residenceCommercialPositionModel);
+        });
+    },
+    async resiForCommecialDraw(res) {
+      var imageSrc = "img/dda.png";
+      var imageSize = new kakao.maps.Size(45, 45);
+      var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+      for (var i = 0; i < res.length; i++) {
+        var marker = new kakao.maps.Marker({
+          position: new kakao.maps.LatLng(res[i].lat, res[i].lon),
+          image: markerImage,
+        });
+        this.curCommercialMarker.push(marker);
+      }
+      await this.resiForCommecialSet(this.map);
+    },
+    resiForCommecialSet(map) {
+      if (this.preCommercialMaker != null) {
+        for (var i = 0; i < this.preCommercialMaker.length; i++) {
+          this.preCommercialMaker[i].setMap(null);
+        }
+      }
+      if (this.curCommercialMarker != null) {
+        for (var i = 0; i < this.curCommercialMarker.length; i++) {
+          this.curCommercialMarker[i].setMap(map);
+        }
+      }
+      this.preCommercialMaker = this.curCommercialMarker;
     },
     async qnaResMaker() {
       console.log(this.getQuestionResult);
@@ -479,10 +517,15 @@ export default {
         }
       }
     },
+
     drawMarker(positions) {
+      var imageSrc = "img/resi.png";
+      var imageSize = new kakao.maps.Size(35, 35);
+      var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
       var mark = new kakao.maps.Marker({
         position: new kakao.maps.LatLng(positions.lat, positions.lon),
         title: positions.id,
+        image: markerImage,
       });
       kakao.maps.event.addListener(mark, "click", () => {
         this.makeClickListener(mark);
@@ -525,7 +568,7 @@ export default {
       /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
       script.src =
-        "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=f52d6b75a8a65ca935ff31e1ba7eace5&libraries=services,clusterer,drawing";
+        "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=f52d6b75a8a65ca935ff31e1ba7eace5&libraries=services,clusterer,drawing";
       document.head.appendChild(script);
     },
     initMap() {

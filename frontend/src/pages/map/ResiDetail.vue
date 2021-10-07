@@ -10,6 +10,13 @@
         <div class="col-md-4">
           헬스장🏋️ : {{ this.resiCommercial.healthCount }}
         </div>
+        <div class="col-md-4">
+          따릉이🚲 :{{ this.resiCommercial.bicycleCount }}
+        </div>
+        <div class="col-md-4">
+          지하철🚈 :{{ this.resiCommercial.subwayCount }}
+        </div>
+        <div class="col-md-4">버스🚍: {{ this.resiCommercial.busCount }}</div>
       </div>
     </card>
 
