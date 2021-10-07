@@ -166,21 +166,4 @@ public class SearchFilterController {
             return ResponseEntity.status(500).body(DongRes.of(500, "fail"));
         }
     }
-
-    @PostMapping("/save")
-    @ApiOperation(value = "유저 검색 필터 저장", notes = "유저 검색 필터를 저장한다.")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 500, message = "실패")
-    })
-    public ResponseEntity<? extends BaseResponseBody> createUserResidenceSearchFilter(
-            @ModelAttribute ResidenceDetailGetReq residenceDetailGetReq, @ApiIgnore Authentication authentication,
-            @ModelAttribute ResidenceGetReq residenceGetReq) {
-        try {
-            searchService.createSearchResidenceFilter(residenceDetailGetReq, authentication, residenceGetReq);
-            return ResponseEntity.status(200).body(BaseResponseBody.of(201, "success"));
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.status(500).body(BaseResponseBody.of(500, "fail"));
-        }
-    }
 }
