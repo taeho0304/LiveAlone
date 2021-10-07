@@ -11,12 +11,13 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * 유저  관련 디비 쿼리 생성을 위한 구현 정의.
+ * 유저 찜 관련 디비 쿼리 생성을 위한 구현 정의.
  */
 @Repository
 public class UserFavoriteRepositorySupport {
     @Autowired
     private JPAQueryFactory jpaQueryFactory;
+
     QUserFavorite quserFavorite = QUserFavorite.userFavorite;
 
     public List<UserFavorite> findByUserId(Long id) {
@@ -25,14 +26,15 @@ public class UserFavoriteRepositorySupport {
         return userFavorites;
     }
 
-    @Transactional
-    public void deleteByUserId(Long userFavoriteId) {
-        jpaQueryFactory.delete(quserFavorite).where(quserFavorite.user.id.eq(userFavoriteId)).execute();
-    }
-
-    public UserFavorite checkDuplicate(Long userId, Long residenceId) {
+    public Boolean checkIsFavorite(Long userId, Long residenceId) {
         UserFavorite userFavorite = jpaQueryFactory.select(quserFavorite).from(quserFavorite)
                 .where(quserFavorite.user.id.eq(userId), quserFavorite.residenceInfo.id.eq(residenceId)).fetchOne();
-        return userFavorite;
+        if(userFavorite == null) return false;
+        return true;
+    }
+
+    @Transactional
+    public void deleteByIds(Long residenceId, Long userId) {
+        jpaQueryFactory.delete(quserFavorite).where(quserFavorite.user.id.eq(userId), quserFavorite.residenceInfo.id.eq(residenceId)).execute();
     }
 }
