@@ -188,7 +188,7 @@ import Modal from "@/components/Modal.vue";
 
 import ResiDetail from "@/pages/map/ResiDetail.vue";
 import VueSimpleAlert from "vue-simple-alert";
-import VueStar from "vue-star";
+
 import http from "@/util/http-common";
 import { mapActions } from "vuex";
 

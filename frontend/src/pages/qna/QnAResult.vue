@@ -108,10 +108,11 @@
 
 <script>
 import { Card } from "@/components";
-import VueStar from "vue-star";
+import { mapActions } from "vuex";
 import http from "@/util/http-common";
 import Modal from "@/components/Modal.vue";
 import ResiDetail from "@/pages/map/ResiDetail.vue";
+import VueSimpleAlert from "vue-simple-alert";
 export default {
   components: {
     Card,
@@ -191,14 +192,16 @@ export default {
           this.resiCommercial = res.data.residenceCommercialCountModel[0];
         });
     },
+    ...mapActions("user", ["requsetFavoriteList"]),
     delFavorite(idx) {
+      console.log(this.getQuestionResult[idx]);
       var deldata = this.getQuestionResult[idx].residenceInfo.id;
       const CSRF_TOKEN = localStorage.getItem("accessToken");
 
       console.log(deldata);
 
       http
-        .delete("/api/v1/favorites?userFavoriteIds=" + deldata, {
+        .delete("/api/v1/favorites?residenceId=" + deldata, {
           headers: {
             Authorization: "Bearer " + CSRF_TOKEN,
           },
@@ -214,6 +217,7 @@ export default {
         });
     },
     myFavorite(idx) {
+      console.log(this.getQuestionResult[idx]);
       var postdata = this.getQuestionResult[idx].residenceInfo.id;
       console.log(postdata);
       const CSRF_TOKEN = localStorage.getItem("accessToken");

@@ -378,29 +378,23 @@
     </div>
   </div>
 </template>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=f52d6b75a8a65ca935ff31e1ba7eace5&libraries=services,clusterer,drawing"/>
-<script src="https://unpkg.com/vue-upload-multiple-image@1.1.6/dist/vue-upload-multiple-image.js"></script>
-<script src="path/to/vue.js"></script>
-<script src="path/to/dist/vue-upload-multiple-image.js"></script>
+
+
 <script>
-import { Tabs, TabPane, FormGroupInput, Button, DropDown } from "@/components";
+import { FormGroupInput, Button, DropDown } from "@/components";
 import { mapActions, mapGetters } from "vuex";
 import Treeselect from "@riophae/vue-treeselect";
 import axios from "axios";
 import http from "@/util/http-common";
-import VueUploadMultipleImage from "vue-upload-multiple-image-korean";
+
 export default {
   name: "manage",
   bodyClass: "manage-page",
   components: {
-    Tabs,
-    TabPane,
     [FormGroupInput.name]: FormGroupInput,
     [Button.name]: Button,
     DropDown,
     Treeselect,
-    VueUploadMultipleImage,
   },
   data: function () {
     return {
@@ -426,18 +420,22 @@ export default {
         { id: "", name: "쓰리룸 이상", valid: true },
       ],
       directionList: [
-        { id: "동", label: "동"},
-        { id: "서", label: "서"},
-        { id: "남", label: "남",
+        { id: "동", label: "동" },
+        { id: "서", label: "서" },
+        {
+          id: "남",
+          label: "남",
           children: [
-            { id: "남동", label: "남동"},
-            { id: "남서", label: "남서"},
+            { id: "남동", label: "남동" },
+            { id: "남서", label: "남서" },
           ],
         },
-        { id: "북", label: "북",
+        {
+          id: "북",
+          label: "북",
           children: [
-            { id: "북동", label: "북동"},
-            { id: "북서", label: "북서"},
+            { id: "북동", label: "북동" },
+            { id: "북서", label: "북서" },
           ],
         },
       ],
@@ -447,12 +445,12 @@ export default {
       addr2: "",
       isMonthType: true,
       isStructureType: false,
-      
+
       categoryName: "매물 유형",
       typeName: "거래 유형",
       structureName: "방 구조",
       directionName: "매물 방향",
-      
+
       residence: {
         residenceCategory: 0, //매물유형
         residenceType: 0, //거래유형
