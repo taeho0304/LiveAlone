@@ -36,20 +36,16 @@ export default {
   },
   methods: {
     moveJuso(data) {
-      console.log("맵이동 emit", data);
       this.moveMapDong = data;
     },
     getMarkerData(data) {
       this.marker = data;
-      console.log(this.marker);
     },
     getMoveData(data) {
       this.move = data;
-      console.log(this.move);
     },
     getDetailSearch(data) {
       this.detailFilter = data;
-      console.log("디테일검색 필터", data);
     },
   },
 };

@@ -133,7 +133,7 @@ export default {
       this.isDraged = false;
     },
     detailFilter: function (newVal) {
-      console.log("change", newVal);
+     
       this.sortFilter = "none";
       this.pageItem.curpage = 1;
       this.pageItem.type = "details";
@@ -146,25 +146,25 @@ export default {
           .then((res) => {
             this.pageItem.total = res.data.pageSize;
             this.resiList = res.data.residenceInfo;
-            console.log("deatailRES", this.resiList);
+          
           });
       } else {
         http.post("/api/v1/residences/detail", newVal).then((res) => {
-          console.log("deatailRES", res.data.residenceInfo);
+       
           this.pageItem.total = res.data.pageSize;
           this.resiList = res.data.residenceInfo;
         });
       }
     },
     resiList: function (newVal) {
-      console.log("new", newVal);
+     
       if (this.isQnAshow) {
         this.isQnAshow = false;
       }
       this.isResiShow = true;
     },
     markerList: function (newVal) {
-      console.log(newVal);
+    
       var mark = null;
       var markers = newVal.positionModelList.map(this.drawMarker);
 
@@ -174,7 +174,7 @@ export default {
       var moveLatLon = new kakao.maps.LatLng(newVal.lat, newVal.long);
       this.cluster.clear();
       this.qnaSetMaker(null);
-      console.log("moveTo", moveLatLon);
+     
       this.map.setLevel(5);
       this.map.panTo(moveLatLon);
       this.moveDong = newVal.dong;
@@ -186,7 +186,7 @@ export default {
       this.qnaSetMaker(null);
       this.selectResiSet(null);
       this.resiForCommecialSet(null);
-      console.log(newVal);
+    
       this.pageItem.curpage = 1;
       this.pageItem.type = "dong";
       this.sortFilter = "none";
@@ -202,7 +202,7 @@ export default {
             headers: { Authorization: "Bearer " + CSRF_TOKEN },
           })
           .then((res) => {
-            console.log("movemap", res.data);
+         
             this.pageItem.total = res.data.pageSize;
             this.resiList = res.data.residenceInfo;
           });
@@ -210,7 +210,7 @@ export default {
         http
           .get("/api/v1/residences?dong=" + newVal + "&pageNum=" + "1")
           .then((res) => {
-            console.log("movemap", res.data);
+          
             this.pageItem.total = res.data.pageSize;
             this.resiList = res.data.residenceInfo;
           });
@@ -219,7 +219,7 @@ export default {
       http
         .get("/api/v1/residences/positions?dongName=" + newVal)
         .then((res) => {
-          console.log(res.data);
+       
           this.markerList = res.data;
         });
     },
@@ -237,7 +237,7 @@ export default {
           "/api/v1/residences/commercialposition?residenceId=" + position.id
         )
         .then((res) => {
-          console.log(res.data.residenceCommercialPositionModel);
+         
           this.resiForCommecialDraw(res.data.residenceCommercialPositionModel);
         });
     },
@@ -268,8 +268,7 @@ export default {
       this.preCommercialMaker = this.curCommercialMarker;
     },
     async qnaResMaker() {
-      console.log(this.getQuestionResult);
-      console.log("마커 그리기");
+     
       this.qnaResMaker = [];
       var imageSrc = "img/recomendicon.png";
       var imageSize = new kakao.maps.Size(45, 45);
@@ -297,7 +296,7 @@ export default {
       await this.qnaSetMaker(this.map);
     },
     async selectResiDraw(moveLatLon) {
-      console.log("ddd");
+    
       var imageSrc = "img/resiicon.png";
       var imageSize = new kakao.maps.Size(45, 45);
 
@@ -329,12 +328,12 @@ export default {
     },
     ...mapActions("search", ["requestDongCommercial"]),
     sort(res) {
-      console.log(res);
+    
       //NOTE: ids , 동 , 상세 중 현재 검색한 타입으로 정렬
       const CSRF_TOKEN = localStorage.getItem("accessToken");
       this.sortFilter = res.sortType;
       if (this.pageItem.type == "ids") {
-        console.log("thisType", this.pageItem.type);
+       
         this.pageItem.curpage = 1;
         this.pageItem.type = "ids";
         this.requestForIds.sortOrder = res.sortOrder ? "asc" : "desc";
@@ -347,7 +346,7 @@ export default {
             .then((res) => {
               this.resiList = res.data.residenceInfo;
               this.pageItem.total = res.data.pageSize;
-              console.log("받아온데이터", this.resiList);
+             
             });
         } else {
           http
@@ -355,13 +354,13 @@ export default {
             .then((res) => {
               this.resiList = res.data.residenceInfo;
               this.pageItem.total = res.data.pageSize;
-              console.log("받아온데이터", this.resiList);
+           
             });
         }
       } else if (this.pageItem.type == "dong") {
         this.dongSortOrder = res.sortOrder ? "asc" : "desc";
         this.dongSortType = res.sortType;
-        console.log("thisType", this.pageItem.type);
+       
         if (CSRF_TOKEN != null) {
           http
             .get(
@@ -378,7 +377,7 @@ export default {
               }
             )
             .then((res) => {
-              console.log("movemap", res.data);
+             
               this.pageItem.total = res.data.pageSize;
               this.resiList = res.data.residenceInfo;
             });
@@ -395,19 +394,18 @@ export default {
                 this.dongSortType
             )
             .then((res) => {
-              console.log("movemap", res.data);
+            
               this.pageItem.total = res.data.pageSize;
               this.resiList = res.data.residenceInfo;
             });
         }
       } else if (this.pageItem.type == "details") {
-        console.log("thisType", this.pageItem.type);
-
+       
         this.pageItem.curpage = 1;
         this.pageItem.type = "details";
         this.detailFilter.sortOrder = res.sortOrder ? "asc" : "desc";
         this.detailFilter.sortType = res.sortType;
-        console.log(this.detailFilter);
+      
         if (CSRF_TOKEN != null) {
           http
             .post("/api/v1/residences/detail", this.detailFilter, {
@@ -416,13 +414,13 @@ export default {
             .then((res) => {
               this.pageItem.total = res.data.pageSize;
               this.resiList = res.data.residenceInfo;
-              console.log("sortDetails", this.resiList);
+             
             });
         } else {
           http
             .post("/api/v1/residences/detail", this.detailFilter)
             .then((res) => {
-              console.log("sortDetails", res.data.residenceInfo);
+             
               this.pageItem.total = res.data.pageSize;
               this.resiList = res.data.residenceInfo;
             });
@@ -430,13 +428,12 @@ export default {
       }
     },
     requestNextItem(itemnum) {
-      console.log(itemnum);
+     
       this.pageItem.curpage = itemnum;
-      console.log(this.pageItem.type);
+      
       const CSRF_TOKEN = localStorage.getItem("accessToken");
       if (this.pageItem.type == "dong") {
-        console.log(this.dongSortOrder);
-        console.log(this.dongSortType);
+       
         if (CSRF_TOKEN != null) {
           var param;
           http
@@ -454,7 +451,7 @@ export default {
               }
             )
             .then((res) => {
-              console.log("movemap", res.data);
+           
               this.resiList = res.data.residenceInfo;
             });
         } else {
@@ -470,7 +467,7 @@ export default {
                 this.dongSortType
             )
             .then((res) => {
-              console.log("movemap", res.data);
+             
               this.resiList = res.data.residenceInfo;
             });
         }
@@ -484,14 +481,14 @@ export default {
             })
             .then((res) => {
               this.resiList = res.data.residenceInfo;
-              console.log("받아온데이터", this.resiList);
+             
             });
         } else {
           http
             .post("/api/v1/residences/ids", this.requestForIds)
             .then((res) => {
               this.resiList = res.data.residenceInfo;
-              console.log("받아온데이터", this.resiList);
+            
             });
         }
       } else if (this.pageItem.type == "details") {
@@ -506,13 +503,13 @@ export default {
             .then((res) => {
               this.pageItem.total = res.data.pageSize;
               this.resiList = res.data.residenceInfo;
-              console.log("deatailRES", this.resiList);
+             
             });
         } else {
           http
             .post("/api/v1/residences/detail", this.detailFilter)
             .then((res) => {
-              console.log("deatailRES", res.data.residenceInfo);
+             
               this.pageItem.total = res.data.pageSize;
               this.resiList = res.data.residenceInfo;
             });
@@ -536,7 +533,7 @@ export default {
       return mark;
     },
     makeClickListener(mark) {
-      console.log(mark);
+    
       var Item = {
         residenceIds: [],
         pageNum: 1,
@@ -553,12 +550,12 @@ export default {
           })
           .then((res) => {
             this.resiList = res.data.residenceInfo;
-            console.log("받아온데이터", this.resiList);
+     
           });
       } else {
         http.post("/api/v1/residences/ids", Item).then((res) => {
           this.resiList = res.data.residenceInfo;
-          console.log("받아온데이터", this.resiList);
+         
         });
       }
     },
@@ -606,7 +603,7 @@ export default {
         var level = map.getLevel();
 
         var message = "현재 지도 레벨은 " + level + " 입니다";
-        console.log(message);
+       
       });
 
       kakao.maps.event.addListener(clusterer, "clusterclick", this.temp);
@@ -621,7 +618,7 @@ export default {
       var message = "변경된 지도 중심좌표는 " + latlng.getLat() + " 이고, ";
       message += "경도는 " + latlng.getLng() + " 입니다";
 
-      console.log(message);
+     
       var geocoder = new kakao.maps.services.Geocoder();
       // 좌표로 행정동 주소 정보를 요청합니다
 
@@ -632,7 +629,7 @@ export default {
       );
     },
     getnewdong(result, status) {
-      console.log(status);
+   
       if (status === kakao.maps.services.Status.OK) {
         const move = {
           si: result[0].region_1depth_name,
@@ -664,13 +661,13 @@ export default {
           .then((res) => {
             this.resiList = res.data.residenceInfo;
             this.pageItem.total = res.data.pageSize;
-            console.log("받아온데이터", this.resiList);
+          
           });
       } else {
         http.post("/api/v1/residences/ids", this.requestForIds).then((res) => {
           this.resiList = res.data.residenceInfo;
           this.pageItem.total = res.data.pageSize;
-          console.log("받아온데이터", this.resiList);
+        
         });
       }
     },

@@ -180,7 +180,7 @@ export default {
     showModal(res) {
       this.showResiDetail = !this.showResiDetail;
       this.resiDetail = this.getQuestionResult[res].residenceInfo;
-      console.log(this.resiDetail);
+     
 
       http
         .post(
@@ -188,17 +188,17 @@ export default {
             this.resiDetail.id
         )
         .then((res) => {
-          console.log(res.data.residenceCommercialCountModel);
+         
           this.resiCommercial = res.data.residenceCommercialCountModel[0];
         });
     },
     ...mapActions("user", ["requsetFavoriteList"]),
     delFavorite(idx) {
-      console.log(this.getQuestionResult[idx]);
+     
       var deldata = this.getQuestionResult[idx].residenceInfo.id;
       const CSRF_TOKEN = localStorage.getItem("accessToken");
 
-      console.log(deldata);
+    
 
       http
         .delete("/api/v1/favorites?residenceId=" + deldata, {
@@ -217,9 +217,9 @@ export default {
         });
     },
     myFavorite(idx) {
-      console.log(this.getQuestionResult[idx]);
+    
       var postdata = this.getQuestionResult[idx].residenceInfo.id;
-      console.log(postdata);
+     
       const CSRF_TOKEN = localStorage.getItem("accessToken");
 
       if (localStorage.getItem("accessToken")) {
@@ -230,7 +230,7 @@ export default {
             headers: { Authorization: "Bearer " + CSRF_TOKEN },
           })
           .then((res) => {
-            console.log(res);
+         
             if (res.status == 201) {
               VueSimpleAlert.fire({
                 title: "찜하기 성공",
@@ -250,10 +250,7 @@ export default {
       }
     },
     movethisResi(idx) {
-      console.log(
-        this.getQuestionResult[idx].residenceInfo.lat,
-        this.getQuestionResult[idx].residenceInfo.lon
-      );
+     
       var position = {
         lat: this.getQuestionResult[idx].residenceInfo.lat,
         lon: this.getQuestionResult[idx].residenceInfo.lon,

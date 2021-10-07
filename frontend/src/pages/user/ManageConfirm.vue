@@ -639,7 +639,7 @@ export default {
       return resultString;
     },
     clickDelete(info, index) {
-      console.log(info);
+     
       this.requestResiSaled(info.id);
       this.getResidenceInfo[index].sale = true;
       VueSimpleAlert.fire({
@@ -657,7 +657,7 @@ export default {
         };
         this.getResidenceInfo[this.modifyIndex].feature.push(insert);
       }
-      console.log(items);
+   
       if (items.type === "매매") {
         let modify = {
           residenceId: this.residence.id,
@@ -734,7 +734,7 @@ export default {
       });
     },
     requestNext(itemnum) {
-      console.log(itemnum);
+     
       this.data.pageNum = itemnum;
       this.requestGetResi(this.data);
     },
@@ -749,10 +749,10 @@ export default {
       var detail = "<strong>옵션</strong><br>";
       for (var idx in data.feature) {
         detail += data.feature[idx].featureName + "<br>";
-        console.log(data.feature[idx].featureName);
+       
       }
 
-      console.log(detail);
+     
       this.$fire({
         title: "상세정보",
         html: `${detail}`,
@@ -760,7 +760,7 @@ export default {
     },
     clickModify(info, index) {
       this.modifyIndex = index;
-      console.log(info);
+   
       this.residence.id = info.id;
       this.showModal = true;
       this.residence.category = info.residenceCategory.categoryName;
@@ -799,7 +799,7 @@ export default {
           this.residence.structure = info.structure;
         }
       }
-      console.log(info.direction);
+     
       for (var idx in info.feature) {
         this.residence.feature[idx] = info.feature[idx].featureName;
       }
@@ -810,7 +810,7 @@ export default {
       this.showModal = false;
     },
     handleAction(actionName, data) {
-      console.log(actionName, data);
+    
       window.alert("check out the console to see the logs");
     },
   },

@@ -34,7 +34,7 @@ export default {
       return state.myfavoriteList;
     },
     getResidenceInfo(state) {
-      console.log(state.residenceInfo);
+    
       return state.residenceInfo;
     },
     getTotalPage(state) {
@@ -60,7 +60,7 @@ export default {
       state.myfavoriteList = payload;
     },
     RESIDENCEINFO(state, payload) {
-      console.log(payload);
+   
       state.residenceInfo = payload.residenceInfo;
       state.totalPage = payload.pageSize;
     }
@@ -74,19 +74,19 @@ export default {
         }).then((res) => {
 
           commit("FAVORITELIST", res.data.userFavoriteList);
-          console.log("reqfavorite", res.data.userFavoriteList)
+       
         })
       }
     },
     requestResiSaled(context, payload) {
-      console.log(payload);
+     
       http
         .delete("/api/v1/residences?residenceId=" + payload)
         .then(({ data }) => {
-          console.log(data);
+        
         })
         .catch((err) => {
-          console.log(err);
+         
         });
     },
     requestRegister(context, payload) {
@@ -132,7 +132,7 @@ export default {
               type: "error",
             })
           } else {
-            console.log(err.response)
+          
           }
         });
     },
@@ -144,14 +144,14 @@ export default {
         })
         .then(({ data }) => {
           commit("USERINFO", data);
-          console.log(data);
+         
         })
         .catch((err) => {
-          console.log(err.response);
+       
         });
     },
     requestModify({ commit }, user) {
-      console.log(user);
+    
       http
         .patch(`/api/v1/users/` + user.userId, user)
         .then(({ data }) => {
@@ -190,9 +190,8 @@ export default {
         });
     },
     requestEstate({ commit }, estateNum) {
-      console.log(estateNum);
-      http
-        .get(`/api/v1/users/estate`, { params: { registrationNumber: estateNum } })
+     
+        http.get(`/api/v1/users/estate`, { params: { registrationNumber: estateNum } })
         .then((res) => {
           commit("user/ESTATEINFO", res.data.estateInfo, { root: true });
           VueSimpleAlert.fire({
@@ -239,7 +238,7 @@ export default {
         });
     },
     requestEstate({ commit }, estateNum) {
-      console.log(estateNum);
+   
       http
         .get(`/api/v1/users/estate`, { params: { registrationNumber: estateNum } })
         .then((res) => {
@@ -300,34 +299,34 @@ export default {
             headers: { 'Content-Type': 'multipart/form-data' },
           })
         .then(({ data }) => {
-          console.log(data);
+       
         })
         .catch((err) => {
-          console.log(err);
+       
         });
     },
     requestGetResi({ commit }, data) {
-      console.log(data);
+     
       http
         .post(`/api/v1/residences/estateIds`, data)
         .then(({ data }) => {
-          console.log(data);
+        
           commit("user/RESIDENCEINFO", data, { root: true });
 
         })
         .catch((err) => {
-          console.log(err);
+          
         });
     },
     requestModifyResi({ commit }, data) {
-      console.log(data.residenceId);
+      
       http
         .patch("/api/v1/residences?residenceId=" + data.residenceId, data)
         .then(({ data }) => {
-          console.log(data);
+         
         })
         .catch((err) => {
-          console.log(err);
+        
         });
     }
   },

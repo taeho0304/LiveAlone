@@ -13,8 +13,7 @@ export default {
     mutations: {
 
         SETQNA(state, payload) {
-            console.log(payload);
-            console.log(payload.qna)
+
             localStorage.setItem("getQnAOpt", JSON.stringify(payload.qna));
         },
         SETRES(state, payload) {
@@ -28,23 +27,23 @@ export default {
                 .then(({ data }) => {
 
                     commit("SETQNA", data)
-                    // console.log(data)
+
                 }).catch((err) => {
 
-                    console.log(err);
+
                 });
         },
         setQnARes({ commit }, data) {
 
             http.post('/api/v1/residences/recommend', data)
                 .then(({ data }) => {
-                    console.log(data.recommendModelList)
+
                     commit("SETRES", data.recommendModelList);
                 }).catch((err) => {
-                    console.log(err);
+
                 });
 
-            // console.log("done")
+
 
             router.push('/search');
         }

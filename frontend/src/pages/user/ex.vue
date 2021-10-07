@@ -166,9 +166,7 @@ import 'formvuelar/dist/formvuelar.css';
     },
     methods: {
         click(config){
-            console.log("되냐")
-            
- console.log(config)
+        
                 var errors = {}
                 if ( config.name === '' ) {
                    document.getElementById("b1").style.borderColor = "red";

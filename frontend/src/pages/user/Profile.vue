@@ -100,7 +100,7 @@
                       style="margin-top: -10px"
                       class="card-footer text-center"
                     >
-                      <a class="btn btn-primary btn-round btn-lg btn-block"
+                      <a class="btn btn-danger btn-round btn-lg btn-block"
                         >탈퇴</a
                       >
                     </div>
@@ -253,13 +253,10 @@ export default {
     showModal(res) {
       this.resiDetail = this.myfavorite[res].residenceInfo;
       this.showResiDetail = !this.showResiDetail;
-      console.log(this.resiDetail);
     },
     delFavorite(idx) {
       var deldata = this.myfavorite[idx].residenceInfo.id;
       const CSRF_TOKEN = localStorage.getItem("accessToken");
-
-      console.log(idx);
 
       http
         .delete("/api/v1/favorites?residenceId=" + deldata, {
@@ -278,13 +275,11 @@ export default {
           if (this.myfavorite.length == 1) {
             this.myfavorite = null;
           }
-          console.log(this.myfavorite);
         });
       this.myfavorite = this.getMyfavoriteList;
     },
     click() {
       this.isClick = !this.isClick;
-      console.log(this.isClick);
     },
     showResiName(name) {
       if (name == "") {
@@ -309,7 +304,6 @@ export default {
       return resFeature;
     },
     clickModify() {
-      console.log(this.isClick);
       let modifyed = {
         userName: this.getUserInfo.user.userName,
         userId: this.getUserInfo.user.userId,
@@ -353,9 +347,8 @@ export default {
   },
   created() {
     this.init();
-    console.log("assdasd", this.getMyfavoriteList);
+
     this.myfavorite = this.getMyfavoriteList;
-    console.log(this.getUserInfo);
   },
   mounted() {},
 };

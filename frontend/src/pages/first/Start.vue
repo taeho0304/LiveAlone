@@ -54,7 +54,7 @@ export default {
     ...mapActions("user", ["requsetFavoriteList"]),
     ...mapActions("question", ["requestQuestion"]),
     getQuestionList() {
-      console.log("질문옵션");
+      
       this.requestQuestion();
     },
   },

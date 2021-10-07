@@ -23,11 +23,11 @@ export default {
         },
         GUGUNCOUNT(state, payload) {
             state.gugunCount = payload.counts;
-            console.log(state.gugunCount)
+      
         },
         DONGCOUNT(state, payload) {
             state.dongcount = payload.counts;
-            console.log(state.dongcount)
+         
         },
         DONGCOMMERCIAL(state, payload) {
             state.dongComiercial = payload.commercialCountModelList;
@@ -39,10 +39,10 @@ export default {
                 .get(`/api/v1/search/roomtypes`)
                 .then(({ data }) => {
                     commit("ROOMTYPE", data);
-                    // console.log(data);
+                   
                 })
                 .catch((err) => {
-                    // console.log(err);
+                    
                 })
         },
         requestBargainType({ commit }) {
@@ -50,21 +50,21 @@ export default {
                 .get(`/api/v1/search/bargaintypes`)
                 .then(({ data }) => {
                     commit("BARGAINTYPE", data);
-                    // console.log(data);
+                 
                 }).catch((err) => {
-                    // console.log(err);
+                  
                 })
         },
         requestDongCommercial({ commit }, data) {
-            console.log(data);
+         
             http
                 .get(`/api/v1/residences/commercialcount/`, { params: { dongName: data } })
                 .then(({ data }) => {
-                    console.log(data)
+                   
                     commit("DONGCOMMERCIAL", data)
                 })
                 .catch((err) => {
-                    console.log(err);
+                  
                 })
         },
     },

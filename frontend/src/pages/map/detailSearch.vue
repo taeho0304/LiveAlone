@@ -564,7 +564,7 @@ export default {
       this.requestDetailSave();
     },
     changeResiCategory(data, value) {
-      console.log("data : ", data, value);
+     
 
       if (value == "4") {
         this.checkedResiCategory[0].checkResi0 = false;
@@ -590,7 +590,7 @@ export default {
         this.checkedResiCategory[1].checkCategory.push("아파트");
       }
 
-      console.log(this.checkedResiCategory[1].checkCategory);
+     
       this.requestDetailSave();
     },
     changeResiType(e) {
@@ -605,7 +605,7 @@ export default {
       if (this.checkedResiType[0].TradingM) {
         this.checkedResiType[1].checkType.push("매매");
       }
-      console.log(this.checkedResiType[1].checkType);
+     
       this.requestDetailSave();
     },
     changeFloorType() {
@@ -661,8 +661,9 @@ export default {
         startJPrice: this.rangeSlider[0],
         endJPrice: this.rangeSlider[1] == 1000 ? 0 : this.rangeSlider[1] * 100,
 
-        startDprice: this.Drange[0],
-        endDprice: this.Drange[1] == 1000 ? 0 : this.Drange[1] * 10,
+        startDprice: this.DepositeRange[0],
+        endDprice:
+          this.DepositeRange[1] == 1000 ? 0 : this.DepositeRange[1] * 100,
 
         startWPrice: this.dealMonthRange[0],
         endWPrice: this.dealMonthRange[1] == 350 ? 0 : this.dealMonthRange[1],
@@ -677,7 +678,7 @@ export default {
         sortType: null,
       };
       //NOTE : 부모로 에밋
-      console.log(mySave);
+      
 
       this.$emit("mydetailS", mySave);
     },

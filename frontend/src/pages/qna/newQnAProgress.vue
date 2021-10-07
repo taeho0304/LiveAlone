@@ -615,7 +615,7 @@ export default {
     clickDong2(dongItems, idx) {
       this.Dong2 = dongItems.dongName;
       this.recommend.dong[1] = dongItems.id;
-      console.log(this.recommend);
+
       this.isNext = true;
     },
     clickGu(guName, idx) {
@@ -663,7 +663,7 @@ export default {
       }
 
       if (this.index == 4) {
-        console.log(this.recommend);
+     
         this.setRes(this.recommend);
         return;
       }

@@ -169,10 +169,10 @@ export default {
 
     click() {
       this.isClick = !this.isClick;
-      console.log(this.isClick);
+    
     },
     clickModify() {
-      console.log(this.isClick);
+    
       let modifyed = {
         userName: this.getUserInfo.user.userName,
         userId: this.getUserInfo.user.userId,
@@ -184,7 +184,7 @@ export default {
       this.click();
     },
     init() {
-      console.log("Manage.vue 2");
+     
       this.requestUserInfo();
     },
     remove() {

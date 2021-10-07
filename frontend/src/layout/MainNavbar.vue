@@ -227,7 +227,7 @@ export default {
       }
     },
     requestDetailSearch(data) {
-      console.log("mainnav", data);
+      
       this.$emit("detailS", data);
     },
     clickLogout() {
@@ -239,7 +239,7 @@ export default {
       this.Dong = dongItems.dongName;
 
       let temp = this.Si + " " + this.Gu + " " + this.Dong;
-      console.log(dongItems);
+      
 
       const data = {
         si: this.Si,
@@ -249,11 +249,11 @@ export default {
         long: dongItems.lon,
       };
 
-      console.log(data);
+     
 
       this.emitData = data;
 
-      console.log("emit : ", this.emitData);
+    
       this.$emit("maker", this.emitData);
     },
     getInfo() {
@@ -261,7 +261,7 @@ export default {
     },
     clickGu(guName, idx) {
       http.get("/api/v1/search/dong" + "?guGunName=" + guName).then((res) => {
-        console.log(res.data.dongModelList);
+       
         this.dongList = res.data.dongModelList;
       });
       this.Gu = guName;
@@ -270,7 +270,7 @@ export default {
       http
         .get("/api/v1/search/gugun" + "?siName=" + "서울특별시")
         .then((res) => {
-          console.log(res.data.guGunListList);
+         
           this.GuList = res.data.guGunListList;
         });
       this.Si = siName;

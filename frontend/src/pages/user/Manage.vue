@@ -72,7 +72,7 @@ export default {
     ]),
 
     init() {
-      console.log("Manage.vue 1");
+     
     },
   },
   created() {
