@@ -212,7 +212,13 @@ export default {
       sortArea: true,
       sortLike: true,
       sortType: null,
-      resiCommercial: null,
+      resiCommercial: {
+        cafeCount: 0,
+        healthCount: 0,
+        bicycleCount: 0,
+        subwayCount: 0,
+        busCount: 0,
+      },
     };
   },
   watch: {
@@ -250,7 +256,6 @@ export default {
   },
   methods: {
     movethisResi(idx) {
-    
       var position = {
         id: this.resiList[idx].residenceInfo.id,
         lat: this.resiList[idx].residenceInfo.lat,
@@ -259,8 +264,6 @@ export default {
       this.$emit("moveThisResi", position);
     },
     SortByLike() {
-   
-
       var sortData = {
         sortType: "favorite",
         sortOrder: this.sortLike,
@@ -287,7 +290,6 @@ export default {
     },
 
     requestNext(itemnum) {
-     
       this.$emit("requestNextItem", itemnum);
     },
     onChangePage(pageOfItems) {
@@ -345,22 +347,19 @@ export default {
     showModal(res) {
       this.showResiDetail = !this.showResiDetail;
       this.resiDetail = this.resiList[res].residenceInfo;
-     
+
       http
         .post(
           "/api/v1/residences/residencecommercialcount?residenceId=" +
             this.resiDetail.id
         )
         .then((res) => {
-      
           this.resiCommercial = res.data.residenceCommercialCountModel[0];
         });
     },
     delFavorite(idx) {
       var deldata = this.resiList[idx].residenceInfo.id;
       const CSRF_TOKEN = localStorage.getItem("accessToken");
-
-    
 
       http
         .delete("/api/v1/favorites?residenceId=" + deldata, {
@@ -380,7 +379,7 @@ export default {
     },
     myFavorite(idx) {
       var postdata = this.resiList[idx].residenceInfo.id;
-     
+
       const CSRF_TOKEN = localStorage.getItem("accessToken");
 
       if (localStorage.getItem("accessToken")) {
@@ -391,7 +390,6 @@ export default {
             headers: { Authorization: "Bearer " + CSRF_TOKEN },
           })
           .then((res) => {
-          
             if (res.status == 201) {
               VueSimpleAlert.fire({
                 title: "찜하기 성공",

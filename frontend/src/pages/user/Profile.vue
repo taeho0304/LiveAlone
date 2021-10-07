@@ -11,6 +11,7 @@
           <ResiDetail
             v-if="resiDetail != null"
             v-bind:resiDetail="resiDetail"
+            v-bind:resiCommercial="resiCommercial"
           />
         </modal>
 
@@ -217,7 +218,13 @@ export default {
       total: 100,
       columns: [""],
       actions: [""],
-
+      resiCommercial: {
+        cafeCount: 0,
+        healthCount: 0,
+        bicycleCount: 0,
+        subwayCount: 0,
+        busCount: 0,
+      },
       settings: {
         dots: true,
         infinite: true,
@@ -253,6 +260,15 @@ export default {
     showModal(res) {
       this.resiDetail = this.myfavorite[res].residenceInfo;
       this.showResiDetail = !this.showResiDetail;
+      http
+        .post(
+          "/api/v1/residences/residencecommercialcount?residenceId=" +
+            this.resiDetail.id
+        )
+        .then((res) => {
+          this.resiCommercial = res.data.residenceCommercialCountModel[0];
+          console.log(res);
+        });
     },
     delFavorite(idx) {
       var deldata = this.myfavorite[idx].residenceInfo.id;

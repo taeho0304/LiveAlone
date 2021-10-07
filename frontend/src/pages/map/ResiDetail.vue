@@ -4,19 +4,13 @@
       <div class="col-md-12">반경 500m내 상권🚀</div>
       <div class="row col-md-12">
         <div class="col-md-4">
-          편의점🏪 :{{ this.resiCommercial.convenienceCount }}
+          편의점🏪 :{{ resiCommercial.convenienceCount }}
         </div>
-        <div class="col-md-4">카페☕️ :{{ this.resiCommercial.cafeCount }}</div>
-        <div class="col-md-4">
-          헬스장🏋️ : {{ this.resiCommercial.healthCount }}
-        </div>
-        <div class="col-md-4">
-          따릉이🚲 :{{ this.resiCommercial.bicycleCount }}
-        </div>
-        <div class="col-md-4">
-          지하철🚈 :{{ this.resiCommercial.subwayCount }}
-        </div>
-        <div class="col-md-4">버스🚍: {{ this.resiCommercial.busCount }}</div>
+        <div class="col-md-4">카페☕️ :{{ resiCommercial.cafeCount }}</div>
+        <div class="col-md-4">헬스장🏋️ : {{ resiCommercial.healthCount }}</div>
+        <div class="col-md-4">따릉이🚲 :{{ resiCommercial.bicycleCount }}</div>
+        <div class="col-md-4">지하철🚈 :{{ resiCommercial.subwayCount }}</div>
+        <div class="col-md-4">버스🚍: {{ resiCommercial.busCount }}</div>
       </div>
     </card>
 
