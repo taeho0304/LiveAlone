@@ -656,13 +656,13 @@ export default {
 
         startPrice: this.dealTradingRange[0],
         endPrice:
-          this.dealTradingRange[1] == 1500 ? 0 : this.dealTradingRange[1],
+          this.dealTradingRange[1] == 1500 ? 0 : this.dealTradingRange[1] * 100,
 
         startJPrice: this.rangeSlider[0],
-        endJPrice: this.rangeSlider[1] == 1000 ? 0 : this.rangeSlider[1],
+        endJPrice: this.rangeSlider[1] == 1000 ? 0 : this.rangeSlider[1] * 100,
 
         startDprice: this.Drange[0],
-        endDprice: this.Drange[1] == 1000 ? 0 : this.Drange[1],
+        endDprice: this.Drange[1] == 1000 ? 0 : this.Drange[1] * 10,
 
         startWPrice: this.dealMonthRange[0],
         endWPrice: this.dealMonthRange[1] == 350 ? 0 : this.dealMonthRange[1],

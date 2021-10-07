@@ -131,7 +131,6 @@ export default {
       this.qnaResMaker();
       this.isQnAshow = true;
       this.isDraged = false;
-      this.map.setDraggable(isDraged);
     },
     detailFilter: function (newVal) {
       console.log("change", newVal);
@@ -436,14 +435,17 @@ export default {
       console.log(this.pageItem.type);
       const CSRF_TOKEN = localStorage.getItem("accessToken");
       if (this.pageItem.type == "dong") {
+        console.log(this.dongSortOrder);
+        console.log(this.dongSortType);
         if (CSRF_TOKEN != null) {
+          var param;
           http
             .get(
               "/api/v1/residences?dong=" +
                 this.moveDong +
                 "&pageNum=" +
-                itemnum,
-              +"&sortOrder=" +
+                itemnum +
+                "&sortOrder=" +
                 this.dongSortOrder +
                 "&sortType=" +
                 this.dongSortType,
@@ -568,7 +570,7 @@ export default {
       /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
       script.src =
-        "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=f52d6b75a8a65ca935ff31e1ba7eace5&libraries=services,clusterer,drawing";
+        "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=f52d6b75a8a65ca935ff31e1ba7eace5&libraries=services,clusterer,drawing";
       document.head.appendChild(script);
     },
     initMap() {
