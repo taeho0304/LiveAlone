@@ -110,6 +110,7 @@
             {{ items.name }}
           </p>
         </drop-down>
+
         <drop-down
           v-if="isSecond"
           class="
