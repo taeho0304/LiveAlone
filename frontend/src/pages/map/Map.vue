@@ -321,7 +321,7 @@ export default {
       this.pointresimaker.setMap(null);
     },
     qnaSetMaker(map) {
-      console.log(map);
+      
       for (var i = 0; i < this.qnaResMaker.length; i++) {
         this.qnaResMaker[i].setMap(map);
       }

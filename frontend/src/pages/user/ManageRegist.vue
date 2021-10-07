@@ -601,7 +601,7 @@ export default {
               this.residence.lat = res.data.documents[0].address.y;
               this.residence.lon = res.data.documents[0].address.x;
             })
-            .catch((error) => console.log(error));
+            .catch((error) => error);
         },
       }).open();
     },
