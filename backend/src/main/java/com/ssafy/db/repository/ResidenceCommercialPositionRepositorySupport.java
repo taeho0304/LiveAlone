@@ -21,8 +21,8 @@ public class ResidenceCommercialPositionRepositorySupport {
     QResidenceCommercialPosition qResidenceCommercialPosition = QResidenceCommercialPosition.residenceCommercialPosition;
 
     public List<ResidenceCommercialPosition> findCommercialPositionByResidenceId(long residenceId) {
-        JPAQuery<ResidenceCommercialPosition> residenceCommercialPosition = jpaQueryFactory.select(qResidenceCommercialPosition).from(qResidenceCommercialPosition);
-//                .where(qResidenceCommercialPosition.residenceInfo);
+        JPAQuery<ResidenceCommercialPosition> residenceCommercialPosition = jpaQueryFactory.select(qResidenceCommercialPosition).from(qResidenceCommercialPosition)
+                .where(qResidenceCommercialPosition.residenceInfo.id.eq(residenceId));
         return residenceCommercialPosition.fetch();
 
     }
