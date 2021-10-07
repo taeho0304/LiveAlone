@@ -379,8 +379,10 @@
   </div>
 </template>
 
+
+
 <script>
-import {  FormGroupInput, Button, DropDown } from "@/components";
+import { FormGroupInput, Button, DropDown } from "@/components";
 import { mapActions, mapGetters } from "vuex";
 import Treeselect from "@riophae/vue-treeselect";
 import axios from "axios";
@@ -419,18 +421,22 @@ export default {
         { id: "", name: "쓰리룸 이상", valid: true },
       ],
       directionList: [
-        { id: "동", label: "동"},
-        { id: "서", label: "서"},
-        { id: "남", label: "남",
+        { id: "동", label: "동" },
+        { id: "서", label: "서" },
+        {
+          id: "남",
+          label: "남",
           children: [
-            { id: "남동", label: "남동"},
-            { id: "남서", label: "남서"},
+            { id: "남동", label: "남동" },
+            { id: "남서", label: "남서" },
           ],
         },
-        { id: "북", label: "북",
+        {
+          id: "북",
+          label: "북",
           children: [
-            { id: "북동", label: "북동"},
-            { id: "북서", label: "북서"},
+            { id: "북동", label: "북동" },
+            { id: "북서", label: "북서" },
           ],
         },
       ],
@@ -440,12 +446,12 @@ export default {
       addr2: "",
       isMonthType: true,
       isStructureType: false,
-      
+
       categoryName: "매물 유형",
       typeName: "거래 유형",
       structureName: "방 구조",
       directionName: "매물 방향",
-      
+
       residence: {
         residenceCategory: 0, //매물유형
         residenceType: 0, //거래유형

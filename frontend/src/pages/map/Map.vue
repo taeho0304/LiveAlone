@@ -131,7 +131,6 @@ export default {
       this.qnaResMaker();
       this.isQnAshow = true;
       this.isDraged = false;
-      this.map.setDraggable(isDraged);
     },
     detailFilter: function (newVal) {
       console.log("change", newVal);
@@ -436,14 +435,17 @@ export default {
       console.log(this.pageItem.type);
       const CSRF_TOKEN = localStorage.getItem("accessToken");
       if (this.pageItem.type == "dong") {
+        console.log(this.dongSortOrder);
+        console.log(this.dongSortType);
         if (CSRF_TOKEN != null) {
+          var param;
           http
             .get(
               "/api/v1/residences?dong=" +
                 this.moveDong +
                 "&pageNum=" +
-                itemnum,
-              +"&sortOrder=" +
+                itemnum +
+                "&sortOrder=" +
                 this.dongSortOrder +
                 "&sortType=" +
                 this.dongSortType,
