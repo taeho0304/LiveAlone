@@ -380,7 +380,7 @@
 </template>
 
 <script>
-import { FormGroupInput, Button, DropDown } from "@/components";
+import {  FormGroupInput, Button, DropDown } from "@/components";
 import { mapActions, mapGetters } from "vuex";
 import Treeselect from "@riophae/vue-treeselect";
 import axios from "axios";
@@ -390,12 +390,10 @@ export default {
   name: "manage",
   bodyClass: "manage-page",
   components: {
-    
     [FormGroupInput.name]: FormGroupInput,
     [Button.name]: Button,
     DropDown,
     Treeselect,
-    
   },
   data: function () {
     return {
