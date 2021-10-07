@@ -219,10 +219,12 @@ public class ResidenceServiceImpl implements ResidenceService {
 		List<ResidenceCommercialPositionModel> residenceCommercialPositionModels = new ArrayList<>();
 		List<ResidenceCommercialPosition> residenceCommercialPositions = residenceCommercialPositionRepositorySupport.findCommercialPositionByResidenceId(residenceId);
 		for (ResidenceCommercialPosition residenceCommercialPosition:residenceCommercialPositions) {
-			ResidenceCommercialPositionModel residenceCommercialPositionModel = new ResidenceCommercialPositionModel();
-			residenceCommercialPositionModel.setLat(residenceCommercialPosition.getCommercialInfo().getLat());
-			residenceCommercialPositionModel.setLon(residenceCommercialPosition.getCommercialInfo().getLon());
-			residenceCommercialPositionModels.add(residenceCommercialPositionModel);
+			if(residenceCommercialPosition.getCommercialInfo().getCommercialCategory().getCategoryName().equals("따릉이")){
+				ResidenceCommercialPositionModel residenceCommercialPositionModel = new ResidenceCommercialPositionModel();
+				residenceCommercialPositionModel.setLat(residenceCommercialPosition.getCommercialInfo().getLat());
+				residenceCommercialPositionModel.setLon(residenceCommercialPosition.getCommercialInfo().getLon());
+				residenceCommercialPositionModels.add(residenceCommercialPositionModel);
+			}
 		}
 		return residenceCommercialPositionModels;
 	}
