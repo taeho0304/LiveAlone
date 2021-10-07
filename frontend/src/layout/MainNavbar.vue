@@ -248,9 +248,6 @@ export default {
         lat: dongItems.lat,
         long: dongItems.lon,
       };
-
-     
-
       this.emitData = data;
 
     
@@ -261,7 +258,6 @@ export default {
     },
     clickGu(guName, idx) {
       http.get("/api/v1/search/dong" + "?guGunName=" + guName).then((res) => {
-       
         this.dongList = res.data.dongModelList;
       });
       this.Gu = guName;
@@ -270,7 +266,6 @@ export default {
       http
         .get("/api/v1/search/gugun" + "?siName=" + "서울특별시")
         .then((res) => {
-         
           this.GuList = res.data.guGunListList;
         });
       this.Si = siName;
