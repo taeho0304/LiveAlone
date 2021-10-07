@@ -120,6 +120,7 @@ public class SearchServiceImpl implements SearchService {
 
 		for(int i=0; i<dongs.size(); i++){
 			DongModel dongModel = new DongModel();
+			dongModel.setId(dongs.get(i).getId());
 			dongModel.setDongName(dongs.get(i).getDongName());
 			dongModel.setLat(dongs.get(i).getLat());
 			dongModel.setLon(dongs.get(i).getLon());

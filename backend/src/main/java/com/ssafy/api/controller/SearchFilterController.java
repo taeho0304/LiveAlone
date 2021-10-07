@@ -158,9 +158,9 @@ public class SearchFilterController {
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "실패")
     })
-    public ResponseEntity<DongRes> getDong( @RequestParam String dong ) {
+    public ResponseEntity<DongRes> getDong( @RequestParam String guGunName ) {
         try {
-            List<DongModel> dongModelList = searchService.getDong(dong);
+            List<DongModel> dongModelList = searchService.getDong(guGunName);
             return ResponseEntity.status(200).body(DongRes.of(dongModelList));
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(500).body(DongRes.of(500, "fail"));

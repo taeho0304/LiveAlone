@@ -2,10 +2,12 @@ package com.ssafy.api.request;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,11 +15,10 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class ResidenceGetReq {
-	String si;
-	String dong;
-	String gugun;
+@ApiModel("ResidenceEstateIdsPostReq")
+public class ResidenceEstateIdsPostReq {
+	@ApiModelProperty(name="부동산 번호", example="1")
+	long estateId;
+	@ApiModelProperty(name="페이지 번호", example="1")
 	long pageNum;
-	String sortType;
-	String sortOrder;
 }
