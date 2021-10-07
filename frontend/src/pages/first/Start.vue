@@ -23,21 +23,6 @@
               ></router-link
             >
 
-            <a
-              class="btn btn-lg btn-block"
-              style="
-                border-radius: 10px;
-                background: linear-gradient(60deg, #48c6ef, #4481eb);
-              "
-              @click="modals.classic = true"
-            >
-              지도보기</a
-            >
-            <modal :show.sync="modals.classic" modal-classes="modal-lg">
-              <div style="display: flex">
-                <seoulMap />
-              </div>
-            </modal>
             <router-link to="/qna"
               ><a
                 class="btn btn-lg btn-block"
@@ -56,19 +41,11 @@
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
-import { Modal } from "@/components";
-import seoulMap from "../first/seoulMap.vue";
+
 export default {
-  components: {
-    Modal,
-    seoulMap,
-  },
+  components: {},
   data() {
-    return {
-      modals: {
-        classic: false,
-      },
-    };
+    return {};
   },
   name: "start",
   bodyClass: "start-page",

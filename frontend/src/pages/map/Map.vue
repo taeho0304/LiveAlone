@@ -76,10 +76,13 @@ export default {
   },
   data() {
     return {
+      checkedMarker: false,
+      preResimaker: null,
+      curResimaker: null,
       isCount: false,
       isShow: false,
       isResiShow: false,
-      isQnAshow: false,
+      isQnAshow: true,
       qnaResiList: [],
       markerList: [],
       resiList: [],
@@ -110,6 +113,7 @@ export default {
         healthCount: 0,
       },
       qnamakers: [],
+      isDraged: true,
     };
   },
   props: {
@@ -123,6 +127,8 @@ export default {
       }
       this.qnaResMaker();
       this.isQnAshow = true;
+      this.isDraged = false;
+      this.map.setDraggable(isDraged);
     },
     detailFilter: function (newVal) {
       console.log("change", newVal);
@@ -167,21 +173,26 @@ export default {
       this.cluster.clear();
       this.qnaSetMaker(null);
       console.log("moveTo", moveLatLon);
-      this.map.setLevel(6);
+      this.map.setLevel(5);
       this.map.panTo(moveLatLon);
       this.moveDong = newVal.dong;
+      this.isDraged = true;
     },
     moveDong: function (newVal) {
       this.isCount = true;
       this.cluster.clear();
       this.qnaSetMaker(null);
+      this.selectResiSet(null);
       console.log(newVal);
       this.pageItem.curpage = 1;
       this.pageItem.type = "dong";
       this.sortFilter = "none";
       this.dongSortType = null;
       this.dongSortOrder = null;
+      this.isDraged = true;
+      this.map.setDraggable(this.isDraged);
       const CSRF_TOKEN = localStorage.getItem("accessToken");
+
       if (CSRF_TOKEN != null) {
         http
           .get("/api/v1/residences?dong=" + newVal + "&pageNum=" + "1", {
@@ -216,14 +227,15 @@ export default {
       var moveLatLon = new kakao.maps.LatLng(position.lat, position.lon);
       this.map.setLevel(1);
       this.map.panTo(moveLatLon);
+
+      this.selectResiDraw(moveLatLon);
     },
     async qnaResMaker() {
       console.log(this.getQuestionResult);
       console.log("마커 그리기");
       this.qnaResMaker = [];
-      var imageSrc =
-        "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-      var imageSize = new kakao.maps.Size(24, 35);
+      var imageSrc = "img/recomendicon.png";
+      var imageSize = new kakao.maps.Size(45, 45);
 
       var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
       for (var i = 0; i < this.getQuestionResult.length; i++) {
@@ -243,7 +255,34 @@ export default {
       );
       this.map.setLevel(2);
       this.map.panTo(moveLatLon);
+      this.checkedMarker = !this.checkedMarker;
+
       await this.qnaSetMaker(this.map);
+    },
+    async selectResiDraw(moveLatLon) {
+      console.log("ddd");
+      var imageSrc = "img/resiicon.png";
+      var imageSize = new kakao.maps.Size(45, 45);
+
+      var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+      this.curResimaker = new kakao.maps.Marker({
+        position: moveLatLon,
+        image: markerImage,
+      });
+
+      this.selectResiSet(this.map);
+    },
+    selectResiSet(map) {
+      if (this.curResimaker != null) {
+        this.curResimaker.setMap(map);
+      }
+      if (this.preResimaker != null) {
+        this.preResimaker.setMap(null);
+      }
+      this.preResimaker = this.curResimaker;
+    },
+    remove() {
+      this.pointresimaker.setMap(null);
     },
     qnaSetMaker(map) {
       console.log(map);
@@ -494,11 +533,12 @@ export default {
       var options = {
         //지도를 생성할 때 필요한 기본 옵션
         center: new kakao.maps.LatLng(37.564214, 127.001699),
-        level: 8, //지도의 레벨(확대, 축소 정도)
+        level: 5, //지도의 레벨(확대, 축소 정도)
       };
 
       var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
       this.map = map;
+
       kakao.maps.event.addListener(map, "dragend", this.mapdrag);
 
       var clusterer = new kakao.maps.MarkerClusterer({
@@ -527,6 +567,8 @@ export default {
       kakao.maps.event.addListener(clusterer, "clusterclick", this.temp);
     },
     mapdrag() {
+      if (!this.isDraged) return;
+
       this.moveDong = null;
       // 지도 중심좌표를 얻어옵니다
       var latlng = this.map.getCenter();
