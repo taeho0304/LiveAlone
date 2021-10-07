@@ -238,6 +238,22 @@ public class ResidenceController {
         }
     }
 
+    @PostMapping("/commercialposition")
+    @ApiOperation(value = "매물 주변 상권 위치", notes = "매물 주변 상권 위치를 출력한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "실패")
+    })
+    public ResponseEntity<ResidenceCommercialPositionRes> getResidenceCommercialPosition(
+            @RequestParam long residenceId) {
+        try {
+            List<ResidenceCommercialPositionModel> residenceCommercialPositionModel = residenceService.getResidenceCommercialPosition(residenceId);
+            return ResponseEntity.status(200).body(ResidenceCommercialPositionRes.of(residenceCommercialPositionModel));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(500).body(ResidenceCommercialPositionRes.of(500, "fail"));
+        }
+    }
+
 //    @DeleteMapping()
 //    @ApiOperation(value = "방 종류 삭제", notes = "방 종류를 삭제한다.")
 //    @ApiResponses({

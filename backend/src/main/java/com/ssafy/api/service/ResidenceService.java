@@ -36,4 +36,6 @@ public interface ResidenceService {
 	List<RecommendModel> getRecommendResidence(ResidenceRecommendPostReq residenceRecommendPostReq, Authentication authentication);
 
 	List<ResidenceCommercialCountModel> getResidenceCommercial(long residenceId);
+
+	List<ResidenceCommercialPositionModel> getResidenceCommercialPosition(long residenceId);
 }
