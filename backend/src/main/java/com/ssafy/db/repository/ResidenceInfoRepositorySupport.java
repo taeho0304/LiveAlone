@@ -33,8 +33,14 @@ public class ResidenceInfoRepositorySupport {
         BooleanBuilder builder = new BooleanBuilder();
         for (int i = 0; i< residenceDetailGetReq.getResidenceType().size(); i++)
             builder.or(qresidenceInfo.residenceType.type.eq(residenceDetailGetReq.getResidenceType().get(i)));
+        residences.where(builder);
+
+        builder = new BooleanBuilder();
         for (int i = 0; i< residenceDetailGetReq.getResidenceCategory().size(); i++)
             builder.or(qresidenceInfo.residenceCategory.categoryName.eq(residenceDetailGetReq.getResidenceCategory().get(i)));
+        residences.where(builder);
+
+        builder = new BooleanBuilder();
         if (residenceDetailGetReq.getStartPrice() > 0) builder.and(qresidenceInfo.cost.goe(residenceDetailGetReq.getStartPrice()));
         if (residenceDetailGetReq.getEndPrice() > 0) builder.and(qresidenceInfo.cost.loe(residenceDetailGetReq.getEndPrice()));
         if (residenceDetailGetReq.getStartJPrice() > 0) builder.and(qresidenceInfo.jeonseCost.goe(residenceDetailGetReq.getStartJPrice()));
