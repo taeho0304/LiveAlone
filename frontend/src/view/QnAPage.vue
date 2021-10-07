@@ -14,7 +14,7 @@ import newQnAProgress from "../pages/qna/newQnAProgress.vue";
 export default {
   data() {
     return {
-      color: "linear-gradient(0deg,rgba(44,44,44,.2),rgba(224,23,3,.6))",
+      color: "linear-gradient(0deg,#fdfbfb,#ebedee)",
     };
   },
   methods: {},

@@ -10,6 +10,7 @@ export default {
         bargainType: [],
         gugunCount: [],
         dongcount: [],
+        dongComiercial: [],
     },
     mutations: {
         ROOMTYPE(state, payload) {
@@ -27,6 +28,9 @@ export default {
         DONGCOUNT(state, payload) {
             state.dongcount = payload.counts;
             console.log(state.dongcount)
+        },
+        DONGCOMMERCIAL(state, payload) {
+            state.dongComiercial = payload.commercialCountModelList;
         }
     },
     actions: {
@@ -50,16 +54,18 @@ export default {
                 }).catch((err) => {
                     // console.log(err);
                 })
-        }
-        , requestGugunCount({ commit }) {
-            http.get("/api/v1/residences/gucount").then((res) => {
-                commit("GUGUNCOUNT", res.data);
-            });
         },
-        requestDongCount({ commit }) {
-            http.get("/api/v1/residences/dongcount").then((res) => {
-                commit("DONGCOUNT", res.data);
-            });
+        requestDongCommercial({ commit }, data) {
+            console.log(data);
+            http
+                .get(`/api/v1/residences/commercialcount/`, { params: { dongName: data } })
+                .then(({ data }) => {
+                    console.log(data)
+                    commit("DONGCOMMERCIAL", data)
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
         },
     },
     getters: {
@@ -74,6 +80,9 @@ export default {
         },
         getBargainType(state) {
             return state.bargainType;
+        },
+        getDongCommercial(state) {
+            return state.dongComiercial;
         }
     }
 }

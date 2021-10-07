@@ -1,56 +1,74 @@
 <template>
   <div>
     <div v-show="isResiShow" class="Resi col-md-3" style="max-width: 430px">
-      <ResidenceList v-bind:resiList="resiList"/>
+      <ResidenceList
+        v-if="resiList != null"
+        v-bind:resiList="resiList"
+        v-bind:pageItem="pageItem"
+        v-bind:sortFilter="sortFilter"
+        @requestNextItem="requestNextItem"
+        @sort="sort"
+        @moveThisResi="moveThisResi"
+      />
     </div>
-    <div id="map" style="width: 100%; height: 100%"></div>
-    <ul id="category" v-show="isShow">
-      <li id="BK9" data-order="0">
-        <span class="category_bg bank"></span>
-        은행
-      </li>
-      <li id="MT1" data-order="1">
-        <span class="category_bg mart"></span>
-        마트
-      </li>
-      <li id="PM9" data-order="2">
-        <span class="category_bg pharmacy"></span>
-        약국
-      </li>
-      <li id="OL7" data-order="3">
-        <span class="category_bg oil"></span>
-        주유소
-      </li>
-      <li id="CE7" data-order="4">
-        <span class="category_bg cafe"></span>
-        카페
-      </li>
-      <li id="CS2" data-order="5">
-        <span class="category_bg store"></span>
-        편의점
-      </li>
-    </ul>
+    <div v-show="isQnAshow" class="Resi col-md-3" style="max-width: 430px">
+      <QnAResList
+        v-bind:getQuestionResult="getQuestionResult"
+        @moveThisResi="moveThisResi"
+      />
+    </div>
 
-    <n-button class="temp" type="neutral" round size="" @click="clickShow()">
-      <i class="now-ui-icons ui-1_zoom-bold"></i
-    ></n-button>
+    <div id="map" style="width: 100%; height: 100%"></div>
+
+    <div
+      v-if="isCount"
+      class="card temp card-neutral"
+      size=""
+      style="
+        width: 300px;
+        margin-top: 34.5%;
+        margin-right: 7px;
+        margin-bottom: 0px;
+      "
+    >
+      <!----><!----><!----><!----><!---->
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">우리동네 {{ this.moveDong }} 상권🤳</li>
+        <li class="list-group-item">
+          편의점🏪 :
+          {{ getDongCommercial[1] == null ? 0 : getDongCommercial[1].count }}
+        </li>
+        <li class="list-group-item">
+          카페☕️ :
+          {{ getDongCommercial[0] == null ? 0 : getDongCommercial[0].count }}
+        </li>
+        <li class="list-group-item">
+          헬스장🏋️ :
+          {{ getDongCommercial[2] == null ? 0 : getDongCommercial[2].count }}
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
-import { Button } from "@/components";
+import {} from "@/components";
 import ResidenceList from "./ResidenceList.vue";
 import http from "@/util/http-common";
-
+import QnAResList from "@/pages/qna/QnAResult.vue";
+import { mapActions, mapGetters } from "vuex";
 export default {
   computed: {},
   components: {
-    [Button.name]: Button,
     ResidenceList,
+    QnAResList,
   },
   name: "index",
   bodyClass: "index-page",
-  computed: {},
+  computed: {
+    ...mapGetters("question", ["getQuestionResult"]),
+    ...mapGetters("search", ["getDongCommercial"]),
+  },
   mounted() {
     window.kakao && window.kakao.maps
       ? this.initMap()
@@ -58,8 +76,17 @@ export default {
   },
   data() {
     return {
+      preCommercialMaker: [],
+      curCommercialMarker: [],
+
+      checkedMarker: false,
+      preResimaker: null,
+      curResimaker: null,
+      isCount: false,
       isShow: false,
       isResiShow: false,
+      isQnAshow: false,
+      qnaResiList: [],
       markerList: [],
       resiList: [],
       map: null,
@@ -67,40 +94,131 @@ export default {
       dongCount: this.$store.getters[`search/getdongCount`],
       marking: null,
       cluster: null,
+      moveDong: null,
+      mark: null,
+      sortFilter: null,
+      dongSortType: null,
+      dongSortOrder: null,
+      pageItem: {
+        curpage: null,
+        total: null,
+        type: null,
+      },
+      requestForIds: {
+        sortOrder: null,
+        sortType: null,
+        residenceIds: [],
+        pageNum: 1,
+      },
+      dong: {
+        convenienceCount: 0,
+        cafeCount: 0,
+        healthCount: 0,
+      },
+      qnamakers: [],
+      isDraged: true,
     };
   },
   props: {
     marker: Object,
+    detailFilter: Object,
   },
   watch: {
+    getQuestionResult: function (newVal) {
+      if (this.isResiShow) {
+        this.isResiShow = false;
+      }
+      this.qnaResMaker();
+      this.isQnAshow = true;
+      this.isDraged = false;
+      this.map.setDraggable(isDraged);
+    },
+    detailFilter: function (newVal) {
+      console.log("change", newVal);
+      this.sortFilter = "none";
+      this.pageItem.curpage = 1;
+      this.pageItem.type = "details";
+      const CSRF_TOKEN = localStorage.getItem("accessToken");
+      if (CSRF_TOKEN != null) {
+        http
+          .post("/api/v1/residences/detail", newVal, {
+            headers: { Authorization: "Bearer " + CSRF_TOKEN },
+          })
+          .then((res) => {
+            this.pageItem.total = res.data.pageSize;
+            this.resiList = res.data.residenceInfo;
+            console.log("deatailRES", this.resiList);
+          });
+      } else {
+        http.post("/api/v1/residences/detail", newVal).then((res) => {
+          console.log("deatailRES", res.data.residenceInfo);
+          this.pageItem.total = res.data.pageSize;
+          this.resiList = res.data.residenceInfo;
+        });
+      }
+    },
     resiList: function (newVal) {
       console.log("new", newVal);
+      if (this.isQnAshow) {
+        this.isQnAshow = false;
+      }
       this.isResiShow = true;
     },
     markerList: function (newVal) {
       console.log(newVal);
-      var markers = newVal.positionModelList.map(function (position) {
-        return new kakao.maps.Marker({
-          position: new kakao.maps.LatLng(position.lat, position.lon),
-          title: position.id,
-        });
-      });
+      var mark = null;
+      var markers = newVal.positionModelList.map(this.drawMarker);
+
       this.cluster.addMarkers(markers);
     },
     marker: function (newVal) {
       var moveLatLon = new kakao.maps.LatLng(newVal.lat, newVal.long);
       this.cluster.clear();
+      this.qnaSetMaker(null);
       console.log("moveTo", moveLatLon);
-      this.map.setLevel(6);
+      this.map.setLevel(5);
       this.map.panTo(moveLatLon);
+      this.moveDong = newVal.dong;
+      this.isDraged = true;
+    },
+    moveDong: function (newVal) {
+      this.isCount = true;
+      this.cluster.clear();
+      this.qnaSetMaker(null);
+      this.selectResiSet(null);
+      this.resiForCommecialSet(null);
+      console.log(newVal);
+      this.pageItem.curpage = 1;
+      this.pageItem.type = "dong";
+      this.sortFilter = "none";
+      this.dongSortType = null;
+      this.dongSortOrder = null;
+      this.isDraged = true;
+      this.map.setDraggable(this.isDraged);
+      const CSRF_TOKEN = localStorage.getItem("accessToken");
 
-      console.log(newVal.dong);
-
+      if (CSRF_TOKEN != null) {
+        http
+          .get("/api/v1/residences?dong=" + newVal + "&pageNum=" + "1", {
+            headers: { Authorization: "Bearer " + CSRF_TOKEN },
+          })
+          .then((res) => {
+            console.log("movemap", res.data);
+            this.pageItem.total = res.data.pageSize;
+            this.resiList = res.data.residenceInfo;
+          });
+      } else {
+        http
+          .get("/api/v1/residences?dong=" + newVal + "&pageNum=" + "1")
+          .then((res) => {
+            console.log("movemap", res.data);
+            this.pageItem.total = res.data.pageSize;
+            this.resiList = res.data.residenceInfo;
+          });
+      }
+      this.requestDongCommercial(newVal);
       http
-        .get(
-          "/api/v1/residences/positions?%EB%8F%99%EC%9D%B4%EB%A6%84=" +
-            newVal.dong
-        )
+        .get("/api/v1/residences/positions?dongName=" + newVal)
         .then((res) => {
           console.log(res.data);
           this.markerList = res.data;
@@ -109,6 +227,339 @@ export default {
   },
   created() {},
   methods: {
+    moveThisResi(position) {
+      var moveLatLon = new kakao.maps.LatLng(position.lat, position.lon);
+      this.map.setLevel(1);
+      this.map.panTo(moveLatLon);
+
+      this.selectResiDraw(moveLatLon);
+      http
+        .post(
+          "/api/v1/residences/commercialposition?residenceId=" + position.id
+        )
+        .then((res) => {
+          console.log(res.data.residenceCommercialPositionModel);
+          this.resiForCommecialDraw(res.data.residenceCommercialPositionModel);
+        });
+    },
+    async resiForCommecialDraw(res) {
+      var imageSrc = "img/dda.png";
+      var imageSize = new kakao.maps.Size(45, 45);
+      var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+      for (var i = 0; i < res.length; i++) {
+        var marker = new kakao.maps.Marker({
+          position: new kakao.maps.LatLng(res[i].lat, res[i].lon),
+          image: markerImage,
+        });
+        this.curCommercialMarker.push(marker);
+      }
+      await this.resiForCommecialSet(this.map);
+    },
+    resiForCommecialSet(map) {
+      if (this.preCommercialMaker != null) {
+        for (var i = 0; i < this.preCommercialMaker.length; i++) {
+          this.preCommercialMaker[i].setMap(null);
+        }
+      }
+      if (this.curCommercialMarker != null) {
+        for (var i = 0; i < this.curCommercialMarker.length; i++) {
+          this.curCommercialMarker[i].setMap(map);
+        }
+      }
+      this.preCommercialMaker = this.curCommercialMarker;
+    },
+    async qnaResMaker() {
+      console.log(this.getQuestionResult);
+      console.log("마커 그리기");
+      this.qnaResMaker = [];
+      var imageSrc = "img/recomendicon.png";
+      var imageSize = new kakao.maps.Size(45, 45);
+
+      var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+      for (var i = 0; i < this.getQuestionResult.length; i++) {
+        var marker = new kakao.maps.Marker({
+          position: new kakao.maps.LatLng(
+            this.getQuestionResult[i].residenceInfo.lat,
+            this.getQuestionResult[i].residenceInfo.lon
+          ),
+          image: markerImage,
+        });
+        this.qnaResMaker.push(marker);
+      }
+
+      var moveLatLon = new kakao.maps.LatLng(
+        this.getQuestionResult[0].residenceInfo.lat,
+        this.getQuestionResult[0].residenceInfo.lon
+      );
+      this.map.setLevel(2);
+      this.map.panTo(moveLatLon);
+      this.checkedMarker = !this.checkedMarker;
+
+      await this.qnaSetMaker(this.map);
+    },
+    async selectResiDraw(moveLatLon) {
+      console.log("ddd");
+      var imageSrc = "img/resiicon.png";
+      var imageSize = new kakao.maps.Size(45, 45);
+
+      var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+      this.curResimaker = new kakao.maps.Marker({
+        position: moveLatLon,
+        image: markerImage,
+      });
+
+      this.selectResiSet(this.map);
+    },
+    selectResiSet(map) {
+      if (this.curResimaker != null) {
+        this.curResimaker.setMap(map);
+      }
+      if (this.preResimaker != null) {
+        this.preResimaker.setMap(null);
+      }
+      this.preResimaker = this.curResimaker;
+    },
+    remove() {
+      this.pointresimaker.setMap(null);
+    },
+    qnaSetMaker(map) {
+      console.log(map);
+      for (var i = 0; i < this.qnaResMaker.length; i++) {
+        this.qnaResMaker[i].setMap(map);
+      }
+    },
+    ...mapActions("search", ["requestDongCommercial"]),
+    sort(res) {
+      console.log(res);
+      //NOTE: ids , 동 , 상세 중 현재 검색한 타입으로 정렬
+      const CSRF_TOKEN = localStorage.getItem("accessToken");
+      this.sortFilter = res.sortType;
+      if (this.pageItem.type == "ids") {
+        console.log("thisType", this.pageItem.type);
+        this.pageItem.curpage = 1;
+        this.pageItem.type = "ids";
+        this.requestForIds.sortOrder = res.sortOrder ? "asc" : "desc";
+        this.requestForIds.sortType = res.sortType;
+        if (CSRF_TOKEN != null) {
+          http
+            .post("/api/v1/residences/ids", this.requestForIds, {
+              headers: { Authorization: "Bearer " + CSRF_TOKEN },
+            })
+            .then((res) => {
+              this.resiList = res.data.residenceInfo;
+              this.pageItem.total = res.data.pageSize;
+              console.log("받아온데이터", this.resiList);
+            });
+        } else {
+          http
+            .post("/api/v1/residences/ids", this.requestForIds)
+            .then((res) => {
+              this.resiList = res.data.residenceInfo;
+              this.pageItem.total = res.data.pageSize;
+              console.log("받아온데이터", this.resiList);
+            });
+        }
+      } else if (this.pageItem.type == "dong") {
+        this.dongSortOrder = res.sortOrder ? "asc" : "desc";
+        this.dongSortType = res.sortType;
+        console.log("thisType", this.pageItem.type);
+        if (CSRF_TOKEN != null) {
+          http
+            .get(
+              "/api/v1/residences?dong=" +
+                this.moveDong +
+                "&pageNum=" +
+                "1" +
+                "&sortOrder=" +
+                this.dongSortOrder +
+                "&sortType=" +
+                this.dongSortType,
+              {
+                headers: { Authorization: "Bearer " + CSRF_TOKEN },
+              }
+            )
+            .then((res) => {
+              console.log("movemap", res.data);
+              this.pageItem.total = res.data.pageSize;
+              this.resiList = res.data.residenceInfo;
+            });
+        } else {
+          http
+            .get(
+              "/api/v1/residences?dong=" +
+                this.moveDong +
+                "&pageNum=" +
+                "1" +
+                "&sortOrder=" +
+                this.dongSortOrder +
+                "&sortType=" +
+                this.dongSortType
+            )
+            .then((res) => {
+              console.log("movemap", res.data);
+              this.pageItem.total = res.data.pageSize;
+              this.resiList = res.data.residenceInfo;
+            });
+        }
+      } else if (this.pageItem.type == "details") {
+        console.log("thisType", this.pageItem.type);
+
+        this.pageItem.curpage = 1;
+        this.pageItem.type = "details";
+        this.detailFilter.sortOrder = res.sortOrder ? "asc" : "desc";
+        this.detailFilter.sortType = res.sortType;
+        console.log(this.detailFilter);
+        if (CSRF_TOKEN != null) {
+          http
+            .post("/api/v1/residences/detail", this.detailFilter, {
+              headers: { Authorization: "Bearer " + CSRF_TOKEN },
+            })
+            .then((res) => {
+              this.pageItem.total = res.data.pageSize;
+              this.resiList = res.data.residenceInfo;
+              console.log("sortDetails", this.resiList);
+            });
+        } else {
+          http
+            .post("/api/v1/residences/detail", this.detailFilter)
+            .then((res) => {
+              console.log("sortDetails", res.data.residenceInfo);
+              this.pageItem.total = res.data.pageSize;
+              this.resiList = res.data.residenceInfo;
+            });
+        }
+      }
+    },
+    requestNextItem(itemnum) {
+      console.log(itemnum);
+      this.pageItem.curpage = itemnum;
+      console.log(this.pageItem.type);
+      const CSRF_TOKEN = localStorage.getItem("accessToken");
+      if (this.pageItem.type == "dong") {
+        if (CSRF_TOKEN != null) {
+          http
+            .get(
+              "/api/v1/residences?dong=" +
+                this.moveDong +
+                "&pageNum=" +
+                itemnum,
+              +"&sortOrder=" +
+                this.dongSortOrder +
+                "&sortType=" +
+                this.dongSortType,
+              {
+                headers: { Authorization: "Bearer " + CSRF_TOKEN },
+              }
+            )
+            .then((res) => {
+              console.log("movemap", res.data);
+              this.resiList = res.data.residenceInfo;
+            });
+        } else {
+          http
+            .get(
+              "/api/v1/residences?dong=" +
+                this.moveDong +
+                "&pageNum=" +
+                itemnum +
+                "&sortOrder=" +
+                this.dongSortOrder +
+                "&sortType=" +
+                this.dongSortType
+            )
+            .then((res) => {
+              console.log("movemap", res.data);
+              this.resiList = res.data.residenceInfo;
+            });
+        }
+      } else if (this.pageItem.type == "ids") {
+        this.pageItem.curpage = itemnum;
+        this.requestForIds.pageNum = itemnum;
+        if (CSRF_TOKEN != null) {
+          http
+            .post("/api/v1/residences/ids", this.requestForIds, {
+              headers: { Authorization: "Bearer " + CSRF_TOKEN },
+            })
+            .then((res) => {
+              this.resiList = res.data.residenceInfo;
+              console.log("받아온데이터", this.resiList);
+            });
+        } else {
+          http
+            .post("/api/v1/residences/ids", this.requestForIds)
+            .then((res) => {
+              this.resiList = res.data.residenceInfo;
+              console.log("받아온데이터", this.resiList);
+            });
+        }
+      } else if (this.pageItem.type == "details") {
+        this.detailFilter.pageNum = itemnum;
+        this.pageItem.curpage = itemnum;
+        const CSRF_TOKEN = localStorage.getItem("accessToken");
+        if (CSRF_TOKEN != null) {
+          http
+            .post("/api/v1/residences/detail", this.detailFilter, {
+              headers: { Authorization: "Bearer " + CSRF_TOKEN },
+            })
+            .then((res) => {
+              this.pageItem.total = res.data.pageSize;
+              this.resiList = res.data.residenceInfo;
+              console.log("deatailRES", this.resiList);
+            });
+        } else {
+          http
+            .post("/api/v1/residences/detail", this.detailFilter)
+            .then((res) => {
+              console.log("deatailRES", res.data.residenceInfo);
+              this.pageItem.total = res.data.pageSize;
+              this.resiList = res.data.residenceInfo;
+            });
+        }
+      }
+    },
+
+    drawMarker(positions) {
+      var imageSrc = "img/resi.png";
+      var imageSize = new kakao.maps.Size(35, 35);
+      var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+      var mark = new kakao.maps.Marker({
+        position: new kakao.maps.LatLng(positions.lat, positions.lon),
+        title: positions.id,
+        image: markerImage,
+      });
+      kakao.maps.event.addListener(mark, "click", () => {
+        this.makeClickListener(mark);
+      });
+
+      return mark;
+    },
+    makeClickListener(mark) {
+      console.log(mark);
+      var Item = {
+        residenceIds: [],
+        pageNum: 1,
+      };
+      this.pageItem.curpage = 1;
+      this.pageItem.total = 1;
+      this.pageItem.type = "ids";
+      const CSRF_TOKEN = localStorage.getItem("accessToken");
+      Item.residenceIds.push(mark.Fb);
+      if (CSRF_TOKEN != null) {
+        http
+          .post("/api/v1/residences/ids", Item, {
+            headers: { Authorization: "Bearer " + CSRF_TOKEN },
+          })
+          .then((res) => {
+            this.resiList = res.data.residenceInfo;
+            console.log("받아온데이터", this.resiList);
+          });
+      } else {
+        http.post("/api/v1/residences/ids", Item).then((res) => {
+          this.resiList = res.data.residenceInfo;
+          console.log("받아온데이터", this.resiList);
+        });
+      }
+    },
     clickShow() {
       this.isShow = !this.isShow;
     },
@@ -117,7 +568,7 @@ export default {
       /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
       script.src =
-        "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=f52d6b75a8a65ca935ff31e1ba7eace5&libraries=services,clusterer,drawing";
+        "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=f52d6b75a8a65ca935ff31e1ba7eace5&libraries=services,clusterer,drawing";
       document.head.appendChild(script);
     },
     initMap() {
@@ -125,11 +576,14 @@ export default {
       var options = {
         //지도를 생성할 때 필요한 기본 옵션
         center: new kakao.maps.LatLng(37.564214, 127.001699),
-        level: 8, //지도의 레벨(확대, 축소 정도)
+        level: 5, //지도의 레벨(확대, 축소 정도)
       };
 
       var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
       this.map = map;
+
+      kakao.maps.event.addListener(map, "dragend", this.mapdrag);
+
       var clusterer = new kakao.maps.MarkerClusterer({
         map: this.map,
         // 마커들을 클러스터로 관리하고 표시할 지도 객체
@@ -155,16 +609,68 @@ export default {
 
       kakao.maps.event.addListener(clusterer, "clusterclick", this.temp);
     },
+    mapdrag() {
+      if (!this.isDraged) return;
+
+      this.moveDong = null;
+      // 지도 중심좌표를 얻어옵니다
+      var latlng = this.map.getCenter();
+
+      var message = "변경된 지도 중심좌표는 " + latlng.getLat() + " 이고, ";
+      message += "경도는 " + latlng.getLng() + " 입니다";
+
+      console.log(message);
+      var geocoder = new kakao.maps.services.Geocoder();
+      // 좌표로 행정동 주소 정보를 요청합니다
+
+      var ddd = geocoder.coord2RegionCode(
+        latlng.getLng(),
+        latlng.getLat(),
+        this.getnewdong
+      );
+    },
+    getnewdong(result, status) {
+      console.log(status);
+      if (status === kakao.maps.services.Status.OK) {
+        const move = {
+          si: result[0].region_1depth_name,
+          gu: result[0].region_2depth_name,
+          dong: result[0].region_3depth_name,
+        };
+
+        this.$emit("moveJuso", move);
+        this.moveDong = move.dong;
+      }
+    },
     temp(cluster) {
       var clickcluster = cluster.getMarkers().length;
-      var Item = [];
+
+      const CSRF_TOKEN = localStorage.getItem("accessToken");
+      this.pageItem.type = "ids";
+      this.requestForIds.residenceIds = [];
+      this.pageItem.curpage = 1;
+      this.sortFilter = "none";
       for (var i = 0; i < clickcluster; i++) {
-        Item.push(cluster.getMarkers()[i].Fb);
+        this.requestForIds.residenceIds.push(cluster.getMarkers()[i].Fb);
       }
-      http.post("/api/v1/residences/ids", Item).then((res) => {
-        this.resiList = res.data.residenceInfo;
-        console.log(this.resiList);
-      });
+
+      if (CSRF_TOKEN != null) {
+        http
+          .post("/api/v1/residences/ids", this.requestForIds, {
+            headers: { Authorization: "Bearer " + CSRF_TOKEN },
+          })
+          .then((res) => {
+            this.resiList = res.data.residenceInfo;
+            this.pageItem.total = res.data.pageSize;
+            console.log("받아온데이터", this.resiList);
+          });
+      } else {
+        http.post("/api/v1/residences/ids", this.requestForIds).then((res) => {
+          this.resiList = res.data.residenceInfo;
+          this.pageItem.total = res.data.pageSize;
+          console.log("받아온데이터", this.resiList);
+        });
+      }
     },
   },
 };
@@ -181,13 +687,10 @@ export default {
   padding-top: 0;
 }
 .temp {
-  position: absolute;
-  left: 50%;
-
-  transform: translate(-50%, -50%);
-
+  float: right;
+  transform: translate(0%, 0%);
   bottom: 0;
-  border-radius: 5px;
+  border-radius: 10px;
   border: 1px solid #909090;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
   background: #fff;
@@ -202,75 +705,6 @@ export default {
   padding: 0;
 }
 
-#category {
-  position: absolute;
-  left: 50%;
-
-  transform: translate(-50%, -50%);
-
-  bottom: 3%;
-  border-radius: 5px;
-  border: 1px solid #909090;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
-  background: #fff;
-  overflow: hidden;
-  z-index: 2;
-}
-#category n-button {
-  left: 50;
-}
-#category li {
-  float: left;
-  list-style: none;
-  width: 50px;
-  border-right: 1px solid #acacac;
-  padding: 6px 0;
-  text-align: center;
-  cursor: pointer;
-}
-#category li.on {
-  background: #eee;
-}
-#category li:hover {
-  background: #ffe6e6;
-  border-left: 1px solid #acacac;
-  margin-left: -1px;
-}
-#category li:last-child {
-  margin-right: 0;
-  border-right: 0;
-}
-#category li span {
-  display: block;
-  margin: 0 auto 3px;
-  width: 27px;
-  height: 28px;
-}
-#category li .category_bg {
-  background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png)
-    no-repeat;
-}
-#category li .bank {
-  background-position: -10px 0;
-}
-#category li .mart {
-  background-position: -10px -36px;
-}
-#category li .pharmacy {
-  background-position: -10px -72px;
-}
-#category li .oil {
-  background-position: -10px -108px;
-}
-#category li .cafe {
-  background-position: -10px -144px;
-}
-#category li .store {
-  background-position: -10px -180px;
-}
-#category li.on .category_bg {
-  background-position-x: -46px;
-}
 .placeinfo_wrap {
   position: absolute;
   bottom: 28px;

@@ -38,6 +38,7 @@ export default {
                 checkPass: true,
                 matchPass: true,
                 requireName: true,
+                checkName:true,
                 requirePhone: true,
                 matchPhone: true,
                 requireEmail: true,
@@ -54,6 +55,7 @@ export default {
                 checkPass: true,
                 matchPass: true,
                 requireName: true,
+                checkName:true,
                 requirePhone: true,
                 matchPhone: true,
                 requireEmail: true,
@@ -112,11 +114,18 @@ export default {
           this.requestEstate(number);
         },
         checkName(){
-          if(!this.user.userName){
+          if(this.user.userName==""){
             this.errors.requireName=false;
+            this.errors.checkName=true;
             return;
-          }else{
+          }else if (!/^[가-힣]{2,15}$/.test(this.user.userName)) {
             this.errors.requireName=true;
+            this.errors.checkName=false;
+            return;
+        }else{
+            this.errors.requireName=true;
+            this.errors.checkName=true;
+            return;
           }
         },
         checkID() {
@@ -184,7 +193,7 @@ export default {
                 this.errors.requireEmail = false;
                 this.errors.matchEmail = true;
                 return;
-            } else if (!/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/.test(this.user.userEmail)) {
+            } else if (!/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.user.userEmail)) {
                 this.errors.requireEmail = true;
                 this.errors.matchEmail = false;
                 return;
@@ -210,12 +219,19 @@ export default {
             }
         },
         checkName2(){
-            if(!this.estate.userName){
-              this.errors2.requireName=false;
-              return;
+            if(this.estate.userName==""){
+                this.errors2.requireName=false;
+                this.errors2.checkName=true;
+                return;
+              }else if (!/^[가-힣]{2,15}$/.test(this.estate.userName)) {
+                this.errors2.requireName=true;
+                this.errors2.checkName=false;
+                return;
             }else{
-              this.errors2.requireName=true;
-            }
+                this.errors2.requireName=true;
+                this.errors2.checkName=true;
+                return;
+              }
           },
           checkID2() {
               if (!this.estate.userId) {
@@ -282,7 +298,7 @@ export default {
                   this.errors2.requireEmail = false;
                   this.errors2.matchEmail = true;
                   return;
-              } else if (!/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/.test(this.estate.userEmail)) {
+              } else if (!/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.estate.userEmail)) {
                   this.errors2.requireEmail = true;
                   this.errors2.matchEmail = false;
                   return;
@@ -308,11 +324,11 @@ export default {
               }
           },
           checkNumber(){
-              if(!this.estate.estateNumber){
-                  this.errors2.requireNumber=false;
-                    return;
+            if(!this.estateNumber){
+                this.errors2.requireNumber=false;
+                return;
             }else{
-              this.errors2.requireNumber=true;
+                this.errors2.requireNumber=true;
               return;
             }
           }

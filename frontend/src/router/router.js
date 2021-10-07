@@ -8,20 +8,21 @@ import Manage from '../view/managePage.vue';
 import MainFooter from '../layout/MainFooter.vue';
 import signupPage from '../view/signupPage.vue';
 import QnAPage from '../view/QnAPage.vue';
-import Service from '../view/servicePage.vue';
 import VueSimpleAlert from "vue-simple-alert";
 Vue.use(Router);
 const requireAuth = () => (to, from, next) => {
   if (localStorage.getItem('accessToken')) {
     return next();
   }
-  VueSimpleAlert.fire({
-    title:"서비스 권한 없음",
-    text:"추천받기 서비스는 회원 전용 서비스 입니다!",
-    type:"error",
-}).then(() => {
-    next('/login');
-  }); 
+  else{
+    VueSimpleAlert.fire({
+      title:"서비스 권한 없음",
+      text:"추천받기 서비스는 회원 전용 서비스 입니다!",
+      type:"error",
+    }).then(() => {
+      next('/login');
+    });
+  }
 };
 export default new Router({
   mode: 'history',
@@ -62,9 +63,9 @@ export default new Router({
       props: {
         header: { colorOnScroll: 400 },
         footer: { backgroundColor: 'black' }
-      }
+      },
+
     },
-    
     {
       path: '/signup',
       name: 'signup',

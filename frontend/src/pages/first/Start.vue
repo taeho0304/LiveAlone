@@ -23,21 +23,6 @@
               ></router-link
             >
 
-            <a
-              class="btn btn-lg btn-block"
-              style="
-                border-radius: 10px;
-                background: linear-gradient(60deg, #48c6ef, #4481eb);
-              "
-              @click="modals.classic = true"
-            >
-              지도보기</a
-            >
-            <modal :show.sync="modals.classic" modal-classes="modal-lg">
-              <div style="display: flex">
-                <seoulMap />
-              </div>
-            </modal>
             <router-link to="/qna"
               ><a
                 class="btn btn-lg btn-block"
@@ -55,44 +40,27 @@
   </div>
 </template>
 <script>
-import { mapActions } from "vuex";
-import { Modal } from "@/components";
-import seoulMap from "../first/seoulMap.vue";
+import { mapActions, mapGetters } from "vuex";
+
 export default {
-  components: {
-    Modal,
-    seoulMap,
-  },
+  components: {},
   data() {
-    return {
-      modals: {
-        classic: false,
-      },
-    };
+    return {};
   },
   name: "start",
   bodyClass: "start-page",
+
   methods: {
+    ...mapActions("user", ["requsetFavoriteList"]),
     ...mapActions("question", ["requestQuestion"]),
     getQuestionList() {
       console.log("질문옵션");
       this.requestQuestion();
     },
-    ...mapActions("search", ["requestGugunCount"]),
-    getGugunCount() {
-      console.log("구군카운트");
-      this.requestGugunCount();
-    },
-    ...mapActions("search", ["requestDongCount"]),
-    getDongCount() {
-      console.log("동카운트");
-      this.requestDongCount();
-    },
   },
   created() {
     this.getQuestionList();
-    this.getGugunCount();
-    this.getDongCount();
+    this.requsetFavoriteList();
   },
 };
 </script>
