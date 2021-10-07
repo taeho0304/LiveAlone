@@ -580,7 +580,7 @@ export default {
           // 우편번호와 주소 정보를 해당 필드에 넣는다.
           this.residence.dong = data.bname; //5자리 새우편번호 사용
           this.addr1 = fullRoadAddr;
-
+          //되라쫌
           const REST_API_KEY = "KakaoAK 74297f3fdce4f2f45a1c824e5f4d922c";
           axios
             .get(
