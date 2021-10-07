@@ -39,7 +39,6 @@ export default {
                 .get(`/api/v1/search/roomtypes`)
                 .then(({ data }) => {
                     commit("ROOMTYPE", data);
-                   
                 })
                 .catch((err) => {
                     
@@ -56,16 +55,17 @@ export default {
                 })
         },
         requestDongCommercial({ commit }, data) {
-         
-            http
+            if(data != null){
+                http
                 .get(`/api/v1/residences/commercialcount/`, { params: { dongName: data } })
                 .then(({ data }) => {
-                   
                     commit("DONGCOMMERCIAL", data)
                 })
                 .catch((err) => {
-                  
-                })
+
+                })    
+            }
+            
         },
     },
     getters: {
