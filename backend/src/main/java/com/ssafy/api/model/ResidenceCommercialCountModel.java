@@ -13,4 +13,7 @@ public class ResidenceCommercialCountModel {
     long cafeCount;
     long healthCount;
     long convenienceCount;
+    long busCount;
+    long bicycleCount;
+    long subwayCount;
 }
