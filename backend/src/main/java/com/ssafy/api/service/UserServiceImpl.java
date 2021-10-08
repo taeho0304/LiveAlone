@@ -1,5 +1,8 @@
 package com.ssafy.api.service;
 
+import com.ssafy.db.entity.EstateInfo;
+import com.ssafy.db.repository.EstateInfoRepository;
+import com.ssafy.db.repository.EstateInfoRepositorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,26 +31,39 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
-	User user = new User();
-	
+	@Autowired
+	EstateInfoRepository estateInfoRepository;
+
+	@Autowired
+	EstateInfoRepositorySupport estateInfoRepositorySupport;
+
 	@Override
 	public User createUser(UserRegisterPostReq userRegisterInfo) {
+		User user = new User();
 		user.setUserId(userRegisterInfo.getUserId());
 		user.setUserPass(passwordEncoder.encode(userRegisterInfo.getUserPass()));
 		user.setUserEmail(userRegisterInfo.getUserEmail());
 		user.setUserPhone(userRegisterInfo.getUserPhone());
 		user.setUserName(userRegisterInfo.getUserName());
+		if(userRegisterInfo.getEstateId() != null)
+			user.setEstateInfo(estateInfoRepository.findById(userRegisterInfo.getEstateId()).get());
 		return userRepository.save(user);
 	}
 	@Override
 	public void patchUser(UserRegisterPostReq userRegisterInfo, String userId) {
 		Optional<User> user = userRepository.findById(userRepositorySupport.findUserByUserId(userId).get().getId());
 		user.get().setUserEmail(userRegisterInfo.getUserEmail());
-		user.get().setUserPass(passwordEncoder.encode(userRegisterInfo.getUserPass()));
+//		user.get().setUserPass(passwordEncoder.encode(userRegisterInfo.getUserPass()));
 		user.get().setUserPhone(userRegisterInfo.getUserPhone());
 		user.get().setUserName(userRegisterInfo.getUserName());
 		userRepository.save(user.get());
 	}
+
+	@Override
+	public EstateInfo getEstateInfoByResgistrationNumber(String registrationNumber) {
+		return estateInfoRepositorySupport.getEstateInfoByRegistrationNumber(registrationNumber).get();
+	}
+
 	@Override
 	public User getUserByUserId(String userId) {
 		return userRepositorySupport.findUserByUserId(userId).get();

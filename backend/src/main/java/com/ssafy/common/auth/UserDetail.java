@@ -26,7 +26,7 @@ public class UserDetail implements org.springframework.security.core.userdetails
     		super();
     		this.user = user;
     }
-    
+
     public User getUser() {
     		return this.user;
     }

@@ -1,11 +1,13 @@
 @include form-control-placeholder($default-color, .8);
 
 .form-control {
-    background-color: $transparent-bg;
-    border: 1px solid $light-gray;
-    border-radius: $btn-round-radius;
+    // background-color: $transparent-bg;
+    background-color: rgb(237 242 267);
+    // border: 1px solid $light-gray;
+    //border: 1px solid #ffffff;
+    border-radius: 10px;
     color: $black-color;
-    line-height: normal;
+    //line-height: normal;
     font-size: $font-size-small;
     height: 100%;
     @include transition-input-focus-color();
@@ -16,16 +18,16 @@
     }
 
     &:focus{
-        border: 1px solid $primary-color;
+        border: 1px solid $info-color;
         @include box-shadow(none);
         outline: 0 !important;
         color: $black-color;
 
         & + .input-group-text,
         & ~ .input-group-text{
-            border: 1px solid $primary-color;
+            border: 1px solid $info-color;
             border-left: none;
-            background-color: $transparent-bg;
+            background-color: rgb(237 242 267);
         }
     }
 

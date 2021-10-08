@@ -1,6 +1,6 @@
 package com.ssafy.api.service;
 
-import com.ssafy.api.model.QnA;
+import com.ssafy.api.model.QnAModel;
 import com.ssafy.api.request.QuestionOptionPostReq;
 import com.ssafy.db.entity.Question;
 import com.ssafy.db.entity.QuestionOption;
@@ -40,27 +40,27 @@ public class QuestionOptionServiceImpl implements QuestionOptionService {
 	}
 
 	@Override
-	public List<QnA> getQuestionOption() {
+	public List<QnAModel> getQuestionOption() {
 		HashMap<Long,Integer> map = new LinkedHashMap<>();
-		List<QnA> qnAList = new ArrayList<>();
+		List<QnAModel> qnAModelList = new ArrayList<>();
 		List<QuestionOption> questionOptionList = questionOptionRepository.findAll();
 		List<Question> questionList = questionRepository.findAll();
 
 		for (int i=0; i<questionList.size(); i++) {
-			QnA qna = new QnA();
+			QnAModel qna = new QnAModel();
 			qna.setIndex(questionList.get(i).getId());
 			qna.setQuestion(questionList.get(i).getQuestionContent());
-			qnAList.add(qna);
+			qnAModelList.add(qna);
 			map.put(questionList.get(i).getId(), i);
 		}
 
 		for (QuestionOption questionOption: questionOptionList) {
 			int index = map.get(questionOption.getQuestion().getId());
-			QnA qna = qnAList.get(index);
+			QnAModel qna = qnAModelList.get(index);
 			qna.getAnswer().add(questionOption.getOptionContent());
-			qnAList.set(index, qna);
+			qnAModelList.set(index, qna);
 		}
-		return qnAList;
+		return qnAModelList;
 	}
 	@Override
 	public void deleteQuestionOption(List<Long> questionOptionId) {

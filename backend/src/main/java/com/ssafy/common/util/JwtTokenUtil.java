@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.*;
 
+import com.ssafy.db.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -13,7 +14,9 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.google.common.collect.Lists.newArrayList;
 
@@ -47,10 +50,22 @@ public class JwtTokenUtil {
                 .build();
     }
     
-    public static String getToken(String userId) {
+    public static String getToken(User user) {
     		Date expires = JwtTokenUtil.getTokenExpiration(expirationTime);
+             Map<String, String > token = new HashMap<String, String>();
+
+             token.put("id",user.getUserId());
+            token.put("name", user.getUserName());
+            token.put("isManager",String.valueOf(user.getIsManger()));
+            if(user.getEstateInfo() != null) {
+                token.put("isEstate",Long.toString(user.getEstateInfo().getId()));
+            }
+            else {
+                token.put("isEstate","null");
+            }
+
         return JWT.create()
-                .withSubject(userId)
+                .withClaim("userInfo",token)
                 .withExpiresAt(expires)
                 .withIssuer(ISSUER)
                 .withIssuedAt(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()))

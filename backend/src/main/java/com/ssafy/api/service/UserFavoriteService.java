@@ -1,6 +1,5 @@
 package com.ssafy.api.service;
 
-import com.ssafy.db.entity.ResidenceInfo;
 import com.ssafy.db.entity.UserFavorite;
 import org.springframework.security.core.Authentication;
 
@@ -13,9 +12,9 @@ public interface UserFavoriteService {
 
 	void createFavoriteResidence(Long residenceId, Authentication authentication);
 
-	List<UserFavorite> getFavoriteResidence(Authentication authentication);
+	List<UserFavorite> getMyResidence(Authentication authentication);
 
-	void deleteFavoriteResidence(List<Long> userFavoriteIds, Authentication authentication);
+	void deleteFavoriteResidence(Long residenceId, Authentication authentication);
 
-	UserFavorite checkDuplicated(Authentication authentication, Long residenceId);
+	Boolean checkIsFavorite(Authentication authentication, Long residenceId);
 }

@@ -1,5 +1,6 @@
 package com.ssafy.api.response;
 
+import com.ssafy.api.model.ResidencePaging;
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.ResidenceInfo;
 import io.swagger.annotations.ApiModel;
@@ -17,12 +18,14 @@ import java.util.List;
 @ApiModel("ResidenceRes")
 public class ResidenceRes extends BaseResponseBody {
 	List<ResidenceInfo> residenceInfo = new ArrayList<>();
+	long pageSize;
 
-	public static ResidenceRes of(List<ResidenceInfo> roomRes) {
+	public static ResidenceRes of(ResidencePaging roomRes) {
 		ResidenceRes res = new ResidenceRes();
 		res.setStatusCode(200);
 		res.setMessage("success");
-		res.setResidenceInfo(roomRes);
+		res.setResidenceInfo(roomRes.getResidenceInfos());
+		res.setPageSize(roomRes.getPageSize());
 		return res;
 	}
 

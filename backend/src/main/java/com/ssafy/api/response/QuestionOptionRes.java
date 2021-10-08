@@ -1,6 +1,6 @@
 package com.ssafy.api.response;
 
-import com.ssafy.api.model.QnA;
+import com.ssafy.api.model.QnAModel;
 import com.ssafy.common.model.response.BaseResponseBody;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -18,9 +18,9 @@ import java.util.List;
 @ApiModel("QuestionOptionRes")
 public class QuestionOptionRes extends BaseResponseBody {
 	@ApiModelProperty(name="Question ID")
-	List<QnA> qna = new ArrayList<>();
+	List<QnAModel> qna = new ArrayList<>();
 	
-	public static QuestionOptionRes of(List<QnA> questionOptions) {
+	public static QuestionOptionRes of(List<QnAModel> questionOptions) {
 		QuestionOptionRes res = new QuestionOptionRes();
 		res.setStatusCode(200);
 		res.setMessage("success");
